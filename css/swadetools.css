@@ -1,0 +1,170 @@
+/* ## TODO style dialog */
+.swadetools-2grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 3px 10px; 
+}
+
+
+
+.swadetools-mod-add {
+display:flex;
+position:relative;
+align-items: center;
+}
+
+.swadetools-mod-add label,.swadetools-mod-add input {
+    flex:1
+}
+
+.swadetools-mod-add input {
+    margin-left:10px;
+}
+
+.swadetools-formpart {
+    margin:10px 0
+}
+
+.swadetools-raise {
+    display: flex;
+    align-items: center;
+}
+.swadetools-raise label {
+    font-size: 16px;
+    display: flex;
+}
+
+.swadetools-raise input {
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+}
+
+.item-image, .item.weapon .item-img,.item-show, .item.weapon .damage {
+    cursor: pointer;
+}
+
+.swadetools-relative {
+    position: relative;
+}
+
+button.swadetools-bennyrerroll {
+   
+    padding-top: 2px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    border: 1px solid #737171;
+    border-radius: 3px;
+    background: url(../icons/benny.png) no-repeat center center #f3f3e7;
+    background-size: 90%;
+    cursor: pointer;
+}
+
+.swadetools-criticalfailure {
+    background: #b10505;
+    color: white;
+    text-align: center;
+    padding: 5px;
+   
+    margin-top: 5px;
+    border-radius: 3px;
+
+}
+
+.swadetools-targetwrap {
+    border: 1px solid #737171;
+    border-radius: 3px;
+    display: flex;
+   
+    margin-bottom: 2px;
+    align-items: center;
+    background: #f3f3e7;
+}
+.swadetools-target-title {
+    color: #5a5959;
+    margin: 3px 0;
+    /* text-align: center; */
+    font-size: 12px;
+}
+.swadetools-targetname {
+font-weight:bold;
+margin-left:5px;
+display: flex;
+align-items: center;
+}
+
+.swadetools-rolldamage, .swadetools-applydamage {
+    display: flex;
+    width:100%;
+    align-items: center;
+    padding: 3px 5px;
+}
+
+
+
+.swadetools-term-hit, .swadetools-term-choose {  /* ///miss hit raise &&& none shaken wounds  */
+color:green
+}
+
+.swadetools-term-raise {  /* ///miss hit raise &&& none shaken wounds  */
+    color:purple
+    }
+
+    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled] {  /* ///miss hit raise &&& none shaken wounds  */
+        color:gray
+        }
+
+        .swadetools-term-miss, .swadetools-term-none{
+            padding: 3px 5px;
+        }
+       
+
+        .swadetools-term-shaken {
+            color:orange;
+        }
+        .swadetools-term-wounds {
+            color:#b10505
+        }
+
+
+        .swadetools-vulnerable-icon {
+            width: 15px;
+            height:15px;
+            background: url(../icons/vulnerable.png) no-repeat center center;
+            background-size:100%;
+            margin:0 2px;
+            display: inline-block;
+        }
+
+
+        .swadetools-simplebutton {
+            margin-top:5px
+        }
+
+
+        .vertical-buttons .dialog-buttons button.dialog-button {
+            cursor:pointer;
+            margin-bottom:2px
+            }
+
+
+            .swadetools-form-hint {
+              
+    font-size: 12px;
+    color: grey;
+            }
+
+           
+            .swadetools-hint {
+                border-bottom:1px dotted transparent;
+                font-size: 12px;
+            }
+            .swadetools-hint:hover {
+                border-bottom:1px dotted grey;
+            }
+
+            .swadetools-raise-power {
+                margin-top:10px
+            }

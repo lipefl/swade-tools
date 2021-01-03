@@ -1,0 +1,38 @@
+{
+    "name": "swade-tools",
+    "title": "SWADE Tools (BETA)",
+    "description": "A series of automations to use with Savage Worlds (SWADE) system. Joker's Wild (with bonus), Status Management (with icons), Reroll with a benny for every roll and other enhancements. This is a BETA version so bugs may occur.",
+    "author": "Felipe Figueiredo",
+    "version": "0.0.1",
+    "minimumCoreVersion": "0.7.8",
+     "url":"https://github.com/lipefl/swade-tools",
+    "manifest":"https://raw.githubusercontent.com/lipefl/swade-tools/main/module.json",
+    "download":"https://github.com/lipefl/swade-tools/archive/main.zip",
+    "esmodules": [
+        "scripts/start.js"
+    ],
+    "styles": ["css/swadetools.css"],
+    "languages": [
+        {
+          "lang": "en",
+          "name": "English",
+          "path": "lang/en.json"
+        },
+        {
+          "lang": "pt-BR",
+          "name": "Português (Brasil)",
+          "path": "lang/pt-BR.json"
+        }
+    ],
+    "packs": [
+      {
+        "name": "macros",
+        "label": "Macros SwadeTools",
+        "system": "swade",
+        "module": "swade-tools",
+        "path": "./packs/macros.db",
+        "entity": "Macro"
+      }
+    ]
+
+  }
