@@ -30,9 +30,15 @@ Most of the module will be enabled by default, so if you want to disable somethi
 
 ## Screeshots
 ![](https://i.imgur.com/vrybiSO.jpg)
+
 ![](https://i.imgur.com/jeDZzgf.jpg)
+
 ![](https://i.imgur.com/YG1IU5W.jpg)
+
 ![](https://i.imgur.com/68Ym14p.jpg)
+
 ![](https://i.imgur.com/gVJDthp.jpg)
+
 ![](https://i.imgur.com/Xxt5cOh.jpg)
+
 ![](https://i.imgur.com/wh2j1Wx.jpg)
