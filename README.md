@@ -1,8 +1,10 @@
 # SWADE Tools (BETA)
-A Foundry VTT module for use with Savage Worlds (SWADE system);
+A Foundry VTT module for use with Savage Worlds (SWADE system).
+
 A series of automations for swade: Joker's Wild (with bonus); Status Management (with icons); Reroll with a benny; detect targets, hit and damage; etc. 
 
 **ATTENTION: This is a BETA version so bugs may occur.**
+
 This is my first big module, please report if you see any bugs and be nice :)
 
 ## Features
