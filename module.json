@@ -4,6 +4,7 @@
     "description": "A series of automations to use with Savage Worlds (SWADE) system. Joker's Wild (with bonus), Status Management (with icons), Reroll with a benny for every roll and other enhancements. This is a BETA version so bugs may occur.",
     "author": "Felipe Figueiredo",
     "version": "0.0.1",
+    "compatibleCoreVersion": "0.7.8",
     "minimumCoreVersion": "0.7.8",
      "url":"https://github.com/lipefl/swade-tools",
     "manifest":"https://raw.githubusercontent.com/lipefl/swade-tools/main/module.json",
