@@ -134,12 +134,16 @@ export default class RollControl {
         {
         let targetNumber=4;
 
-        if (vulIcon){
-            targetNumber-=2;
-        }
+       
         if (skill==gb.setting('fightingSkill')){
             targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
         }
+
+        if (vulIcon){
+            targetNumber-=2;
+        }
+
+        
         let raisecount=gb.raiseCount(this.roll.total,targetNumber);
 
      //   console.log(raisecount);
@@ -195,14 +199,15 @@ export default class RollControl {
            
             let charRoll=new ItemRoll(actor,item);
             charRoll.useTarget(targetid);
+            if (raise){
+                charRoll.raiseDmg();
+            }
             charRoll.rollBaseDamage();
           //  charRoll.combatRoll(argsArray[1]);
           //  charRoll.damageTarget(target);
            //   charRoll.addFlavor(item.name);
            /*    charRoll.addModifier(item.data.data.actions.dmgMod,gb.trans('ModItem'));
-              if (raise){
-                  charRoll.raiseDmg();
-              }
+              
             charRoll.rollDamage(`${item.data.data.damage}`); */
             charRoll.display();
         }
@@ -215,20 +220,22 @@ export default class RollControl {
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
 
         let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
-        let armor=gb.realInt(target.actor.data.data.stats.toughness.armor) /// TODO apply PA
+        
         let item=game.actors.get(actorid).items.get(itemid);
 
         let applyDmg=false;
 
        // console.log(item);
-
+     /// adds AP
+        let apextra=0;
         if (item.data.data.ap){
-            armor-=item.data.data.ap;
-            if (armor<0){
-                armor=0;
+            let armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
+            apextra=gb.realInt(item.data.data.ap);
+            if (apextra>armor){
+                apextra=armor;
             }
         }
-        let raisecount=gb.raiseCount(this.roll.total,toughness+armor);
+        let raisecount=gb.raiseCount(this.roll.total,toughness-apextra);
      //   console.log(toughness+armor);
      //   console.log(raisecount);
         let addTarget='none';

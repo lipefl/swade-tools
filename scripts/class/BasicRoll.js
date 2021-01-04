@@ -54,7 +54,7 @@ export default class BasicRoll {
     if (!wildDie){
         rollExp=`1d${dieType}x${this.prepareModifier(modifier)}`;
     } else {
-        rollExp=`{1d${dieType}x,1d${wildDie}}kh${this.prepareModifier(modifier)}`
+        rollExp=`{1d${dieType}x,1d${wildDie}x}kh${this.prepareModifier(modifier)}`
     }
 
 }
