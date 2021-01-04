@@ -1,1 +1,27 @@
-{}
+{
+    "SWADETOOLS.Bennies": "Benis",
+    "SWADETOOLS.Modifier": "Modificador",
+    "SWADETOOLS.Fighting": "Pelear",
+    "SWADETOOLS.SettingUsePP": "Puntos de Poder Actuales",
+    "SWADETOOLS.Targetshaken": "Aturdido",
+    "SWADETOOLS.Joker": "Joker",
+    "SWADETOOLS.UnShakenAttempt": "intenta recuperarse del aturdimiento",
+    "SWADETOOLS.RemDistr": "ya no está distraído",
+    "SWADETOOLS.RemStunnedSuc": "ya no está conmocionado, pero se mantiene Distraído y Vulnerable",
+    "SWADETOOLS.NoBennies": "no tiene ningún Beni",
+    "SWADETOOLS.UnStunnedAttempt": "intenta recuperarse de la conmoción",
+    "SWADETOOLS.RemVuln": "ya no es Vulnerable",
+    "SWADETOOLS.RemShaken": "ya no esta Aturdido",
+    "SWADETOOLS.StillShaken": "permanece Aturdido",
+    "SWADETOOLS.RemStunnedRaise": "ya no esta Conmocionado",
+    "SWADETOOLS.StillStunned": "permanece Conmocionado",
+    "SWADETOOLS.Additional": "Adicional",
+    "SWADETOOLS.Unskilled": "Sin entrenamiento",
+    "SWADETOOLS.Damage": "Daño",
+    "SWADETOOLS.UnshakenBennyButton": "Eliminar Aturdimiento usando un Beni",
+    "SWADETOOLS.JokersWild": "¡Joker Salvaje!",
+    "SWADETOOLS.JokersWildMsg": "¡Benis entregados automáticamente!",
+    "SWADETOOLS.Targetraise": "Aumento",
+    "SWADETOOLS.Targetwound": "Herida",
+    "SWADETOOLS.Targetwounds": "Heridas"
+}
