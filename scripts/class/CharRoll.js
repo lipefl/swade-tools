@@ -428,9 +428,10 @@ export default class CharRoll extends BasicRoll{
     
     }
 
-    rollDamage(damage){
+    rollDamage(damage,extraflavor=''){
         this.rolltype='damage';
-        this.flavor+=`<div>Dano: ${damage}</div>`;
+        
+        this.flavor+=`<div>${gb.trans('Dmg','SWADE')}: ${damage}${extraflavor}</div>`;
         this.baseModifiers(true);
       //  console.log(this.dmgraise);
         this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise);

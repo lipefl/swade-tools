@@ -111,6 +111,8 @@ export default class CombatControl {
         this.setCombat(combat.id);
         let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true && (el.flags?.['swade-tools']?.jokersWild===undefined || el.flags?.['swade-tools']?.jokersWild!=combat.round));
 
+        console.log(jokers);
+
         if (jokers.length>0){
 
 

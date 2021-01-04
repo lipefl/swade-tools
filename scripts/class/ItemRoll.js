@@ -95,8 +95,11 @@ export default class ItemRoll extends CharRoll{
 
     rollBaseDamage(){
         this.addDmgMod();
-       
-        this.rollDamage(this.item.data.data.damage);
+        let extrainfo='';
+        if (this.item.data.data.ap){
+            extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.data.data.ap}) `;
+        }
+        this.rollDamage(this.item.data.data.damage,extrainfo);
     }
 
     

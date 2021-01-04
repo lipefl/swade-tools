@@ -315,14 +315,14 @@ Hooks.on('renderCombatTracker',(obj,html,data)=>{
 
     if (data.hasCombat){
         
-        if (!jokerIsGiving){
-           if (cbt.jokersWild(data.combat)){
+       // if (!jokerIsGiving){
+           if (cbt.jokersWild(data.combat) && !jokerIsGiving){
                jokerIsGiving=true;
            } else {
                jokerIsGiving=false;
            }
 
-        }
+       // }
         
     }
 }

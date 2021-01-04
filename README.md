@@ -17,7 +17,7 @@ This is my first big module, please report if you see any bugs and be nice :)
 6. Shows a button to Reroll with a Benny in every roll. And shows a critical failure message (hiding the benny button in this case)
 7. Weapons and Powers show a dialog box instead of sending to chat directly. They also count shots and power points automatically (can be disabled in module settings)
 8. Weapons and Powers auto-detect when targets are selected, showing hit, raise with a button to roll damage and apply wounds.
-9. Translation support (English and Portuguese BR available)
+9. Translation support (English, Portuguese BR and Spanish available)
 
 ### Bonus: Macro
 A Macro that shows the "Quick Access" of the selected token and rolls the basic skill with a checkbox to show more options (in dialog). Only works with the module.
