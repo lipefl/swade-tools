@@ -5,12 +5,12 @@ import Char from './Char.js';
 export default class StatusIcon {
 
     statuses = [
-        {stat: 'isShaken', icon: 'modules/swade-tools/icons/shaken.png'},
-        {stat: 'isDistracted', icon: 'modules/swade-tools/icons/distracted.png'},
-        {stat: 'isVulnerable', icon: 'modules/swade-tools/icons/vulnerable.png'},
-        {stat: 'isStunned', icon: 'modules/swade-tools/icons/stunned.png'},
-        {stat: 'isEntangled', icon: 'modules/swade-tools/icons/entangled.png'},
-        {stat: 'isBound', icon: 'modules/swade-tools/icons/bound.png'}
+        {stat: 'isShaken', icon: '/modules/swade-tools/icons/shaken.png'},
+        {stat: 'isDistracted', icon: '/systems/swade/assets/icons/status/status_distracted.svg'},
+        {stat: 'isVulnerable', icon: '/systems/swade/assets/icons/status/status_vulnerable.svg'},
+        {stat: 'isStunned', icon: '/systems/swade/assets/icons/status/status_stunned.svg'},
+        {stat: 'isEntangled', icon: '/systems/swade/assets/icons/status/status_entangled.svg'},
+        {stat: 'isBound', icon: '/systems/swade/assets/icons/status/status_bound.svg'}
     ]
     
     wounds = [
