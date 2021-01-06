@@ -104,16 +104,21 @@ align-items: center;
 
 
 
-.swadetools-term-hit, .swadetools-term-choose {  /* ///miss hit raise &&& none shaken wounds  */
+.swadetools-term-hit, .swadetools-rof-hit {  /* ///miss hit raise &&& none shaken wounds  */
 color:green
 }
 
-.swadetools-term-raise {  /* ///miss hit raise &&& none shaken wounds  */
+.swadetools-term-raise,.swadetools-rof-raise {  /* ///miss hit raise &&& none shaken wounds  */
     color:purple
     }
 
-    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled] {  /* ///miss hit raise &&& none shaken wounds  */
+    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled], .swadetools-bar {  /* ///miss hit raise &&& none shaken wounds  */
         color:gray
+        }
+
+        .swadetools-term-rof {
+color:black;
+padding: 0 5px;
         }
 
         .swadetools-term-miss, .swadetools-term-none{
@@ -168,3 +173,7 @@ color:green
             .swadetools-raise-power {
                 margin-top:10px
             }
+
+            .swadetools-term-rof .swadetools-rolldamage {width:auto}
+
+.swadetools-term-rof .swadetools-target-name {display:inline-block}

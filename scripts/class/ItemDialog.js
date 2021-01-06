@@ -20,7 +20,7 @@ export default class ItemDialog {
 
         let patxt='';
         if (weaponinfo.ap>0){
-            patxt=` (PA: ${weaponinfo.ap})`;
+            patxt=` (${gb.trans('Ap','SWADE')}: ${weaponinfo.ap})`;
         }
 
 
@@ -65,7 +65,7 @@ export default class ItemDialog {
 
         <div class="swadetools-formpart swadetools-2grid">
         
-        <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong></label><input type="text" id="mod" value=""></div>`
+        <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div>`
 
        
         
@@ -87,10 +87,12 @@ export default class ItemDialog {
         }
 
 
+        let skillIcon='<i class="fas fa-bullseye"></i> ';
+        let damageIcon='<i class="fas fa-tint"></i> ';
         
 
         buttons.mainSkill={
-            label: skillName+gb.stringMod(weaponactions.skillMod),
+            label: skillIcon+skillName+gb.stringMod(weaponactions.skillMod),
             callback: (html)=>{
                 
                 let itemRoll=new ItemRoll(this.actor,this.item)
@@ -115,7 +117,7 @@ export default class ItemDialog {
         
         if (showDamage){
         buttons.mainDamage={
-            label: gb.trans('Damage'),//weaponinfo.damage+gb.stringMod(weaponactions.dmgMod),
+            label: damageIcon+gb.trans('Damage'),//weaponinfo.damage+gb.stringMod(weaponactions.dmgMod),
             
             callback: (html)=>{
                
@@ -150,9 +152,16 @@ export default class ItemDialog {
         for (const id in weaponactions.additional){
            
             let action=weaponactions.additional[id];
+
+            let actionIcon;
+            if (action.type=='skill'){
+                actionIcon=skillIcon;
+            } else if (action.type=='damage'){
+                actionIcon=damageIcon;
+            }
        
             buttons[id]={
-                label: action.name,
+                label: actionIcon+action.name,
                 callback: (html)=>{
 
 

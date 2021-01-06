@@ -74,7 +74,9 @@ export default class RollControl {
                     this.html.append(this.targetShow).on('click','a.swadetools-rolldamage',(event)=>{
                         let el=event.currentTarget;
                         let targetid=$(el).attr('data-swadetools-targetid');
-                        this.targetFunction(targetid);
+                        let raise=gb.realInt($(el).attr('data-swadetools-raise'));
+                        
+                        this.targetFunction(targetid,raise);
             
                     }).ready(()=>{
                         this.scrollChat();/// force scroll
@@ -127,11 +129,7 @@ export default class RollControl {
         let rof=this.chat.data.flags["swade-tools"].userof;
 
 
-        if (rof>1){
-            addTarget='choose';
-            rollDmg=true;
-        } else
-        {
+       
         let targetNumber=4;
 
        
@@ -139,15 +137,27 @@ export default class RollControl {
             targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
         }
 
-        if (vulIcon){
-            targetNumber-=2;
+
+        let raisecount;
+        if (item.type=='power' && rof<2 && gb.raiseCount(this.roll.total,targetNumber)<0) { /// failed power
+            raisecount=-1 /// force failure
+        } else {
+
+            if (vulIcon){
+                targetNumber-=2;
+            }
+    
+            
+            if (rof<2){
+                raisecount=gb.raiseCount(this.roll.total,targetNumber);
+            }
+            
         }
 
         
-        let raisecount=gb.raiseCount(this.roll.total,targetNumber);
 
      //   console.log(raisecount);
-        if (raisecount>=0){
+        if (rof<2 && raisecount>=0){
             rollDmg=true;
             addTarget='hit';
             if (raisecount>0){
@@ -156,20 +166,52 @@ export default class RollControl {
             }
         } 
 
-        } 
+        
 
 
         if (!this.titleshow){
-            this.targetShow+=`<div class="swadetools-target-title">${gb.trans('TargetsTitleSkill')}</div>`
+            
+            this.targetShow+=`<div class="swadetools-target-title">${gb.trans('TargetsTitleSkill')}. `
+
+            if (rof>1){
+                this.targetShow+=`${gb.trans('TipRofRoll')}. `;
+                if (game.user.isGM){
+                    this.targetShow+=`${gb.trans('TipTargetNumber')}.`;
+                }
+
+            }
+
+            this.targetShow+=`</div>`
             this.titleshow=true;
+        }
+
+       
+        if (rof>1){
+           
+            addTarget='rof';
         }
 
         this.targetShow+=`<div class="swadetools-targetwrap  swadetools-term-${addTarget}">`
 
        
         //data-swade-tools-action="rollTargetDmg:${this.actor._id},${this.itemid},${target.id},${raise}"
+
+        if (rof>1){
+            let showTargetNumber='';
+            let showRaiseTargetNumber='';
+            if (game.user.isGM){
+                showTargetNumber=` (${targetNumber})`
+                showRaiseTargetNumber=` (${targetNumber+4})`
+            }
+            this.targetShow+=`<i class="fas fa-bullseye"></i><div class="swadetools-targetname">${target.name}${vulIcon}: <a class="swadetools-rolldamage swadetools-rof-hit" data-swadetools-raise=0 data-swadetools-targetid="${target.id}">${gb.trans('Targethit')}${showTargetNumber}</a> <span class="swadetools-bar">|</span> <a class="swadetools-rolldamage swadetools-rof-raise" data-swadetools-raise=1 data-swadetools-targetid="${target.id}">${gb.trans('Targetraise')}${showRaiseTargetNumber}</a></div>`
+
+        } else {
         if (rollDmg){
-            this.targetShow+=`<a class="swadetools-rolldamage" data-swadetools-targetid="${target.id}" title="${gb.trans('RollDamage')}"><i class="fas fa-bullseye"></i>`
+            let raiseInt=0;
+            if (raise){
+                raiseInt=1;
+            }
+            this.targetShow+=`<a class="swadetools-rolldamage" data-swadetools-raise=${raiseInt} data-swadetools-targetid="${target.id}" title="${gb.trans('RollDamage')}"><i class="fas fa-bullseye"></i>`
         } else {
             this.targetShow+=`<i class="fas fa-times-circle"></i>`;
         }
@@ -179,11 +221,11 @@ export default class RollControl {
         if (rollDmg){
             this.targetShow+=`</a>`
         }
-        
+    }
         this.targetShow+=`</div>`;
 
 
-        this.targetFunction=(targetid)=>{
+        this.targetFunction=(targetid,raiseDmg)=>{
 
           //  console.log(target);
 
@@ -199,7 +241,7 @@ export default class RollControl {
            
             let charRoll=new ItemRoll(actor,item);
             charRoll.useTarget(targetid);
-            if (raise){
+            if (raiseDmg){
                 charRoll.raiseDmg();
             }
             charRoll.rollBaseDamage();
@@ -256,7 +298,7 @@ export default class RollControl {
                 s='s';
             }
 
-            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)} + Shaken`
+            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)} + ${gb.trans('Targetshaken')}`
 
         } else {
             addTargetTxt=gb.trans('Target'+addTarget);

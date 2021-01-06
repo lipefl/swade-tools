@@ -27,7 +27,7 @@
     "SWADETOOLS.Unskilled": "Unskilled",
     "SWADETOOLS.Damage": "Damage",
     "SWADETOOLS.RaiseDmg": "Raise Damage",
-    "SWADETOOLS.Modifier": "Modifier",
+    "SWADETOOLS.Modifier": "Mod.",
     "SWADETOOLS.NoweaponInActor": "Your controlled Actor does not have an item named",
     "SWADETOOLS.NoskillInActor": "Your controlled Actor does not have a skill named",
     "SWADETOOLS.NopowerInActor": "Your controlled Actor does not have a power named",
@@ -65,6 +65,9 @@
     "SWADETOOLS.PermissionActor": "You don't have permission to use this Actor (or his functionality)",
     "SWADETOOLS.NotShaken": "The Actor is not Shaken anymore",
     "SWADETOOLS.PPHint": "PP to be added to cost. Can be negative.",
+    "SWADETOOLS.ModHint": "Accepts number or dice (e.g.: -2 or 1d6)",
     "SWADETOOLS.ShowDialogCheck": "Show dialog (damage and other actions)",
-    "SWADETOOLS.NoItemEquipped": "No item equipped on selected token"
+    "SWADETOOLS.NoItemEquipped": "No item equipped on selected token",
+    "SWADETOOLS.TipRofRoll": "For RoF, hit/raise are defined manually",
+    "SWADETOOLS.TipTargetNumber": "(N) is the target number (visible to GM only)"
 }

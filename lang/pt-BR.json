@@ -27,7 +27,7 @@
     "SWADETOOLS.Unskilled": "Sem Perícia",
     "SWADETOOLS.Damage": "Dano",
     "SWADETOOLS.RaiseDmg": "Ampliação de Dano",
-    "SWADETOOLS.Modifier": "Modificador",
+    "SWADETOOLS.Modifier": "Mod.",
     "SWADETOOLS.NoweaponInActor": "O Ator controlado não tem um item com nome",
     "SWADETOOLS.NoskillInActor": "O Ator controlado não tem uma perícia item com nome",
     "SWADETOOLS.NopowerInActor": "O Ator controlado não tem uma poder item com nome",
@@ -48,10 +48,10 @@
     "SWADETOOLS.SettingUseShots": "Contar Tiros",
     "SWADETOOLS.SettingUseShotsHint": "Se não quiser descontar tiros automaticamente ao usar armas, desabilite.",
     "SWADETOOLS.SettingUsePP": "Contar Pontos de Poder",
-    "SWADETOOLS.SettingUsePPHint": "Se não quiser descontar Pontos de Poder autoamticamente ao usar poderes, desabilite.",
+    "SWADETOOLS.SettingUsePPHint": "Se não quiser descontar Pontos de Poder automaticamente ao usar poderes, desabilite.",
     "SWADETOOLS.Targethit": "Acerto",
     "SWADETOOLS.Targetchoose": "Alvo",
-    "SWADETOOLS.Targetmiss": "Erro",
+    "SWADETOOLS.Targetmiss": "Falha",
     "SWADETOOLS.Targetraise": "Ampliação",
     "SWADETOOLS.Targetnone": "Nenhum",
     "SWADETOOLS.Targetshaken": "Abalado",
@@ -65,6 +65,9 @@
     "SWADETOOLS.PermissionActor": "Você não tem permissão para usar esse Ator (ou suas funcionalidades)",
     "SWADETOOLS.NotShaken": "O Ator não está mais Abalado",
     "SWADETOOLS.PPHint": "PP adicionado ao custo. Pode ser negativo.",
+    "SWADETOOLS.ModHint": "Aceita número ou dado (ex.: -2 ou 1d6)",
     "SWADETOOLS.ShowDialogCheck": "Mostrar opções (dano e outras ações)",
-    "SWADETOOLS.NoItemEquipped": "Nenhum item equipado no token selecionado"
+    "SWADETOOLS.NoItemEquipped": "Nenhum item equipado no token selecionado",
+    "SWADETOOLS.TipRofRoll": "Para CdT, acerto e ampliação são definidos manualmente",
+    "SWADETOOLS.TipTargetNumber": "(N) é o número alvo (somente visível para o Mestre)"
 }

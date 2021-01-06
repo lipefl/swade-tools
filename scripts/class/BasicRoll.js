@@ -7,6 +7,7 @@ export default class BasicRoll {
         this.raise=null;
         this.targetNumber=4;
         this.roll;
+        this.diceModifier='';
     }
 
     prepareModifier(modifier){
@@ -18,8 +19,22 @@ export default class BasicRoll {
             modifier='';
         }
 
-        return modifier;
+        if (this.diceModifier){
+            this.diceModifier=this.explodeAllDice(this.diceModifier);
+        }
+
+        return this.diceModifier+modifier;
     }
+
+
+    addDiceModifier(dieMod){  
+        
+        dieMod=gb.stringDiceMod(dieMod);
+        this.diceModifier+=dieMod;
+        return dieMod;
+
+    }
+
 
    buildRoll(dieType,wildDie,modifier=0,rof){
 

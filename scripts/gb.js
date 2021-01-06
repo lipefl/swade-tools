@@ -20,6 +20,13 @@ export const mainGM=()=>{
     if(game.user.id==GMPlayer().id) {return true} else {return false} /// get only one main GM
 }
 
+export const stringDiceMod=(mod)=>{
+    if (!mod.startsWith('+') && !mod.startsWith('-')){
+        mod='+'+mod; // add the plus sign
+    }
+
+    return mod;
+}
 
 export const stringMod=(mod)=>{
   //  let modStr=mod;

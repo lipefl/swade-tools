@@ -31,8 +31,10 @@ export default class SheetControl {
             })
         } */
 
-        this.html.find('.skill-list-main ol.skill-list li.item.skill button.skill-name,.skills-list .skill.item a').unbind('click').bind('click',(ev)=>{
-            let skillId=ev.currentTarget.parentElement.dataset.itemId;
+        this.html.find('.skill-list-main ol.skill-list li.item.skill button.skill-name,.skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',(ev)=>{
+            //let skillId=ev.currentTarget.parentElement.dataset.itemId;
+            let skillId=$(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
+          
             let sys=new SystemRoll(this.sheet.actor);
 
            // this.addJokerModifier(this.sheet.actor.id);  

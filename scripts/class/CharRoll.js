@@ -37,6 +37,7 @@ export default class CharRoll extends BasicRoll{
        this.dontDisplay=false;
        this.usetarget='';
        this.extrapp=0;
+       
     }
 
 
@@ -47,16 +48,22 @@ export default class CharRoll extends BasicRoll{
     } */
 
     addModifier(mod,reason){
-        //console.log(mod,reason);
+     //   console.log(mod,reason);
+        if (typeof mod == "string" && mod.includes('d')){
+
+            mod=this.addDiceModifier(mod); // add the plus
+            this.reasons.push(`${reason}: ${mod}`);
+        } else {
         mod=gb.realInt(mod);
         if (mod!=0){
         this.mod+=mod;
         
         this.reasons.push(`${reason}: ${gb.stringMod(mod)}`);
         }
+        }
     }
 
-
+    
     baseModifiers(damage=false){
 
     if (!damage){
