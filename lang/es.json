@@ -66,5 +66,8 @@
     "SWADETOOLS.PermissionActor": "No tienes permisos para usar este Actor (o su funcionalidad)",
     "SWADETOOLS.NotShaken": "El Actor ya no está Aturdido",
     "SWADETOOLS.ShowDialogCheck": "Mostrar diálogo (daño y otras acciones)",
-    "SWADETOOLS.NoItemEquipped": "El objeto no está equipado en el token seleccionado"
+    "SWADETOOLS.NoItemEquipped": "El objeto no está equipado en el token seleccionado",
+    "SWADETOOLS.TipTargetNumber": "(N) es el número objetivo (visible sólo para el DJ)",
+    "SWADETOOLS.ModHint": "Acepta números o dados (p.e.: -2 o 1d6)",
+    "SWADETOOLS.TipRofRoll": "Para la CdF, acierto/aumento se definen manualmente"
 }
