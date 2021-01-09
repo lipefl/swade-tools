@@ -39,12 +39,25 @@ align-items: center;
     vertical-align: middle;
 }
 
-.item-image, .item.weapon .item-img,.item-show, .item.weapon .damage {
+.item-image, .item.weapon .item-img,.item-show, .item.weapon .damage,.powers-list h4.item-name, .item-list .item.weapon h4 {
     cursor: pointer;
 }
 
 .swadetools-relative {
     position: relative;
+}
+
+.swadetools-chatadd-status {
+margin-top:3px
+}
+
+.swadetools-unshake-button {
+    background-image: url(../icons/benny.png);
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    cursor:pointer;
+    padding-left:30px;
+    text-align: left;
 }
 
 button.swadetools-bennyrerroll {

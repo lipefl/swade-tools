@@ -21,6 +21,8 @@ export default class CombatControl {
     }
    
     act(combatant){
+        
+       
 
         if(!combatant.defeated){ // ignore defeated ??? - let foundry control
         if (this.previousTurn){
@@ -34,6 +36,7 @@ export default class CombatControl {
         
         this.startTurn(combatant);
         }
+        
         
     }
 
@@ -106,7 +109,7 @@ export default class CombatControl {
             }
     }
 
-    jokersWild(combat){
+    async jokersWild(combat){
 
         this.setCombat(combat.id);
         let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true && (el.flags?.['swade-tools']?.jokersWild===undefined || el.flags?.['swade-tools']?.jokersWild!=combat.round));
@@ -133,6 +136,9 @@ export default class CombatControl {
 
 
     unshaken(combatant){
+
+     
+
         let actor=combatant.actor;
       //  console.log(actor);
         let charRoll=new CharRoll(actor);
@@ -140,24 +146,32 @@ export default class CombatControl {
         this.addJoker(combatant,charRoll);
           
         charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
-        charRoll.rollAtt('spirit');    
-        charRoll.display();
+        charRoll.rollAtt('spirit')
+        charRoll.addFlag('useactor',actor.id);
+        charRoll.addFlag('rolltype','unshaken');
+           charRoll.display()
 
-        let char=new Char(actor);
+            /* to RollControl
+            
+            let char=new Char(actor);
 
-        if (charRoll.isSuccess()){
-           
-            char.off('isShaken');
-            char.say(gb.trans("RemShaken"))
-        } else {
-            if (char.bennyCount()){
-
-                char.say(`<button class="swadetools-simplebutton" data-swade-tools-action="unshakeBenny:${actor.id}">${gb.trans('UnshakenBennyButton')}</button>`)
-
+            if (charRoll.isSuccess()){
+               
+                char.off('isShaken');
+                char.say(gb.trans("RemShaken"))
             } else {
-                char.say(`${gb.trans('NoBennies')}, ${gb.trans('StillShaken')}`)
+                if (char.bennyCount()){
+    
+                    char.say(`<button class="swadetools-simplebutton" data-swade-tools-action="unshakeBenny:${actor.id}">${gb.trans('UnshakenBennyButton')}</button>`)
+    
+                } else {
+                    char.say(`${gb.trans('NoBennies')}, ${gb.trans('StillShaken')}`)
+                } 
             } 
-        }
+            
+            */
+          
+        
         
     }
 
@@ -167,9 +181,13 @@ export default class CombatControl {
         this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
         charRoll.rollAtt('vigor');
+
+        charRoll.addFlag('useactor',actor.id);
+        charRoll.addFlag('rolltype','unstunned');
+
         charRoll.display();
 
-        let char=new Char(actor);
+       /*  let char=new Char(actor);
         if (charRoll.raiseCount()==0){
             
          //   console.log('unstun');
@@ -203,7 +221,7 @@ export default class CombatControl {
         } else {
             /// failure
             char.say(gb.trans('StillStunned'));
-        }
+        } */
     }
 
     startTurn(combatant){      

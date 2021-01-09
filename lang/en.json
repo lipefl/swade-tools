@@ -69,5 +69,11 @@
     "SWADETOOLS.ShowDialogCheck": "Show dialog (damage and other actions)",
     "SWADETOOLS.NoItemEquipped": "No item equipped on selected token",
     "SWADETOOLS.TipRofRoll": "For RoF, hit/raise are defined manually",
-    "SWADETOOLS.TipTargetNumber": "(N) is the target number (visible to GM only)"
+    "SWADETOOLS.TipTargetNumber": "(N) is the target number (visible to GM only)",
+    "SWADETOOLS.SettingsItemNameClick": "Show info when clicking on weapon/power name",
+    "SWADETOOLS.SettingsItemNameClickHint": "This will keep the default behaviour on click of a power/weapon name (normally show some info), instead of opening a dialog to roll.",
+    "SWADETOOLS.SettingsDefaultStatus": "Use system default status icons when available",
+    "SWADETOOLS.SettingsDefaultStatusHint": "Enable this to use the system default status icons instead of Swade Tools icons.",
+    "SWADETOOLS.SettingsJokersWild": "Disable Joker's Wild",
+    "SWADETOOLS.SettingsJokersWildHint": "This will disable automatic benny distribution when drawing a Joker in combat."
 }

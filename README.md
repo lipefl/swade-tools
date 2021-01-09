@@ -1,13 +1,11 @@
-# SWADE Tools (BETA)
+# SWADE Tools
 A Foundry VTT module for use with Savage Worlds (SWADE system).
 
 A series of automations for swade: Joker's Wild (with bonus); Status Management (with icons); Reroll with a benny; detect targets, hit and damage; etc. 
 
-**ATTENTION: This is a BETA version so bugs may occur.**
-
 This is my first big module, please report if you see any bugs and be nice :)
 
-## Features
+## Features Available
 
 1. Automatically rolls initiative when combat starts 
 2. Distribute bennies automatically when a Joker is drawn (Joker's Wild)
@@ -18,6 +16,9 @@ This is my first big module, please report if you see any bugs and be nice :)
 7. Weapons and Powers show a dialog box instead of sending to chat directly. They also count shots and power points automatically (can be disabled in module settings)
 8. Weapons and Powers auto-detect when targets are selected, showing hit, raise with a button to roll damage and apply wounds.
 9. Translation support (English, Portuguese BR and Spanish available)
+10. DiceSoNice Support (with benny animations)
+
+More features will be added
 
 ### Bonus: Macro
 A Macro that shows the "Quick Access" of the selected token and rolls the basic skill with a checkbox to show more options (in dialog). Only works with the module.
@@ -42,3 +43,7 @@ Most of the module will be enabled by default, so if you want to disable somethi
 ![](https://i.imgur.com/Xxt5cOh.jpg)
 
 ![](https://i.imgur.com/wh2j1Wx.jpg)
+
+## Next Planned Features
+1. Soak Rolls
+2. Watch for Special Abilities, Edges and Core Setting Rules to auto add modifiers or modify how Swade Tools behave

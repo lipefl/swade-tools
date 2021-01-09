@@ -69,5 +69,11 @@
     "SWADETOOLS.ShowDialogCheck": "Mostrar opções (dano e outras ações)",
     "SWADETOOLS.NoItemEquipped": "Nenhum item equipado no token selecionado",
     "SWADETOOLS.TipRofRoll": "Para CdT, acerto e ampliação são definidos manualmente",
-    "SWADETOOLS.TipTargetNumber": "(N) é o número alvo (somente visível para o Mestre)"
+    "SWADETOOLS.TipTargetNumber": "(N) é o número alvo (somente visível para o Mestre)",
+    "SWADETOOLS.SettingsItemNameClick": "Mostrar info ao clicar no nome de uma arma/poder",
+    "SWADETOOLS.SettingsItemNameClickHint": "Isso irá manter o comportamento padrão ao clicar numa arma/poder (normalmente mostrar informação), ao invés de abrir o diálogo de rolagem.",
+    "SWADETOOLS.SettingsDefaultStatus": "Use os ícones de estado padrão do sistema quando disponíveis",
+    "SWADETOOLS.SettingsDefaultStatusHint": "Habilite isso para usar os ícones de estado padrão do sistema ao invés dos ícones do Swade Tools.",
+    "SWADETOOLS.SettingsJokersWild": "Desabilitar O Curinga é Selvagem",
+    "SWADETOOLS.SettingsJokersWildHint": "Isso irá desabilitar a distribuição de benes automática ao sacar um Curinga em combate."
 }

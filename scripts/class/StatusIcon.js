@@ -1,6 +1,5 @@
-//import Helper from './Helper.js';
-
 import Char from './Char.js';
+import * as gb from './../gb.js';
 
 export default class StatusIcon {
 
@@ -39,6 +38,23 @@ export default class StatusIcon {
         if (this.entityType=='token'){
             this.istoken=true;
         }
+
+        this.addOptions();
+        
+    }
+
+    addOptions(){
+
+        if (gb.setting('defaultStatusIcons')){
+        this.statuses=[
+        {stat: 'isShaken', icon: 'modules/swade-tools/icons/shaken.png'},
+        {stat: 'isDistracted', icon: '/systems/swade/assets/icons/status/status_distracted.svg'},
+        {stat: 'isVulnerable', icon: '/systems/swade/assets/icons/status/status_vulnerable.svg'},
+        {stat: 'isStunned', icon: '/systems/swade/assets/icons/status/status_stunned.svg'},
+        {stat: 'isEntangled', icon: '/systems/swade/assets/icons/status/status_entangled.svg'},
+        {stat: 'isBound', icon: '/systems/swade/assets/icons/status/status_bound.svg'}
+        ]
+    }
     }
 
     applyEffect(icon,active,overlay=false){

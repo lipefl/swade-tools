@@ -196,9 +196,18 @@ export const say=(what,who,flavor='')=>{
     return ChatMessage.create(chatData, {});
 }
 
-export const raiseCount=(result,targetNumber)=>{
+export const raiseCount=(result,targetNumber=4)=>{
     return Math.floor((result-targetNumber)/4);
 }
+
+export const bennyAnimation=()=>{
+    if (game.dice3d) {
+        const benny = new Roll('1dB').roll();
+        game.dice3d.showForRoll(benny, game.user, true, null, false);
+    }
+}
+
+
 
 export const btnAction = { /// button functions
     unshakeBenny:(argsArray)=>{

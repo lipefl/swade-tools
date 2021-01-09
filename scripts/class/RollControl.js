@@ -17,6 +17,9 @@ export default class RollControl {
         this.user=game.users.get(userId);
         this.userid=userId;
 
+        this.rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
+
+        console.log(this.chat.data.flags);
       //  console.log(userId);
     }
 
@@ -30,6 +33,126 @@ export default class RollControl {
                 this.scrollChat();
             })
         }
+
+        this.statusRolls();
+    }
+
+    statusRolls(){
+        
+        
+        if (this.rolltype=='unshaken'){
+            this.unshaken();
+        } else if (this.rolltype=='unstunned'){
+            this.unstunned();
+        }
+    }
+
+    unstunned(){
+        let actorid=this.chat.data.flags["swade-tools"].useactor;
+        let actor=game.actors.get(actorid);
+
+
+        
+        let raisecount=gb.raiseCount(this.roll.total);
+
+        let content=`<div class="swadetools-chatadd-status">`;
+
+        let result='failure';
+
+        if (raisecount==0){
+            
+         //   console.log('unstun');
+
+           result='success';
+          
+          
+
+
+           content+=`<div>${actor.name} ${gb.trans("RemStunnedSuc")}</div>`;
+            
+
+                     
+
+        } else if (raisecount>0){
+           
+            result='raise';
+
+            content+=`<div>${actor.name} ${gb.trans("RemStunnedRaise")}</div>`;
+          //  char.say(gb.trans("RemStunnedRaise"))
+        } else {
+            /// failure
+            content+=`<div>${actor.name} ${gb.trans("StillStunned")}</div>`;
+           // char.say(gb.trans('StillStunned'));
+        }
+
+        content+=`</div>`;
+
+        this.html.append(content).ready(()=>{
+            this.scrollChat();
+            let char=new Char(actor);
+            if (result=='success'){
+                char.off('isStunned')
+                setTimeout(()=>{ /// silver tape to avoid bug
+                    actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
+                },500)   
+            } else if (result=='raise'){
+                char.off('isStunned');
+                actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
+            }
+        });
+    }
+
+
+    unshaken(){
+        let actorid=this.chat.data.flags["swade-tools"].useactor;
+        let actor=game.actors.get(actorid);
+
+
+        let char=new Char(actor);
+
+        let raisecount=gb.raiseCount(this.roll.total);
+        let content=`<div class="swadetools-chatadd-status">`;
+        let shakenremove=false;
+
+            if (raisecount>=0){
+               shakenremove=true;
+               
+                content+=`<div>${actor.name} ${gb.trans("RemShaken")}</div>`;
+               
+            } else {
+                if (char.bennyCount()){
+                    
+                    content+=`<div><button class="swadetools-simplebutton swadetools-unshake-button">${gb.trans('UnshakenBennyButton')}</button></div>`
+               //     char.say()
+    
+                } else {
+
+                    content+=`<div>${gb.trans('NoBennies')}, ${gb.trans('StillShaken')}</div>`
+                   // char.say()
+                } 
+            }
+
+            content+=`</div>`;
+
+            this.html.append(content).on('click','button.swadetools-unshake-button',()=>{
+             //   let actor=game.actors.get(argsArray[0]);
+       
+               // let char=new Char(actor);
+        
+                if (char.is('isShaken')){
+                if (char.spendBenny()){
+                    char.off('isShaken');
+                    char.say(gb.trans("RemShaken"));
+                }} else {
+                    ui.notifications.warn(gb.trans('NotShaken'));
+                }
+            }).ready(()=>{
+                this.scrollChat();
+
+                if (shakenremove){
+                    char.off('isShaken');
+                }
+            })
     }
 
     scrollChat(){
@@ -219,7 +342,7 @@ export default class RollControl {
         this.targetShow+=`<div class="swadetools-targetname">${target.name}${vulIcon}: ${gb.trans('Target'+addTarget)}</div>`
         
         if (rollDmg){
-            this.targetShow+=`</a>`
+            this.targetShow+=`</a>` /// TODO add soak <a></a>
         }
     }
         this.targetShow+=`</div>`;
@@ -362,6 +485,8 @@ export default class RollControl {
 
 
     addBennyButton(){
+
+        if (this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
         this.html.append('<div class="swadetools-relative"><button class="swadetools-bennyrerroll" title="'+gb.trans('RerollBtn')+'"></button></div>').on('click','button.swadetools-bennyrerroll',()=>{
             
 
@@ -382,10 +507,9 @@ export default class RollControl {
             }
         });
     }
-
-    rerollItem(){
-
     }
+
+   
 
     findActor(){
 
@@ -398,7 +522,7 @@ export default class RollControl {
 
          
         if (!actor || actor.length>1){
-             ui.notifications.warn('NoActorFoundReroll');
+             ui.notifications.warn(gb.trans('NoActorFoundReroll'));
              return false;
         } else {
             return actor;
@@ -419,24 +543,20 @@ export default class RollControl {
 
 
        roll.toMessage(chatData).then((chat)=>{
-        if (this.chat.data.flags["swade-tools"]?.itemroll){
+        if (this.chat.data.flags["swade-tools"]){
             let flags=this.chat.data.flags["swade-tools"];
 
             chat.update({"flags.swade-tools":flags});
             /// repeat flags for roll
-            /// TODO find a better way to repeat all the swade-tools flags
-          //  chat.update({"flags.swade-tools.itemroll":flags.itemroll,"flags.swade-tools.useactor":flags.useactor,"flags.swade-tools.rolltype":flags.rolltype,"flags.swade-tools.userof":flags.userof,"flags.swade-tools.usetarget":flags.usetarget});
-
-            /* chatlog=new ChatLog();
-            chatlog.updateMessage(chat); */
+           
         }
        });
     }
 
     isCritical(){
-        let rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
+       // let rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
-        if (rolltype!==undefined && rolltype!='damage'){
+        if (this.rolltype!='damage'){
 
         let dices=this.roll.dice;
         let ones=dices.filter(el=>el.total==1);

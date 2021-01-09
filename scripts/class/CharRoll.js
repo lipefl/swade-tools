@@ -37,6 +37,7 @@ export default class CharRoll extends BasicRoll{
        this.dontDisplay=false;
        this.usetarget='';
        this.extrapp=0;
+       this.flagUpdate={};
        
     }
 
@@ -313,110 +314,6 @@ export default class CharRoll extends BasicRoll{
 
 
 
-   /*  attackTarget(target){
-
-        
-        let addTarget='miss';
-        let raise=0;
-        let rollDmg=false;
-
-        let targetNumber=4;
-        if (this.skillName==gb.setting('fightingSkill')){
-            targetNumber=target.actor.data.data.parry.value+target.actor.data.data.parry.modifier
-        }
-
-        let vulBonus=0;
-        let char=new Char(target.actor);
-        if (char.is('isVulnerable')){
-            vulBonus=2;
-        }
-
-        let raisecount=this.raiseCount(targetNumber,vulBonus);
-
-       // console.log(raisecount);
-        if (raisecount>=0){
-            rollDmg=true;
-            addTarget='hit';
-            if (raisecount>0){
-                addTarget='raise';
-                raise=1;
-            }
-        } 
-
-        
-
-        this.targetShow+=`<div class="swadetools-targetwrap  swadetools-term-${addTarget}">`
-        if (rollDmg){
-            this.targetShow+=`<a class="swadetools-rolldamage" title="${gb.trans('RollDamage')}" data-swade-tools-action="rollTargetDmg:${this.actor._id},${this.itemid},${target.id},${raise}"><i class="fas fa-tint"></i>`
-        }
-
-        this.targetShow+=`<div class="swadetools-targetname">${target.name}: ${gb.trans('Target'+addTarget)}</div>`
-        
-        if (rollDmg){
-            this.targetShow+=`</a>`
-        }
-        
-        this.targetShow+=`</div>`;
-        
-    }
-
-    damageTarget(target){
-        let toughness=target.actor.data.data.stats.toughness.value;
-        let armor=target.actor.data.data.stats.toughness.armor /// TODO apply PA
-        let item=this.actor.items.get(this.itemid);
-
-        let applyDmg=false;
-
-      //  console.log(item);
-
-        if (item.data.data.ap){
-            armor-=item.data.data.ap;
-            if (armor<0){
-                armor=0;
-            }
-        }
-        let raisecount=this.raiseCount(toughness+armor);
-     //   console.log(toughness+armor);
-     //   console.log(raisecount);
-        let addTarget='none';
-
-        if (raisecount>=0){
-            applyDmg=true;
-            addTarget='shaken';
-            if (raisecount>0){
-
-                addTarget='wounds';
-            }
-        } 
-
-        let addTargetTxt=addTarget
-        if (addTarget=='wounds'){
-            let s='';
-            if (raisecount>1){
-                s='s';
-            }
-
-            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)} + Shaken`
-
-        } else {
-            addTargetTxt=gb.trans('Target'+addTarget);
-        }
-
-
-        this.targetShow+=`<div class="swadetools-targetwrap swadetools-term-${addTarget}">`
-
-        if (applyDmg){
-            this.targetShow+=`<a class="swadetools-applydamage" title="${gb.trans('ApplyDamage')}" data-swade-tools-action-once=1 data-swade-tools-action="applyTargetDmg:${target.id},${raisecount}"><i class="fas fa-check"></i>`
-        }
-
-        this.targetShow+=`<div class="swadetools-targetname">${target.name}: ${addTargetTxt}</div>`
-        
-        if (applyDmg){
-            this.targetShow+=`</a>`;
-        }
-        
-        this.targetShow+=`</div>`;
-    } */
 
     raiseDmg(){
         this.dmgraise=true;
@@ -448,15 +345,26 @@ export default class CharRoll extends BasicRoll{
         this.flavorAdd.start+=flavorText;
     }
 
-   /*  buildFlavor(){
-        /// game.i18n SWADE ...
-    } */
+  
+    addFlag(key,value){
+        this.flagUpdate[key]=value;
+    }
 
-    display(){
+    autoItemFlags(){
+        if (this.item){
+            this.addFlag('itemroll',this.item._id);
+            this.addFlag('useactor',this.actor.id);
+            this.addFlag('rolltype',this.rolltype);
+            this.addFlag('userof',this.rof);
+            this.addFlag('usetarget',this.usetarget);
+        }
+    }
+
+   display(flags=false){
 
        
         
-
+        
        
 
         if (!this.dontDisplay){
@@ -477,25 +385,28 @@ export default class CharRoll extends BasicRoll{
 
        // let total=this.roll.total;
 
-      
+      this.autoItemFlags();
 
        // this.roll.setFlag('swade-tools',)
 
        this.roll.toMessage(chatData).then((chat)=>{
-           
-        if (this.item){
+       
+        
+        if (this.flagUpdate){ /// auto add item flags
            // console.log(this.item);
           //  console.log(this.rof);
 
-            let updateFlags={
+           /*  let updateFlags={
                 itemroll: this.item._id,
                 useactor: this.actor.id,
                 rolltype: this.rolltype,
                 userof: this.rof,
                 usetarget: this.usetarget
-            }
+            } */
 
-            chat.update({'flags.swade-tools':updateFlags});
+            chat.update({'flags.swade-tools':this.flagUpdate});
+
+            
           //  chat.update({"flags.swade-tools.itemroll":this.item._id,"flags.swade-tools.useactor":this.actor.id,"flags.swade-tools.rolltype":this.rolltype,"flags.swade-tools.userof":this.rof,"flags.swade-tools.usetarget":this.usetarget});
         }
         

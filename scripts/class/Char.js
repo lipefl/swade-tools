@@ -109,6 +109,8 @@ export default class Char {
               //  this.actor.update({"data.bennies.value":actualBennies});
             }
 
+            gb.bennyAnimation();
+
             return true;
         }
 

@@ -87,6 +87,35 @@ Hooks.on('ready',()=>{
 		config: true
     });
 
+    game.settings.register('swade-tools', 'itemNameClick', {
+		name: gb.trans('SettingsItemNameClick'),
+		hint: gb.trans('SettingsItemNameClickHint'),
+		default: false,
+		scope: "world",
+		type: Boolean,
+		config: true
+    });
+
+
+    game.settings.register('swade-tools', 'defaultStatusIcons', {
+		name: gb.trans('SettingsDefaultStatus'),
+		hint: gb.trans('SettingsDefaultStatusHint'),
+		default: false,
+		scope: "world",
+		type: Boolean,
+		config: true
+    });
+
+
+    game.settings.register('swade-tools', 'disableJokersWild', {
+		name: gb.trans('SettingsJokersWild'),
+		hint: gb.trans('SettingsJokersWildHint'),
+		default: false,
+		scope: "world",
+		type: Boolean,
+		config: true
+    });
+    
 
     chatUpdate=true;
 
@@ -278,6 +307,7 @@ let cbt=new CombatControl;
 
 Hooks.on('updateCombat',combat=>{
     if (gb.mainGM()){
+        
     /// check if no card flags (combatant.flags.swade) and run initiative automatically => combat.rollAll();
     //console.log('combat update');
    // console.log(combat);
@@ -302,7 +332,7 @@ Hooks.on('updateCombat',combat=>{
         cbt.act(combat.combatant);
 
     }
-        
+   
 }
 });
 
@@ -311,16 +341,24 @@ Hooks.on('updateCombat',combat=>{
 var jokerIsGiving=false;
 
 Hooks.on('renderCombatTracker',(obj,html,data)=>{
-    if (gb.mainGM()){
+
+    if (!gb.setting('disableJokersWild') && gb.mainGM()){
 
     if (data.hasCombat){
         
        // if (!jokerIsGiving){
-           if (cbt.jokersWild(data.combat) && !jokerIsGiving){
+           if (!jokerIsGiving){
+                jokerIsGiving=true;
+                cbt.jokersWild(data.combat).then(()=>{
+                    jokerIsGiving=false;
+                })
+            }
+          
+           /* if (cbt.jokersWild(data.combat) && !jokerIsGiving){
                jokerIsGiving=true;
            } else {
                jokerIsGiving=false;
-           }
+           } */
 
        // }
         

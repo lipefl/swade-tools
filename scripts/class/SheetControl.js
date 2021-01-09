@@ -84,14 +84,36 @@ export default class SheetControl {
 
 
     bindItem(){
-        this.html.find('.item-show, .item-image, .card-header .item-name,.item.weapon .item-img').unbind('click').bind('click',ev=>{
+
+        /// v0.0.4
+       /*  this.html.find('.item-show, .item-image, .card-header .item-name,.item.weapon .item-img').unbind('click').bind('click',ev=>{
             let itemId=$(ev.currentTarget).parents('.item').data('itemId');
             let item=new ItemDialog(this.sheet.actor,itemId);
             item.showDialog();
-        })
-        /* const li = $(ev.currentTarget).parents('.item');
-            const item = this.actor.getOwnedItem(li.data('itemId'));
-            item.show(); */
+        }) */
+
+        /// v0.0.5
+        
+        // .swade-official
+        let findEl='.quick-main .quick-list:nth-of-type(-n+2) .item-image,.quick-main .quick-list:nth-of-type(-n+2) .item-show,.inventory .item.weapon .item-img, .inventory .item.weapon .item-show, .item.power .item-image,.item.power .item-show'
+
+        
+
+        /// .npc and .community
+        findEl+=',.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image';
+        
+
+        if(!gb.setting('itemNameClick')){
+            findEl+=',.quick-main .quick-list:nth-of-type(-n+2) .item-name,.gear-list.weapon-list .item.weapon .item-name'  /// swade-official, npc
+        }
+       
+           // console.log(findEl);
+            this.html.find(findEl).unbind('click').bind('click',ev=>{
+                let itemId=$(ev.currentTarget).parents('.item').data('itemId');
+                let item=new ItemDialog(this.sheet.actor,itemId);
+                item.showDialog();
+            })
+        
     }
 
 
