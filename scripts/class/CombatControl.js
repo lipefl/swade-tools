@@ -75,11 +75,11 @@ export default class CombatControl {
         }
     }
 
-    addJoker(combatant,rollObj){
+    /* addJoker(combatant,rollObj){
         if (this.hasJoker(combatant)){
             rollObj.addModifier(2,gb.trans("Joker"))
         } 
-    }
+    } */
 
 
     giveJokersBennies(combat,combatant){
@@ -143,12 +143,16 @@ export default class CombatControl {
       //  console.log(actor);
         let charRoll=new CharRoll(actor);
         
-        this.addJoker(combatant,charRoll);
+      //  this.addJoker(combatant,charRoll);
           
         charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
         charRoll.rollAtt('spirit')
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unshaken');
+
+        if (actor.isToken===true){
+            charRoll.addFlag('usetoken',actor.options.token.id);
+        }
            charRoll.display()
 
             /* to RollControl
@@ -178,12 +182,15 @@ export default class CombatControl {
     unstunned(combatant){
         let actor=combatant.actor;
         let charRoll=new CharRoll(actor);        
-        this.addJoker(combatant,charRoll);    
+     //   this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
         charRoll.rollAtt('vigor');
 
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unstunned');
+        if (actor.isToken===true){
+            charRoll.addFlag('usetoken',actor.options.token.id);
+        }
 
         charRoll.display();
 
@@ -289,6 +296,11 @@ export default class CombatControl {
             char.off('isDistracted');
             char.say(gb.trans("RemDistr"))
             this.setFlag(combatant,gb.moduleName,'removeDistracted',0)
+        }
+
+        if (gb.actorIsConvicted(actor.id)){
+            char.say(`${gb.trans('ConvEnd')}<button class="swadetools-simplebutton swadetools-unshake-button" data-swade-tools-action="keepConviction:${actor.id}">${gb.trans('ConvKepp')}</button>`)
+            char.update('details.conviction.active',false);
         }
     }
 }

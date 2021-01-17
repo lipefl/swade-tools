@@ -84,12 +84,14 @@ export default class CharRoll extends BasicRoll{
     }
 
         if (game.combat){ /// search for joker
-            if(gb.actorIsJoker(this.actor.id)){
+            if(gb.actorIsJoker(this.actor)){
                 this.addModifier(2,gb.trans("Joker"));
             }
         }
 
-       
+       if (gb.actorIsConvicted(this.actor)){
+           this.addModifier('1d6',gb.trans('Conv','SWADE'))
+       }
 
        //return this.mod;
     }
@@ -341,8 +343,13 @@ export default class CharRoll extends BasicRoll{
         this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise);
     }
 
-    addFlavor(flavorText){
-        this.flavorAdd.start+=flavorText;
+    addFlavor(flavorText,atend=false){
+        if (atend){
+            this.flavorAdd.end+=flavorText;
+        } else {
+            this.flavorAdd.start+=flavorText;
+        }
+        
     }
 
   
@@ -357,6 +364,10 @@ export default class CharRoll extends BasicRoll{
             this.addFlag('rolltype',this.rolltype);
             this.addFlag('userof',this.rof);
             this.addFlag('usetarget',this.usetarget);
+
+            if (this.actor.isToken===true){
+                this.addFlag('usetoken',this.actor.options.token.id);
+            }
         }
     }
 

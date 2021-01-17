@@ -7,19 +7,19 @@ export default class SystemRoll {
 
 
     rollDamage(itemId){
-        this.addJokerModifier(this.actor.id);  
+        this.addJokerModifier();  
         this.actor.items.get(itemId).rollDamage();
     }
 
     rollSkill(skillId){
        
-            this.addJokerModifier(this.actor.id);  
+            this.addJokerModifier();  
             this.actor.rollSkill(skillId);
         
     }
 
-    addJokerModifier(actorId){
-        if (gb.actorIsJoker(actorId)){
+    addJokerModifier(){ 
+        if (gb.actorIsJoker(this.actor)){
             Hooks.once('renderDialog',(dialog,html,data)=>{
                 html.find('input#bonus').val('+2');
             });
@@ -28,7 +28,7 @@ export default class SystemRoll {
 
     rollAtt(attribute){
     
-            this.addJokerModifier(this.actor.id);           
+            this.addJokerModifier();           
             this.actor.rollAttribute(attribute);
         
     }

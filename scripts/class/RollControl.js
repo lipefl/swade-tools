@@ -1,6 +1,6 @@
 import * as gb from './../gb.js';
 import Char from './Char.js';
-//import CharRoll from './CharRoll.js';
+import CharRoll from './CharRoll.js';
 import ItemRoll from './ItemRoll.js';
 
 export default class RollControl {
@@ -12,6 +12,7 @@ export default class RollControl {
         this.roll=chat._roll;
         this.targetShow='';
         this.targetFunction;
+        this.soakFunction;
         this.titleshow=false;
 
         this.user=game.users.get(userId);
@@ -19,7 +20,10 @@ export default class RollControl {
 
         this.rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
-        console.log(this.chat.data.flags);
+        //this.actor;
+        this.istoken=false;
+
+     //   console.log(this.chat.data.flags);
       //  console.log(userId);
     }
 
@@ -48,8 +52,11 @@ export default class RollControl {
     }
 
     unstunned(){
-        let actorid=this.chat.data.flags["swade-tools"].useactor;
-        let actor=game.actors.get(actorid);
+
+        let actor=this.getActor(true);
+
+        /* let actorid=this.chat.data.flags["swade-tools"].useactor;
+        let actor=game.actors.get(actorid); */
 
 
         
@@ -87,28 +94,35 @@ export default class RollControl {
 
         content+=`</div>`;
 
+        let char=new Char(actor,this.istoken);
+
+        
+
         this.html.append(content).ready(()=>{
             this.scrollChat();
-            let char=new Char(actor);
+            
             if (result=='success'){
                 char.off('isStunned')
                 setTimeout(()=>{ /// silver tape to avoid bug
-                    actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
+                    char.updateData({'status.isDistracted':true,'status.isVulnerable':true})
+                   // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
                 },500)   
             } else if (result=='raise'){
                 char.off('isStunned');
-                actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
+                char.updateData({'status.isDistracted':false,'status.isVulnerable':false})/// just to make sure is disabled
+              //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
             }
         });
     }
 
 
     unshaken(){
-        let actorid=this.chat.data.flags["swade-tools"].useactor;
-        let actor=game.actors.get(actorid);
+      //  let actorid=this.chat.data.flags["swade-tools"].useactor;
+        let actor=this.getActor(true);
+       // console.log(actor);
+       // console.log(this.istoken);
 
-
-        let char=new Char(actor);
+        let char=new Char(actor,this.istoken);
 
         let raisecount=gb.raiseCount(this.roll.total);
         let content=`<div class="swadetools-chatadd-status">`;
@@ -160,9 +174,9 @@ export default class RollControl {
     }
 
     findTargets(){
-        if (this.chat.data.flags["swade-tools"]?.itemroll){ /// show only for items (weapons, powers)
+        if (this.chat.data.flags["swade-tools"]?.itemroll || this.rolltype=='soak'){ /// show only for items (weapons, powers) and soak
 
-            let rolltype=this.chat.data.flags["swade-tools"].rolltype;
+            let rolltype=this.rolltype;
 
             if (this.chat.data.flags["swade-tools"].usetarget){
 
@@ -186,6 +200,10 @@ export default class RollControl {
                         
 
                         
+                    } else if (rolltype=='soak'){
+
+                        let prevWounds=this.chat.data.flags["swade-tools"].wounds;
+                        this.damageTarget(target,this.soak(prevWounds));
                     }
 
                    
@@ -198,20 +216,35 @@ export default class RollControl {
                         let el=event.currentTarget;
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
+
+
+
                         
                         this.targetFunction(targetid,raise);
             
                     }).ready(()=>{
                         this.scrollChat();/// force scroll
                     })
-                } else if (rolltype=='damage'){
-                    this.html.append(this.targetShow).one('click','a.swadetools-applydamage',(event)=>{
-                        this.targetFunction();
+                } else if (rolltype=='damage' || rolltype=='soak'){
+                    this.html.append(this.targetShow).on('click','a.swadetools-applydamage',(event)=>{
+                        
                         let el=event.currentTarget;
                         $(el).attr('disabled','disabled');
+                        this.html.off('click','a.swadetools-applydamage');
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        let raise=gb.realInt($(el).attr('data-swadetools-raise'));
+                        this.targetFunction(targetid,raise);
+                       
 
                        
             
+                    }).on('click','a.swadetools-soakdamage',(event)=>{
+                        let el=event.currentTarget;
+                        $(el).attr('disabled','disabled');
+                        this.html.off('click','a.swadetools-soakdamage');
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        let raise=gb.realInt($(el).attr('data-swadetools-raise'));
+                        this.soakFunction(targetid,raise);
                     }).ready(()=>{
                         this.scrollChat();
                      })
@@ -222,20 +255,79 @@ export default class RollControl {
     }
 
 
+    soak(wounds){
+
+        let raises=gb.raiseCount(this.roll.total);
+                if (raises>=0){
+                    wounds=wounds-(raises+1);
+
+                }
+
+                return wounds;
+
+              //  this.damageTarget(target,wounds);
+    }
+
    /*  addTargetInfo(){
         let rolltype=this.chat.data.flags["swade-tools"].rolltype;
         if (rolltype)
         
     } */
 
+    
+
+    getActor(orToken=false){
+        
+            if (this.chat.data.flags["swade-tools"]?.usetoken){
+                let tokenid=this.chat.data.flags["swade-tools"].usetoken
+
+                this.istoken=true;
+                if (orToken){
+                    
+                    return canvas.tokens.get(tokenid)
+                } else {
+                    return canvas.tokens.get(tokenid).actor
+                }
+
+                
+                
+            } else {
+                let actorid=this.chat.data.flags["swade-tools"].useactor
+                return game.actors.get(actorid);
+            }
+        
+
+       
+    }
+
     attackTarget(target){
-        let actorid=this.chat.data.flags["swade-tools"].useactor;
+        
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
+        let item=this.getActor().items.get(itemid);
+
+        /* if (this.chat.data.flags["swade-tools"]?.usetoken){
+            let tokenid=this.chat.data.flags["swade-tools"].usetoken
+            item=canvas.tokens.get(tokenid).actor.items.filter(el=>el.id==itemid)[0];
+        } else {
+            let actorid=this.chat.data.flags["swade-tools"].useactor
+            item=game.actors.get(actorid).items.get(itemid);
+        } */
+
+     //   let actorid=this.chat.data.flags["swade-tools"].useactor;
+        
         
         let addTarget='miss';
         let raise=0;
         let rollDmg=false;
-        let item=game.actors.get(actorid).items.get(itemid);
+       // let item=game.actors.get(actorid).items.get(itemid);
+
+       //  console.log(game.actors.get(actorid));
+        /*
+        if (!item) { /// check for synthetic actor
+             item=game.actors.get(actorid).actorData.items.filter(el=>el.id==itemid)[0];
+        } */
+
+
         let skill=item.data.data.actions.skill;
 
         
@@ -352,17 +444,19 @@ export default class RollControl {
 
           //  console.log(target);
 
-            let actor=game.actors.get(actorid);
+         //   let actor=game.actors.get(actorid);
           //  let target=target;
            // let item=actor.items.get(argsArray[1]);
 
-           if (actor.permission!=3){
+
+
+           if (this.getActor().permission!=3){
             ui.notifications.error(gb.trans('PermissionActor'))
             return false;
            }
       
            
-            let charRoll=new ItemRoll(actor,item);
+            let charRoll=new ItemRoll(this.getActor(),item);
             charRoll.useTarget(targetid);
             if (raiseDmg){
                 charRoll.raiseDmg();
@@ -379,16 +473,24 @@ export default class RollControl {
         
     }
 
-    damageTarget(target){
+   
 
-        let actorid=this.chat.data.flags["swade-tools"].useactor;
+    damageTarget(target,newWounds=null){
+        let applyDmg=false;
+        let raisecount;
+        let soakClass='';
+
+        if (newWounds===null){
+       // let actorid=this.chat.data.flags["swade-tools"].useactor;
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
 
         let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
-        
-        let item=game.actors.get(actorid).items.get(itemid);
 
-        let applyDmg=false;
+      //  console.log(toughness);
+        
+        let item=this.getActor().items.get(itemid);
+
+       
 
        // console.log(item);
      /// adds AP
@@ -400,7 +502,14 @@ export default class RollControl {
                 apextra=armor;
             }
         }
-        let raisecount=gb.raiseCount(this.roll.total,toughness-apextra);
+         raisecount=gb.raiseCount(this.roll.total,toughness-apextra);
+        } else {
+            raisecount=newWounds; 
+
+            if (raisecount==0){ //0 wounds
+                raisecount=-1  ///not even shaken
+            } 
+        }
      //   console.log(toughness+armor);
      //   console.log(raisecount);
         let addTarget='none';
@@ -427,19 +536,23 @@ export default class RollControl {
             addTargetTxt=gb.trans('Target'+addTarget);
         }
 
+        if (applyDmg && addTarget=='wounds' && newWounds===null){
+            soakClass=' swadetools-damage-with-soak';
+        }
+
 
         if (!this.titleshow){
             this.targetShow+=`<div class="swadetools-target-title">${gb.trans('TargetsTitleDamage')}</div>`
             this.titleshow=true;
         }
 
-        this.targetShow+=`<div class="swadetools-targetwrap swadetools-term-${addTarget}">`
+        this.targetShow+=`<div class="swadetools-targetwrap swadetools-term-${addTarget}${soakClass}">`
 
        
 
         if (applyDmg){
             ///data-swade-tools-action-once=1 data-swade-tools-action="applyTargetDmg:${target.id},${raisecount}"
-            this.targetShow+=`<a class="swadetools-applydamage" title="${gb.trans('ApplyDamage')}" ><i class="fas fa-tint"></i>`
+            this.targetShow+=`<a class="swadetools-applydamage" title="${gb.trans('ApplyDamage')}" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}"><i class="fas fa-tint"></i>`
         } else {
             this.targetShow+=`<i class="fas fa-times-circle"></i>`;
         }
@@ -449,12 +562,36 @@ export default class RollControl {
         this.targetShow+=`<div class="swadetools-targetname">${target.name}: ${addTargetTxt}</div>`
         
         if (applyDmg){
-            this.targetShow+=`</a>`;
+            this.targetShow+=`</a>`
+            if (soakClass){ 
+                this.targetShow+=`<a class="swadetools-soakdamage" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}" title="${gb.trans('SoakDmg')}"><i class="fas fa-tint-slash"></i></a>`;
+            }
         }
         
         this.targetShow+=`</div>`;
 
-        this.targetFunction=()=>{
+
+        this.soakFunction=(targetid)=>{
+            let target=canvas.tokens.get(targetid);
+            let charRoll=new CharRoll(target.actor);
+            let char=new Char(target.actor);
+          //  let wounds=raisecount;
+
+            if (char.spendBenny()){
+                charRoll.rollAtt('vigor');
+                charRoll.addFlavor(gb.trans('DoSoak'))
+                charRoll.addFlag('rolltype','soak');
+                charRoll.addFlag('usetarget',target.id);
+                charRoll.addFlag('wounds',raisecount);
+                charRoll.display();
+                
+            }
+           
+           
+        }
+
+        this.targetFunction=(targetid,raisecount)=>{
+            let target=canvas.tokens.get(targetid);
            // let target=canvas.tokens.get(argsArray[0]).actor
       //  let raisecount=argsArray[1];
 

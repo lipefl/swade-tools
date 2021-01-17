@@ -106,6 +106,7 @@ font-weight:bold;
 margin-left:5px;
 display: flex;
 align-items: center;
+flex-wrap: wrap;
 }
 
 .swadetools-rolldamage, .swadetools-applydamage {
@@ -125,7 +126,7 @@ color:green
     color:purple
     }
 
-    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled], .swadetools-bar {  /* ///miss hit raise &&& none shaken wounds  */
+    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled],.swadetools-soakdamage[disabled], .swadetools-bar {  /* ///miss hit raise &&& none shaken wounds  */
         color:gray
         }
 
@@ -190,3 +191,62 @@ padding: 0 5px;
             .swadetools-term-rof .swadetools-rolldamage {width:auto}
 
 .swadetools-term-rof .swadetools-target-name {display:inline-block}
+
+.swadetools-soakdamage {
+    
+    padding-left:20px;
+    background-size: contain;
+    color:#c59f36;
+    width:35px;
+}
+
+
+.swadetools-damage-with-soak .swadetools-applydamage{
+width: calc(100% - 40px);
+}
+
+
+.swadetools-targetwrap.swadetools-damage-with-soak { 
+    border:none;
+    background:none;
+    border-radius:none;
+    }
+    
+    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {
+    border: 1px solid #737171;
+        border-radius: 3px;
+        background-color: #f3f3e7;
+    }
+    
+    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage {
+    position:relative;
+    margin-left:5px;
+    padding:3px 20px 3px 
+    }
+    
+    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage:before {
+    position:absolute;
+    content:'';
+    display:block;
+    background-image: url(../icons/benny.png);
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    width: 17px;
+    height: 17px;
+    left: 2px;
+    background-size: 100%;
+    }
+
+    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage[disabled]:before{
+        filter:grayscale(1)
+    }
+/*     .swadetools-targetwrap a,
+    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
+    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {
+        transition:0.5s ease;
+    }
+    .swadetools-targetwrap a:hover,
+    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage:hover, 
+    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage:hover {
+        background-color: #f9f9d0;
+    } */

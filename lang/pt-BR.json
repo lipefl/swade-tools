@@ -75,5 +75,12 @@
     "SWADETOOLS.SettingsDefaultStatus": "Use os ícones de estado padrão do sistema quando disponíveis",
     "SWADETOOLS.SettingsDefaultStatusHint": "Habilite isso para usar os ícones de estado padrão do sistema ao invés dos ícones do Swade Tools.",
     "SWADETOOLS.SettingsJokersWild": "Desabilitar O Curinga é Selvagem",
-    "SWADETOOLS.SettingsJokersWildHint": "Isso irá desabilitar a distribuição de benes automática ao sacar um Curinga em combate."
+    "SWADETOOLS.SettingsJokersWildHint": "Isso irá desabilitar a distribuição de benes automática ao sacar um Curinga em combate.",
+    "SWADETOOLS.ConvEnd": "Sua Convicção está acabando. Você pode gastar um Bene para mantê-la até a próxima rodada.",
+    "SWADETOOLS.ConvKepp": "Gastar um Bene para Convicção",
+    "SWADETOOLS.AlreadyConvic": "Esse ator já está com Convicção Ativa",
+    "SWADETOOLS.ConvictionKept": "Convicção foi mantida até a próxima rodada!",
+    "SWADETOOLS.SoakDmg": "Absorver Dano",
+    "SWADETOOLS.DoSoak": "tenta absorver o Dano",
+    "SWADETOOLS.RoFFinalMod": "Modificador Final"
 }

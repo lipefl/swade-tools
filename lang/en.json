@@ -75,5 +75,12 @@
     "SWADETOOLS.SettingsDefaultStatus": "Use system default status icons when available",
     "SWADETOOLS.SettingsDefaultStatusHint": "Enable this to use the system default status icons instead of Swade Tools icons.",
     "SWADETOOLS.SettingsJokersWild": "Disable Joker's Wild",
-    "SWADETOOLS.SettingsJokersWildHint": "This will disable automatic benny distribution when drawing a Joker in combat."
+    "SWADETOOLS.SettingsJokersWildHint": "This will disable automatic benny distribution when drawing a Joker in combat.",
+    "SWADETOOLS.ConvEnd": "Your Convinction is running out. You might spend a Benny to keep it until the next round.",
+    "SWADETOOLS.ConvKepp": "Spend a Benny for Conviction",
+    "SWADETOOLS.AlreadyConvic": "This actor already has Conviction active",
+    "SWADETOOLS.ConvictionKept": "Conviction was extended to the next round!",
+    "SWADETOOLS.SoakDmg": "Soak Damage",
+    "SWADETOOLS.DoSoak": "tries to Soak Damage",
+    "SWADETOOLS.RoFFinalMod": "Final Modifier"
 }

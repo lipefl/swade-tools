@@ -2,12 +2,23 @@
 import * as gb from './../gb.js';
 
 export default class Char {
-    constructor(actor,istoken=false){
-        this.actor=actor;
+    constructor(entity,istoken=false){
+        this.entity=entity;
         this.bennies=null;
         this.gmBenny=false;
         this.istoken=istoken;
       //  this.update={}
+
+     // console.log(entity);
+
+        if (entity.actorData) { /// target token
+            this.entity=canvas.tokens.get(entity._id)
+            this.istoken=true;
+        } 
+
+        if (!istoken && this.entity.actor!==undefined){
+            this.istoken=true;
+        }
     }
 
     is(statusName){
@@ -19,7 +30,22 @@ export default class Char {
     }
 
     data(key){ // after data.data
-        return gb.getActorData(this.actor,'data.'+key,this.istoken)
+      //  console.log(this.getActor());
+       // console.log(key,this.getActor().data[key]);
+        let keys=key.split('.');
+       // let actor=
+     //  console.log(this.entity,this.getActor());
+        let data=this.getActor().data.data;
+       
+        keys.map(k=>{
+        //    console.log(k);
+            data=data[k];
+        //    console.log(data);
+        })
+
+      //  console.log(key,data);
+        return data;
+       // return gb.getActorData(this.entity,'data.'+key,this.istoken)
     }
 
     dataint(key){
@@ -43,16 +69,37 @@ export default class Char {
         gb.updateActor(this.actor,'data.'+key,val,this.istoken);
     } */
 
+    
+
     update(data,val){
-        let entity=this.actor;
+        /* let entity=this.actor;
         data='data.'+data;
         if (this.istoken){
             data="actorData."+data;
-            entity=canvas.tokens.get(this.actor._id)
+            entity=canvas.tokens.get(this.actor.id)
         }
-        entity.update({[data]:val});
+       entity.update({[data]:val}); */
+
+       this.updateData({[data]:val});
     }
 
+
+    updateData(dataobj){
+        let entity=this.entity;
+        let prefix='data.';
+        if (this.istoken){
+            prefix="actorData.data.";
+            entity=canvas.tokens.get(this.entity.id)
+        }
+
+        let dataupdate={}
+        for (const i in dataobj){
+            dataupdate[prefix+i]=dataobj[i]
+        }
+
+       // console.log(dataupdate);
+       entity.update(dataupdate);
+    }
 
   /*  getEntity(){
        let entity=this.actor;
@@ -65,6 +112,7 @@ export default class Char {
 
 
     off(statusName){
+     //   console.log(statusName,this.is(statusName));
         if (this.is(statusName)){
             this.update('status.'+statusName,false);
            // this.actor.update({['data.status.'+statusName]:false})
@@ -73,8 +121,9 @@ export default class Char {
     }
 
     on(statusName){
+      //  console.log(statusName,this.is(statusName));
         if (!this.is(statusName)){
-            this.update('status.'+statusName,true);
+           this.update('status.'+statusName,true);
           //  this.actor.update({['data.status.'+statusName]:true})
         }
        
@@ -93,7 +142,7 @@ export default class Char {
     }
 
     spendBenny(){
-        if (this.actor.permission!=3){
+        if (this.getActor().permission!=3){
             ui.notifications.error(gb.trans('PermissionActor'))
             return false;
         } else 
@@ -123,25 +172,38 @@ export default class Char {
      //   this.actor.update({"data.bennies.value":actualBennies});
     }
 
+
+    getActor(){
+        let actor=this.entity;
+        if (this.istoken){
+            actor=this.entity.actor;
+        }
+
+        return actor;
+    }
     
 
     bennyCount(){
         if (this.bennies==null){       
         let actualBennies=0;
-        if (this.actor.isWildcard){
+
+        let actor=this.getActor();
+
+        if (actor.isWildcard){
             actualBennies=this.dataint('bennies.value');
             
         } 
 
-      //  console.log(this.actor);
+        
 
-        if (actualBennies<=0 && this.actor.data.type=='npc'){
+        if (actualBennies<=0 && actor.data.type=='npc'){
             this.gmBenny=true; /// uses gm benny if it's an enemy and has no bennies.
         }
     
         if (this.gmBenny){
             let gmPlayer=gb.GMPlayer();
             actualBennies=gmPlayer.data.flags.swade.bennies;
+          //  console.log(gmPlayer);
         }
 
         this.bennies=actualBennies;
@@ -165,7 +227,7 @@ export default class Char {
     say(msg,flavor){
        
 
-        return gb.say(msg,this.actor.name,flavor)
+        return gb.say(msg,this.entity.name,flavor)
     }
 
     /* rollAtt(attribute,modifier=0){  ///if targetNumber, use modifier => tn always 4

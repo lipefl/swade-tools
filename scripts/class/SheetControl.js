@@ -110,6 +110,7 @@ export default class SheetControl {
            // console.log(findEl);
             this.html.find(findEl).unbind('click').bind('click',ev=>{
                 let itemId=$(ev.currentTarget).parents('.item').data('itemId');
+               
                 let item=new ItemDialog(this.sheet.actor,itemId);
                 item.showDialog();
             })

@@ -50,6 +50,19 @@ export default class BasicRoll {
         let rofExp='';
         let wildExp='';
         let mod=this.prepareModifier(modifier);
+
+        if (typeof mod == "string" && mod.includes('d')){
+         //   console.log(mod);
+            mod=new Roll(mod).roll().total;
+            if (mod>0){
+                mod='+'+mod;
+            }
+
+            this.addFlavor(`<div>${gb.trans('RoFFinalMod')}: ${mod}</div>`,true);
+          //  console.log(mod);
+        }
+        
+        
         
         for (let i=1;i<rof;i++){
             rofExp+=`,1d${dieType}x${mod}`

@@ -25,7 +25,7 @@ import RollControl from './class/RollControl.js';
   
 */
 
-var chatUpdate=false;
+var foundryIsReady=false;
 
 
 Hooks.on('ready',()=>{
@@ -117,7 +117,7 @@ Hooks.on('ready',()=>{
     });
     
 
-    chatUpdate=true;
+    foundryIsReady=true;
 
    // console.log(gb.getActorData(game.actors.get("WO2pFlDeowqDMNQc"),'data.stats.parry.value')+'actor-data');
     
@@ -178,7 +178,7 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
   //  console.log();
 
-    if (chatUpdate && chatItem.isRoll){
+    if (foundryIsReady && chatItem.isRoll){
 
 
         let roll=new RollControl(chatItem,html,chatItem.data.user);
@@ -342,7 +342,7 @@ var jokerIsGiving=false;
 
 Hooks.on('renderCombatTracker',(obj,html,data)=>{
 
-    if (!gb.setting('disableJokersWild') && gb.mainGM()){
+    if (foundryIsReady && !gb.setting('disableJokersWild') && gb.mainGM()){
 
     if (data.hasCombat){
         

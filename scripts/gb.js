@@ -97,25 +97,26 @@ export const updateParry=(actor,item,istoken=false,isdelete=false)=>{
     
 }
 
-export const getActorData=(actor,data,istoken)=>{
+export const getActorData=(entity,data,istoken)=>{
     let keys=data.split('.');
     let obj
 
    // console.log('reading: '+data);
 
     if (istoken){
-      //  console.log(actor);
+      //  console.log(entity);
         /// search for actorData and return if true, if not, return actor
-       let tokendata=actor.actorData;
+       let tokendata=entity.actorData;
         let dataRet=keys.reduce((a, v) => a?.[v], tokendata);
         if (!dataRet){
-            obj=game.actors.get(actor.actorId).data;
+           // console.log(game.actors.get(entity.actor.id));
+            obj=game.actors.get(entity.actor.id).data;
         } else {
             return dataRet;
         }
         
     } else {
-        obj=actor.data;
+        obj=entity.data;
     }
     
     return keys.reduce((a, v) => a[v], obj)
@@ -170,11 +171,31 @@ export const realInt =(variable)=>{
     return parseInt(variable) || 0;
 }
 
-export const actorIsJoker=(actorId)=>{
+export const actorIsJoker=(actor)=>{
 
-    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade.hasJoker===true && el?.actor._id===actorId).length>0){
+   // actor.token.id==el.tokenId
+
+    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true && el?.actor?._id===actor._id && 
+        (!actor?.isToken || actor.token.id==el.tokenId)  /// check if it's the same token
+        ).length>0){
+
+       
+
         return true;
     } else {
+        return false;
+    }
+}
+
+export const actorIsConvicted=(actor)=>{
+   // let actor=game.actors.get(actorId);
+   
+    if (actor?.data?.data?.details?.conviction.active===true){
+       // console.log('conviction is on');
+        return true;
+       
+    } else {
+      //  console.log('conviction is off');
         return false;
     }
 }
@@ -210,6 +231,22 @@ export const bennyAnimation=()=>{
 
 
 export const btnAction = { /// button functions
+
+    keepConviction:(argsArray)=>{
+        let actor=game.actors.get(argsArray[0]);
+
+        
+        if (!actorIsConvicted(actor.id)){
+            let char=new Char(actor);
+            if (char.spendBenny()){
+                char.update('details.conviction.active',true);
+                char.say(trans("ConvictionKept"));
+            }
+        } else {
+            ui.notifications.warn(trans('AlreadyConvic'));
+        }
+    },
+
     unshakeBenny:(argsArray)=>{
         let actor=game.actors.get(argsArray[0]);
        
