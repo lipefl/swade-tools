@@ -222,7 +222,7 @@ export default class CharRoll extends BasicRoll{
 
     powerCount(){
 
-        if (this.item && this.item.type=='power'){
+        if (gb.setting('countPP') && this.item && this.item.type=='power'){
             let ppspent=1;
 
             if (this.raiseCount()>=0){
