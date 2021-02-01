@@ -5,6 +5,7 @@ import ItemRoll from './class/ItemRoll.js';
 import ItemDialog from './class/ItemDialog.js';
 import SheetControl from './class/SheetControl.js';
 import RollControl from './class/RollControl.js';
+import { registerSettings } from './settings.js';
 
 
 /*
@@ -22,6 +23,11 @@ import RollControl from './class/RollControl.js';
   BLIND: "blindroll",
   SELF: "selfroll"
 };
+
+
+ui.notifications.error =>red
+ui.notifications.info => blue
+ui.notifications.warn =>yellow
   
 */
 
@@ -60,63 +66,8 @@ Hooks.on('ready',()=>{
     
   };
 
-     game.settings.register('swade-tools', 'fightingSkill', {
-		name: gb.trans('SettingFighting'),
-		hint: gb.trans('SettingFightingHint'),
-		default: gb.trans('Fighting'),
-		scope: "world",
-		type: String,
-		config: true
-    }); 
-    
-    game.settings.register('swade-tools', 'countShots', {
-		name: gb.trans('SettingUseShots'),
-		hint: gb.trans('SettingUseShotsHint'),
-		default: true,
-		scope: "world",
-		type: Boolean,
-		config: true
-    }); 
-    
-    game.settings.register('swade-tools', 'countPP', {
-		name: gb.trans('SettingUsePP'),
-		hint: gb.trans('SettingUsePPHint'),
-		default: true,
-		scope: "world",
-		type: Boolean,
-		config: true
-    });
-
-    game.settings.register('swade-tools', 'itemNameClick', {
-		name: gb.trans('SettingsItemNameClick'),
-		hint: gb.trans('SettingsItemNameClickHint'),
-		default: false,
-		scope: "world",
-		type: Boolean,
-		config: true
-    });
-
-
-    game.settings.register('swade-tools', 'defaultStatusIcons', {
-		name: gb.trans('SettingsDefaultStatus'),
-		hint: gb.trans('SettingsDefaultStatusHint'),
-		default: false,
-		scope: "world",
-		type: Boolean,
-		config: true
-    });
-
-
-    game.settings.register('swade-tools', 'disableJokersWild', {
-		name: gb.trans('SettingsJokersWild'),
-		hint: gb.trans('SettingsJokersWildHint'),
-		default: false,
-		scope: "world",
-		type: Boolean,
-		config: true
-    });
-    
-
+     
+  registerSettings();
     foundryIsReady=true;
 
    // console.log(gb.getActorData(game.actors.get("WO2pFlDeowqDMNQc"),'data.stats.parry.value')+'actor-data');

@@ -17,6 +17,7 @@ export default class ItemDialog {
         let weaponactions=item.data.data.actions;
         let showDamage=true;
         let showRaiseDmg=true;
+        let showReload=false;
 
         let patxt='';
         if (weaponinfo.ap>0){
@@ -140,11 +141,16 @@ export default class ItemDialog {
             }
         }
     }
-       /*  buttons.raiseDamage={
-            label: weaponinfo.damage+'+1d6'+gb.stringMod(weaponactions.dmgMod),
-            callback: ()=>{charRoll.damageRoll(weaponinfo.damage,weaponactions.dmgMod,true)}
-        } */
+      
 
+    if (weaponinfo.shots>0 && !weaponinfo.autoReload){
+        buttons.reload={
+            label: gb.trans('Reload','SWADE'),
+            callback: ()=> {
+                gb.rechargeWeapon(this.actor,this.item);
+            }
+        }
+    }
 
         /// TODO other actions
       
@@ -220,11 +226,19 @@ export default class ItemDialog {
             }
         }
 
+      
+
+        /* console.log(buttons);
+        console.log(Object.keys(buttons).length);
+        if (Object.keys(buttons).length>3){
+            classes={classes:['dialog swadetools-vertical']};
+        } */
+
         new Dialog({
             title: item.name,
             content: content,
             buttons: buttons
-        }).render(true);
+        },{classes:['dialog swadetools-vertical']}).render(true);
     }
 
 

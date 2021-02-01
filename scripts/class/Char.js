@@ -29,6 +29,16 @@ export default class Char {
         }
     }
 
+    hasEdgeSetting(edgeName){
+        
+        let edge=this.getActor().items.filter(el=>el.type=='edge' && el.name.trim()==gb.settingKeyName(edgeName).trim());
+        if (edge && edge.length>0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     data(key){ // after data.data
       //  console.log(this.getActor());
        // console.log(key,this.getActor().data[key]);
@@ -155,6 +165,14 @@ export default class Char {
                 gb.GMPlayer().update({"flags.swade.bennies":actualBennies});   
             } else {
                 this.update('bennies.value',actualBennies);
+
+                if (gb.settingKeyName('Hard Choices')){ /// give the GM a BENNY
+                    let gmPlayer=gb.GMPlayer();
+                    let actualGMBennies=gmPlayer.data.flags.swade.bennies;
+                    actualGMBennies++;
+                    gb.GMPlayer().update({"flags.swade.bennies":actualGMBennies});
+                    
+                }
               //  this.actor.update({"data.bennies.value":actualBennies});
             }
 
@@ -190,7 +208,10 @@ export default class Char {
         let actor=this.getActor();
 
         if (actor.isWildcard){
-            actualBennies=this.dataint('bennies.value');
+            if (!gb.settingKeyName('Hard Choices') || actor.isPC===true){
+                actualBennies=this.dataint('bennies.value');
+            }
+            
             
         } 
 

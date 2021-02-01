@@ -38,6 +38,8 @@ export default class CharRoll extends BasicRoll{
        this.usetarget='';
        this.extrapp=0;
        this.flagUpdate={};
+
+       this.edgemod=0;
        
     }
 
@@ -61,6 +63,17 @@ export default class CharRoll extends BasicRoll{
         
         this.reasons.push(`${reason}: ${gb.stringMod(mod)}`);
         }
+        }
+    }
+
+
+    addEdgeModifier(edge,mod){
+        if (mod>this.edgemod){ /// dont stack
+            let char=new Char(this.actor);
+            if (char.hasEdgeSetting(edge)){
+                this.addModifier(mod,gb.settingKeyName(edge))
+                this.edgemod=mod;
+            }
         }
     }
 
@@ -208,7 +221,7 @@ export default class CharRoll extends BasicRoll{
     isItem(item,countshots=true){
         this.item=item;
 
-        if (countshots && item.type=="weapon" && gb.setting('countShots')){
+        if (gb.systemSetting('ammoManagement') && countshots && item.type=="weapon"){
             this.manageshots=countshots;
         }
         

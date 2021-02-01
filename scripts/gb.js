@@ -6,6 +6,17 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes'];
+export const abilitiesNaming=['Construct','Hardy','Undead'];
+export const settingRules=['Dumb Luck','Hard Choices','Unarmored Hero','Wound Cap'];
+
+export const settingKey=(name)=>{
+    return name.replace(' ','')+'Setting';
+}
+
+export const settingKeyName=(name)=>{
+    return setting(settingKey(name))
+}
 
 export const trans=(term,initialFlag=false)=>{ 
     if (!initialFlag){
@@ -204,6 +215,10 @@ export const setting=(settingName)=>{
     return game.settings.get('swade-tools',settingName);
 }
 
+export const systemSetting=(settingName)=>{
+    return game.settings.get('swade',settingName);
+}
+
 export const say=(what,who,flavor='')=>{
     let chatData = {
         user: game.user._id,
@@ -228,7 +243,63 @@ export const bennyAnimation=()=>{
     }
 }
 
+export const rechargeWeapon=(actor,item)=>{
+    let newshots;
+    let shots=realInt(item.data.data.shots);
+    let curShots=realInt(item.data.data.currentShots);
+    let stop=false;
 
+    if (shots==curShots){
+        ui.notifications.info(trans('ReloadUnneeded','SWADE'));
+        stop=true;
+    } else {
+        if ((systemSetting('ammoFromInventory') && actor.isPC) || (!actor.isPC && systemSetting('npcAmmo'))){
+            let gearname=item.data.data.ammo.trim();
+            if (!gearname){
+               ui.notifications.error(trans('NoAmmoSet','SWADE'));
+               stop=true;
+            } else {
+                let gearitem=actor.items.filter(el=>el.type=='gear' && el.name==gearname)[0];
+                let shotsToFull=shots-curShots;
+                
+                console.log(gearname);
+                console.log(gearitem);
+
+                if (!gearitem){
+                    ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));
+                    newshots=0
+
+                } else {
+                    let gearshots=realInt(gearitem.data.data.quantity);
+                    let usedgearshots;
+                    if (gearshots<shotsToFull){
+                        ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));
+                        newshots=curShots+gearshots;
+                        usedgearshots=gearshots;
+                    } else {
+                        usedgearshots=shotsToFull;
+                        newshots=shots;
+                    }
+
+                    let newgearshots=gearshots-usedgearshots;
+                    gearitem.update({"data.quantity":newgearshots})
+                }
+
+            }
+        } else {
+            /// no ammo gear setting
+            newshots=item.data.data.shots;
+        }
+
+        if (!stop && newshots!=curShots){
+            item.update({"data.currentShots":newshots});
+            let char=new Char(actor);
+            char.say(`${item.name} ${trans('Recharged')}`);
+        }
+       
+      
+    }
+}
 
 export const btnAction = { /// button functions
 
@@ -308,8 +379,10 @@ export const btnAction = { /// button functions
        // args actorid,itemid
        let actor=game.actors.get(argsArray[0]);
        let item=actor.items.get(argsArray[1]);
-       item.update({"data.currentShots":item.data.data.shots});
+
+       rechargeWeapon(actor,item);
+       /* item.update({"data.currentShots":item.data.data.shots});
        let char=new Char(actor);
-       char.say(`${item.name} ${trans('Recharged')}`);
+       char.say(`${item.name} ${trans('Recharged')}`); */
     }
 }

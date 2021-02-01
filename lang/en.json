@@ -82,5 +82,28 @@
     "SWADETOOLS.ConvictionKept": "Conviction was extended to the next round!",
     "SWADETOOLS.SoakDmg": "Soak Damage",
     "SWADETOOLS.DoSoak": "tries to Soak Damage",
-    "SWADETOOLS.RoFFinalMod": "Final Modifier"
+    "SWADETOOLS.RoFFinalMod": "Final Modifier",
+    "SWADETOOLS.settingName": "Edges, Abilities and Traits",
+    "SWADETOOLS.settingNameButton": "Change Default Names",
+    "SWADETOOLS.settingNameHint": "Change the default names that affect rolls automatically (abilities are considered as edge items). If you using SWADE core in a SWADE TOOLS supported language, you probably won't need to change anything here.",
+    "SWADETOOLS.ElanSetting": "Elan",
+    "SWADETOOLS.NoMercySetting" : "No Mercy",
+    "SWADETOOLS.IronJawSetting" : "Iron Jaw",
+    "SWADETOOLS.CombatReflexesSetting": "Combat Reflexes",
+    "SWADETOOLS.ConstructSetting": "Construct",
+    "SWADETOOLS.HardySetting": "Hardy",
+    "SWADETOOLS.HardyWarn": " has Hardy, so no effect on another Shaken result",
+    "SWADETOOLS.UndeadSetting": "Undead",
+    "SWADETOOLS.settingRules": "Setting Rules",
+    "SWADETOOLS.settingRulesButton": "Choose Setting Rules",
+    "SWADETOOLS.settingRulesHint": "Mark the Setting Rules you are using to change configuration and automation.",
+    "SWADETOOLS.DumbLuckSetting" : "Dumb Luck",
+    "SWADETOOLS.HardChoicesSetting" : "Hard Choices",
+    "SWADETOOLS.UnarmoredHeroSetting" : "Unarmored Hero",
+    "SWADETOOLS.WoundCapSetting" : "Wound Cap",
+    "SWADETOOLS.HardChoicesWarn" : "When using Hard Choices, NPC WildCard bennies will be ignored. Do you want to also disable Joker's Wild and set starting GM Bennies to zero? This is the default for Hard Choices.",
+    "SWADETOOLS.Yes": "Yes",
+    "SWADETOOLS.No": "No"
+
+    
 }

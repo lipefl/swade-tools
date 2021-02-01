@@ -240,6 +240,21 @@ width: calc(100% - 40px);
     .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage[disabled]:before{
         filter:grayscale(1)
     }
+
+    .swadetools-vertical.dialog .dialog-buttons {
+        display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 5px;
+    }
+    .swadetools-vertical.dialog .dialog-buttons > * {
+        flex:none;
+    }
+
+    .swadetools-vertical.dialog .dialog-buttons button {
+        margin:0
+    }
+
+
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {

@@ -33,6 +33,10 @@ export default class RollControl {
             this.addBennyButton();
             this.findTargets();
         } else {
+
+            if (gb.settingKeyName('Dumb Luck')){
+                this.addBennyButton();
+            }
             this.html.append('<div class="swadetools-criticalfailure">'+gb.trans('CriticalFailure')+'</div>').ready(()=>{
                 this.scrollChat();
             })
@@ -396,6 +400,8 @@ export default class RollControl {
 
             }
 
+           
+
             this.targetShow+=`</div>`
             this.titleshow=true;
         }
@@ -519,6 +525,9 @@ export default class RollControl {
             addTarget='shaken';
             if (raisecount>0){
 
+                if(gb.settingKeyName('Wound Cap') && raisecount>4){
+                    raisecount=4;
+                }
                 addTarget='wounds';
             }
         } 
@@ -578,11 +587,20 @@ export default class RollControl {
           //  let wounds=raisecount;
 
             if (char.spendBenny()){
-                charRoll.rollAtt('vigor');
+                charRoll.addEdgeModifier('Iron Jaw',2)
+               
+                
+
+                if(gb.settingKeyName('Unarmored Hero') && gb.realInt(target.actor.data.data.stats.toughness.armor)==0){
+                    charRoll.addModifier(2,gb.trans(gb.settingKey('Unarmored Hero')));
+                }
+               
+                
                 charRoll.addFlavor(gb.trans('DoSoak'))
                 charRoll.addFlag('rolltype','soak');
                 charRoll.addFlag('usetarget',target.id);
                 charRoll.addFlag('wounds',raisecount);
+                charRoll.rollAtt('vigor');
                 charRoll.display();
                 
             }
@@ -609,7 +627,12 @@ export default class RollControl {
 
             if (raisecount==0){
                 if (char.is('isShaken')){
-                    char.applyWounds(1);
+                    if (!char.hasEdgeSetting('Hardy')){
+                        char.applyWounds(1);
+                    } else {
+                        ui.notifications.info(`${target.actor.name} ${gb.trans('HardyWarn')}`)
+                    }
+                    
                 } else {
                     char.on('isShaken');
                 }
@@ -636,7 +659,10 @@ export default class RollControl {
 
             if (char.spendBenny()){
 
-                this.rerollBasic();
+               
+
+
+                this.rerollBasic(actor);
                
                 
             
@@ -666,8 +692,42 @@ export default class RollControl {
         }
     }
 
-    rerollBasic(){
-        let roll=new Roll(this.chat._roll.formula).roll();
+    rerollBasic(actor){
+
+        let char=new Char(actor);
+        let mod=0;
+        let reason='';
+        let edgebonus=false;
+
+
+      //  console.log(this.chat.data.flags);
+
+        if (this.rolltype=='damage'){
+
+            if (this.chat.data.flags['swade-tools']?.edgebonus!="nomercy" && char.hasEdgeSetting('No Mercy')){
+                mod=2
+                reason=gb.settingKeyName('No Mercy');
+                edgebonus='nomercy'
+            }
+
+        } else {
+            if (this.chat.data.flags['swade-tools']?.edgebonus!="elan" && char.hasEdgeSetting('Elan')){
+                mod=2
+                reason=gb.settingKeyName('Elan');    
+                edgebonus='elan'
+            }
+        }
+
+       
+
+       let modStr='';
+       let extraflavor='';
+       if (mod){
+           modStr=gb.stringMod(mod);
+            extraflavor=`<div>${reason}: ${modStr}</div>`;
+       }
+
+        let roll=new Roll(this.chat._roll.formula+modStr).roll();
 
             
 
@@ -675,7 +735,7 @@ export default class RollControl {
             user: game.user._id,
             speaker: {alias:this.chat.alias},
          //content: 'this is plus',
-        flavor: this.chat.data.flavor
+        flavor: this.chat.data.flavor+extraflavor
         };
 
 
@@ -683,7 +743,14 @@ export default class RollControl {
         if (this.chat.data.flags["swade-tools"]){
             let flags=this.chat.data.flags["swade-tools"];
 
-            chat.update({"flags.swade-tools":flags});
+            /* if (edgebonus){
+                flags.edgebonus=edgebonus;
+            }
+
+            console.log(this.chat.data.flags);
+            console.log(flags); */
+            
+            chat.update({"flags.swade-tools":flags,"flags.swade-tools.edgebonus":edgebonus});
             /// repeat flags for roll
            
         }

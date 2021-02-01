@@ -1,0 +1,13 @@
+<form id="setting-name-config">
+<h2 class="module-header">{{localize "SWADETOOLS.settingNameButton"}}</h2>
+<p>{{localize "SWADETOOLS.settingNameHint"}}</p>
+
+<div class="form-group">
+    <label>{{localize "SWADETOOLS.Fighting"}}</label>
+    <div class="form-fields"><input type="text" name="fightingSkill" id="fightingSkill" value="{{fightingName}}"/></div>
+    <p class="notes">{{localize "SWADETOOLS.SettingFightingHint"}}</p>
+    </div>
+
+  {{{formHtml}}}
+<button type="submit"><i class="far fa-save"></i>{{localize "SETTINGS.Save"}}</button>
+</form>

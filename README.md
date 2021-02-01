@@ -18,12 +18,24 @@ This is my first big module, please report if you see any bugs and be nice :)
 9. Translation support (English, Portuguese BR and Spanish available)
 10. DiceSoNice Support (with benny animations)
 
+Obs: Vehicles are not supported yet, but it'll be implemented.
+
 ## v1.1.0
 
 11. Conviction Support: +1d6 Bonus is automatically added to item/power rolls now. In combat, will auto deactivate Conviction at the end of the turn, offering to spend a Benny to keep it active for another round.
 12. Soak Damage: Shows an icon next to the "apply damage" button to soak damage.
 
+**Fixes**
 + bug fixes related to targeting, button behaviour and synthetic actors status and items not working properly
+
+## v1.2.0
+
+13. Detect Edges/Abilities and apply bonus. Supported: Elan, No Mercy, Iron Jaw, Combat Reflexes, Construct, Hardy, Undead
+14. Allow configuring some Setting Rules to modify how Swade Tools behave. Supported: Dumb Luck, Hard Choices, Unarmored Hero, Wound Cap
+
+**Fixes**
++ read ammo settings from swade system (v 0.16). Added button to reload and Inventory ammo.
++ better item dialog layout when more than 3 buttons
 
 More features will be added...
 
@@ -52,4 +64,6 @@ Most of the module will be enabled by default, so if you want to disable somethi
 ![](https://i.imgur.com/wh2j1Wx.jpg)
 
 ## Next Planned Features
-1. Watch for Special Abilities, Edges and Core Setting Rules to auto add modifiers or modify how Swade Tools behave
++ Adventure Cards integration
++ Review of character points distribution
+

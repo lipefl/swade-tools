@@ -146,6 +146,12 @@ export default class CombatControl {
       //  this.addJoker(combatant,charRoll);
           
         charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
+        
+
+        charRoll.addEdgeModifier('Combat Reflexes',2)
+        charRoll.addEdgeModifier('Undead',2)
+        charRoll.addEdgeModifier('Construct',2)
+        
         charRoll.rollAtt('spirit')
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unshaken');

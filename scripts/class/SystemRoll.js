@@ -7,8 +7,14 @@ export default class SystemRoll {
 
 
     rollDamage(itemId){
-        this.addJokerModifier();  
-        this.actor.items.get(itemId).rollDamage();
+        this.addJokerModifier();          
+        this.actor.items.get(itemId).rollDamage().then(()=>{
+            Hooks.once("renderChatMessage", (chat, html) => { 
+                chat.update({'flags.swade-tools.rolltype':'damage'});
+               
+            })
+        });
+        
     }
 
     rollSkill(skillId){
