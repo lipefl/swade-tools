@@ -42,7 +42,10 @@ export default class RollControl {
             })
         }
 
-        this.statusRolls();
+       
+            this.statusRolls();
+        
+        
     }
 
     statusRolls(){
@@ -743,12 +746,7 @@ export default class RollControl {
         if (this.chat.data.flags["swade-tools"]){
             let flags=this.chat.data.flags["swade-tools"];
 
-            /* if (edgebonus){
-                flags.edgebonus=edgebonus;
-            }
-
-            console.log(this.chat.data.flags);
-            console.log(flags); */
+           
             
             chat.update({"flags.swade-tools":flags,"flags.swade-tools.edgebonus":edgebonus});
             /// repeat flags for roll

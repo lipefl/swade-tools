@@ -228,11 +228,7 @@ export default class ItemDialog {
 
       
 
-        /* console.log(buttons);
-        console.log(Object.keys(buttons).length);
-        if (Object.keys(buttons).length>3){
-            classes={classes:['dialog swadetools-vertical']};
-        } */
+      
 
         new Dialog({
             title: item.name,

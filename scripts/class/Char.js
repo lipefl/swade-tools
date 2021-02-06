@@ -62,6 +62,14 @@ export default class Char {
         return gb.realInt(this.data(key));
     }
 
+    hasPerm(){
+        if (this.getActor().permission==3){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     isDefeated(){
 
         let defeated=false;
@@ -95,6 +103,7 @@ export default class Char {
 
 
     updateData(dataobj){
+        if (this.hasPerm()){
         let entity=this.entity;
         let prefix='data.';
         if (this.istoken){
@@ -109,6 +118,7 @@ export default class Char {
 
        // console.log(dataupdate);
        entity.update(dataupdate);
+        }
     }
 
   /*  getEntity(){

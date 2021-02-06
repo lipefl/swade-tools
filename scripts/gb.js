@@ -262,8 +262,8 @@ export const rechargeWeapon=(actor,item)=>{
                 let gearitem=actor.items.filter(el=>el.type=='gear' && el.name==gearname)[0];
                 let shotsToFull=shots-curShots;
                 
-                console.log(gearname);
-                console.log(gearitem);
+              //  console.log(gearname);
+             //   console.log(gearitem);
 
                 if (!gearitem){
                     ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));

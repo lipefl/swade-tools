@@ -27,7 +27,7 @@ export default class SettingRules extends FormApplication {
               checked=' checked="checked" ';
           }
 
-          console.log(confkey,gb.setting(confkey));
+       //   console.log(confkey,gb.setting(confkey));
 
             data.formHtml+=`<div class="form-group">
             <label>${gb.trans(confkey)}</label>

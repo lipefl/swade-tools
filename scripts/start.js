@@ -131,6 +131,7 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
     if (foundryIsReady && chatItem.isRoll){
 
+     //   console.log(chatItem.data.user);
 
         let roll=new RollControl(chatItem,html,chatItem.data.user);
        
@@ -239,6 +240,7 @@ Hooks.on('ready',()=>{ /// disable autoInit
        // console.log('initializing');
 
     game.settings.set('swade','autoInit',false);
+    
     }
         
         
@@ -252,13 +254,18 @@ Hooks.on('renderSettingsConfig',(obj,html,data)=>{ /// warn that autoInit is dis
     }
 })
 
+
+
 var dontStart=false;
 let cbt=new CombatControl;
 
 
 Hooks.on('updateCombat',combat=>{
+
+ //   console.log('combatout');
     if (gb.mainGM()){
         
+   //     console.log('combat');
     /// check if no card flags (combatant.flags.swade) and run initiative automatically => combat.rollAll();
     //console.log('combat update');
    // console.log(combat);
@@ -297,11 +304,13 @@ Hooks.on('renderCombatTracker',(obj,html,data)=>{
 
     if (data.hasCombat){
         
+      //  console.log('jokeris',jokerIsGiving)
        // if (!jokerIsGiving){
            if (!jokerIsGiving){
                 jokerIsGiving=true;
                 cbt.jokersWild(data.combat).then(()=>{
                     jokerIsGiving=false;
+                //    console.log('jokeris',jokerIsGiving)
                 })
             }
           
