@@ -95,7 +95,7 @@ export default class BasicRoll {
 
     //this.roll.terms[0].dice[0].options.flavor='Skill';
     
-   console.log(this.roll);
+  // console.log(this.roll);
     return this.roll;
 
    }
