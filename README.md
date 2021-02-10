@@ -36,6 +36,8 @@ Obs: Vehicles are not supported yet, but it'll be implemented.
 **Fixes**
 + read ammo settings from swade system (v 0.16). Added button to reload and Inventory ammo.
 + better item dialog layout when more than 3 buttons
++ Multiple AB support
++ dice so nice wild dice config support 
 
 More features will be added...
 

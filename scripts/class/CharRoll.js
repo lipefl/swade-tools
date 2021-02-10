@@ -231,6 +231,22 @@ export default class CharRoll extends BasicRoll{
         
     }
 
+
+    getActualPP(){
+       
+        let actualPP=this.actor.data.data.powerPoints.value;
+       
+        let arcane=this.item.data.data.arcane
+        
+
+        if (arcane){
+            actualPP=this.actor.data.data.powerPoints[arcane].value;
+            
+        }
+
+        return actualPP;
+
+    }
   
 
     powerCount(){
@@ -244,10 +260,21 @@ export default class CharRoll extends BasicRoll{
                 this.flavorAdd.end+=`<div>${gb.trans('FailedPP')}</div>`
             }
 
+            let actualPP=this.getActualPP();
+            let updateKey='data.powerPoints.value';
+            let arcane=this.item.data.data.arcane
+
+            if (arcane){
+               // actualPP=this.actor.data.data.powerPoints[arcane].value;
+                updateKey='data.powerPoints.'+arcane+'.value'
+            }
+
             
 
-            let newpp=gb.realInt(this.actor.data.data.powerPoints.value)-ppspent;
-            this.actor.update({'data.powerPoints.value':newpp})
+            let newpp=gb.realInt(actualPP)-ppspent;
+           
+            this.actor.update({[updateKey]:newpp})
+           
         }
         
     }
@@ -267,7 +294,7 @@ export default class CharRoll extends BasicRoll{
          //   entity=this.item
             update='data.currentShots';
         } else if (this.item.type=='power'){
-            maxshots=gb.realInt(this.actor.data.data.powerPoints.value)
+            maxshots=gb.realInt(this.getActualPP())
             currentShots=maxshots;
             if (!maxshots){
                 this.noPowerPointsMsg();

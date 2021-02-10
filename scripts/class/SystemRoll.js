@@ -20,7 +20,12 @@ export default class SystemRoll {
     rollSkill(skillId){
        
             this.addJokerModifier();  
-            this.actor.rollSkill(skillId);
+            this.actor.rollSkill(skillId).then(()=>{
+                Hooks.once("renderChatMessage", (chat, html) => { 
+                    chat.update({'flags.swade-tools.rolltype':'skill'});
+                   
+                })
+            });
         
     }
 
@@ -35,7 +40,12 @@ export default class SystemRoll {
     rollAtt(attribute){
     
             this.addJokerModifier();           
-            this.actor.rollAttribute(attribute);
+            this.actor.rollAttribute(attribute).then(()=>{
+                Hooks.once("renderChatMessage", (chat, html) => { 
+                    chat.update({'flags.swade-tools.rolltype':'attribute'});
+                   
+                })
+            });
         
     }
 }

@@ -90,9 +90,58 @@ export default class BasicRoll {
 //console.log(rollExp);
 
     this.roll=new Roll(rollExp).roll();
-  // console.log(this.roll);
+
+    this.addDiceFlavor(rof);
+
+    //this.roll.terms[0].dice[0].options.flavor='Skill';
+    
+   console.log(this.roll);
     return this.roll;
 
+   }
+
+
+   addDiceFlavor(rof){
+
+        let wildkey;
+       if (rof>1){
+
+        let i=0;
+        if (this.skillName){
+            while (i<rof){
+            this.roll.terms[0].dice[i].options.flavor=this.skillName;
+            i++;
+            }
+        }
+
+        this.roll.terms[0].dice[i].options.flavor=gb.trans('WildDie','SWADE');
+        wildkey=i;
+
+       } else {
+        if (this.skillName){
+            this.roll.terms[0].dice[0].options.flavor=this.skillName;
+        }
+       
+        this.roll.terms[0].dice[1].options.flavor=gb.trans('WildDie','SWADE');
+        wildkey=1;
+        
+
+       }
+
+
+       this.colorWild(wildkey);
+
+       
+   }
+
+   colorWild(wildKey){
+    if (!!game.dice3d){
+        let colorPreset = game.settings.get('swade', 'dsnWildDie');
+        if (colorPreset !== 'none') {
+            this.roll.terms[0].dice[wildKey].options.colorset = colorPreset;
+        }
+            
+    }
    }
 
    buildDamageRoll(damage,modifier,raise){

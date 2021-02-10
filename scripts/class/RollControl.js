@@ -108,6 +108,7 @@ export default class RollControl {
         this.html.append(content).ready(()=>{
             this.scrollChat();
             
+            if (gb.mainGM()){
             if (result=='success'){
                 char.off('isStunned')
                 setTimeout(()=>{ /// silver tape to avoid bug
@@ -118,6 +119,7 @@ export default class RollControl {
                 char.off('isStunned');
                 char.updateData({'status.isDistracted':false,'status.isVulnerable':false})/// just to make sure is disabled
               //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
+            }
             }
         });
     }
@@ -170,7 +172,8 @@ export default class RollControl {
             }).ready(()=>{
                 this.scrollChat();
 
-                if (shakenremove){
+
+                if (shakenremove && gb.mainGM()){
                     char.off('isShaken');
                 }
             })
@@ -649,7 +652,7 @@ export default class RollControl {
 
     addBennyButton(){
 
-        if (this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
+        if (this.rolltype!==undefined && this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
         this.html.append('<div class="swadetools-relative"><button class="swadetools-bennyrerroll" title="'+gb.trans('RerollBtn')+'"></button></div>').on('click','button.swadetools-bennyrerroll',()=>{
             
 
