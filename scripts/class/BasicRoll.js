@@ -91,7 +91,8 @@ export default class BasicRoll {
 
     this.roll=new Roll(rollExp).roll();
 
-    this.addDiceFlavor(rof);
+
+    this.addDiceFlavor(rof,wildDie);
 
     //this.roll.terms[0].dice[0].options.flavor='Skill';
     
@@ -101,9 +102,10 @@ export default class BasicRoll {
    }
 
 
-   addDiceFlavor(rof){
+   addDiceFlavor(rof,wildDie){
 
         let wildkey;
+        console.log(this.roll);
        if (rof>1){
 
         let i=0;
@@ -114,22 +116,30 @@ export default class BasicRoll {
             }
         }
 
+        if (wildDie){
         this.roll.terms[0].dice[i].options.flavor=gb.trans('WildDie','SWADE');
         wildkey=i;
+        }
 
        } else {
-        if (this.skillName){
+        if (this.skillName && wildDie){
             this.roll.terms[0].dice[0].options.flavor=this.skillName;
+        } else {
+            this.roll.terms[0].options.flavor=this.skillName;
         }
        
+        if (wildDie){
         this.roll.terms[0].dice[1].options.flavor=gb.trans('WildDie','SWADE');
         wildkey=1;
-        
+        }
 
        }
 
 
-       this.colorWild(wildkey);
+       if (wildDie){
+        this.colorWild(wildkey);
+       }
+       
 
        
    }
