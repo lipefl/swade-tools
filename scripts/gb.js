@@ -237,7 +237,7 @@ export const raiseCount=(result,targetNumber=4)=>{
 }
 
 export const bennyAnimation=()=>{
-    if (game.dice3d) {
+    if (!!game.dice3d && game.settings.get('swade', 'dsnShowBennyAnimation')) {
         const benny = new Roll('1dB').roll();
         game.dice3d.showForRoll(benny, game.user, true, null, false);
     }
@@ -253,7 +253,7 @@ export const rechargeWeapon=(actor,item)=>{
         ui.notifications.info(trans('ReloadUnneeded','SWADE'));
         stop=true;
     } else {
-        console.log(actor);
+      //  console.log(actor);
         if ((systemSetting('ammoFromInventory') && actor.data.type=='character') || (actor.data.type=='npc' && systemSetting('npcAmmo'))){
             let gearname=item.data.data.ammo.trim();
             if (!gearname){
@@ -263,8 +263,8 @@ export const rechargeWeapon=(actor,item)=>{
                 let gearitem=actor.items.filter(el=>el.type=='gear' && el.name.trim()==gearname)[0];
                 let shotsToFull=shots-curShots;
                 
-                console.log(gearname);
-                console.log(gearitem);
+              //  console.log(gearname);
+              //  console.log(gearitem);
 
                 if (!gearitem){
                     ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));
