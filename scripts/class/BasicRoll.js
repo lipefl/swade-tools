@@ -136,7 +136,8 @@ export default class BasicRoll {
 
    colorWild(wildKey){
     if (!!game.dice3d){
-        let colorPreset = game.settings.get('swade', 'dsnWildDie');
+      //  let colorPreset='none';
+        const colorPreset = game.user.getFlag('swade', 'dsnWildDie') || 'none';
         if (colorPreset !== 'none') {
             this.roll.terms[0].dice[wildKey].options.colorset = colorPreset;
         }
