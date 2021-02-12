@@ -253,17 +253,18 @@ export const rechargeWeapon=(actor,item)=>{
         ui.notifications.info(trans('ReloadUnneeded','SWADE'));
         stop=true;
     } else {
-        if ((systemSetting('ammoFromInventory') && actor.isPC) || (!actor.isPC && systemSetting('npcAmmo'))){
+        console.log(actor);
+        if ((systemSetting('ammoFromInventory') && actor.data.type=='character') || (actor.data.type=='npc' && systemSetting('npcAmmo'))){
             let gearname=item.data.data.ammo.trim();
             if (!gearname){
                ui.notifications.error(trans('NoAmmoSet','SWADE'));
                stop=true;
             } else {
-                let gearitem=actor.items.filter(el=>el.type=='gear' && el.name==gearname)[0];
+                let gearitem=actor.items.filter(el=>el.type=='gear' && el.name.trim()==gearname)[0];
                 let shotsToFull=shots-curShots;
                 
-              //  console.log(gearname);
-             //   console.log(gearitem);
+                console.log(gearname);
+                console.log(gearitem);
 
                 if (!gearitem){
                     ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));
