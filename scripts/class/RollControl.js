@@ -744,6 +744,7 @@ export default class RollControl {
         flavor: this.chat.data.flavor+extraflavor
         };
 
+        /// also copy roll.options addDiceFlavor TODO
 
        roll.toMessage(chatData).then((chat)=>{
         if (this.chat.data.flags["swade-tools"]){
