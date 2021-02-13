@@ -235,7 +235,7 @@ export const say=(what,who,flavor='')=>{
 export const raiseCount=(result,targetNumber=4)=>{
     return Math.floor((result-targetNumber)/4);
 }
-dsnShowBennyAnimation
+//dsnShowBennyAnimation
 export const bennyAnimation=()=>{
     if (!!game.dice3d && game.user.getFlag('swade', 'dsnShowBennyAnimation')) {
         const benny = new Roll('1dB').roll();
