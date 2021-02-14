@@ -106,7 +106,9 @@ export default class BasicRoll {
 
         let wildkey;
      //   console.log(this.roll);
-     //console.log(this.roll.terms);
+
+    
+
        if (rof>1){
 
         let i=0;

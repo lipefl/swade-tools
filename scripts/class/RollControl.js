@@ -704,6 +704,7 @@ export default class RollControl {
         let mod=0;
         let reason='';
         let edgebonus=false;
+        let oldroll=this.chat._roll
 
 
       //  console.log(this.chat.data.flags);
@@ -733,8 +734,26 @@ export default class RollControl {
             extraflavor=`<div>${reason}: ${modStr}</div>`;
        }
 
-        let roll=new Roll(this.chat._roll.formula+modStr).roll();
+        let roll=new Roll(oldroll.formula+modStr).roll();
 
+        if (oldroll.terms[0]?.dice!==undefined){
+
+            for (let i=0;i<oldroll.terms[0].dice.length;i++){
+                roll.terms[0].dice[i].options=oldroll.terms[0].dice[i].options
+            }
+
+        } else {
+
+            /// 1 die
+            roll.terms[0].options=oldroll.terms[0].options
+        }
+
+         ////
+   //  console.log(this.chat._roll.terms[0].dice); /// if undefined its 1 die, use this.chat._roll.terms[0].options
+     /// else
+ // console.log(this.chat._roll.terms[0].dice); /// defined, use this.chat._roll.terms[0].dice[i].options
+
+        /// also copy roll.options addDiceFlavor TODO
             
 
         let chatData = {
@@ -744,7 +763,7 @@ export default class RollControl {
         flavor: this.chat.data.flavor+extraflavor
         };
 
-        /// also copy roll.options addDiceFlavor TODO
+        
 
        roll.toMessage(chatData).then((chat)=>{
         if (this.chat.data.flags["swade-tools"]){
