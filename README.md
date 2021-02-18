@@ -18,8 +18,6 @@ This is my first big module, please report if you see any bugs and be nice :)
 9. Translation support (English, Portuguese BR and Spanish available)
 10. DiceSoNice Support (with benny animations)
 
-Obs: Vehicles are not supported yet, but it'll be implemented.
-
 ## v1.1.0
 
 11. Conviction Support: +1d6 Bonus is automatically added to item/power rolls now. In combat, will auto deactivate Conviction at the end of the turn, offering to spend a Benny to keep it active for another round.
@@ -38,6 +36,7 @@ Obs: Vehicles are not supported yet, but it'll be implemented.
 + better item dialog layout when more than 3 buttons
 + Multiple AB support
 + dice so nice wild dice config support 
++ Vehicle support
 
 More features will be added...
 

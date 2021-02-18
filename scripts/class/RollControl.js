@@ -781,7 +781,7 @@ export default class RollControl {
     isCritical(){
        // let rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
-        if (this.rolltype!='damage'){
+        if (this.rolltype!='damage' && this.roll){
 
         let dices=this.roll.dice;
         let ones=dices.filter(el=>el.total==1);

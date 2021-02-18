@@ -5,6 +5,12 @@ import ItemRoll from './ItemRoll.js';
 export default class ItemDialog {
     constructor(actor,itemId){
         this.item=actor.items.get(itemId)
+       
+
+        if (actor.data.type=='vehicle'){
+            actor=game.actors.get(actor.data.data.driver.id);
+        }
+
         this.actor=actor;
         this.charRoll=new CharRoll(actor);
     }
@@ -17,7 +23,7 @@ export default class ItemDialog {
         let weaponactions=item.data.data.actions;
         let showDamage=true;
         let showRaiseDmg=true;
-        let showReload=false;
+      //  let showReload=false;
 
         let patxt='';
         if (weaponinfo.ap>0){

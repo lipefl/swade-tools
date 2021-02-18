@@ -9,8 +9,10 @@ export default class SystemRoll {
     rollDamage(itemId){
         this.addJokerModifier();          
         this.actor.items.get(itemId).rollDamage().then(()=>{
-            Hooks.once("renderChatMessage", (chat, html) => { 
+            Hooks.once("renderChatMessage", (chat, html,data) => { 
+                if (data.user.id==game.user.id){
                 chat.update({'flags.swade-tools.rolltype':'damage'});
+                }
                
             })
         });
@@ -21,9 +23,10 @@ export default class SystemRoll {
        
             this.addJokerModifier();  
             this.actor.rollSkill(skillId).then(()=>{
-                Hooks.once("renderChatMessage", (chat, html) => { 
+                Hooks.once("renderChatMessage", (chat, html,data) => { 
+                    if (data.user.id==game.user.id){
                     chat.update({'flags.swade-tools.rolltype':'skill'});
-                   
+                    }
                 })
             });
         
@@ -41,8 +44,10 @@ export default class SystemRoll {
     
             this.addJokerModifier();           
             this.actor.rollAttribute(attribute).then(()=>{
-                Hooks.once("renderChatMessage", (chat, html) => { 
+                Hooks.once("renderChatMessage", (chat, html,data) => { 
+                    if (data.user.id==game.user.id){
                     chat.update({'flags.swade-tools.rolltype':'attribute'});
+                    }
                    
                 })
             });

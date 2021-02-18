@@ -220,11 +220,11 @@ Hooks.on('updateToken', (scene, token, data, options, userId) => {
 Hooks.on('renderActorSheet',(sheet,html)=>{
 
     
-    if (sheet.actor.data.type!='vehicle'){ /// not available for vehicle yet
+   // if (sheet.actor.data.type!='vehicle'){ /// not available for vehicle yet
       //  console.log(sheet);
         let sct=new SheetControl(sheet,html);
         sct.rebindAll();
-    }
+  //  }
     
     
 
