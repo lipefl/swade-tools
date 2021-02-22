@@ -34,9 +34,10 @@ This is my first big module, please report if you see any bugs and be nice :)
 **Fixes**
 + read ammo settings from swade system (v 0.16). Added button to reload and Inventory ammo.
 + better item dialog layout when more than 3 buttons
-+ Multiple AB support
-+ dice so nice wild dice config support 
++ Multiple AB properly support
++ dice so nice/swade wild dice config support 
 + Vehicle support
++ Token Action Hud, Maestro and other modules compatibility
 
 More features will be added...
 

@@ -251,7 +251,7 @@ export default class CharRoll extends BasicRoll{
 
     powerCount(){
 
-        if (gb.setting('countPP') && this.item && this.item.type=='power'){
+        if (gb.setting('countPP') && this.item && this.rolltype=='skill' && this.item.type=='power'){
             let ppspent=1;
 
             if (this.raiseCount()>=0){
@@ -336,9 +336,32 @@ export default class CharRoll extends BasicRoll{
 
 
     noShotsMsg(item){
-        let char=new Char(this.actor);
-        char.say(`${item.name} ${gb.trans('NotEnoughShots')} <button  class="swadetools-simplebutton" data-swade-tools-action="rechargeWeapon:${this.actor._id},${item._id}">${gb.trans('RechargeQuestion')}</button>`);
-        this.dontDisplay=true;
+       // let char=new Char(this.actor);
+
+        new Dialog({
+            title: item.name,
+            content: `<p>${item.name} ${gb.trans('NotEnoughShots')}</p>`,
+            buttons: {
+                cancel: {
+                    label: `<i class="fas fa-times"></i> ${gb.trans('Cancel','SWADE')}`,
+                    callback: ()=>{
+                       
+                    }
+                },
+                ok: {
+                    label: `<i class="fas fa-redo"></i> ${gb.trans('Reload','SWADE')}`,
+                    callback: ()=>{
+                        gb.rechargeWeapon(this.actor,this.item);
+
+                    }
+                }
+
+                
+            }
+        }).render(true);
+
+      //  char.say(`${item.name} ${gb.trans('NotEnoughShots')} <button  class="swadetools-simplebutton" data-swade-tools-action="rechargeWeapon:${this.actor._id},${item._id}">${gb.trans('RechargeQuestion')}</button>`);
+       this.dontDisplay=true;
       //  return false;
     }
 
@@ -426,12 +449,17 @@ export default class CharRoll extends BasicRoll{
 
         this.powerCount(); /// check for power failure/success and spend pp
         
+      //   dataformodules='';
+      //  if (this.rolltype=='skill'){
+            let  dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${this.actor.id}"></div>` //maestro etc
+      //  }
+        
 
         let chatData = {
             user: game.user._id,
-            speaker: {alias:this.actor.name},
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
          //content: 'this is plus',
-        flavor: this.flavorAdd.start+this.flavor+this.flavorAdd.end
+        flavor: this.flavorAdd.start+this.flavor+this.flavorAdd.end+dataformodules
         };
 
        // let total=this.roll.total;

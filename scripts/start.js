@@ -6,6 +6,7 @@ import ItemDialog from './class/ItemDialog.js';
 import SheetControl from './class/SheetControl.js';
 import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
+import TokenHud from './class/TokenHud.js';
 
 
 /*
@@ -230,7 +231,10 @@ Hooks.on('renderActorSheet',(sheet,html)=>{
 
 })
 
-
+Hooks.on('renderTokenActionHUD',()=>{
+    let tah=new TokenHud();
+    tah.rebindAll();
+})
 
 
 

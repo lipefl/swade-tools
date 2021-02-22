@@ -257,8 +257,18 @@ export default class Char {
 
     say(msg,flavor){
        
+        let chatData = {
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker({ actor: this.getActor() }),
+          content: msg,
+        flavor: flavor
+        };
+    
+        /* let chat=new ChatMessage();
+        chat.render(false,) */
+        return ChatMessage.create(chatData, {});
 
-        return gb.say(msg,this.entity.name,flavor)
+       // return gb.say(msg,this.entity.name,flavor)
     }
 
     /* rollAtt(attribute,modifier=0){  ///if targetNumber, use modifier => tn always 4

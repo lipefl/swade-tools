@@ -758,7 +758,7 @@ export default class RollControl {
 
         let chatData = {
             user: game.user._id,
-            speaker: {alias:this.chat.alias},
+            speaker: ChatMessage.getSpeaker({ actor: actor }),
          //content: 'this is plus',
         flavor: this.chat.data.flavor+extraflavor
         };

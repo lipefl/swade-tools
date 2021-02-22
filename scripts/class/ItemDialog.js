@@ -241,6 +241,7 @@ export default class ItemDialog {
             content: content,
             buttons: buttons
         },{classes:['dialog swadetools-vertical']}).render(true);
+        
     }
 
 

@@ -37,7 +37,7 @@ export default class SheetControl {
           
             let sys=new SystemRoll(this.sheet.actor);
 
-           // this.addJokerModifier(this.sheet.actor.id);  
+           
             sys.rollSkill(skillId);
         })
 
