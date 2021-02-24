@@ -15,7 +15,7 @@ This is my first big module, please report if you see any bugs and be nice :)
 6. Shows a button to Reroll with a Benny in every roll. And shows a critical failure message (hiding the benny button in this case)
 7. Weapons and Powers show a dialog box instead of sending to chat directly. They also count shots and power points automatically (can be disabled in module settings)
 8. Weapons and Powers auto-detect when targets are selected, showing hit, raise with a button to roll damage and apply wounds.
-9. Translation support (English, Portuguese BR and Spanish available)
+9. Translation support (English, Portuguese BR, Spanish and Italian available)
 10. DiceSoNice Support (with benny animations)
 
 ## v1.1.0
@@ -38,6 +38,7 @@ This is my first big module, please report if you see any bugs and be nice :)
 + dice so nice/swade wild dice config support 
 + Vehicle support
 + Token Action Hud, Maestro and other modules compatibility
++ Italian translation added
 
 More features will be added...
 
