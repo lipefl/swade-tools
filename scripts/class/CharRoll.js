@@ -449,10 +449,10 @@ export default class CharRoll extends BasicRoll{
 
         this.powerCount(); /// check for power failure/success and spend pp
         
-      //   dataformodules='';
-      //  if (this.rolltype=='skill'){
-            let  dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${this.actor.id}"></div>` //maestro etc
-      //  }
+      let  dataformodules='';
+        if (this.rolltype=='skill'){
+            dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${this.actor.id}"></div>` //maestro etc
+        }
         
 
         let chatData = {

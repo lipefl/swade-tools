@@ -243,7 +243,7 @@ export const bennyAnimation=()=>{
     }
 }
 
-export const rechargeWeapon=(actor,item)=>{
+export const rechargeWeapon=async (actor,item)=>{
     let newshots;
     let shots=realInt(item.data.data.shots);
     let curShots=realInt(item.data.data.currentShots);
@@ -253,7 +253,7 @@ export const rechargeWeapon=(actor,item)=>{
         ui.notifications.info(trans('ReloadUnneeded','SWADE'));
         stop=true;
     } else {
-      //  console.log(actor);
+    
         if ((systemSetting('ammoFromInventory') && actor.data.type=='character') || (actor.data.type=='npc' && systemSetting('npcAmmo'))){
             let gearname=item.data.data.ammo.trim();
             if (!gearname){
@@ -263,8 +263,7 @@ export const rechargeWeapon=(actor,item)=>{
                 let gearitem=actor.items.filter(el=>el.type=='gear' && el.name.trim()==gearname)[0];
                 let shotsToFull=shots-curShots;
                 
-              //  console.log(gearname);
-              //  console.log(gearitem);
+            
 
                 if (!gearitem){
                     ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));
@@ -283,7 +282,9 @@ export const rechargeWeapon=(actor,item)=>{
                     }
 
                     let newgearshots=gearshots-usedgearshots;
-                    gearitem.update({"data.quantity":newgearshots})
+                  
+                 await gearitem.update({"data.quantity":newgearshots})
+                
                 }
 
             }
