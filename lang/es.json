@@ -69,5 +69,18 @@
     "SWADETOOLS.NoItemEquipped": "El objeto no está equipado en el token seleccionado",
     "SWADETOOLS.TipTargetNumber": "(N) es el número objetivo (visible sólo para el DJ)",
     "SWADETOOLS.ModHint": "Acepta números o dados (p.e.: -2 o 1d6)",
-    "SWADETOOLS.TipRofRoll": "Para la CdF, acierto/aumento se definen manualmente"
+    "SWADETOOLS.TipRofRoll": "Para la CdF, acierto/aumento se definen manualmente",
+    "SWADETOOLS.SettingsDefaultStatus": "Usar los iconos de estado del sistema si están disponibles",
+    "SWADETOOLS.SettingsJokersWild": "Desactivar Comodines Salvajes",
+    "SWADETOOLS.ConvEnd": "Se está agotando tu Convicción. Puedes gastar un Beni para mantenerla hasta la siguiente ronda.",
+    "SWADETOOLS.ConvKepp": "Gastar un Beni para Convicción",
+    "SWADETOOLS.AlreadyConvic": "Este actor ya tiene la Convicción activa",
+    "SWADETOOLS.ConvictionKept": "¡La Convicción continúa hasta la siguiente ronda!",
+    "SWADETOOLS.DoSoak": "intenta Absorver Daño",
+    "SWADETOOLS.RoFFinalMod": "Modificador Final",
+    "SWADETOOLS.SettingsItemNameClick": "Mostrar información al hacer click en el nombre del arma o poder",
+    "SWADETOOLS.SettingsItemNameClickHint": "Esto mantiene el comportamiento por defecto al hacer click en el nombre de un arma o poder (normalmente mostrar información), en lugar de abrir el diálogo de la tirada.",
+    "SWADETOOLS.SettingsDefaultStatusHint": "Activa esto para usar los iconos de estado del sistema en lugar de los de Swade Tools.",
+    "SWADETOOLS.SettingsJokersWildHint": "Esto desactiva el reparto automático de benis al sacar un Comodín en combate.",
+    "SWADETOOLS.SoakDmg": "Absorver Daño"
 }
