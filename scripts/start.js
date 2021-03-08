@@ -75,6 +75,8 @@ Hooks.on('ready',()=>{
     
 })
 
+/* removed due to v0.17
+
 Hooks.on('deleteOwnedItem',(actor,item,diff,userId)=>{
     if (game.user.id==userId){
     gb.updateParry(actor,item,false,true);
@@ -99,7 +101,7 @@ Hooks.on('updateToken',(scene, token, data, options, userId)=>{
    if (game.user.id==userId){
     gb.updateParry(token,data,true);
    }
-})
+}) */
 
 
 
@@ -242,21 +244,51 @@ Hooks.on('renderTokenActionHUD',()=>{
 Hooks.on('ready',()=>{ /// disable autoInit
     if (gb.mainGM()){
        // console.log('initializing');
-
-    game.settings.set('swade','autoInit',false);
+    if (!gb.systemSetting('autoInit') && !gb.setting('disableAutoInitStart')){
+        game.settings.set('swade','autoInit',true);
+        ui.notifications.info(gb.trans('AutoInit','SWADE')+' '+gb.trans('ConfigEnabled'));
+    } 
     
-    }
+
+    if (gb.systemSettingExists("jokersWild")){
+
+        if (gb.systemSetting('jokersWild') && !gb.setting('disableJokersWild')){
+        game.settings.set('swade','jokersWild',false); /// disable system joker's wild for now
+        ui.notifications.info(gb.trans('JokersWild','SWADE')+' '+gb.trans('ConfigDisabled'));
+        }
+
+       
+
+    } 
+
+    if (gb.systemSettingExists('parryBaseSkill')){
+        if (gb.systemSetting('parryBaseSkill')!=gb.setting('fightingSkill')){
+            game.settings.set('swade','parryBaseSkill',gb.setting('fightingSkill')) /// auto-translate
+            ui.notifications.info(gb.trans('ParryBase','SWADE')+' '+gb.trans('FightingWarn')+' '+gb.setting('fightingSkill'))
+        }
         
+    }
+
+
+    if (!gb.setting('disableAutoInitStart')){
+        $(document).on('click','a[data-control="startCombat"]',()=>{
+          //  console.log('clicked');
+            if (!game.combat.started && game.combat.combatants.filter(el=>el.flags.swade===undefined || el.flags.swade.cardValue===null).length>0){
+                game.combat.rollAll();    
+            }
+        })
+    }
+}
         
 
 });
 
-Hooks.on('renderSettingsConfig',(obj,html,data)=>{ /// warn that autoInit is disabled
+/* Hooks.on('renderSettingsConfig',(obj,html,data)=>{ /// warn that autoInit is disabled
     if (gb.mainGM()){
       //  console.log('render settings');
     html.find('input[name="swade.autoInit"]').attr('disabled','disabled').closest('.form-group').attr('style','border:1px solid red;padding:0 3px').append(`<p class="notes" style="color:red">${gb.trans('AutoInitWarn')}</p>`);
     }
-})
+}) */
 
 
 
@@ -264,43 +296,97 @@ var dontStart=false;
 let cbt=new CombatControl;
 
 
-Hooks.on('updateCombat',combat=>{
+Hooks.on('renderCombatTracker',async (data)=>{
+    if (gb.mainGM() && foundryIsReady){
+       // console.log(data,args);
+    //   console.log('dontStart',dontStart);
+       let combat=data.combat;
 
- //   console.log('combatout');
-    if (gb.mainGM()){
-        
-   //     console.log('combat');
-    /// check if no card flags (combatant.flags.swade) and run initiative automatically => combat.rollAll();
-    //console.log('combat update');
-   // console.log(combat);
-    cbt.setCombat(combat.id);
-    if (combat.getFlag(gb.moduleName,'initRolled')!=combat.round){
-        dontStart=true;
-        if (combat.combatants.filter(el=>el.flags.swade===undefined || el.flags.swade.cardValue===null).length>0){
-           
-            combat.rollAll().then(()=>{
-                dontStart=false;
-                cbt.act(combat.combatant); /// first in this round
-                
-            });       
-        }
+      // console.log(combat);
+       
+       if (!combat || !combat.started){
+           return false;
+       }
+
+       /*  */
        
 
-        combat.setFlag(gb.moduleName,'initRolled',combat.round);
+       if (combat.getFlag(gb.moduleName,'roundAct')!=combat.round){ ///once per round
+            let combatorder='';
+            combat.setupTurns().map(el=>{
+               combatorder+=el.initiative+'-'+el._id+'-';
+            })
+
+           
+            if (!dontStart && combat.getFlag(gb.moduleName,'roundOrder')!=combatorder){
+                dontStart=true;
+                await combat.setFlag(gb.moduleName,'roundOrder',combatorder);
+                await combat.setFlag(gb.moduleName,'roundAct',combat.round);
+                
+                dontStart=false;
+               // console.log('new combat order',combatorder);
+            //    console.log('new combat round',combat.round,combatorder);
+                
+            } 
+            
+       }
+       
+      // console.log(data.combat.setupTurns());
+       // console.log('renderCombatTracker',data.combat.combatant.name,data.combat.round,data.combat.combatant.flags.swade.cardValue);
+       
+        cbt.setCombat(combat.id);
+
+        let combatantdata=combat.combatant.initiative+'-'+combat.combatant._id+'-'+combat.round;
+
+        if (!dontStart && combat.combatant.flags?.swade?.cardValue && combat.getFlag(gb.moduleName,'lastActed')!=combatantdata){
+            dontStart=true           
+            await cbt.jokersWild(combat);
+            await cbt.act(combat.combatant);
+            await combat.setFlag(gb.moduleName,'lastActed',combatantdata);
+            dontStart=false;
+        }
         
-    } 
-
-    if (!dontStart){
-        cbt.act(combat.combatant);
-
     }
+ 
+})
+
+/* Hooks.on('updateCombat',combat=>{
+
+    //   console.log('combatout');
+       if (gb.mainGM()){
+           
+      //     console.log('combat');
+       /// check if no card flags (combatant.flags.swade) and run initiative automatically => combat.rollAll();
+       //console.log('combat update');
+      // console.log(combat);
+       cbt.setCombat(combat.id);
+       if (combat.getFlag(gb.moduleName,'initRolled')!=combat.round){
+           dontStart=true;
+           if (combat.combatants.filter(el=>el.flags.swade===undefined || el.flags.swade.cardValue===null).length>0){
+              
+               combat.rollAll().then(()=>{
+                   dontStart=false;
+                   cbt.act(combat.combatant); /// first in this round
+                   
+               });       
+           }
+          
    
-}
-});
+           combat.setFlag(gb.moduleName,'initRolled',combat.round);
+           
+       } 
+   
+       if (!dontStart){
+           cbt.act(combat.combatant);
+   
+       }
+      
+   }
+   }); */
 
 
 
-var jokerIsGiving=false;
+/* var jokerIsGiving=false;
 
 Hooks.on('renderCombatTracker',(obj,html,data)=>{
 
@@ -318,17 +404,12 @@ Hooks.on('renderCombatTracker',(obj,html,data)=>{
                 })
             }
           
-           /* if (cbt.jokersWild(data.combat) && !jokerIsGiving){
-               jokerIsGiving=true;
-           } else {
-               jokerIsGiving=false;
-           } */
-
+           
        // }
         
     }
 }
-})
+}) */
 
 
 

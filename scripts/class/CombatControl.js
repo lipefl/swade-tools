@@ -20,7 +20,7 @@ export default class CombatControl {
         this.combatid=id;
     }
    
-    act(combatant){
+    async act(combatant){
         
        
 
@@ -32,7 +32,7 @@ export default class CombatControl {
       
         this.previousTurn=combatant;
 
-       // console.log(combatant);
+       // console.log('ACTING',combatant.name);
         
         this.startTurn(combatant);
         }
@@ -41,7 +41,7 @@ export default class CombatControl {
     }
 
 
-    getFlag(combatant,scope,flag){
+   getFlag(combatant,scope,flag){
         if (combatant.flags?.[scope]?.[flag]!==undefined){
             return combatant.flags[scope][flag]
         } else {
@@ -49,7 +49,7 @@ export default class CombatControl {
         }
     }
 
-    setFlag(combatant,scope,flag,value){
+    async setFlag(combatant,scope,flag,value){
         /* game.combat.updateEmbeddedEntity('Combatant', {
             _id: combatant.id,
           //  initiative: suitValue + cardValue,
@@ -111,7 +111,22 @@ export default class CombatControl {
 
     async jokersWild(combat){
 
-        this.setCombat(combat.id);
+        if (combat.getFlag(gb.moduleName,'jokersWild')!=combat.round){
+        let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true);
+      //  console.log('jokers',jokers);
+        await combat.setFlag(gb.moduleName,'jokersWild',combat.round);
+        
+        if (jokers.length>0){
+            jokers.map(combatant=>{
+                this.giveJokersBennies(combat,combatant);
+                gb.say(gb.trans('JokersWildMsg'),gb.trans('JokersWild')) 
+            })
+
+        }
+
+        }
+
+        /* this.setCombat(combat.id);
         let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true && (el.flags?.['swade-tools']?.jokersWild===undefined || el.flags?.['swade-tools']?.jokersWild!=combat.round));
 
        // console.log(jokers);
@@ -130,7 +145,7 @@ export default class CombatControl {
             return true;
         }
         
-       return false;
+       return false; */
         
     }
 

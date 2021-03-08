@@ -4,11 +4,14 @@ import ItemRoll from './ItemRoll.js';
 
 export default class ItemDialog {
     constructor(actor,itemId){
-        this.item=actor.items.get(itemId)
+        this.item=actor.items.get(itemId);
+     //   this.vehicle=false;
        
 
         if (actor.data.type=='vehicle'){
+            this.vehicle=actor;
             actor=game.actors.get(actor.data.data.driver.id);
+            
         }
 
         this.actor=actor;
@@ -102,7 +105,8 @@ export default class ItemDialog {
             label: skillIcon+skillName+gb.stringMod(weaponactions.skillMod),
             callback: (html)=>{
                 
-                let itemRoll=new ItemRoll(this.actor,this.item)
+                let itemRoll=new ItemRoll(this.actor,this.item);
+                
             //    console.log(this.item);
                 this.processItemFormDialog(html,itemRoll);
                 itemRoll.rollBaseSkill();
@@ -290,7 +294,9 @@ export default class ItemDialog {
 
     processItemFormDialog(html,charRoll){
         
-       
+        if (this.vehicle){
+            charRoll.usingVehicle(this.vehicle);
+        }
         
            charRoll.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
             if (html.find("#raise")[0]?.checked){

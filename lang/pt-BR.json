@@ -70,8 +70,8 @@
     "SWADETOOLS.NoItemEquipped": "Nenhum item equipado no token selecionado",
     "SWADETOOLS.TipRofRoll": "Para CdT, acerto e ampliação são definidos manualmente",
     "SWADETOOLS.TipTargetNumber": "(N) é o número alvo (somente visível para o Mestre)",
-    "SWADETOOLS.SettingsItemNameClick": "Mostrar info ao clicar no nome de uma arma/poder",
-    "SWADETOOLS.SettingsItemNameClickHint": "Isso irá manter o comportamento padrão ao clicar numa arma/poder (normalmente mostrar informação), ao invés de abrir o diálogo de rolagem.",
+    "SWADETOOLS.SettingsItemNameClick": "Mostrar info ao clicar no nome de uma arma/poder/perícia",
+    "SWADETOOLS.SettingsItemNameClickHint": "Isso irá manter o comportamento padrão ao clicar numa arma/poder/perícia (normalmente mostrar informação), ao invés de abrir o diálogo de rolagem.",
     "SWADETOOLS.SettingsDefaultStatus": "Use os ícones de estado padrão do sistema quando disponíveis",
     "SWADETOOLS.SettingsDefaultStatusHint": "Habilite isso para usar os ícones de estado padrão do sistema ao invés dos ícones do Swade Tools.",
     "SWADETOOLS.SettingsJokersWild": "Desabilitar O Curinga é Selvagem",
@@ -103,5 +103,11 @@
     "SWADETOOLS.WoundCapSetting" : "Limite de Ferimentos",
     "SWADETOOLS.HardChoicesWarn" : "Ao usar Escolhas Difíceis, Benes de NPCs Cartas Selvagens serão ignorados. Você também quer desabilitar O Curinga é Selvagem e configurar os Benes iniciais do Mestre como zero? Esse é o padrão de Escolhas Difíceis.",
     "SWADETOOLS.Yes": "Sim",
-    "SWADETOOLS.No": "Não"
+    "SWADETOOLS.No": "Não",
+    "SWADETOOLS.ConfigDisabled": "foi desabilitado em configurações para evitar conflitos com Swade Tools",
+    "SWADETOOLS.ConfigEnabled": "foi habilitado em configurações automaticamente em Swade Tools",
+    "SWADETOOLS.FightingWarn": "foi modificado de acordo com suas configurações do Swade Tools para:",
+    "SWADETOOLS.SettingsAutoInitStart": "Não rolar iniciativa automaticamente quando o combate inicia",
+    "SWADETOOLS.SettingsAutoInitStartHint":"(Requer Reiniciar) Desabilita a rolagem automática de iniciativa quando iniciar um combate.",
+    "SWADETOOLS.AutoDisableWarn":"Se estiver marcado, Swade Tools não irá habilitar a seguinte configuração do sistema SWADE automaticamente ao iniciar: "
 }

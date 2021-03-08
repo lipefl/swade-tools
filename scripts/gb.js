@@ -215,6 +215,14 @@ export const setting=(settingName)=>{
     return game.settings.get('swade-tools',settingName);
 }
 
+export const systemSettingExists=(settingName)=>{
+    if (game.settings.settings.get("swade."+settingName)!==undefined){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export const systemSetting=(settingName)=>{
     return game.settings.get('swade',settingName);
 }

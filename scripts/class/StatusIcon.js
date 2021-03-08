@@ -267,7 +267,7 @@ export default class StatusIcon {
       
     }
 
-    let fatigueval=actor.data.data.fatigue.value;
+    let fatigueval=actor.data.data?.fatigue?.value;
     if (fatigueval){        
         this.applyEffect(this.fatigues.filter(el=>el.value==fatigueval)[0].icon,true);
     }

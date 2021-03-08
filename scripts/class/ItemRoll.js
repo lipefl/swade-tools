@@ -10,8 +10,15 @@ export default class ItemRoll extends CharRoll{
         this.actions=this.data.additional;
         
         //this.combatRoll(this.item._id);
+
         this.addFlavor(item.name);
         this.isItem(item);
+
+        /* if (actor.data.type=='vehicle'){
+            this.usingVehicle(actor);
+            actor=game.actors.get(actor.data.data.driver.id);
+            
+        } */
       //  console.log(this.item);
 
     }

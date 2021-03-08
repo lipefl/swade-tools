@@ -40,9 +40,17 @@ export default class CharRoll extends BasicRoll{
        this.flagUpdate={};
 
        this.edgemod=0;
+       this.vehicle=false;
+
+      
        
     }
 
+    usingVehicle(vehicle){
+        this.vehicle=vehicle;
+        this.addFlavor(' ('+vehicle.name+') ');
+        this.flagUpdate['usevehicle']=vehicle.id;
+    }
 
    /*  combatRoll(itemId){
         this.incombat=true;
@@ -451,7 +459,11 @@ export default class CharRoll extends BasicRoll{
         
       let  dataformodules='';
         if (this.rolltype=='skill'){
-            dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${this.actor.id}"></div>` //maestro etc
+            let actorid=this.actor.id;
+            if (this.vehicle){
+                actorid=this.vehicle.id;
+            }
+            dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${actorid}"></div>` //maestro etc
         }
         
 
@@ -484,6 +496,7 @@ export default class CharRoll extends BasicRoll{
             } */
 
             chat.update({'flags.swade-tools':this.flagUpdate});
+           // console.log(this.flagUpdate);
 
             
           //  chat.update({"flags.swade-tools.itemroll":this.item._id,"flags.swade-tools.useactor":this.actor.id,"flags.swade-tools.rolltype":this.rolltype,"flags.swade-tools.userof":this.rof,"flags.swade-tools.usetarget":this.usetarget});

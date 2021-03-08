@@ -284,6 +284,13 @@ export default class RollControl {
         
     } */
 
+    getItemOwner(){
+        if (this.chat.data.flags["swade-tools"]?.usevehicle){
+            return game.actors.get(this.chat.data.flags["swade-tools"].usevehicle);
+        } else {
+            return this.getActor();
+        }
+    }
     
 
     getActor(orToken=false){
@@ -313,7 +320,7 @@ export default class RollControl {
     attackTarget(target){
         
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
-        let item=this.getActor().items.get(itemid);
+        let item=this.getItemOwner().items.get(itemid);
 
         /* if (this.chat.data.flags["swade-tools"]?.usetoken){
             let tokenid=this.chat.data.flags["swade-tools"].usetoken
@@ -462,13 +469,19 @@ export default class RollControl {
 
 
 
-           if (this.getActor().permission!=3){
+           if (this.getActor().permission!=3 || this.getItemOwner().permission!=3){
             ui.notifications.error(gb.trans('PermissionActor'))
             return false;
            }
       
            
-            let charRoll=new ItemRoll(this.getActor(),item);
+            let charRoll=new ItemRoll(this.getItemOwner(),item);
+
+            if (this.chat.data.flags["swade-tools"]?.usevehicle){
+                charRoll.usingVehicle(this.getItemOwner());
+            }
+
+
             charRoll.useTarget(targetid);
             if (raiseDmg){
                 charRoll.raiseDmg();
@@ -500,7 +513,7 @@ export default class RollControl {
 
       //  console.log(toughness);
         
-        let item=this.getActor().items.get(itemid);
+        let item=this.getItemOwner().items.get(itemid);
 
        
 

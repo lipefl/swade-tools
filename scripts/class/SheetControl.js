@@ -31,7 +31,13 @@ export default class SheetControl {
             })
         } */
 
-        this.html.find('.skill-list-main ol.skill-list li.item.skill button.skill-name,.skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',(ev)=>{
+        let addel=''
+        if(!gb.setting('itemNameClick')){
+            addel='ol.skill-list li.item.skill button.skill-name,';
+        }
+
+        // ol.skill-list ....
+        this.html.find(addel+'ol.skill-list li.item.skill button.skill-die,ol.skill-list li.item.skill img.skill-icon,.skill-list-main ol.skill-list li.item.skill button.skill-name, .skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',(ev)=>{
             //let skillId=ev.currentTarget.parentElement.dataset.itemId;
             let skillId=$(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
           
@@ -93,19 +99,38 @@ export default class SheetControl {
         }) */
 
         /// v0.0.5
+
+        let nthkey='1';
+        if (this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true)){
+       // if (Object.keys(this.sheet.actor.data.data.powerPoints).length !== 0){
+         //  console.log(this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true));
+       //   console.log('has powers');
+            nthkey='-n+2';
+        }
+
+
         
         // .swade-official
-        let findEl='.quick-main .quick-list:nth-of-type(-n+2) .item-image,.quick-main .quick-list:nth-of-type(-n+2) .item-show,.inventory .item.weapon .item-img, .inventory .item.weapon .item-show, .item.power .item-image,.item.power .item-show'
+        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item.weapon .item-img, .inventory .item.weapon .item-show, .item.power .item-image,.item.power .item-show,'
 
         
 
         /// .npc and .community
-        findEl+=',.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image';
+        findEl+='.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image,';
+
+
+        ///v0.17
+        findEl+='.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'
         
 
         if(!gb.setting('itemNameClick')){
-            findEl+=',.quick-main .quick-list:nth-of-type(-n+2) .item-name,.gear-list.weapon-list .item.weapon .item-name'  /// swade-official, npc
+            findEl+=',.quick-main .quick-list:nth-of-type('+nthkey+') .item-name,.gear-list.weapon-list .item.weapon .item-name'  /// swade-official, npc
+            //v0.17
+            findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-name';
         }
+
+    
+       
        
            // console.log(findEl);
             this.html.find(findEl).unbind('click').bind('click',ev=>{

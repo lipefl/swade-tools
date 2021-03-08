@@ -1,4 +1,9 @@
 # SWADE Tools
+
+## ATTENTION
+Swade Tools v1.3+ is compatible with SWADE system v0.17+ only
+
+## About the Module
 A Foundry VTT module for use with Savage Worlds (SWADE system).
 
 A series of automations for swade: Joker's Wild (with bonus); Status Management (with icons); Reroll with a benny; detect targets, hit and damage; etc. 
@@ -39,6 +44,16 @@ This is my first big module, please report if you see any bugs and be nice :)
 + Vehicle support
 + Token Action Hud, Maestro and other modules compatibility
 + Italian translation added
+
+## v1.3.0
+Version compatible with SWADE system v0.17+ only
+
+**Changes**
++ Notifications about changing settings automatically
++ Auto Disabling Jokers Wild setting on swade system for now, can be enabled if you Disable Jokers Wild in Swade Tools (it'll probably be removed from Swade Tools once the swade system is fully working with NPCs)
++ There's now an option to not auto-roll initiative when combat starts. 
++ Now Swade Tools is using auto iniative setting from swade system, but it will enable it automatically. It can be disabled if you choose to not auto-roll initiative when combat starts.
+
 
 More features will be added...
 
