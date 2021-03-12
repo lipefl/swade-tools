@@ -194,7 +194,7 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
 Hooks.on("updateActor", (actor,data,diff,userId) => {       
    
-    if (game.user.id==userId){ /// TODO define this or... only gm?
+    if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
         upActor.checkAllStatus();
     }

@@ -1,5 +1,6 @@
 
 import * as gb from './../gb.js';
+import CharRoll from './CharRoll.js';
 
 export default class Char {
     constructor(entity,istoken=false){
@@ -7,6 +8,7 @@ export default class Char {
         this.bennies=null;
         this.gmBenny=false;
         this.istoken=istoken;
+        this.isvehicle=false;
       //  this.update={}
 
      // console.log(entity);
@@ -18,6 +20,11 @@ export default class Char {
 
         if (!istoken && this.entity.actor!==undefined){
             this.istoken=true;
+        }
+
+       // console.log(this.entity);
+        if (this.getActor().data.type=='vehicle'){
+            this.isvehicle=true;
         }
     }
 
@@ -73,7 +80,7 @@ export default class Char {
     isDefeated(){
 
         let defeated=false;
-        if (this.data('fatigue.value')>this.data('fatigue.max')){
+        if (!this.isvehicle && this.data('fatigue.value')>this.data('fatigue.max')){
             defeated=true;
         } else if (this.data('wounds.value')>this.data('wounds.max')) {
             defeated=true;
@@ -101,6 +108,49 @@ export default class Char {
        this.updateData({[data]:val});
     }
 
+
+    isVehicle(){
+        return this.isvehicle;
+    }
+
+
+
+    outOfControl(){
+        let vehicle=this.getActor();
+        let driver=gb.getDriver(vehicle);
+        
+            //// test for out of control
+            if (driver){
+            let charroll=new CharRoll(driver);
+            charroll.addFlavor(gb.trans('OutOfControlRoll')+' ('+vehicle.name+')');
+            charroll.rollSkill(gb.getDriverSkill(vehicle));
+            charroll.display();
+
+            if (charroll.isSuccess()){
+               // chardrive=new Char(target);
+                this.say(gb.trans('OutOfControlSuccess'));
+            } else {
+                this.say(gb.trans('OutOfControlFail'));
+                
+                if (gb.setting('outofcontrolTable')){
+                    this.rollTable(game.tables.get(gb.setting('outofcontrolTable')));
+                   // game.tables.get(gb.setting('outofcontrolTable')).draw();
+                }
+                
+            }
+        }
+    }
+
+
+    rollTable(table){
+        let sort=table.roll();
+        let chatData={
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker({ actor: this.getActor() })
+        }
+       
+        table.toMessage(sort.results,{roll:sort.roll,messageData:chatData});
+    }
 
     updateData(dataobj){
         if (this.hasPerm()){
@@ -254,6 +304,8 @@ export default class Char {
             return `${gb.trans('Have')} ${this.bennies} ${gb.trans(bennieWord)}`;
         }
     }
+
+
 
     say(msg,flavor){
        

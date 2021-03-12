@@ -162,7 +162,7 @@ export default class SheetControl {
 
     rollSkill(skillId){
         if (this.rollWithouDialog){
-            //TODO
+          
         } else {
             this.addJokerModifier(this.sheet.actor.id);  
             this.sheet.actor.rollSkill(skillId);

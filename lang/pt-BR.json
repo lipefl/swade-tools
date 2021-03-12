@@ -109,5 +109,16 @@
     "SWADETOOLS.FightingWarn": "foi modificado de acordo com suas configurações do Swade Tools para:",
     "SWADETOOLS.SettingsAutoInitStart": "Não rolar iniciativa automaticamente quando o combate inicia",
     "SWADETOOLS.SettingsAutoInitStartHint":"(Requer Reiniciar) Desabilita a rolagem automática de iniciativa quando iniciar um combate.",
-    "SWADETOOLS.AutoDisableWarn":"Se estiver marcado, Swade Tools não irá habilitar a seguinte configuração do sistema SWADE automaticamente ao iniciar: "
+    "SWADETOOLS.AutoDisableWarn":"Se estiver marcado, Swade Tools não irá habilitar a seguinte configuração do sistema SWADE automaticamente ao iniciar: ",
+    "SWADETOOLS.Targetshakenvehicle": "Fora de Controle",
+    "SWADETOOLS.OutOfControlRoll": "tenta evitar Fora de Controle",
+    "SWADETOOLS.OutOfControlSuccess": "evita Fora de Controle",
+    "SWADETOOLS.OutOfControlFail": "sofre Fora de Controle",
+    "SWADETOOLS.OutOfControlTable": "Tabela Fora de Controle",
+    "SWADETOOLS.OutOfControlTableHint": "Escolha uma tabela para rolar automaticamente quando um veículo sofrer Fora de Controle",
+    "SWADETOOLS.GrittyDamage": "Dano Severo",
+    "SWADETOOLS.GrittyDamageHint": "Escolha uma tabela para rolar Dano Severo",
+    "SWADETOOLS.Disabled":"Desabilitado",
+    "SWADETOOLS.NoOperator":"Não há um Motorista no Veículo",
+    "SWADETOOLS.NoOperatorSkill":"Não há uma perícia de manobra cadastrada no veículo"
 }

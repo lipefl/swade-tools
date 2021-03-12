@@ -35,16 +35,38 @@ export default class SettingRules extends FormApplication {
             </div>`;
         })
 
+        /// gritty damage
+        data.formHtml+=`<div class="form-group">
+            <label>${gb.trans('GrittyDamage')}</label>
+            <div class="form-fields"><select name="grittyDamage" id="grittyDamage">
+            <option value="">${gb.trans('Disabled')}</option>`
+
+            game.tables.map(table=>{
+                let selected='';
+                if(gb.setting('grittyDamage')==table.id){
+                    selected=` selected="selected" `
+                }
+                data.formHtml+=`<option value="${table.id}" ${selected}>${table.name}</option>`
+              })
+
+         data.formHtml+=`</select></div>
+            <p class="notes">${gb.trans('GrittyDamageHint')}</p>
+            </div>`;
 
 
         return data
     }
 
       async _updateObject(event, formData) {
+        console.log(formData);
         for (let name in formData){
             let value=false;
             if (formData[name]){
                 value=true;
+            }
+
+            if (value && name=='grittyDamage'){
+                value=formData[name];
             }
             game.settings.set(gb.moduleName,name,value);
 

@@ -47,12 +47,14 @@ This is my first big module, please report if you see any bugs and be nice :)
 
 ## v1.3.0
 Version compatible with SWADE system v0.17+ only
+15. Added Out of Control and Gritty Damage auto roll tables (v1.3.1)
 
 **Changes**
 + Notifications about changing settings automatically
 + Auto Disabling Jokers Wild setting on swade system for now, can be enabled if you Disable Jokers Wild in Swade Tools (it'll probably be removed from Swade Tools once the swade system is fully working with NPCs)
 + There's now an option to not auto-roll initiative when combat starts. 
 + Now Swade Tools is using auto iniative setting from swade system, but it will enable it automatically. It can be disabled if you choose to not auto-roll initiative when combat starts.
++ Better vehicle damage
 
 
 More features will be added...

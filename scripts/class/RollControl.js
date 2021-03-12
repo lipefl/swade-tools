@@ -453,7 +453,7 @@ export default class RollControl {
         this.targetShow+=`<div class="swadetools-targetname">${target.name}${vulIcon}: ${gb.trans('Target'+addTarget)}</div>`
         
         if (rollDmg){
-            this.targetShow+=`</a>` /// TODO add soak <a></a>
+            this.targetShow+=`</a>` 
         }
     }
         this.targetShow+=`</div>`;
@@ -504,12 +504,26 @@ export default class RollControl {
         let applyDmg=false;
         let raisecount;
         let soakClass='';
+        let isvehicle=false;
 
         if (newWounds===null){
        // let actorid=this.chat.data.flags["swade-tools"].useactor;
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
 
-        let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
+      //  console.log(target);
+
+        let toughness;
+        let armor;
+        if (target.actor.data.type=='vehicle'){
+            toughness=gb.realInt(target.actor.data.data.toughness.total);
+            armor=gb.realInt(target.actor.data.data.toughness.armor);
+            isvehicle=true;
+        } else {
+            toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
+            armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
+        }
+
+       // let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
 
       //  console.log(toughness);
         
@@ -521,7 +535,6 @@ export default class RollControl {
      /// adds AP
         let apextra=0;
         if (item.data.data.ap){
-            let armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
             apextra=gb.realInt(item.data.data.ap);
             if (apextra>armor){
                 apextra=armor;
@@ -541,7 +554,10 @@ export default class RollControl {
 
         if (raisecount>=0){
             applyDmg=true;
+            
             addTarget='shaken';
+            
+            
             if (raisecount>0){
 
                 if(gb.settingKeyName('Wound Cap') && raisecount>4){
@@ -551,6 +567,7 @@ export default class RollControl {
             }
         } 
 
+      
         let addTargetTxt=addTarget
         if (addTarget=='wounds'){
             let s='';
@@ -558,13 +575,26 @@ export default class RollControl {
                 s='s';
             }
 
-            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)} + ${gb.trans('Targetshaken')}`
+            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)}`
+
+           if (isvehicle){
+            addTargetTxt+=`+ ${gb.trans('Targetshakenvehicle')}`;
+           } else {
+            addTargetTxt+=`+ ${gb.trans('Targetshaken')}`;
+           }
+            
+            
 
         } else {
-            addTargetTxt=gb.trans('Target'+addTarget);
+            if (isvehicle && addTarget=='shaken'){
+                addTargetTxt=gb.trans('Targetshakenvehicle');
+            } else {
+                addTargetTxt=gb.trans('Target'+addTarget);
+            }
+           
         }
 
-        if (applyDmg && addTarget=='wounds' && newWounds===null){
+        if (!isvehicle && applyDmg && addTarget=='wounds' && newWounds===null){
             soakClass=' swadetools-damage-with-soak';
         }
 
@@ -645,6 +675,9 @@ export default class RollControl {
         
 
             if (raisecount==0){
+                if (char.isVehicle()){
+                    char.outOfControl();
+                } else
                 if (char.is('isShaken')){
                     if (!char.hasEdgeSetting('Hardy')){
                         char.applyWounds(1);
@@ -656,12 +689,27 @@ export default class RollControl {
                     char.on('isShaken');
                 }
             } else if (raisecount>0){
-                char.on('isShaken');
+                
+               
                 char.applyWounds(raisecount);
+                
+                if (char.isVehicle()){
+                    char.outOfControl();
+                } else {                    
+                    char.on('isShaken');
+
+                    if (gb.setting('grittyDamage')){
+                        char.rollTable(game.tables.get(gb.setting('grittyDamage')));
+                    }
+                  //  this.grittyDamage(target);
+                }
+                
             }
         }
     }
 
+
+    
 
     addBennyButton(){
 

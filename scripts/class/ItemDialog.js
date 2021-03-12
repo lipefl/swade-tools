@@ -10,7 +10,7 @@ export default class ItemDialog {
 
         if (actor.data.type=='vehicle'){
             this.vehicle=actor;
-            actor=game.actors.get(actor.data.data.driver.id);
+            actor=gb.getDriver(actor);
             
         }
 
@@ -162,7 +162,7 @@ export default class ItemDialog {
         }
     }
 
-        /// TODO other actions
+        
       
 
         for (const id in weaponactions.additional){

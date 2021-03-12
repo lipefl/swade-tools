@@ -109,6 +109,17 @@
     "SWADETOOLS.FightingWarn": "was modified from Fighting according to your Swade Tools settings to:",
     "SWADETOOLS.SettingsAutoInitStart":"Don't roll initiative automatically when a starting a combat",
     "SWADETOOLS.SettingsAutoInitStartHint":"(Requires Reload) Disable the automatic initative roll when starting a combat.",
-    "SWADETOOLS.AutoDisableWarn":"If checked, Swade Tools will not enable the following SWADE system setting automatically at start: "
+    "SWADETOOLS.AutoDisableWarn":"If checked, Swade Tools will not enable the following SWADE system setting automatically at start: ",
+    "SWADETOOLS.Targetshakenvehicle": "Out of Control",
+    "SWADETOOLS.OutOfControlRoll": "tries to avoid Out of Control",
+    "SWADETOOLS.OutOfControlSuccess": "avoids Out of Control",
+    "SWADETOOLS.OutOfControlFail": "suffers Out of Control",
+    "SWADETOOLS.OutOfControlTable": "Out of Control Table",
+    "SWADETOOLS.OutOfControlTableHint": "Choose a table to roll automatically when a vehicle suffers from Out of Control",
+    "SWADETOOLS.GrittyDamage": "Gritty Damage",
+    "SWADETOOLS.GrittyDamageHint": "Choose a table to roll for Gritty Damage",
+    "SWADETOOLS.Disabled":"Disabled",
+    "SWADETOOLS.NoOperator":"No Operator in this Vehicle",
+    "SWADETOOLS.NoOperatorSkill":"No Operation Skill found in this Vehicle"
     
 }

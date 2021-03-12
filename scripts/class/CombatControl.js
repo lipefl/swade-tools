@@ -267,13 +267,13 @@ export default class CombatControl {
         if (char.is('isBound')){
             checkDistracted=false;
             checkVulnerable=false;
-            /// TODO shows a message
+          
             char.say(gb.trans('ItsBound')) // add buttons str-2 or athletics - warn on token move -> same for entangled
         }
 
         if (char.is('isEntangled')){
             checkDistracted=false;            
-            /// TODO shows a message
+           
             char.say(gb.trans('ItsEntangled')) 
         }
 

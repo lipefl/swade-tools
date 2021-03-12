@@ -123,4 +123,29 @@ export const registerSettings=()=>{
       })
   })
 
+
+  game.settings.register(gb.moduleName,'grittyDamage',{
+    scope: 'world',
+    type: String,
+    config: false,
+    default: ''
+});
+
+let outChoices={'':gb.trans('Disabled')};
+
+game.tables.map(table=>{
+  outChoices[table.id]=table.name;
+})
+
+
+game.settings.register(gb.moduleName,'outofcontrolTable',{
+  name: gb.trans('OutOfControlTable'),
+  hint: gb.trans('OutOfControlTableHint'),
+  scope: 'world',
+  type: String,
+  config: true,
+  choices: outChoices,
+  default: ''
+});
+
 }

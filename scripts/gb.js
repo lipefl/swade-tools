@@ -18,6 +18,28 @@ export const settingKeyName=(name)=>{
     return setting(settingKey(name))
 }
 
+export const getDriver=(vehicle)=>{
+    if (vehicle.data.data?.driver?.id){
+        return game.actors.get(vehicle.data.data.driver.id);
+    } else {
+        ui.notifications.error(trans('NoOperator'));
+        return false
+    }
+    
+}
+
+export const getDriverSkill=(vehicle)=>{
+    if (vehicle.data.data?.driver?.skill){
+        return vehicle.data.data.driver.skill
+    } else if(vehicle.data.data?.driver?.skillAlternative) {
+        return vehicle.data.data.driver.skillAlternative;
+    } else {
+        ui.notifications.error(trans('NoOperatorSkill'));
+        return false;
+    }
+   
+}
+
 export const trans=(term,initialFlag=false)=>{ 
     if (!initialFlag){
         initialFlag='SWADETOOLS';
@@ -368,20 +390,49 @@ export const btnAction = { /// button functions
         let target=canvas.tokens.get(argsArray[0]).actor
         let raisecount=argsArray[1];
         let char=new Char(target);
+        let isvehicle=false;
+
+        if (target.data.type=='vehicle'){
+            isvehicle=true;
+        }
 
      //   console.log(target);
      //   console.log(raisecount);
     
 
-        if (raisecount==0){
+        if (raisecount==0 && !isvehicle){
             if (char.is('isShaken')){
                 char.applyWounds(1);
             } else {
                 char.on('isShaken');
             }
         } else if (raisecount>0){
-            char.on('isShaken');
+            if (!isvehicle){
+                char.on('isShaken');
+            }
+            
+            console.log('isvehicle',isvehicle);
+            console.log('gritty',setting('grittyDamage'));
+
+            if (!isvehicle && setting('grittyDamage')){
+                console.log('tablerolll');
+                game.tables.get(setting('grittyDamage')).draw();
+            }
+
             char.applyWounds(raisecount);
+
+           
+            
+           
+        }
+
+
+        
+
+        if (isvehicle && raisecount>=0){
+
+            
+
         }
     },
 
