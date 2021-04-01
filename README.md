@@ -47,6 +47,7 @@ This is my first big module, please report if you see any bugs and be nice :)
 
 ## v1.3.0
 Version compatible with SWADE system v0.17+ only
+
 15. Added Out of Control and Gritty Damage auto roll tables (v1.3.1)
 
 **Changes**

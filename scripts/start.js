@@ -8,7 +8,9 @@ import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
 
-
+// TODO roll item/power/skill with image => description 
+// TODO - compat with better rolls
+// TODO warn about swade version
 /*
  const ENTITY_PERMISSIONS = {
     "NONE": 0,

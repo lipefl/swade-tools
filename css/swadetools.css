@@ -254,6 +254,7 @@ width: calc(100% - 40px);
         margin:0
     }
 
+    .swade-official .primary .attribute { max-width: 64px; }
 
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
