@@ -33,7 +33,7 @@ export default class ItemRoll extends CharRoll{
         if (action.type=='skill'){
            
            this.addModifier(action.skillMod,action.name);
-           if (action.shotsUsed){
+           if (action.shotsUsed!==''){
             this.useShots(action.shotsUsed);
             }
             

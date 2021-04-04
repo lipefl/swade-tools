@@ -204,6 +204,25 @@ export const realInt =(variable)=>{
     return parseInt(variable) || 0;
 }
 
+export const setFlagCombatant=(combat,combatant,scope,flag,value)=>{
+    let update={_id:combatant._id,['flags.'+scope+'.'+flag]:value}
+    //  console.log(update);
+     combat.updateCombatant(update);
+}
+
+export const actorCombatant=(actor)=>{
+    if (game.combat){
+        let combatant=game.combat.combatants.find(el=>el?.actor?._id===actor._id);
+        if (!combatant){
+            return false;
+        } else {
+            return combatant;
+        }
+    } else {
+        return false;
+    }
+}
+
 export const actorIsJoker=(actor)=>{
 
    // actor.token.id==el.tokenId
@@ -411,11 +430,11 @@ export const btnAction = { /// button functions
                 char.on('isShaken');
             }
             
-            console.log('isvehicle',isvehicle);
-            console.log('gritty',setting('grittyDamage'));
+           // console.log('isvehicle',isvehicle);
+         //   console.log('gritty',setting('grittyDamage'));
 
             if (!isvehicle && setting('grittyDamage')){
-                console.log('tablerolll');
+               // console.log('tablerolll');
                 game.tables.get(setting('grittyDamage')).draw();
             }
 

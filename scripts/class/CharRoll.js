@@ -385,7 +385,17 @@ export default class CharRoll extends BasicRoll{
         this.shotsUsed=gb.realInt(shots);
     }
 
-
+    wildAttack(){
+        
+        this.addFlag('wildattack',1);
+        let char=new Char(this.actor);
+        char.on('isVulnerable');
+        ///remove combat flag -> force Vulnerable
+        let combatant=gb.actorCombatant(this.actor)
+        if (combatant){
+            gb.setFlagCombatant(game.combat,combatant,gb.moduleName,'removeVulnerable',0);
+        }
+    }
 
 
     raiseDmg(){

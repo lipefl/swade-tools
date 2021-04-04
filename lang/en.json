@@ -120,6 +120,7 @@
     "SWADETOOLS.GrittyDamageHint": "Choose a table to roll for Gritty Damage",
     "SWADETOOLS.Disabled":"Disabled",
     "SWADETOOLS.NoOperator":"No Operator in this Vehicle",
-    "SWADETOOLS.NoOperatorSkill":"No Operation Skill found in this Vehicle"
+    "SWADETOOLS.NoOperatorSkill":"No Operation Skill found in this Vehicle",
+    "SWADETOOLS.WildAttack":"Wild Attack"
     
 }

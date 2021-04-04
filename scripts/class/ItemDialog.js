@@ -162,7 +162,22 @@ export default class ItemDialog {
         }
     }
 
-        
+        if (skillName==gb.setting('fightingSkill')){
+            buttons.wildattack={
+                label: gb.trans('WildAttack'),
+                callback: (html)=>{
+                    let itemRoll=new ItemRoll(this.actor,this.item);
+                    
+            //    console.log(this.item);
+                    this.processItemFormDialog(html,itemRoll);
+                    
+                    itemRoll.addModifier(2,gb.trans('WildAttack'));
+                    itemRoll.rollBaseSkill();                  
+                    itemRoll.wildAttack();
+                    itemRoll.display();
+                }
+            }
+        }
       
 
         for (const id in weaponactions.additional){

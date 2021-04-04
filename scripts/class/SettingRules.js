@@ -58,7 +58,7 @@ export default class SettingRules extends FormApplication {
     }
 
       async _updateObject(event, formData) {
-        console.log(formData);
+        //console.log(formData);
         for (let name in formData){
             let value=false;
             if (formData[name]){

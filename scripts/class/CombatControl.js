@@ -26,7 +26,8 @@ export default class CombatControl {
 
         if(!combatant.defeated){ // ignore defeated ??? - let foundry control
         if (this.previousTurn){
-            this.endTurn(this.previousTurn);
+            await this.endTurn(this.previousTurn);
+         //   console.log('ending');
         }
 
       
@@ -34,14 +35,15 @@ export default class CombatControl {
 
        // console.log('ACTING',combatant.name);
         
-        this.startTurn(combatant);
+       await this.startTurn(combatant);
+      //  console.log('starting');
         }
         
         
     }
 
 
-   getFlag(combatant,scope,flag){
+   async getFlag(combatant,scope,flag){
         if (combatant.flags?.[scope]?.[flag]!==undefined){
             return combatant.flags[scope][flag]
         } else {
@@ -111,7 +113,7 @@ export default class CombatControl {
 
     async jokersWild(combat){
 
-        if (combat.getFlag(gb.moduleName,'jokersWild')!=combat.round){
+        if (!gb.setting('disableJokersWild') && combat.getFlag(gb.moduleName,'jokersWild')!=combat.round){
         let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true);
       //  console.log('jokers',jokers);
         await combat.setFlag(gb.moduleName,'jokersWild',combat.round);
@@ -252,7 +254,7 @@ export default class CombatControl {
         } */
     }
 
-    startTurn(combatant){      
+   async startTurn(combatant){      
         let actor=combatant.actor;
        // console.log('start: '+actor.name); 
         let char=new Char(actor);
@@ -303,17 +305,20 @@ export default class CombatControl {
         /// Entangled
     }
     
-    endTurn(combatant){
+    async endTurn(combatant){
         let actor=combatant.actor;
       //  console.log('end: '+actor.name); 
         let char=new Char(actor);
-        if (this.getFlag(combatant,gb.moduleName,'removeVulnerable')){
+      //  console.log(combatant);
+      //  console.log(await this.getFlag(combatant,gb.moduleName,'removeVulnerable'));
+        if (await this.getFlag(combatant,gb.moduleName,'removeVulnerable')){
+        //    console.log('removing Vulnerable');
             char.off('isVulnerable')
             char.say(gb.trans("RemVuln"))
             this.setFlag(combatant,gb.moduleName,'removeVulnerable',0)
         }
 
-        if (this.getFlag(combatant,gb.moduleName,'removeDistracted')){
+        if (await this.getFlag(combatant,gb.moduleName,'removeDistracted')){
             char.off('isDistracted');
             char.say(gb.trans("RemDistr"))
             this.setFlag(combatant,gb.moduleName,'removeDistracted',0)

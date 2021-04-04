@@ -481,6 +481,9 @@ export default class RollControl {
                 charRoll.usingVehicle(this.getItemOwner());
             }
 
+            if (this.chat.data.flags["swade-tools"]?.wildattack){
+                charRoll.addModifier(2,gb.trans('WildAttack'));
+            }
 
             charRoll.useTarget(targetid);
             if (raiseDmg){
