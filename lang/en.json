@@ -121,6 +121,7 @@
     "SWADETOOLS.Disabled":"Disabled",
     "SWADETOOLS.NoOperator":"No Operator in this Vehicle",
     "SWADETOOLS.NoOperatorSkill":"No Operation Skill found in this Vehicle",
-    "SWADETOOLS.WildAttack":"Wild Attack"
+    "SWADETOOLS.WildAttack":"Wild Attack",
+    "SWADETOOLS.UpdateSWADE": "Your SWADE system version is not compatible with SWADE Tools module. Please update SWADE system."
     
 }

@@ -229,6 +229,17 @@ export default class CharRoll extends BasicRoll{
     isItem(item,countshots=true){
         this.item=item;
 
+        console.log(item);
+
+        this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
+        <img src="${item.img}" title="${item.name}" width="36" height="36">
+        <h3 class="item-name"><a>${item.name}</a></h3>
+      </header>
+    
+    <div class="card-content" style="display:none">
+        ${item.data.data.description}
+      </div></div>`;
+
         if (gb.systemSetting('ammoManagement') && countshots && item.type=="weapon"){
             this.manageshots=countshots;
         }
@@ -473,7 +484,14 @@ export default class CharRoll extends BasicRoll{
             if (this.vehicle){
                 actorid=this.vehicle.id;
             }
-            dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${actorid}"></div>` //maestro etc
+
+            let datatoken='';
+            if (this.actor.token){
+                datatoken=' data-token-id="${this.actor.token.scene.id}.${this.actor.token.id}" ';
+            }
+
+           // console.log(this.actor.token.scene.id+'.'+this.actor.token.id);
+            dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${actorid}" ${datatoken}></div>` //maestro etc
         }
         
 

@@ -256,6 +256,11 @@ width: calc(100% - 40px);
 
     .swade-official .primary .attribute { max-width: 64px; }
 
+    .swadetools-pseudocard .card-content {
+        border-bottom: 2px groove #fff;
+        }
+        
+
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {

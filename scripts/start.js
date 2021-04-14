@@ -8,9 +8,9 @@ import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
 
-// TODO roll item/power/skill with image => description 
+
 // TODO - compat with better rolls
-// TODO warn about swade version
+// TODO - reload only X -> Deadlands ?
 /*
  const ENTITY_PERMISSIONS = {
     "NONE": 0,
@@ -73,6 +73,15 @@ Hooks.on('ready',()=>{
   registerSettings();
     foundryIsReady=true;
 
+
+    // check version
+    let swadeversion=game.system.data.version.split('.');
+    if (gb.realInt(swadeversion[1])<17){
+        ui.notifications.error(gb.trans('UpdateSWADE'));
+    }
+
+   // console.log(gb.realInt(swadeversion[1]));
+
    // console.log(gb.getActorData(game.actors.get("WO2pFlDeowqDMNQc"),'data.stats.parry.value')+'actor-data');
     
 })
@@ -130,6 +139,10 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
     })
 
+    html.on('click','.swadetools-pseudocard header.card-header a',(event)=>{
+        let el=$(event.currentTarget);
+        el.closest('.swadetools-pseudocard').find('.card-content').toggle();
+    })
   //  console.log(chatItem)
 
   //  console.log();

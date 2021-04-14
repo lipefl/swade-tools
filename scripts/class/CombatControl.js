@@ -31,7 +31,7 @@ export default class CombatControl {
         }
 
       
-        this.previousTurn=combatant;
+        this.previousTurn=Object.assign({},combatant);
 
        // console.log('ACTING',combatant.name);
         
@@ -307,18 +307,22 @@ export default class CombatControl {
     
     async endTurn(combatant){
         let actor=combatant.actor;
-      //  console.log('end: '+actor.name); 
+    //    console.log('end: '+actor.name); 
         let char=new Char(actor);
-      //  console.log(combatant);
-      //  console.log(await this.getFlag(combatant,gb.moduleName,'removeVulnerable'));
-        if (await this.getFlag(combatant,gb.moduleName,'removeVulnerable')){
-        //    console.log('removing Vulnerable');
+     //   console.log(combatant);
+    ///   console.log(combatant.flags.swade);
+     //   console.log(combatant.flags?.['swade-tools']?.removeVulnerable);
+     //   console.log(await this.getFlag(combatant,gb.moduleName,'removeVulnerable'));
+      let removeVul=await this.getFlag(combatant,gb.moduleName,'removeVulnerable')
+        if (removeVul){
+         //   console.log('removing Vulnerable');
             char.off('isVulnerable')
             char.say(gb.trans("RemVuln"))
             this.setFlag(combatant,gb.moduleName,'removeVulnerable',0)
         }
 
-        if (await this.getFlag(combatant,gb.moduleName,'removeDistracted')){
+        let removeDist=await this.getFlag(combatant,gb.moduleName,'removeDistracted');
+        if (removeDist){
             char.off('isDistracted');
             char.say(gb.trans("RemDistr"))
             this.setFlag(combatant,gb.moduleName,'removeDistracted',0)

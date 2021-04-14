@@ -20,7 +20,7 @@ This is my first big module, please report if you see any bugs and be nice :)
 6. Shows a button to Reroll with a Benny in every roll. And shows a critical failure message (hiding the benny button in this case)
 7. Weapons and Powers show a dialog box instead of sending to chat directly. They also count shots and power points automatically (can be disabled in module settings)
 8. Weapons and Powers auto-detect when targets are selected, showing hit, raise with a button to roll damage and apply wounds.
-9. Translation support (English, Portuguese BR, Spanish and Italian available)
+9. Translation support (English, Portuguese BR, Spanish, Italian and German available)
 10. DiceSoNice Support (with benny animations)
 
 ## v1.1.0
@@ -56,6 +56,9 @@ Version compatible with SWADE system v0.17+ only
 + There's now an option to not auto-roll initiative when combat starts. 
 + Now Swade Tools is using auto iniative setting from swade system, but it will enable it automatically. It can be disabled if you choose to not auto-roll initiative when combat starts.
 + Better vehicle damage
++ Added German language
++ Warn about swade version
++ Card-like layout for items
 
 
 More features will be added...
