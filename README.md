@@ -59,6 +59,7 @@ Version compatible with SWADE system v0.17+ only
 + Added German language
 + Warn about swade version
 + Card-like layout for items
++ better RoF targeting
 
 
 More features will be added...

@@ -76,7 +76,7 @@ Hooks.on('ready',()=>{
 
     // check version
     let swadeversion=game.system.data.version.split('.');
-    if (gb.realInt(swadeversion[1])<17){
+    if (gb.realInt(swadeversion[0])==0 && gb.realInt(swadeversion[1])<17){
         ui.notifications.error(gb.trans('UpdateSWADE'));
     }
 
@@ -143,13 +143,15 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
         let el=$(event.currentTarget);
         el.closest('.swadetools-pseudocard').find('.card-content').toggle();
     })
-  //  console.log(chatItem)
+   //console.log(chatItem)
 
   //  console.log();
 
     if (foundryIsReady && chatItem.isRoll){
 
      //   console.log(chatItem.data.user);
+
+    
 
         let roll=new RollControl(chatItem,html,chatItem.data.user);
        

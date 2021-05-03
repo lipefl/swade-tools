@@ -11,7 +11,8 @@ export default class RollControl {
         this.html=html;
         this.roll=chat._roll;
         this.targetShow='';
-        this.targetFunction;
+        this.targetPrint=[];
+        this.targetFunction=false;
         this.soakFunction;
         this.titleshow=false;
 
@@ -29,6 +30,7 @@ export default class RollControl {
 
 
     doActions(){
+        
         if (!this.isCritical()){
             this.addBennyButton();
             this.findTargets();
@@ -42,6 +44,10 @@ export default class RollControl {
             })
         }
 
+      //  console.log(this.chat.data.flags['swade-tools']);
+        if (this.rolltype=='skill' && this.chat.data.flags['swade-tools'].userof>1){ ///hide total for rof
+            this.html.find('h4.dice-total').css('color','transparent');
+        }
        
             this.statusRolls();
         
@@ -187,6 +193,9 @@ export default class RollControl {
         if (this.chat.data.flags["swade-tools"]?.itemroll || this.rolltype=='soak'){ /// show only for items (weapons, powers) and soak
 
             let rolltype=this.rolltype;
+            let rof=this.chat.data.flags["swade-tools"].userof;
+
+
 
             if (this.chat.data.flags["swade-tools"].usetarget){
 
@@ -197,12 +206,32 @@ export default class RollControl {
                 this.targets=Array.from(this.user.targets);
             }
             
+
           //  console.log(this.targets);
             if (this.targets && this.targets.length>0){
                 this.targets.map(target=>{
                 // let raise=false;
                     if (rolltype=='skill'){
-                        this.attackTarget(target);
+
+                        
+
+                        if (rof<2){
+                            this.attackTarget(target,this.roll.total,1);
+                        } else {
+
+                            let results=this.roll.terms[0].results;
+
+                           // results.sort((a, b) => (a.result < b.result) ? 1 : -1)
+                            let i=0;
+                            results.map(result=>{
+                                i++
+                                this.attackTarget(target,result.result,i);
+                            })
+                           
+                            
+                        }
+                        
+                        
                         
 
                     } else if (rolltype=='damage'){
@@ -222,15 +251,83 @@ export default class RollControl {
 
 
                 if (rolltype=='skill'){
+
+                    this.targetShow+=`<div class="swadetools-target-title">${gb.trans('TargetsTitleSkill')}. `
+
+                    if (rof>1){
+                        this.targetShow+=gb.trans('TipRoFLower')
+                    }
+                    /* if (rof>1){
+                        print+=`${gb.trans('TipRofRoll')}. `;
+                        if (game.user.isGM){
+                            print+=`${gb.trans('TipTargetNumber')}.`;
+                        }
+        
+                    } */
+        
+                   
+        
+                    this.targetShow+=`</div>`
+
+                    if (rof>1){
+
+                        this.targetPrint.sort((a, b) => (a.total < b.total) ? 1 : (a.total === b.total) ? ((a.rof > b.rof) ? 1 : -1) : -1 )
+                       // this.targetPrint.sort((a, b) => (a.total < b.total) ? 1 : -1);
+
+                       // console.log(this.targetPrint);
+                        let rofnumb=null;
+                        let i=0;
+                        this.targetPrint.forEach((item)=>{
+                           
+                            let stop=false;
+                            
+                            if (item.rof!=rofnumb){
+                                if (rofnumb!==null){
+                                    this.targetShow+='</div></div>' /// close previous swadetools-rof-wrap div
+                                }                                
+                                i++;
+
+                                if (i>rof){ /// dont show lower result -> num result = num rof
+                                    stop=true;
+                                }
+
+                                if (!stop){
+                                this.targetShow+=`<div class="swadetools-rof-wrap"><div class="swadetools-rof-total"><span class="swadetools-rof-totalwrap">${item.total}</span></div><div class="swadetools-rof-results">`;
+                                rofnumb=item.rof;
+                                }
+                            }
+
+                            if (!stop){
+                                this.targetShow+=item.print;
+                            }
+                            
+                           
+
+                        })
+
+                        this.targetShow+='</div></div>' ///close swadetools-rof-wrap
+
+                    } else {
+                        this.targetPrint.forEach((item)=>{
+                            this.targetShow+=item.print;
+                        });
+                    }
+                   
+                    
                     this.html.append(this.targetShow).on('click','a.swadetools-rolldamage',(event)=>{
                         let el=event.currentTarget;
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
 
-
+                        if ($(el).parents('.swadetools-rof-wrap').length>0){
+                            $(el).parents('.swadetools-rof-wrap').first().addClass('swadetools-rof-disable').find('a').removeClass('swadetools-rolldamage');
+                            //this.html.find('.swadetools-rof-wrap').off('click','a.swadetools-rolldamage');
+                        }
 
                         
                         this.targetFunction(targetid,raise);
+
+
             
                     }).ready(()=>{
                         this.scrollChat();/// force scroll
@@ -317,10 +414,19 @@ export default class RollControl {
        
     }
 
-    attackTarget(target){
+    attackTarget(target,total,rofnumb){
         
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
         let item=this.getItemOwner().items.get(itemid);
+
+        let rof=1;
+
+        let print='';
+        
+        
+       // let rof=this.chat.data.flags["swade-tools"].userof;
+
+        
 
         /* if (this.chat.data.flags["swade-tools"]?.usetoken){
             let tokenid=this.chat.data.flags["swade-tools"].usetoken
@@ -345,7 +451,7 @@ export default class RollControl {
         } */
 
 
-        let skill=item.data.data.actions.skill;
+        let skill=this.chat.data.flags["swade-tools"].skill;
 
         
 
@@ -358,7 +464,7 @@ export default class RollControl {
         }
 
 
-        let rof=this.chat.data.flags["swade-tools"].userof;
+       
 
 
        
@@ -371,7 +477,7 @@ export default class RollControl {
 
 
         let raisecount;
-        if (item.type=='power' && rof<2 && gb.raiseCount(this.roll.total,targetNumber)<0) { /// failed power
+        if (item.type=='power' && rof<2 && gb.raiseCount(total,targetNumber)<0) { /// failed power
             raisecount=-1 /// force failure
         } else {
 
@@ -381,7 +487,7 @@ export default class RollControl {
     
             
             if (rof<2){
-                raisecount=gb.raiseCount(this.roll.total,targetNumber);
+                raisecount=gb.raiseCount(total,targetNumber);
             }
             
         }
@@ -401,23 +507,7 @@ export default class RollControl {
         
 
 
-        if (!this.titleshow){
-            
-            this.targetShow+=`<div class="swadetools-target-title">${gb.trans('TargetsTitleSkill')}. `
-
-            if (rof>1){
-                this.targetShow+=`${gb.trans('TipRofRoll')}. `;
-                if (game.user.isGM){
-                    this.targetShow+=`${gb.trans('TipTargetNumber')}.`;
-                }
-
-            }
-
-           
-
-            this.targetShow+=`</div>`
-            this.titleshow=true;
-        }
+       
 
        
         if (rof>1){
@@ -425,39 +515,47 @@ export default class RollControl {
             addTarget='rof';
         }
 
-        this.targetShow+=`<div class="swadetools-targetwrap  swadetools-term-${addTarget}">`
+        print+=`<div class="swadetools-targetwrap  swadetools-term-${addTarget}">`
 
        
         //data-swade-tools-action="rollTargetDmg:${this.actor._id},${this.itemid},${target.id},${raise}"
 
         if (rof>1){
+
+            /// totaldie= this.roll.terms[0].results[i].result
             let showTargetNumber='';
             let showRaiseTargetNumber='';
             if (game.user.isGM){
                 showTargetNumber=` (${targetNumber})`
                 showRaiseTargetNumber=` (${targetNumber+4})`
             }
-            this.targetShow+=`<i class="fas fa-bullseye"></i><div class="swadetools-targetname">${target.name}${vulIcon}: <a class="swadetools-rolldamage swadetools-rof-hit" data-swadetools-raise=0 data-swadetools-targetid="${target.id}">${gb.trans('Targethit')}${showTargetNumber}</a> <span class="swadetools-bar">|</span> <a class="swadetools-rolldamage swadetools-rof-raise" data-swadetools-raise=1 data-swadetools-targetid="${target.id}">${gb.trans('Targetraise')}${showRaiseTargetNumber}</a></div>`
+            print+=`<i class="fas fa-bullseye"></i><div class="swadetools-targetname">${target.name}${vulIcon}: <a class="swadetools-rolldamage swadetools-rof-hit" data-swadetools-raise=0 data-swadetools-targetid="${target.id}">${gb.trans('Targethit')}${showTargetNumber}</a> <span class="swadetools-bar">|</span> <a class="swadetools-rolldamage swadetools-rof-raise" data-swadetools-raise=1 data-swadetools-targetid="${target.id}">${gb.trans('Targetraise')}${showRaiseTargetNumber}</a></div>`
 
         } else {
+
         if (rollDmg){
             let raiseInt=0;
             if (raise){
                 raiseInt=1;
             }
-            this.targetShow+=`<a class="swadetools-rolldamage" data-swadetools-raise=${raiseInt} data-swadetools-targetid="${target.id}" title="${gb.trans('RollDamage')}"><i class="fas fa-bullseye"></i>`
+            print+=`<a class="swadetools-rolldamage swadetools-rolldamage-style" data-swadetools-raise=${raiseInt} data-swadetools-targetid="${target.id}" title="${gb.trans('RollDamage')}"><i class="fas fa-bullseye"></i>`
         } else {
-            this.targetShow+=`<i class="fas fa-times-circle"></i>`;
+            print+=`<i class="fas fa-times-circle"></i>`;
         }
 
-        this.targetShow+=`<div class="swadetools-targetname">${target.name}${vulIcon}: ${gb.trans('Target'+addTarget)}</div>`
+        print+=`<div class="swadetools-targetname">${target.name}${vulIcon}: ${gb.trans('Target'+addTarget)}</div>`
         
         if (rollDmg){
-            this.targetShow+=`</a>` 
+            print+=`</a>` 
         }
     }
-        this.targetShow+=`</div>`;
+        print+=`</div>`;
 
+
+        this.targetPrint.push({rof:rofnumb,total:total,print:print})
+
+
+        if (!this.targetFunction){
 
         this.targetFunction=(targetid,raiseDmg)=>{
 
@@ -498,10 +596,8 @@ export default class RollControl {
             charRoll.rollDamage(`${item.data.data.damage}`); */
             charRoll.display();
         }
-        
+        }
     }
-
-   
 
     damageTarget(target,newWounds=null){
         let applyDmg=false;
@@ -846,6 +942,8 @@ export default class RollControl {
        // let rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
         if (this.rolltype!='damage' && this.roll){
+
+      //  console.log(this.roll);
 
         let dices=this.roll.dice;
         let ones=dices.filter(el=>el.total==1);

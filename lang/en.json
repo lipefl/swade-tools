@@ -122,6 +122,7 @@
     "SWADETOOLS.NoOperator":"No Operator in this Vehicle",
     "SWADETOOLS.NoOperatorSkill":"No Operation Skill found in this Vehicle",
     "SWADETOOLS.WildAttack":"Wild Attack",
-    "SWADETOOLS.UpdateSWADE": "Your SWADE system version is not compatible with SWADE Tools module. Please update SWADE system."
+    "SWADETOOLS.UpdateSWADE": "Your SWADE system version is not compatible with SWADE Tools module. Please update SWADE system.",
+    "SWADETOOLS.TipRoFLower":"When using RoF, the lower result is ignored."
     
 }

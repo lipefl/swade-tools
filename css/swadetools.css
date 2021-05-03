@@ -109,7 +109,7 @@ align-items: center;
 flex-wrap: wrap;
 }
 
-.swadetools-rolldamage, .swadetools-applydamage {
+.swadetools-rolldamage-style, .swadetools-applydamage {
     display: flex;
     width:100%;
     align-items: center;
@@ -126,7 +126,7 @@ color:green
     color:purple
     }
 
-    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled],.swadetools-soakdamage[disabled], .swadetools-bar {  /* ///miss hit raise &&& none shaken wounds  */
+    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled],.swadetools-soakdamage[disabled], .swadetools-bar, .swadetools-rof-disable a.swadetools-rolldamage-style {  /* ///miss hit raise &&& none shaken wounds  */
         color:gray
         }
 
@@ -188,7 +188,7 @@ padding: 0 5px;
                 margin-top:10px
             }
 
-            .swadetools-term-rof .swadetools-rolldamage {width:auto}
+            .swadetools-term-rof .swadetools-rolldamage-style {width:auto}
 
 .swadetools-term-rof .swadetools-target-name {display:inline-block}
 
@@ -259,8 +259,39 @@ width: calc(100% - 40px);
     .swadetools-pseudocard .card-content {
         border-bottom: 2px groove #fff;
         }
-        
 
+
+        .swadetools-rof-wrap {
+            display: flex;
+            /* border-bottom: 2px groove #fff; */
+            padding: 5px 5px 2px 0;
+            align-items: center;
+            background-color: white;
+            border: 1px solid #737171;
+            margin: 3px 0;
+            border-radius: 3px;
+        }
+        
+        .swadetools-rof-total {
+            font-size: 20px;
+    font-weight: bold;
+    padding: 0 5px;
+    min-width:30px;
+    text-align: center;
+        }
+
+        .swadetools-rof-disable{
+            background:rgba(255,255,255,0.3)
+        }
+
+        .swadetools-rof-disable .swadetools-rof-total {
+            color:grey;
+        }
+
+        
+        .swadetools-rof-results {
+            flex:1
+        }
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {

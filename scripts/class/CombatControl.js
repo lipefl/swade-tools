@@ -114,7 +114,8 @@ export default class CombatControl {
     async jokersWild(combat){
 
         if (!gb.setting('disableJokersWild') && combat.getFlag(gb.moduleName,'jokersWild')!=combat.round){
-        let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true);
+            /// swade.hasJoker bug
+        let jokers=combat.combatants.filter(el=>el.flags?.swade?.cardValue>14);
       //  console.log('jokers',jokers);
         await combat.setFlag(gb.moduleName,'jokersWild',combat.round);
         

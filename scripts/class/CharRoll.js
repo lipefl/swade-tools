@@ -184,7 +184,7 @@ export default class CharRoll extends BasicRoll{
         
        
         
-        
+        this.addFlag('skill',skillName);
         
 
         this.flavor+=`<div>${skillName}</div>`;
@@ -229,7 +229,7 @@ export default class CharRoll extends BasicRoll{
     isItem(item,countshots=true){
         this.item=item;
 
-        console.log(item);
+     //   console.log(item);
 
         this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">
@@ -508,6 +508,8 @@ export default class CharRoll extends BasicRoll{
 
        // this.roll.setFlag('swade-tools',)
 
+       
+
        this.roll.toMessage(chatData).then((chat)=>{
        
         
@@ -523,6 +525,9 @@ export default class CharRoll extends BasicRoll{
                 usetarget: this.usetarget
             } */
 
+           // console.log(this.flagUpdate);
+
+           /// TODO improve this - renderChatMessage 3 times 
             chat.update({'flags.swade-tools':this.flagUpdate});
            // console.log(this.flagUpdate);
 
@@ -530,6 +535,7 @@ export default class CharRoll extends BasicRoll{
           //  chat.update({"flags.swade-tools.itemroll":this.item._id,"flags.swade-tools.useactor":this.actor.id,"flags.swade-tools.rolltype":this.rolltype,"flags.swade-tools.userof":this.rof,"flags.swade-tools.usetarget":this.usetarget});
         }
         
+      
 
             //    console.log(chat);
                /*  Hooks.once('renderChatMessage',(chatItem,html)=>{

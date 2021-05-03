@@ -121,5 +121,7 @@
     "SWADETOOLS.Disabled":"Desabilitado",
     "SWADETOOLS.NoOperator":"Não há um Motorista no Veículo",
     "SWADETOOLS.NoOperatorSkill":"Não há uma perícia de manobra cadastrada no veículo",
-    "SWADETOOLS.WildAttack":"Ataque Selvagem"
+    "SWADETOOLS.WildAttack":"Ataque Selvagem",
+    "SWADETOOLS.UpdateSWADE": "A versão do seu sistema SWADE não é compatível com o SWADE Tools. Por favor, atualize seu sistema SWADE.",
+    "SWADETOOLS.TipRoFLower":"Em CdT, o menor resultado é ignorado."
 }

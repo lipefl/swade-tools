@@ -226,8 +226,8 @@ export const actorCombatant=(actor)=>{
 export const actorIsJoker=(actor)=>{
 
    // actor.token.id==el.tokenId
-
-    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true && el?.actor?._id===actor._id && 
+  /// removed  flags.swade.hasJoker (swade bug)
+    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade?.cardValue>14 && el?.actor?._id===actor._id && 
         (!actor?.isToken || actor.token.id==el.tokenId)  /// check if it's the same token
         ).length>0){
 
