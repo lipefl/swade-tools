@@ -38,6 +38,11 @@
           "lang": "de",
           "name": "Deutsch",
           "path": "lang/de.json"
+        },
+        {
+          "lang": "ca",
+          "name": "Català",
+          "path": "lang/ca.json"
         }
     ],
     "packs": [
