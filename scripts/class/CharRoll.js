@@ -418,7 +418,9 @@ export default class CharRoll extends BasicRoll{
         if (weaponDamage.includes('@str')){        
             let regexStr = /[@]str/g;
                 weaponDamage = weaponDamage.replace(regexStr, "1d" + this.actor.data.data.attributes.strength.die.sides);
-    
+                if (this.actor.data.data.attributes.strength.die.modifier){
+                    this.addModifier(this.actor.data.data.attributes.strength.die.modifier,gb.trans('AttrStr','SWADE'));
+                }
                 
        }
         return weaponDamage;
