@@ -10,8 +10,9 @@ export default class ItemDialog {
 
         if (actor.data.type=='vehicle'){
             this.vehicle=actor;
+            console.log(this.vehicle);
             actor=gb.getDriver(actor);
-            
+            console.log(actor);
         }
 
         this.actor=actor;
@@ -107,7 +108,7 @@ export default class ItemDialog {
                 
                 let itemRoll=new ItemRoll(this.actor,this.item);
                 
-            //    console.log(this.item);
+                //console.log(this.actor);
                 this.processItemFormDialog(html,itemRoll);
                 itemRoll.rollBaseSkill();
                 itemRoll.display();

@@ -1,7 +1,8 @@
 # SWADE Tools
 
 ## ATTENTION
-Swade Tools v1.3+ is compatible with SWADE system v0.17+ only
+Swade Tools v1.4+ is only compatible with Foundry v0.8.7+ (maybe 0.8.6) and SWADE system v0.19+
+If you use Foundry v0.7.9, please install Swade Tools v1.3.6 manually (see releases)
 
 ## About the Module
 A Foundry VTT module for use with Savage Worlds (SWADE system).
@@ -49,6 +50,9 @@ This is my first big module, please report if you see any bugs and be nice :)
 Version compatible with SWADE system v0.17+ only
 
 15. Added Out of Control and Gritty Damage auto roll tables (v1.3.1)
+
+## v1.4.0
+Version compatible with Foundry VTT v0.8.7 and SWADE system v0.19
 
 **Changes**
 + Notifications about changing settings automatically

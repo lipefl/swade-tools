@@ -156,6 +156,7 @@ export default class CharRoll extends BasicRoll{
        
         this.rolltype='skill';
         this.skillName=skillName;
+       
         let item=this.actor.items.filter(el=>el.type=='skill' && el.name==skillName)[0];
         let wildCard=this.actor.isWildcard;
         let dieType;
@@ -460,7 +461,9 @@ export default class CharRoll extends BasicRoll{
             this.addFlag('usetarget',this.usetarget);
 
             if (this.actor.isToken===true){
-                this.addFlag('usetoken',this.actor.options.token.id);
+               // console.log(this.actor);
+              //  console.log(this.actor.parent._object.id);
+              this.addFlag('usetoken',this.actor.parent._object.id);
             }
         }
     }

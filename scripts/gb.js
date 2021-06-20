@@ -20,7 +20,8 @@ export const settingKeyName=(name)=>{
 
 export const getDriver=(vehicle)=>{
     if (vehicle.data.data?.driver?.id){
-        return game.actors.get(vehicle.data.data.driver.id);
+        let driverid=vehicle.data.data.driver.id.split('.');
+        return game.actors.get(driverid[1]);
     } else {
         ui.notifications.error(trans('NoOperator'));
         return false
