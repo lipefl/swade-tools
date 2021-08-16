@@ -3,7 +3,7 @@
 ## ATTENTION
 Swade Tools v1.4+ is only compatible with Foundry v0.8.7+ (maybe 0.8.6) and SWADE system v0.19+
 
-If you use Foundry v0.7.9, please install Swade Tools v1.3.6 manually (see releases)
+If you use Foundry v0.7.9 (or 0.7.10), please install Swade Tools v1.3.6 manually (see releases)
 
 ## About the Module
 A Foundry VTT module for use with Savage Worlds (SWADE system).
