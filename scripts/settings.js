@@ -55,14 +55,14 @@ export const registerSettings=()=>{
     });
 
 
-    game.settings.register(gb.moduleName, 'disableJokersWild', {
+   /*  game.settings.register(gb.moduleName, 'disableJokersWild', {
 		name: gb.trans('SettingsJokersWild'),
 		hint: gb.trans('SettingsJokersWildHint')+' '+gb.trans('AutoDisableWarn')+' '+gb.trans('JokersWild','SWADE'),
 		default: false,
 		scope: "world",
 		type: Boolean,
 		config: true
-    });
+    }); */
 
     game.settings.register(gb.moduleName, 'disableAutoInitStart', {
       name: gb.trans('SettingsAutoInitStart'),

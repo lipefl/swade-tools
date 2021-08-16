@@ -228,14 +228,16 @@ export const actorIsJoker=(actor)=>{
 
    // actor.token.id==el.tokenId
   /// removed  flags.swade.hasJoker (swade bug)
-    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade?.cardValue>14 && el?.actor?._id===actor._id && 
-        (!actor?.isToken || actor.token.id==el.tokenId)  /// check if it's the same token
+    if(game.combat && game.combat.combatants.filter(el=>el.data.flags?.swade?.cardValue>14 && el?.actor?._id===actor._id && 
+        (!actor?.isToken || actor.token.id==el.token.id)  /// check if it's the same token
         ).length>0){
 
        
 
         return true;
     } else {
+      //  console.log(actor);
+     //   console.log('nojoker');
         return false;
     }
 }
@@ -345,8 +347,10 @@ export const rechargeWeapon=async (actor,item)=>{
 
         if (!stop && newshots!=curShots){
             item.update({"data.currentShots":newshots});
+            if (item.data.data.autoReload!==true){  // nao jogar no chat para itens com autoReload
             let char=new Char(actor);
             char.say(`${item.name} ${trans('Recharged')}`);
+            }
         }
        
       

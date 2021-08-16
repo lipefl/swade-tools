@@ -80,8 +80,8 @@ export default class SettingRules extends FormApplication {
                         ok: {
                             label: `<i class="fas fa-check"></i> ${gb.trans('Yes')}`,
                             callback: ()=>{
-                                $('input[name="swade-tools.disableJokersWild"]').prop('checked',true) /// just to make sure is checked
-                                game.settings.set(gb.moduleName,'disableJokersWild',true);
+                               // $('input[name="swade-tools.disableJokersWild"]').prop('checked',true) /// just to make sure is checked
+                                game.settings.set('swade','jokersWild',false); /// disable system joker's wild
                                 game.settings.set('swade','gmBennies',0);
                             }
                         },

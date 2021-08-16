@@ -8,7 +8,7 @@ import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
 
-
+////
 // TODO - compat with better rolls
 // TODO - reload only X -> Deadlands ?
 /*
@@ -267,7 +267,7 @@ Hooks.on('ready',()=>{ /// disable autoInit
     } 
     
 
-    if (gb.systemSettingExists("jokersWild")){
+    /* if (gb.systemSettingExists("jokersWild")){
 
         if (gb.systemSetting('jokersWild') && !gb.setting('disableJokersWild')){
         game.settings.set('swade','jokersWild',false); /// disable system joker's wild for now
@@ -276,7 +276,7 @@ Hooks.on('ready',()=>{ /// disable autoInit
 
        
 
-    } 
+    }  */
 
     if (gb.systemSettingExists('parryBaseSkill')){
         if (gb.systemSetting('parryBaseSkill')!=gb.setting('fightingSkill')){
@@ -290,7 +290,7 @@ Hooks.on('ready',()=>{ /// disable autoInit
     if (!gb.setting('disableAutoInitStart')){
         $(document).on('click','a[data-control="startCombat"]',()=>{
           //  console.log('clicked');
-            if (!game.combat.started && game.combat.combatants.filter(el=>el.flags.swade===undefined || el.flags.swade.cardValue===null).length>0){
+            if (!game.combat.started && game.combat.combatants.filter(el=>el.flags===undefined || el.flags.swade===undefined || el.flags.swade.cardValue===null).length>0){
                 game.combat.rollAll();    
             }
         })
@@ -309,11 +309,47 @@ Hooks.on('ready',()=>{ /// disable autoInit
 
 
 
-var dontStart=false;
+//var dontStart=false;
 let cbt=new CombatControl;
 
+Hooks.on('updateCombat',combat=>{
+    if (foundryIsReady && gb.mainGM()){
+    cbt.setCombat(combat.id);  
+    //cbt.jokersWild(combat);
+    cbt.endTurn(combat.combatants.find(el=>el.id==combat.previous.combatantId));
+    cbt.startTurn(combat.combatants.find(el=>el.id==combat.current.combatantId));
+    }
+});
 
-Hooks.on('renderCombatTracker',async (data)=>{
+
+/* Hooks.on("renderCombatTracker", async (combatTracker, update) => {
+    let combat=combatTracker.viewed;
+
+
+
+
+    
+  //  console.log(combat);
+  //  console.log(update);
+    if (combat.combatant) {
+        cbt.setCombat(combat.id);
+      //  let nextTurn = getNextTurn(combat);
+        if (update && lastTurn != combat.combatant._id && foundryIsReady  && gb.mainGM()) {
+            lastTurn = combat.combatant._id;
+         // console.log(update);
+      //   console.log(combat,combat.combatant,combat.started);
+            if (combat && combat.combatant && combat.started) {
+          //      console.log(combat.combatant.name);
+                await cbt.act(combat.combatant);
+                
+
+            }
+        }
+    }
+}); */
+
+
+/* Hooks.on('renderCombatTracker',async (data)=>{
     if (gb.mainGM() && foundryIsReady){
        // console.log(data,args);
     //   console.log('dontStart',dontStart);
@@ -325,7 +361,7 @@ Hooks.on('renderCombatTracker',async (data)=>{
            return false;
        }
 
-       /*  */
+      
        
 
        if (combat.getFlag(gb.moduleName,'roundAct')!=combat.round){ ///once per round
@@ -366,7 +402,7 @@ Hooks.on('renderCombatTracker',async (data)=>{
     }
  
 })
-
+ */
 /* Hooks.on('updateCombat',combat=>{
 
     //   console.log('combatout');

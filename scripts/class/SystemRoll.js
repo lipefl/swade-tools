@@ -7,7 +7,7 @@ export default class SystemRoll {
 
 
     rollDamage(itemId){
-        this.addJokerModifier();          
+      //  this.addJokerModifier();          
         this.actor.items.get(itemId).rollDamage().then(()=>{
             Hooks.once("renderChatMessage", (chat, html,data) => { 
                 if (data.user.id==game.user.id){
@@ -21,7 +21,7 @@ export default class SystemRoll {
 
     rollSkill(skillId){
        
-            this.addJokerModifier();  
+         //   this.addJokerModifier();  
             this.actor.rollSkill(skillId).then(()=>{
                 Hooks.once("renderChatMessage", (chat, html,data) => { 
                     if (data.user.id==game.user.id){
@@ -32,17 +32,17 @@ export default class SystemRoll {
         
     }
 
-    addJokerModifier(){ 
+    /* addJokerModifier(){ /// removed, now in system
         if (gb.actorIsJoker(this.actor)){
             Hooks.once('renderDialog',(dialog,html,data)=>{
                 html.find('input#bonus').val('+2');
             });
         }
-    }
+    } */
 
     rollAtt(attribute){
     
-            this.addJokerModifier();           
+           // this.addJokerModifier();           
             this.actor.rollAttribute(attribute).then(()=>{
                 Hooks.once("renderChatMessage", (chat, html,data) => { 
                     if (data.user.id==game.user.id){

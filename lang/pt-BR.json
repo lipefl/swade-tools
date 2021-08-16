@@ -6,8 +6,8 @@
     "SWADETOOLS.RemVuln": "não está mais Vulnerável",
     "SWADETOOLS.RemShaken": "não está mais Abalado",
     "SWADETOOLS.StillShaken": "continua Abalado",
-    "SWADETOOLS.RemStunnedSuc": "não está mais Atordoado, mas continua Distraído e Vulnerável",
-    "SWADETOOLS.RemStunnedRaise": "não está mais Atordoado",
+    "SWADETOOLS.RemStunnedSuc": "não está mais Atordoado, mas continua Vulnerável",
+    "SWADETOOLS.RemStunnedRaise": "não está mais Atordoado, mas continua Vulnerável até o final do seu turno",
     "SWADETOOLS.StillStunned": "continua Atordoado",
     "SWADETOOLS.ItsBound": "está Preso, não pode se mover e pode apenas tentar se libertar com Atletismo ou Força-2",
     "SWADETOOLS.ItsEntangled": "está Enredado e não pode se mover, mas pode tentar se libertar com uma ação usando Atletismo ou Força-2",
@@ -123,5 +123,10 @@
     "SWADETOOLS.NoOperatorSkill":"Não há uma perícia de manobra cadastrada no veículo",
     "SWADETOOLS.WildAttack":"Ataque Selvagem",
     "SWADETOOLS.UpdateSWADE": "A versão do seu sistema SWADE não é compatível com o SWADE Tools. Por favor, atualize seu sistema SWADE.",
-    "SWADETOOLS.TipRoFLower":"Em CdT, o menor resultado é ignorado."
+    "SWADETOOLS.TipRoFLower":"Em CdT, o menor resultado é ignorado.",
+    "SWADETOOLS.ActDmgHint":"Dano para ser rolado ao clicar em Acerto/Ampliação",
+    "SWADETOOLS.Default":"Padrão",
+    "SWADETOOLS.NoDmgActionDefined": "Não há dano definido nessa ação do item. O dano padrão foi usado (se houver).",
+    "SWADETOOLS.UseSkillSelected": "Usar Perícia",
+    "SWADETOOLS.NoSkillQuestion": "não tem uma perícia. Gostaria de usar uma?"
 }

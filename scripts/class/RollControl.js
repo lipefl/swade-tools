@@ -118,12 +118,17 @@ export default class RollControl {
             if (result=='success'){
                 char.off('isStunned')
                 setTimeout(()=>{ /// silver tape to avoid bug
-                    char.updateData({'status.isDistracted':true,'status.isVulnerable':true})
+                    char.updateData({'status.isVulnerable':true})
                    // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
                 },500)   
             } else if (result=='raise'){
                 char.off('isStunned');
-                char.updateData({'status.isDistracted':false,'status.isVulnerable':false})/// just to make sure is disabled
+                setTimeout(()=>{ /// silver tape to avoid bug
+                    char.updateData({'status.isVulnerable':true})
+                   // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
+                },500)
+              //  char.updateData({'status.isDistracted':false,'status.isVulnerable':true})/// just to make sure is disabled
+                game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat).updateCombatant({_id:this.chat.data.flags?.["swade-tools"]?.usecombatant,['flags.swade-tools.removeVulnerable']:1});
               //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
             }
             }
@@ -587,7 +592,14 @@ export default class RollControl {
             if (raiseDmg){
                 charRoll.raiseDmg();
             }
-            charRoll.rollBaseDamage();
+
+            if (this.chat.data.flags["swade-tools"].damageaction){
+                charRoll.rollAction(this.chat.data.flags["swade-tools"].damageaction)
+            } else {
+                charRoll.rollBaseDamage();
+            }
+
+            
           //  charRoll.combatRoll(argsArray[1]);
           //  charRoll.damageTarget(target);
            //   charRoll.addFlavor(item.name);

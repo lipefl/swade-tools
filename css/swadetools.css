@@ -292,6 +292,12 @@ width: calc(100% - 40px);
         .swadetools-rof-results {
             flex:1
         }
+
+        .swadetools-damage-actions select {
+            margin-left:auto;
+            flex:1;
+            max-width:100px;
+        }
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {

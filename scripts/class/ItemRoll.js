@@ -52,10 +52,14 @@ export default class ItemRoll extends CharRoll{
 
         } else if (action.type=='damage'){
             this.addModifier(action.dmgMod,action.name);
-            let damage=this.item.data.damage;
+            let damage=this.item.data.data.damage;            
 
             if (action.dmgOverride){
                 damage=action.dmgOverride;
+            } else {
+                
+                ui.notifications.warn(gb.trans('NoDmgActionDefined'));
+                
             }
 
             this.addDmgMod();
@@ -93,8 +97,10 @@ export default class ItemRoll extends CharRoll{
         }
     }
 
+
     rollBaseSkill(){
         this.addSkillMod();
+
         
         this.rollSkill(this.data.skill);
         

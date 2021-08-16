@@ -20,32 +20,33 @@ export default class CombatControl {
         this.combatid=id;
     }
    
-    async act(combatant){
+    /* async act(combatant){ ///not used anymore
         
-       
+     //  console.log(combatant);
 
-        if(!combatant.defeated){ // ignore defeated ??? - let foundry control
+       if(!combatant.defeated){ // ignore defeated ??? - let foundry control
         if (this.previousTurn){
             await this.endTurn(this.previousTurn);
-         //   console.log('ending');
+          //  console.log('ending'+this.previousTurn._actor.name);
+         //   console.log(this.previousTurn);
         }
 
       
         this.previousTurn=Object.assign({},combatant);
 
-       // console.log('ACTING',combatant.name);
+        //console.log('ACTING',combatant.name);
         
        await this.startTurn(combatant);
-      //  console.log('starting');
+      //  console.log('starting'+combatant.name);
         }
         
         
-    }
+    } */
 
 
    async getFlag(combatant,scope,flag){
-        if (combatant.flags?.[scope]?.[flag]!==undefined){
-            return combatant.flags[scope][flag]
+        if (combatant.data.flags?.[scope]?.[flag]!==undefined){
+            return combatant.data.flags[scope][flag]
         } else {
             return false;
         }
@@ -111,7 +112,8 @@ export default class CombatControl {
             }
     }
 
-    async jokersWild(combat){
+    ////not used anymore
+    /* async jokersWild(combat){ 
 
         if (!gb.setting('disableJokersWild') && combat.getFlag(gb.moduleName,'jokersWild')!=combat.round){
             /// swade.hasJoker bug
@@ -129,28 +131,9 @@ export default class CombatControl {
 
         }
 
-        /* this.setCombat(combat.id);
-        let jokers=combat.combatants.filter(el=>el.flags?.swade?.hasJoker===true && (el.flags?.['swade-tools']?.jokersWild===undefined || el.flags?.['swade-tools']?.jokersWild!=combat.round));
-
-       // console.log(jokers);
-
-        if (jokers.length>0){
-
-
-            jokers.map(combatant=>{
-                this.setFlag(combatant,gb.moduleName,'jokersWild',combat.round)
-                this.giveJokersBennies(combat,combatant);
-                
-            })
-            
-            gb.say(gb.trans('JokersWildMsg'),gb.trans('JokersWild')) /// working but show message twice    
-           
-            return true;
-        }
         
-       return false; */
         
-    }
+    } */
 
 
     unshaken(combatant){
@@ -169,13 +152,15 @@ export default class CombatControl {
         charRoll.addEdgeModifier('Combat Reflexes',2)
         charRoll.addEdgeModifier('Undead',2)
         charRoll.addEdgeModifier('Construct',2)
+
+
         
         charRoll.rollAtt('spirit')
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unshaken');
 
         if (actor.isToken===true){
-            charRoll.addFlag('usetoken',actor.options.token.id);
+            charRoll.addFlag('usetoken',actor.token.id);
         }
            charRoll.display()
 
@@ -212,9 +197,13 @@ export default class CombatControl {
 
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unstunned');
+     //   console.log(actor);
         if (actor.isToken===true){
-            charRoll.addFlag('usetoken',actor.options.token.id);
+            charRoll.addFlag('usetoken',actor.token.id);
         }
+
+        charRoll.addFlag('usecombat',this.combatid);
+        charRoll.addFlag('usecombatant',combatant.id);
 
         charRoll.display();
 
@@ -307,7 +296,7 @@ export default class CombatControl {
     }
     
     async endTurn(combatant){
-        let actor=combatant.actor;
+        let actor=combatant._actor;
     //    console.log('end: '+actor.name); 
         let char=new Char(actor);
      //   console.log(combatant);
@@ -315,6 +304,8 @@ export default class CombatControl {
      //   console.log(combatant.flags?.['swade-tools']?.removeVulnerable);
      //   console.log(await this.getFlag(combatant,gb.moduleName,'removeVulnerable'));
       let removeVul=await this.getFlag(combatant,gb.moduleName,'removeVulnerable')
+     // console.log(combatant);
+    //  console.log(removeVul);
         if (removeVul){
          //   console.log('removing Vulnerable');
             char.off('isVulnerable')

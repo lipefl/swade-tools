@@ -53,19 +53,25 @@ Version compatible with SWADE system v0.17+ only
 15. Added Out of Control and Gritty Damage auto roll tables (v1.3.1)
 
 ## v1.4.0
-Version compatible with Foundry VTT v0.8.7 and SWADE system v0.19
+Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 
 **Changes**
 + Notifications about changing settings automatically
-+ Auto Disabling Jokers Wild setting on swade system for now, can be enabled if you Disable Jokers Wild in Swade Tools (it'll probably be removed from Swade Tools once the swade system is fully working with NPCs)
 + There's now an option to not auto-roll initiative when combat starts. 
 + Now Swade Tools is using auto iniative setting from swade system, but it will enable it automatically. It can be disabled if you choose to not auto-roll initiative when combat starts.
 + Better vehicle damage
-+ German language added
++ German and Catalan languages added
 + Warn about swade version
 + Card-like layout for items
 + better RoF targeting
-+ Catalan translation added 
++ If the weapon has multiple damage action, you can change the damage to roll after Hit/Raise instead of default damage
++ Jokers Wild removed from swade tools (since swade system option is now fully functional)
++ Item asks for a skill when the skill field is empty (and save the choice for future rolls)
+
+**Fixes**
++ Combat automation remade (it wasn't working with the new swade system initiative)
++ Fixed problem with joker bonus duplicating (from system and swade tools)
++ Fixed problem with "Doesn't need reload" option
 
 More features will be added...
 

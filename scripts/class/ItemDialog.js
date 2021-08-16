@@ -10,13 +10,59 @@ export default class ItemDialog {
 
         if (actor.data.type=='vehicle'){
             this.vehicle=actor;
-            console.log(this.vehicle);
+           // console.log(this.vehicle);
             actor=gb.getDriver(actor);
-            console.log(actor);
+         //   console.log(actor);
         }
 
         this.actor=actor;
         this.charRoll=new CharRoll(actor);
+
+        this.dontDisplay=false;
+    }
+
+
+    saveSkill(newSkill){
+        this.item.update({'data.actions.skill':newSkill});
+        this.item.data.data.actions.skill=newSkill;
+        this.dontDisplay=false;
+        this.showDialog();
+    }
+
+    noSkillItem(){
+        let item=this.item;
+        let content=`<p><strong>${this.item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>`;
+        content+=`<p><select id="skillitem">`;
+        this.actor.items.filter(el=>el.data.type=='skill').map(skill=>{
+            content+=`<option value="${skill.name}">${skill.name}</option>`;
+        })
+        content+=`</select></p>`;
+
+        new Dialog({
+            title: item.name,
+            content: content,
+            buttons: {
+                cancel: {
+                    label: `<i class="fas fa-times"></i> ${gb.trans('Unskilled')}`,
+                    callback: ()=>{
+                        this.saveSkill(gb.trans('Unskilled'));
+                        
+                    }
+                },
+                ok: {
+                    label: `<i class="fas fa-check"></i> ${gb.trans('UseSkillSelected')}`,
+                    callback: (html)=>{
+                    
+                        this.saveSkill(html.find('#skillitem')[0].value);
+                        
+                    }
+                }
+
+                
+            }
+        }).render(true);
+
+        this.dontDisplay=true;
     }
 
     showDialog(){
@@ -27,6 +73,8 @@ export default class ItemDialog {
         let weaponactions=item.data.data.actions;
         let showDamage=true;
         let showRaiseDmg=true;
+        
+        let damageActions=[];
       //  let showReload=false;
 
         let patxt='';
@@ -39,13 +87,19 @@ export default class ItemDialog {
             showDamage=false;
             showRaiseDmg=false;
            
-            for (const id in weaponactions.additional){
-                if (weaponactions.additional[id].type=='damage'){
-                    showRaiseDmg=true;
-                }
-               
-            }
+            
         }
+
+        
+
+        for (const id in weaponactions.additional){
+            if (weaponactions.additional[id].type=='damage'){
+                showRaiseDmg=true;
+                damageActions.push({id:id,name:weaponactions.additional[id].name});
+            }
+           
+        }
+
        // let raise=false;
         let content=`<div class="swadetools-dialog-item">
         <div class="swadetools-itemfulldata">
@@ -66,7 +120,7 @@ export default class ItemDialog {
                 content+=`<div><strong>${gb.trans('Dmg','SWADE')}</strong>: ${weaponinfo.damage}${patxt}</div>`;
             }
             
-            content+=`<div><strong>${gb.trans('PP','SSO')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(this.actor.data.data.powerPoints.value)}</div>
+            content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(this.actor.data.data.powerPoints.value)}</div>
             <div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
             <div><strong>${gb.trans('Rng','SWADE')}</strong>: ${weaponinfo.range}</div>
         `
@@ -88,14 +142,43 @@ export default class ItemDialog {
         if (showRaiseDmg){
             content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="raise" value="1"><strong>${gb.trans('RaiseDmg')}</strong></label></div>`;
         }
+
+        if (damageActions.length>0){
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>Dano:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ActDmgHint')}"></i></label> <select id="actiondmg">
+            <option value="">${gb.trans('Default')}</option>`;
+
+          //  console.log(damageActions)
+         
+            damageActions.forEach(act=>{
+                content+=`<option value="${act.id}">${act.name}</option>`;
+            })
+             
+            /* for (const i in damageActions) {
+                content+=`<option value="${act[i].id}">${act[i].name}</option>`;
+            }  */
+
+           
+
+            content+=`</select>
+            </div>`;
+        }
+
         
         content+=`</div>`
+
+
+       
+
         let buttons={};
 
         let skillName=weaponactions.skill;
         if (!skillName){
-            skillName=gb.trans('Unskilled');
+            skillName=this.noSkillItem();
+           
+           // skillName=gb.trans('Unskilled');
         }
+
+        
 
 
         let skillIcon='<i class="fas fa-bullseye"></i> ';
@@ -255,12 +338,13 @@ export default class ItemDialog {
       
 
       
-
+        if (!this.dontDisplay){
         new Dialog({
             title: item.name,
             content: content,
             buttons: buttons
         },{classes:['dialog swadetools-vertical']}).render(true);
+        }
         
     }
 
@@ -321,6 +405,10 @@ export default class ItemDialog {
         
             if (html.find('#extrapp')[0]){
                 charRoll.usePP(html.find('#extrapp')[0].value);
+            }
+
+            if (html.find('#actiondmg')[0] && html.find('#actiondmg')[0].value!=''){
+                charRoll.useDamageAction(html.find('#actiondmg')[0].value);
             }
         
     }

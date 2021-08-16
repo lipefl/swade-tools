@@ -6,8 +6,8 @@
     "SWADETOOLS.RemVuln": "is no longer Vulnerable",
     "SWADETOOLS.RemShaken": "is no longer Shaken",
     "SWADETOOLS.StillShaken": "remains Shaken",
-    "SWADETOOLS.RemStunnedSuc": "is no longer Stunned, but still Distracted and Vulnerable",
-    "SWADETOOLS.RemStunnedRaise": "is no longer Stunned",
+    "SWADETOOLS.RemStunnedSuc": "is no longer Stunned, but still Vulnerable",
+    "SWADETOOLS.RemStunnedRaise": "is no longer Stunned, but still Vulnerable until the end of his turn",
     "SWADETOOLS.StillStunned": "remains Stunned",
     "SWADETOOLS.ItsBound": "is Bound, can't move and can only try to break free using Athletics or Strength-2",
     "SWADETOOLS.ItsEntangled": "is Entangled and can't move, but can try to break free with an action using Athletics or Strength-2",
@@ -123,6 +123,12 @@
     "SWADETOOLS.NoOperatorSkill":"No Operation Skill found in this Vehicle",
     "SWADETOOLS.WildAttack":"Wild Attack",
     "SWADETOOLS.UpdateSWADE": "Your SWADE system version is not compatible with SWADE Tools module. Please update SWADE system.",
-    "SWADETOOLS.TipRoFLower":"When using RoF, the lower result is ignored."
+    "SWADETOOLS.TipRoFLower":"When using RoF, the lower result is ignored.",
+    "SWADETOOLS.ActDmgHint":"Damage to be rolled when clicking Hit/Raise",
+    "SWADETOOLS.Default":"Default",
+    "SWADETOOLS.NoDmgActionDefined": "There's no damage defined in this item's action. The default damage was used (if defined).",
+    "SWADETOOLS.UseSkillSelected": "Use Skill",
+    "SWADETOOLS.NoSkillQuestion": "don't have a skill. Would you like to use one?"
+
     
 }

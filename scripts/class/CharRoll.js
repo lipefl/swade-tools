@@ -43,6 +43,7 @@ export default class CharRoll extends BasicRoll{
        this.vehicle=false;
 
       
+      
        
     }
 
@@ -72,6 +73,11 @@ export default class CharRoll extends BasicRoll{
         this.reasons.push(`${reason}: ${gb.stringMod(mod)}`);
         }
         }
+    }
+
+
+    useDamageAction(actionid){
+        this.addFlag('damageaction',actionid);
     }
 
 
@@ -153,6 +159,7 @@ export default class CharRoll extends BasicRoll{
         if (this.item && this.manageshots){
             this.countShots();
         }
+
        
         this.rolltype='skill';
         this.skillName=skillName;
@@ -332,7 +339,17 @@ export default class CharRoll extends BasicRoll{
 
                 if (currentShots<0){
                     if (this.item.type=='weapon'){
-                        this.noShotsMsg(this.item);
+                        if (this.item.data.data.autoReload===true){
+                            
+                            gb.rechargeWeapon(this.actor,this.item).then(()=>{
+                                return this.countShots();
+                            })
+                            
+                           
+                        } else {
+                            this.noShotsMsg(this.item);
+                        }
+                        
                     } else if (this.item.type=='power'){
                         this.noPowerPointsMsg();
                     }
@@ -354,6 +371,8 @@ export default class CharRoll extends BasicRoll{
         }
     }
 
+
+    
 
     noShotsMsg(item){
        // let char=new Char(this.actor);
@@ -431,8 +450,14 @@ export default class CharRoll extends BasicRoll{
 
     rollDamage(damage,extraflavor=''){
         this.rolltype='damage';
+
+        let raisetext=``;
+
+        if (this.dmgraise){
+            raisetext=`(+${gb.trans('Targetraise')})`;
+        }
         
-        this.flavor+=`<div>${gb.trans('Dmg','SWADE')}: ${damage}${extraflavor}</div>`;
+        this.flavor+=`<div>${gb.trans('Dmg','SWADE')}: ${damage} ${raisetext} ${extraflavor}</div>`;
         this.baseModifiers(true);
       //  console.log(this.dmgraise);
         this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise);
