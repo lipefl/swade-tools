@@ -340,10 +340,13 @@ export default class CharRoll extends BasicRoll{
                 if (currentShots<0){
                     if (this.item.type=='weapon'){
                         if (this.item.data.data.autoReload===true){
+
+                            gb.rechargeWeapon(this.actor,this.item,this.shotsUsed);
                             
-                            gb.rechargeWeapon(this.actor,this.item).then(()=>{
+                            
+                            /* gb.rechargeWeapon(this.actor,this.item).then(()=>{
                                 return this.countShots();
-                            })
+                            }) */
                             
                            
                         } else {
@@ -525,58 +528,49 @@ export default class CharRoll extends BasicRoll{
         }
         
 
+        this.autoItemFlags();
+
+        let updateFlags={}
+
+        if (this.flagUpdate){
+            updateFlags={'swade-tools':this.flagUpdate}
+        }
+
         let chatData = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
          //content: 'this is plus',
+         flags: updateFlags,
         flavor: this.flavorAdd.start+this.flavor+this.flavorAdd.end+dataformodules
         };
 
        // let total=this.roll.total;
 
-      this.autoItemFlags();
+     
 
        // this.roll.setFlag('swade-tools',)
 
        
 
-       this.roll.toMessage(chatData).then((chat)=>{
+       this.roll.toMessage(chatData)
+       /* .then((chat)=>{ => already in chatData
        
         
-        if (this.flagUpdate){ /// auto add item flags
-           // console.log(this.item);
-          //  console.log(this.rof);
+        if (this.flagUpdate){ 
+           
 
-           /*  let updateFlags={
-                itemroll: this.item._id,
-                useactor: this.actor.id,
-                rolltype: this.rolltype,
-                userof: this.rof,
-                usetarget: this.usetarget
-            } */
 
-           // console.log(this.flagUpdate);
+           // chat.update({'flags.swade-tools':this.flagUpdate});
 
-           /// TODO improve this - renderChatMessage 3 times 
-            chat.update({'flags.swade-tools':this.flagUpdate});
-           // console.log(this.flagUpdate);
 
-            
-          //  chat.update({"flags.swade-tools.itemroll":this.item._id,"flags.swade-tools.useactor":this.actor.id,"flags.swade-tools.rolltype":this.rolltype,"flags.swade-tools.userof":this.rof,"flags.swade-tools.usetarget":this.usetarget});
+           
         }
         
       
 
-            //    console.log(chat);
-               /*  Hooks.once('renderChatMessage',(chatItem,html)=>{
-                    html.append(this.targetShow);
-                }) */
-             //   $('ol#chat-log li[data-message-id="'+chat.id+'"]').append(this.targetShow);
-               // chat.html.append(this.targetShow);
-              //  gb.say(this.targetShow,this.actor.name,gb.trans('TargetsFlavor')+total);
-               
             
-       });
+            
+       }); */
 
        
         }

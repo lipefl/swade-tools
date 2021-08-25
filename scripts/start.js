@@ -120,6 +120,8 @@ Hooks.on('updateToken',(scene, token, data, options, userId)=>{
 ///data-swade-tools-action='func:arg1,arg2'
 
 Hooks.on("renderChatMessage", (chatItem, html) => { 
+
+   // console.log(chatItem);
     
     html.on('click','a[data-swade-tools-action],button[data-swade-tools-action]',(event)=>{ /// remove and change for Hooks.once ?
         let el=event.currentTarget;

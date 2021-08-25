@@ -295,7 +295,7 @@ export const bennyAnimation=()=>{
     }
 }
 
-export const rechargeWeapon=async (actor,item)=>{
+export const rechargeWeapon=async (actor,item,removeShots=false)=>{
     let newshots;
     let shots=realInt(item.data.data.shots);
     let curShots=realInt(item.data.data.currentShots);
@@ -343,6 +343,14 @@ export const rechargeWeapon=async (actor,item)=>{
         } else {
             /// no ammo gear setting
             newshots=item.data.data.shots;
+        }
+
+        if (removeShots){
+            newshots=newshots-removeShots;
+        }
+
+        if (newshots<0){
+            ui.notifications.warn(`${item.name} ${gb.trans('NotEnoughShots')}`);
         }
 
         if (!stop && newshots!=curShots){
