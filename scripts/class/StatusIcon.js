@@ -3,14 +3,7 @@ import * as gb from './../gb.js';
 
 export default class StatusIcon {
 
-    statuses = [
-        {stat: 'isShaken', icon: 'modules/swade-tools/icons/shaken.png'},
-        {stat: 'isDistracted', icon: 'modules/swade-tools/icons/distracted.png'},
-        {stat: 'isVulnerable', icon: 'modules/swade-tools/icons/vulnerable.png'},
-        {stat: 'isStunned', icon: 'modules/swade-tools/icons/stunned.png'},
-        {stat: 'isEntangled', icon: 'modules/swade-tools/icons/entangled.png'},
-        {stat: 'isBound', icon: 'modules/swade-tools/icons/bound.png'}
-    ]
+    statuses = gb.stIcons
     
     wounds = [
         {value: 1, icon: "/modules/swade-tools/icons/w1.png"},
@@ -57,11 +50,24 @@ export default class StatusIcon {
     }
     }
 
+    noBasicActiveEffect(statusName){
+        if (this.entity.data.effects.filter(el=>el.data.flags.core.statusId==this.translateActiveEffect(statusName)).length>0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     applyEffect(icon,active,overlay=false){
 
+       let stat=this.statuses.filter(el=>el.icon==icon)[0]?.stat;
+
+    if (!active || this.noBasicActiveEffect(stat)){
         this.getTokens().map(token=>{
+            
            token.toggleEffect(icon,{active:active,overlay:overlay}) 
         })
+    }
        /*  if (this.entityType=='actor'){
             this.entity.getActiveTokens().map((token)=>{
                 
@@ -103,6 +109,9 @@ export default class StatusIcon {
             this.applyEffect(icon,varcheck)
             this.chainedStatus(statusName,varcheck);
             
+            if (!varcheck){ 
+                this.removeActiveEffects(statusName);
+            }
             
            
             /* if (varcheck){
@@ -114,6 +123,19 @@ export default class StatusIcon {
             
         }
        
+    }
+
+
+    translateActiveEffect(statusName){
+        return statusName.substring(2).toLowerCase();///remove is and put in lowercase
+    }
+
+    removeActiveEffects(statusName){ /// also remove Active Effect
+        let idstat=this.entity.data.effects.filter(el=>el.data.flags.core.statusId==this.translateActiveEffect(statusName))[0]?._id;
+        if (idstat){
+            this.entity.deleteEmbeddedDocuments('ActiveEffect',[idstat]);
+        }
+        
     }
 
     upStatus(statusName,val){

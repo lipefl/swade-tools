@@ -1,6 +1,7 @@
 import CharRoll from './CharRoll.js';
 import * as gb from './../gb.js';
 import ItemRoll from './ItemRoll.js';
+import Char from './Char.js';
 
 export default class ItemDialog {
     constructor(actor,itemId){
@@ -259,6 +260,23 @@ export default class ItemDialog {
                     itemRoll.rollBaseSkill();                  
                     itemRoll.wildAttack();
                     itemRoll.display();
+                }
+            }
+
+            let char=new Char(this.actor);
+            if (char.hasEdgeSetting('Frenzy')){
+                buttons.frenzy={
+                    label: gb.settingKeyName('Frenzy'),
+                    callback: (html)=>{
+                        let itemRoll=new ItemRoll(this.actor,this.item);
+                    
+            //    console.log(this.item);
+                    this.processItemFormDialog(html,itemRoll);                    
+                    
+                    itemRoll.rollBaseSkill(2);                  
+                   
+                    itemRoll.display();
+                    }
                 }
             }
         }

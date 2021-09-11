@@ -9,6 +9,7 @@ export default class Char {
         this.gmBenny=false;
         this.istoken=istoken;
         this.isvehicle=false;
+       
       //  this.update={}
 
      // console.log(entity);
@@ -180,6 +181,7 @@ export default class Char {
        return entity;
    } */
 
+  
 
     off(statusName){
      //   console.log(statusName,this.is(statusName));
@@ -209,6 +211,26 @@ export default class Char {
             /// mark defeated
             tokenTarget.toggleOverlay(CONFIG.controlIcons.defeated);
         } */
+    }
+
+
+    activeEffect(status,del){
+
+      
+
+    if (gb.statusDefault.includes(status)){
+  
+        let onName='is'+status.charAt(0).toUpperCase() + status.slice(1);
+        
+        if (!del){
+            this.on(onName);
+        } else {
+            this.off(onName);
+        }
+
+    }
+
+        
     }
 
     spendBenny(){

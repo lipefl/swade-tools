@@ -128,5 +128,19 @@
     "SWADETOOLS.Default":"Padrão",
     "SWADETOOLS.NoDmgActionDefined": "Não há dano definido nessa ação do item. O dano padrão foi usado (se houver).",
     "SWADETOOLS.UseSkillSelected": "Usar Perícia",
-    "SWADETOOLS.NoSkillQuestion": "não tem uma perícia. Gostaria de usar uma?"
+    "SWADETOOLS.NoSkillQuestion": "não tem uma perícia. Gostaria de usar uma?",
+    "SWADETOOLS.RangedInMelee":"Armas de Combate à Distância em Corpo a Corpo: Usando Aparar",
+    "SWADETOOLS.IsVulnerable":"está Vulnerável",
+    "SWADETOOLS.SeeSituational":"Ver Modificadores Situacionais",
+    "SWADETOOLS.gangUpBonus":"Bônus de Agrupar",
+    "SWADETOOLS.TargetTooFar":"Alvo está além da Extrema Distância",
+    "SWADETOOLS.Extreme":"Extrema Distância",
+    "SWADETOOLS.SettingGangUp": "Calcular Agrupar (criar PCs Amigáveis e NPCs Hostis)",
+    "SWADETOOLS.SettingGangUpHint": "Ao ativar essa opção, o cálculo de Agrupar será feito automaticamente. Novos Personagens Jogadores serão marcados como amigáveis nas configurações do Token e NPCs como hostis (você pode alterar isso depois, como no caso de um NPC aliado). Se quiser ajustar todos os atores atuais use a macro: PC Friendly / NPC Hostile",
+    "SWADETOOLS.FriendlyPCMacroQuestion": "Isso irá mudar todos os Personagens Jogadores para amigáveis e NPCs para hostis nas Configurações de Token (Prototype Token). Prosseguir?",
+    "SWADETOOLS.FriendlyPCMacroOk": "Todos PCs são amigáveis e NPCs hostis nas Configurações de Token!",
+    "SWADETOOLS.DodgeSetting": "Esquiva",
+    "SWADETOOLS.BlockSetting": "Bloquear",
+    "SWADETOOLS.ImprovedBlockSetting": "Bloquear Aprimorado",
+    "SWADETOOLS.FrenzySetting": "Frenesi"
 }

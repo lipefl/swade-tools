@@ -6,9 +6,22 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
-export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes'];
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy'];
 export const abilitiesNaming=['Construct','Hardy','Undead'];
 export const settingRules=['Dumb Luck','Hard Choices','Unarmored Hero','Wound Cap'];
+
+
+
+export const statusDefault = ['shaken','distracted','vulnerable','stunned','bound','entangled'];
+
+export const stIcons=[
+    {stat: 'isShaken', icon: 'modules/swade-tools/icons/shaken.png'},
+    {stat: 'isDistracted', icon: 'modules/swade-tools/icons/distracted.png'},
+    {stat: 'isVulnerable', icon: 'modules/swade-tools/icons/vulnerable.png'},
+    {stat: 'isStunned', icon: 'modules/swade-tools/icons/stunned.png'},
+    {stat: 'isEntangled', icon: 'modules/swade-tools/icons/entangled.png'},
+    {stat: 'isBound', icon: 'modules/swade-tools/icons/bound.png'}
+]
 
 export const settingKey=(name)=>{
     return name.replace(' ','')+'Setting';
@@ -29,6 +42,10 @@ export const getDriver=(vehicle)=>{
     
 }
 
+export const statusDefaultToIs=(status)=>{
+    return 'is'+status.charAt(0).toUpperCase() + status.slice(1);
+}
+
 export const getDriverSkill=(vehicle)=>{
     if (vehicle.data.data?.driver?.skill){
         return vehicle.data.data.driver.skill
@@ -40,6 +57,32 @@ export const getDriverSkill=(vehicle)=>{
     }
    
 }
+
+// canvas.tokens.placeables => all tokens in the scene
+
+export const getRange=(origin,target)=>{
+    const ray = new Ray(origin, target);
+    const grid_unit = canvas.grid.grid.options.dimensions.distance
+    let distance = canvas.grid.measureDistances([{ ray }], {gridSpaces: true})[0];
+    distance = Math.round(distance / grid_unit)
+
+    // adding flying
+    let alt=Math.abs(origin.data.elevation-target.data.elevation);
+
+    if (alt){
+        ///hipotenusa
+        distance=Math.round(Math.sqrt(Math.pow(distance,2)+Math.pow(alt,2)));
+    }
+
+    if (distance<1){
+        distance=1;
+    }
+   
+    return distance;
+}
+
+
+
 
 export const trans=(term,initialFlag=false)=>{ 
     if (!initialFlag){
@@ -345,13 +388,13 @@ export const rechargeWeapon=async (actor,item,removeShots=false)=>{
             newshots=item.data.data.shots;
         }
 
+       
         if (removeShots){
             newshots=newshots-removeShots;
-        }
+           
+        } 
 
-        if (newshots<0){
-            ui.notifications.warn(`${item.name} ${gb.trans('NotEnoughShots')}`);
-        }
+        
 
         if (!stop && newshots!=curShots){
             item.update({"data.currentShots":newshots});
@@ -360,6 +403,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false)=>{
             char.say(`${item.name} ${trans('Recharged')}`);
             }
         }
+       
        
       
     }

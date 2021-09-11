@@ -148,4 +148,13 @@ game.settings.register(gb.moduleName,'outofcontrolTable',{
   default: ''
 });
 
+game.settings.register(gb.moduleName, 'gangUp', {
+  name: gb.trans('SettingGangUp'),
+  hint: gb.trans('SettingGangUpHint'),
+  default: true,
+  scope: "world",
+  type: Boolean,
+  config: true
+  });
+
 }

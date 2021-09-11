@@ -339,9 +339,10 @@ export default class CharRoll extends BasicRoll{
 
                 if (currentShots<0){
                     if (this.item.type=='weapon'){
-                        if (this.item.data.data.autoReload===true){
+                        if (this.item.data.data.autoReload===true && maxshots>=this.shotsUsed){
 
-                            gb.rechargeWeapon(this.actor,this.item,this.shotsUsed);
+                            gb.rechargeWeapon(this.actor,this.item,this.shotsUsed)
+                            
                             
                             
                             /* gb.rechargeWeapon(this.actor,this.item).then(()=>{
@@ -534,6 +535,8 @@ export default class CharRoll extends BasicRoll{
 
         if (this.flagUpdate){
             updateFlags={'swade-tools':this.flagUpdate}
+
+         //   console.log(updateFlags);
         }
 
         let chatData = {

@@ -73,6 +73,13 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Fixed problem with joker bonus duplicating (from system and swade tools)
 + Fixed problem with "Doesn't need reload" option
 
+
+## v1.5.0
++ Apply "Assign Status Effect" via token
++ Calculates Gang Up, Range and Ranged Weapon in Melee (shows a (?) icon in the target with more info)
++ Bonus Macro to turn all your PCs Friendly and NPCs Hostile (to work with Gang Up)
++ New Edges automations: Block, Improved Block, Dodge, Frenzy
+
 More features will be added...
 
 ### Bonus: Macro

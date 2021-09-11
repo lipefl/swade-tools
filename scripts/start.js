@@ -7,10 +7,12 @@ import SheetControl from './class/SheetControl.js';
 import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
+import Char from './class/Char.js';
 
-////
+//// NEXT TODO -> vantagens que interferem (Esquiva,Bloquear,Bloquear Aprimorado,Frenesi)
 // TODO - compat with better rolls
 // TODO - reload only X -> Deadlands ?
+
 /*
  const ENTITY_PERMISSIONS = {
     "NONE": 0,
@@ -51,6 +53,7 @@ Hooks.on('ready',()=>{
         gb.macroRoll('power',powerName);
     }
 
+
     
   game.swade.swadetoolsAttack=(actor,item,dialog=false)=>{
       if (dialog){
@@ -81,6 +84,24 @@ Hooks.on('ready',()=>{
     }
 
    // console.log(gb.realInt(swadeversion[1]));
+
+   
+   if (!gb.setting('defaultStatusIcons')){
+   CONFIG.statusEffects.map(data=>{
+       if (gb.statusDefault.includes(data.id)){
+           data.icon=gb.stIcons.filter(el=>el.stat==gb.statusDefaultToIs(data.id))[0]?.icon;
+       }
+   })
+
+}
+
+//console.log(CONFIG.statusEffects)
+
+   /* CONFIG.statusEffects.unshift({
+    icon: 'modules/swade-tools/icons/shaken.png',
+    id: 'st-shaken',
+    label: 'SWADE.Shaken',
+}) */
 
    // console.log(gb.getActorData(game.actors.get("WO2pFlDeowqDMNQc"),'data.stats.parry.value')+'actor-data');
     
@@ -114,6 +135,36 @@ Hooks.on('updateToken',(scene, token, data, options, userId)=>{
    }
 }) */
 
+Hooks.on("createActor",(actor,options,userid)=>{
+
+    if (gb.setting('gangUp')){
+        if (actor.data.type=='character'){
+            actor.update({'token.disposition':1})
+        } else if (actor.data.type=='npc'){
+            actor.update({'token.disposition':-1})
+        }
+    }
+})
+
+
+Hooks.on("createActiveEffect", (effect, diff) => { 
+    let actor=effect.parent; 
+    
+    let char=new Char(actor);
+    char.activeEffect(effect.data.flags.core.statusId,false);
+
+    
+
+   
+})
+
+Hooks.on("deleteActiveEffect", (effect,diff)=>{
+
+    let actor=effect.parent; 
+    
+    let char=new Char(actor);
+    char.activeEffect(effect.data.flags.core.statusId,true);
+})
 
 
 
@@ -211,8 +262,9 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 });
 
 
-Hooks.on("updateActor", (actor,data,diff,userId) => {       
+Hooks.on("updateActor", async (actor,data,diff,userId) => {       
    
+    
     if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
         upActor.checkAllStatus();

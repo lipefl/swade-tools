@@ -24,6 +24,8 @@ export default class RollControl {
         //this.actor;
         this.istoken=false;
 
+        this.powerfail=null;
+
      //   console.log(this.chat.data.flags);
       //  console.log(userId);
     }
@@ -334,6 +336,23 @@ export default class RollControl {
 
 
             
+                    }).on('click','a.swadetools-situational-link',(event)=>{
+                        let el=event.currentTarget;
+                        $(el).closest('.swadetools-targetwrap').find('.swadetools-situational-info').slideToggle();
+
+                        /* new Dialog({
+                            title: $(el).attr('data-title'),
+                            content: info,
+                            buttons: {
+                                ok: {
+                                    label: `<i class="fas fa-check"></i> ${gb.trans('OK')}`
+                                }
+                
+                                
+                            }
+                        }).render(true); */
+
+
                     }).ready(()=>{
                         this.scrollChat();/// force scroll
                     })
@@ -412,11 +431,44 @@ export default class RollControl {
                 
             } else {
                 let actorid=this.chat.data.flags["swade-tools"].useactor
-                return game.actors.get(actorid);
+                if (orToken){
+                    return canvas.tokens.placeables.filter(el=>el.actor._id==actorid)[0]
+                } else {
+                    return game.actors.get(actorid);
+                }
+                
             }
         
 
        
+    }
+
+
+    failedPower(item){
+        if (this.powerfail===null && item.type=='power'){
+            let rof=this.chat.data.flags["swade-tools"].userof;
+            this.powerfail=true;
+            
+            if (rof<2){
+                if (gb.raiseCount(this.roll.total,4)>=0){
+                    this.powerfail=false;
+                } 
+            } else {
+
+                let results=this.roll.terms[0].results;
+               // results.sort((a, b) => (a.result < b.result) ? 1 : -1)
+               
+                results.map(result=>{
+                    if (gb.raiseCount(result,4)>=0){
+                        this.powerfail=false;
+                    }
+                })
+               
+                
+            }
+        }
+
+        return this.powerfail;
     }
 
     attackTarget(target,total,rofnumb){
@@ -428,6 +480,7 @@ export default class RollControl {
 
         let print='';
         
+        let targetInfo='';
         
        // let rof=this.chat.data.flags["swade-tools"].userof;
 
@@ -461,34 +514,120 @@ export default class RollControl {
         
 
        // let vulBonus=0;
-       let vulIcon='';
-        let char=new Char(target.actor);
-        if (char.is('isVulnerable')){
-           
-            vulIcon=`<span class="swadetools-vulnerable-icon" title="${gb.trans('Vuln','SWADE')}"></span>`
-        }
-
-
+      // let vulIcon='';
        
 
+       
+      let raisecount;
 
        
         let targetNumber=4;
 
+        let targetRange=gb.getRange(this.getActor(true),target);
        
-        if (skill==gb.setting('fightingSkill')){
+        if (skill==gb.setting('fightingSkill') || targetRange==1){
             targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
+            if (skill!=gb.setting('fightingSkill')){
+                //Ranged Weapons in Melee
+                targetInfo+=`<li>${gb.trans('RangedInMelee')}</li>`;
+            } else {
+                /// using Fighting
+                if (gb.setting('gangUp')){
+                    let gangup=this.gangUp(this.getActor(true),target);
+                    if (gangup>0){
+
+                        let reason='';
+                        let char=new Char(target.actor);
+                        if (char.hasEdgeSetting('Improved Block')){
+                            gangup-=2
+                            reason=` (${gb.settingKeyName('Improved Block')})`
+                        } else if (char.hasEdgeSetting('Block')){
+                            gangup-=1
+                            reason=` (${gb.settingKeyName('Block')})`
+                        }
+
+                        if (gangup<0){
+                            gangup=0;
+                        }
+
+
+                        targetNumber-=gangup;
+                        targetInfo+=`<li>${gb.trans('gangUpBonus')}: +${gangup}${reason}</li>`;
+
+                        
+                    }
+                }
+            }
+        } else {
+
+        //// ranged attack
+
+            let char=new Char(target.actor);
+            if (char.hasEdgeSetting('Dodge')){
+                targetNumber+=2;
+                targetInfo+=`<li>${gb.settingKeyName('Dodge')}: -2`
+            }
+
+
+            if (item.data.data.range.includes('/')){
+                let distances=item.data.data.range.split('/')
+                let distancemod=0;
+                let toofar=false;
+                let extreme='';
+                let i=1;
+                console.log(targetRange);
+                distances.forEach(dist=>{
+                    dist=gb.realInt(dist);
+                    if (dist>0 && targetRange>Math.abs(dist)){
+                        if (i<3){
+                            distancemod+=2
+
+                        } else {
+                            
+                            extreme=` (${gb.trans('Extreme')})`;
+                            distancemod=8;
+                            if (targetRange>dist*4){
+                                toofar=true;
+                               
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    i++
+                })
+
+                if (distancemod){
+                    if (toofar){
+                        raisecount=-1;  // autofail 
+                        targetInfo+=`<li>${gb.trans('TargetTooFar')}</li>`;
+                    } else {
+                        targetNumber+=distancemod;
+                        targetInfo+=`<li>${gb.trans('Rng','SWADE')}: -${distancemod}${extreme}</li>`;
+                    }
+                }
+            }
+
+            
         }
 
 
-        let raisecount;
-        if (item.type=='power' && rof<2 && gb.raiseCount(total,targetNumber)<0) { /// failed power
+        let char=new Char(target.actor);
+        if (char.is('isVulnerable')){
+           targetInfo+=`<li>${target.name} ${gb.trans('IsVulnerable')}: +2</li>`;
+            targetNumber-=2;
+        }
+
+
+        //// distance modifier
+
+        
+        if (this.failedPower(item)) { /// failed power
             raisecount=-1 /// force failure
         } else {
 
-            if (vulIcon){
-                targetNumber-=2;
-            }
+            
     
             
             if (rof<2){
@@ -525,7 +664,7 @@ export default class RollControl {
        
         //data-swade-tools-action="rollTargetDmg:${this.actor._id},${this.itemid},${target.id},${raise}"
 
-        if (rof>1){
+      /*   if (rof>1){
 
             /// totaldie= this.roll.terms[0].results[i].result
             let showTargetNumber='';
@@ -534,9 +673,9 @@ export default class RollControl {
                 showTargetNumber=` (${targetNumber})`
                 showRaiseTargetNumber=` (${targetNumber+4})`
             }
-            print+=`<i class="fas fa-bullseye"></i><div class="swadetools-targetname">${target.name}${vulIcon}: <a class="swadetools-rolldamage swadetools-rof-hit" data-swadetools-raise=0 data-swadetools-targetid="${target.id}">${gb.trans('Targethit')}${showTargetNumber}</a> <span class="swadetools-bar">|</span> <a class="swadetools-rolldamage swadetools-rof-raise" data-swadetools-raise=1 data-swadetools-targetid="${target.id}">${gb.trans('Targetraise')}${showRaiseTargetNumber}</a></div>`
+            print+=`<i class="fas fa-bullseye"></i><div class="swadetools-targetname">${target.name}: <a class="swadetools-rolldamage swadetools-rof-hit" data-swadetools-raise=0 data-swadetools-targetid="${target.id}">${gb.trans('Targethit')}${showTargetNumber}</a> <span class="swadetools-bar">|</span> <a class="swadetools-rolldamage swadetools-rof-raise" data-swadetools-raise=1 data-swadetools-targetid="${target.id}">${gb.trans('Targetraise')}${showRaiseTargetNumber}</a></div>`
 
-        } else {
+        } else { */
 
         if (rollDmg){
             let raiseInt=0;
@@ -548,12 +687,17 @@ export default class RollControl {
             print+=`<i class="fas fa-times-circle"></i>`;
         }
 
-        print+=`<div class="swadetools-targetname">${target.name}${vulIcon}: ${gb.trans('Target'+addTarget)}</div>`
+        print+=`<div class="swadetools-targetname">${target.name}: ${gb.trans('Target'+addTarget)}</div>`
         
         if (rollDmg){
             print+=`</a>` 
         }
-    }
+   // }
+
+
+        if (targetInfo){
+            print+=`<a class="swadetools-situational-link" title="${gb.trans('SeeSituational')}"><i class="fa fa-question-circle"></i></a><div class="swadetools-situational-info" style="display:none"><ul>${targetInfo}</ul></div>`;
+        }
         print+=`</div>`;
 
 
@@ -966,5 +1110,89 @@ export default class RollControl {
         }
             return false;
         
+    }
+
+
+    /* getDisposition(token){
+        if (token.actor.data.type=='character'){ /// all pcs are friendly
+            return 'friend';
+        } else {
+            if (token.data.disposition==1){ // a friendly npc
+                return 'friend';
+            }
+
+            return 'enemy';
+        }
+    }
+ */
+    /// token.data.disposition
+    // disposition -1 friendly
+        // disposition 1 hostile
+
+    gangUp(attacker,target){
+        if (!attacker || !target 
+        || attacker.actor.data.type=='vehicle' || target.actor.data.type=='vehicle'
+        || attacker.data.disposition==target.data.disposition
+        || attacker.data.disposition==0
+        ) {
+          //  console.log('nothing');
+            return 0;
+        }
+
+
+        let all_around_target=canvas.tokens.placeables.filter(t=>
+            t.id!=attacker.id // not the attacker
+            && t.id!=target.id /// not the target
+            && t.visible  /// is visible         
+            && !t.combatant?.data.defeated /// not defeated
+            && t?.actor.data.data.status.isStunned===false /// not stunned    
+            && t?.actor.data.type!='vehicle'
+            && t.data.disposition!=0        
+            && gb.getRange(target,t)==1 /// adjacent
+        )
+
+      //  console.log('all_around',all_around_target.length)
+
+        if (!all_around_target.length){
+            return 0
+        }
+
+
+        let allies_of_attacker=all_around_target.filter(t=>
+             t.data.disposition==attacker.data.disposition 
+        )
+
+      //  console.log('allies_of_attacker',allies_of_attacker.length);
+
+        let allies_of_target=all_around_target.filter(t=>
+            t.data.disposition==target.data.disposition
+        )
+        
+      //  console.log('allies_of_target',allies_of_target.length);
+      
+        let helping_target=0;
+        if (allies_of_target.length){ ///see if any of them nullify something
+            allies_of_target.map(al=>{
+                let not_able=allies_of_attacker.filter(t=>
+                gb.getRange(al,t)==1
+                );
+                if (not_able.length){
+                    helping_target++
+                }
+            })
+        }
+
+       // console.log('helping',helping_target);
+
+        let gangup=allies_of_attacker.length-helping_target;
+
+        if (gangup>4){
+            gangup=4
+        }
+
+       // console.log('gangup',gangup);
+
+        return gangup;
+    
     }
 }

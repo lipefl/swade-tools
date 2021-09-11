@@ -90,7 +90,7 @@ button.swadetools-bennyrerroll {
     border: 1px solid #737171;
     border-radius: 3px;
     display: flex;
-   
+   flex-wrap:wrap;
     margin-bottom: 2px;
     align-items: center;
     background: #f3f3e7;
@@ -111,7 +111,7 @@ flex-wrap: wrap;
 
 .swadetools-rolldamage-style, .swadetools-applydamage {
     display: flex;
-    width:100%;
+    
     align-items: center;
     padding: 3px 5px;
 }
@@ -297,6 +297,30 @@ width: calc(100% - 40px);
             margin-left:auto;
             flex:1;
             max-width:100px;
+        }
+
+        .swadetools-situational-info {
+            width:100%;
+            color: #5a5959;
+    font-size: 12px;
+    padding:3px;
+        }
+
+        .swadetools-situational-info ul {
+            padding-top: 0;
+    padding-bottom: 0;
+    list-style-type: disc;
+   
+    margin: 0;
+        }
+
+        .swadetools-situational-link {
+            margin-left:auto;
+            color:black
+        }
+
+        .swadetools-term-hit .swadetools-situational-link, .swadetools-term-raise .swadetools-situational-link{
+            margin-right:3px
         }
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 

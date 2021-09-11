@@ -128,7 +128,21 @@
     "SWADETOOLS.Default":"Default",
     "SWADETOOLS.NoDmgActionDefined": "There's no damage defined in this item's action. The default damage was used (if defined).",
     "SWADETOOLS.UseSkillSelected": "Use Skill",
-    "SWADETOOLS.NoSkillQuestion": "don't have a skill. Would you like to use one?"
-
+    "SWADETOOLS.NoSkillQuestion": "don't have a skill. Would you like to use one?",
+    "SWADETOOLS.RangedInMelee":"Ranged Weapon in Melee: Using Parry",
+    "SWADETOOLS.IsVulnerable":"is Vulnerable",
+    "SWADETOOLS.SeeSituational":"See Situational Modifiers",
+    "SWADETOOLS.gangUpBonus":"Gang Up Bonus",
+    "SWADETOOLS.TargetTooFar":"Target is beyond Extreme Range",
+    "SWADETOOLS.Extreme":"Extreme Range",
+    "SWADETOOLS.SettingGangUp": "Calculate GangUp (create friendly PCs and hostile NPCs)",
+    "SWADETOOLS.SettingGangUpHint": "Using this option, Gang Up will be calculated automatically. New Characters (PC) will be marked as friendly in Token configurations and NPCs as hostile (you can alter this later, like in a NPC ally). If you want to fix all the current Actors, use the macro: PC Friendly / NPC Hostile",
+    "SWADETOOLS.FriendlyPCMacroQuestion": "This will turn all current characters (PCs) as friendly and NPCs as hostile in Prototype Token configurations. Proceed?",
+    "SWADETOOLS.FriendlyPCMacroOk": "All current PCs are friendly and NPCs hostile in Prototype Token!",
+    "SWADETOOLS.DodgeSetting": "Dodge",
+    "SWADETOOLS.BlockSetting": "Block",
+    "SWADETOOLS.ImprovedBlockSetting": "Improved Block",
+    "SWADETOOLS.FrenzySetting": "Frenzy"
+    
     
 }
