@@ -51,7 +51,8 @@ export default class StatusIcon {
     }
 
     noBasicActiveEffect(statusName){
-        if (this.entity.data.effects.filter(el=>el.data.flags.core.statusId==this.translateActiveEffect(statusName)).length>0){
+        
+        if (this.entity.data.effects.filter(el=>el.data.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
             return false;
         } else {
             return true;

@@ -9,7 +9,9 @@ import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
 import Char from './class/Char.js';
 
-//// NEXT TODO -> vantagens que interferem (Esquiva,Bloquear,Bloquear Aprimorado,Frenesi)
+//// NEXT TODO -> Scale and Size (see about Swat and Stomp - ignore scale)
+/// auto-check (and ask to include) CDT actions for weapons 
+
 // TODO - compat with better rolls
 // TODO - reload only X -> Deadlands ?
 

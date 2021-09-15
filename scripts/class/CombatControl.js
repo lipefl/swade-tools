@@ -270,7 +270,7 @@ export default class CombatControl {
         }
 
         if (char.is('isStunned')){
-            checkDistracted=false;
+          //  checkDistracted=false; => new rule
             checkVulnerable=false;
             this.unstunned(combatant);
         }

@@ -80,6 +80,9 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Bonus Macro to turn all your PCs Friendly and NPCs Hostile (to work with Gang Up)
 + New Edges automations: Block, Improved Block, Dodge, Frenzy
 
+**Fixes**
++ Stunned allows distracted to be removed at the end of next turn (as in the rules)
+
 More features will be added...
 
 ### Bonus: Macro
