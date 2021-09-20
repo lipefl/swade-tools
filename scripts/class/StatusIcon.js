@@ -52,7 +52,7 @@ export default class StatusIcon {
 
     noBasicActiveEffect(statusName){
         
-        if (this.entity.data.effects.filter(el=>el.data.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
+        if (statusName && this.entity.data.effects.filter(el=>el.data.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
             return false;
         } else {
             return true;
@@ -128,11 +128,14 @@ export default class StatusIcon {
 
 
     translateActiveEffect(statusName){
+        if (!statusName){
+            return false;
+        }
         return statusName.substring(2).toLowerCase();///remove is and put in lowercase
     }
 
     removeActiveEffects(statusName){ /// also remove Active Effect
-        let idstat=this.entity.data.effects.filter(el=>el.data.flags.core.statusId==this.translateActiveEffect(statusName))[0]?._id;
+        let idstat=this.entity.data.effects.filter(el=>el.data.flags?.core?.statusId && el.data.flags?.core?.statusId==this.translateActiveEffect(statusName))[0]?._id;
         if (idstat){
             this.entity.deleteEmbeddedDocuments('ActiveEffect',[idstat]);
         }

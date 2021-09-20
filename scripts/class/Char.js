@@ -7,23 +7,29 @@ export default class Char {
         this.entity=entity;
         this.bennies=null;
         this.gmBenny=false;
-        this.istoken=istoken;
+        this.istoken=false; /// foundry change
         this.isvehicle=false;
        
       //  this.update={}
 
      // console.log(entity);
 
-        if (entity.actorData) { /// target token
+        /* if (entity.actorData) { /// target token
             this.entity=canvas.tokens.get(entity._id)
             this.istoken=true;
         } 
 
         if (!istoken && this.entity.actor!==undefined){
+            console.log(this.entity.actor);
             this.istoken=true;
+        } */
+
+        
+        if (this.entity.actor!==undefined){
+            this.entity=this.entity.actor;
         }
 
-       // console.log(this.entity);
+      // console.log(this.entity);
         if (this.getActor().data.type=='vehicle'){
             this.isvehicle=true;
         }
@@ -167,7 +173,7 @@ export default class Char {
             dataupdate[prefix+i]=dataobj[i]
         }
 
-       // console.log(dataupdate);
+    //   console.log(dataupdate);
        entity.update(dataupdate);
         }
     }
@@ -184,7 +190,7 @@ export default class Char {
   
 
     off(statusName){
-     //   console.log(statusName,this.is(statusName));
+     //  console.log(statusName,this.is(statusName),'off');
         if (this.is(statusName)){
             this.update('status.'+statusName,false);
            // this.actor.update({['data.status.'+statusName]:false})
@@ -193,7 +199,7 @@ export default class Char {
     }
 
     on(statusName){
-      //  console.log(statusName,this.is(statusName));
+     //   console.log(statusName,this.is(statusName),'on');
         if (!this.is(statusName)){
            this.update('status.'+statusName,true);
           //  this.actor.update({['data.status.'+statusName]:true})

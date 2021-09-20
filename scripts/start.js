@@ -153,7 +153,10 @@ Hooks.on("createActiveEffect", (effect, diff) => {
     let actor=effect.parent; 
     
     let char=new Char(actor);
-    char.activeEffect(effect.data.flags.core.statusId,false);
+    if (effect.data.flags?.core?.statusId){
+        char.activeEffect(effect.data.flags.core.statusId,false);
+    }
+    
 
     
 
@@ -165,7 +168,9 @@ Hooks.on("deleteActiveEffect", (effect,diff)=>{
     let actor=effect.parent; 
     
     let char=new Char(actor);
+    if (effect.data.flags?.core?.statusId){
     char.activeEffect(effect.data.flags.core.statusId,true);
+    }
 })
 
 
@@ -368,12 +373,29 @@ Hooks.on('ready',()=>{ /// disable autoInit
 //var dontStart=false;
 let cbt=new CombatControl;
 
-Hooks.on('updateCombat',combat=>{
+Hooks.on('updateCombat',async (entity,data,options,userid)=>{
+  //  console.log(JSON.parse(JSON.stringify(entity)))
     if (foundryIsReady && gb.mainGM()){
-    cbt.setCombat(combat.id);  
+    let combatdata=await entity;
+    cbt.setCombat(combatdata.id);  
     //cbt.jokersWild(combat);
-    cbt.endTurn(combat.combatants.find(el=>el.id==combat.previous.combatantId));
-    cbt.startTurn(combat.combatants.find(el=>el.id==combat.current.combatantId));
+   
+    if (combatdata.current.round!=combatdata.previous.round){
+      //  console.log('new round');
+        setTimeout(async()=>{ /// silver tape => combat not updating correctly on new round
+            combatdata=game.combats.get(combatdata.id);
+            await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
+            await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
+        },500)
+      //  console.log(combatdata.current.combatantId);
+       // console.log(entity.current.combatantId);
+        
+    } else {
+        await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
+        await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
+    }
+   
+    
     }
 });
 

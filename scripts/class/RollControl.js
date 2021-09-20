@@ -575,7 +575,7 @@ export default class RollControl {
                 let toofar=false;
                 let extreme='';
                 let i=1;
-                console.log(targetRange);
+               // console.log(targetRange);
                 distances.forEach(dist=>{
                     dist=gb.realInt(dist);
                     if (dist>0 && targetRange>Math.abs(dist)){
