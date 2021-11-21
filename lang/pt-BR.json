@@ -142,5 +142,7 @@
     "SWADETOOLS.DodgeSetting": "Esquiva",
     "SWADETOOLS.BlockSetting": "Bloquear",
     "SWADETOOLS.ImprovedBlockSetting": "Bloquear Aprimorado",
-    "SWADETOOLS.FrenzySetting": "Frenesi"
+    "SWADETOOLS.FrenzySetting": "Frenesi",
+    "SWADETOOLS.SettingShowSituational": "Sempre mostrar modificadores situacionais do alvo",
+    "SWADETOOLS.SettingShowSituationalHint": "Com essa opção ativada, os modificadores do alvo ficarão sempre visíveis, sem precisar clicar em (?)"
 }

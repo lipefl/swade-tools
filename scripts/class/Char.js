@@ -149,8 +149,11 @@ export default class Char {
     }
 
 
-    rollTable(table){
-        let sort=table.roll();
+    async rollTable(table){
+        let sort=await table.roll();
+
+        console.log(sort);
+
         let chatData={
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: this.getActor() })

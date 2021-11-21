@@ -6,29 +6,30 @@ export default class SystemRoll {
     }
 
 
-    rollDamage(itemId){
-      //  this.addJokerModifier();          
-        this.actor.items.get(itemId).rollDamage().then(()=>{
-            Hooks.once("renderChatMessage", (chat, html,data) => { 
-                if (data.user.id==game.user.id){
-                chat.update({'flags.swade-tools.rolltype':'damage'});
-                }
-               
-            })
-        });
+   async rollDamage(itemId){
+      //  this.addJokerModifier(); 
+      await   Hooks.once("renderChatMessage", (chat, html,data) => { 
+        if (data.user.id==game.user.id){
+        chat.update({'flags.swade-tools.rolltype':'damage'});
+        }
+       
+    })        
+        this.actor.items.get(itemId).rollDamage()
         
     }
 
-    rollSkill(skillId){
+    async rollSkill(skillId){
        
          //   this.addJokerModifier();  
-            this.actor.rollSkill(skillId).then(()=>{
-                Hooks.once("renderChatMessage", (chat, html,data) => { 
-                    if (data.user.id==game.user.id){
-                    chat.update({'flags.swade-tools.rolltype':'skill'});
-                    }
-                })
-            });
+         await Hooks.once("renderChatMessage", (chat, html,data) => { 
+            console.log(data);
+            if (data.user.id==game.user.id){
+            chat.update({'flags.swade-tools.rolltype':'skill'});
+            }
+        })
+           this.actor.rollSkill(skillId)/* .then(()=>{ */
+                
+            /* }).catch(()=>{console.log('catch')}); */
         
     }
 
@@ -40,17 +41,16 @@ export default class SystemRoll {
         }
     } */
 
-    rollAtt(attribute){
+    async rollAtt(attribute){
     
-           // this.addJokerModifier();           
-            this.actor.rollAttribute(attribute).then(()=>{
-                Hooks.once("renderChatMessage", (chat, html,data) => { 
-                    if (data.user.id==game.user.id){
-                    chat.update({'flags.swade-tools.rolltype':'attribute'});
-                    }
-                   
-                })
-            });
+           // this.addJokerModifier();   
+           await Hooks.once("renderChatMessage", (chat, html,data) => { 
+            if (data.user.id==game.user.id){
+            chat.update({'flags.swade-tools.rolltype':'attribute'});
+            }
+           
+        })        
+            this.actor.rollAttribute(attribute)
         
     }
 }

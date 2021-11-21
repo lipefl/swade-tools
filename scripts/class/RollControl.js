@@ -32,11 +32,15 @@ export default class RollControl {
 
 
     doActions(){
+
+     //   console.log('calling do actions');
         
         if (!this.isCritical()){
             this.addBennyButton();
             this.findTargets();
         } else {
+
+            
 
             if (gb.settingKeyName('Dumb Luck')){
                 this.addBennyButton();
@@ -523,7 +527,7 @@ export default class RollControl {
        
         let targetNumber=4;
 
-        let targetRange=gb.getRange(this.getActor(true),target);
+        let targetRange=gb.getRange(this.getActor(true),target)*canvas.dimensions.distance; /// use Grid Scale for distance (but not for gang up)
        
         if (skill==gb.setting('fightingSkill') || targetRange==1){
             targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
@@ -696,7 +700,12 @@ export default class RollControl {
 
 
         if (targetInfo){
-            print+=`<a class="swadetools-situational-link" title="${gb.trans('SeeSituational')}"><i class="fa fa-question-circle"></i></a><div class="swadetools-situational-info" style="display:none"><ul>${targetInfo}</ul></div>`;
+
+            let displaycss=' style="display:none" ';
+            if (gb.setting('alwaysShowSituational')){
+                displaycss='';
+            }
+            print+=`<a class="swadetools-situational-link" title="${gb.trans('SeeSituational')}"><i class="fa fa-question-circle"></i></a><div class="swadetools-situational-info" ${displaycss}><ul>${targetInfo}</ul></div>`;
         }
         print+=`</div>`;
 
@@ -968,6 +977,8 @@ export default class RollControl {
 
     addBennyButton(){
 
+        
+
         if (this.rolltype!==undefined && this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
         this.html.append('<div class="swadetools-relative"><button class="swadetools-bennyrerroll" title="'+gb.trans('RerollBtn')+'"></button></div>').on('click','button.swadetools-bennyrerroll',()=>{
             
@@ -1140,8 +1151,10 @@ export default class RollControl {
         }
 
 
+
         let all_around_target=canvas.tokens.placeables.filter(t=>
             t.id!=attacker.id // not the attacker
+            && !(attacker.actor.isToken===false && attacker.actor.id==t.actor.id)
             && t.id!=target.id /// not the target
             && t.visible  /// is visible         
             && !t.combatant?.data.defeated /// not defeated
@@ -1151,7 +1164,7 @@ export default class RollControl {
             && gb.getRange(target,t)==1 /// adjacent
         )
 
-      //  console.log('all_around',all_around_target.length)
+       console.log('all_around',all_around_target.length)
 
         if (!all_around_target.length){
             return 0
@@ -1162,13 +1175,13 @@ export default class RollControl {
              t.data.disposition==attacker.data.disposition 
         )
 
-      //  console.log('allies_of_attacker',allies_of_attacker.length);
+       console.log('allies_of_attacker',allies_of_attacker.length);
 
         let allies_of_target=all_around_target.filter(t=>
             t.data.disposition==target.data.disposition
         )
         
-      //  console.log('allies_of_target',allies_of_target.length);
+        console.log('allies_of_target',allies_of_target.length);
       
         let helping_target=0;
         if (allies_of_target.length){ ///see if any of them nullify something
@@ -1182,7 +1195,7 @@ export default class RollControl {
             })
         }
 
-       // console.log('helping',helping_target);
+        console.log('helping',helping_target);
 
         let gangup=allies_of_attacker.length-helping_target;
 

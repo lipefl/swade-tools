@@ -67,6 +67,8 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + If the weapon has multiple damage action, you can change the damage to roll after Hit/Raise instead of default damage
 + Jokers Wild removed from swade tools (since swade system option is now fully functional)
 + Item asks for a skill when the skill field is empty (and save the choice for future rolls)
++ "Count PP" option removed in favor of system setting "No Power Points"
++ New option to always show Situational Modifiers for target
 
 **Fixes**
 + Combat automation remade (it wasn't working with the new swade system initiative)

@@ -375,20 +375,65 @@ let cbt=new CombatControl;
 
 Hooks.on('updateCombat',async (entity,data,options,userid)=>{
   //  console.log(JSON.parse(JSON.stringify(entity)))
+  //console.log(entity);
     if (foundryIsReady && gb.mainGM()){
-    let combatdata=await entity;
-    cbt.setCombat(combatdata.id);  
+    let combatdata=entity;
+    let combatid=combatdata.id;
+    cbt.setCombat(combatid);  
+    
     //cbt.jokersWild(combat);
    
     if (combatdata.current.round!=combatdata.previous.round){
       //  console.log('new round');
-        setTimeout(async()=>{ /// silver tape => combat not updating correctly on new round
+       /*  setTimeout(async()=>{ /// silver tape => combat not updating correctly on new round
             combatdata=game.combats.get(combatdata.id);
             await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
             await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
-        },500)
+        },500) */
       //  console.log(combatdata.current.combatantId);
        // console.log(entity.current.combatantId);
+
+       await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
+       let init=0;
+       let first=false;
+       let csize=combatdata.combatants.size;
+       let i=0;
+       let combatantsids=new Array;
+       let suit=0;
+     //  console.log(combatdata.combatants);
+
+       let firstPlayer=Hooks.on('updateCombatant',async(combatant,initdata)=>{
+       //   console.log(combatant,initdata);
+           // console.log(size);
+           
+            if (initdata.initiative!==null){
+                if (!combatantsids.includes(combatant.id)){
+                    combatantsids.push(combatant.id);
+                    i++;
+
+                    if (initdata.flags.swade.cardValue>init ||
+                        initdata.flags.swade.cardValue==init && initdata.flags.swade.suitValue>suit
+                        ){                   
+                        first=combatant.id;
+                        init=initdata.flags.swade.cardValue;
+                        suit=initdata.flags.swade.suitValue;
+                    }
+    
+                    if (i==csize){
+                        Hooks.off('updateCombatant',firstPlayer);
+                        await cbt.startTurn(combatdata.combatants.find(el=>el.id==first));
+                    }
+                }
+                
+                
+             //   console.log(i);
+              
+            }
+
+           
+       })
+
+       
         
     } else {
         await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));

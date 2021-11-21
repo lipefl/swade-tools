@@ -66,7 +66,7 @@ export default class CharRoll extends BasicRoll{
             mod=this.addDiceModifier(mod); // add the plus
             this.reasons.push(`${reason}: ${mod}`);
         } else {
-        mod=gb.realInt(mod);
+        mod=gb.realInt(eval(mod));
         if (mod!=0){
         this.mod+=mod;
         
@@ -252,7 +252,7 @@ export default class CharRoll extends BasicRoll{
             this.manageshots=countshots;
         }
         
-        if (countshots && item.type=="power" && gb.setting('countPP')){
+        if (countshots && item.type=="power" && !gb.systemSetting('noPowerPoints')){
             this.manageshots=countshots;
         }
         
@@ -278,7 +278,7 @@ export default class CharRoll extends BasicRoll{
 
     powerCount(){
 
-        if (gb.setting('countPP') && this.item && this.rolltype=='skill' && this.item.type=='power'){
+        if (!gb.systemSetting('noPowerPoints') && this.item && this.rolltype=='skill' && this.item.type=='power'){
             let ppspent=1;
 
             if (this.raiseCount()>=0){

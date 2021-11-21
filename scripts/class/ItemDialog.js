@@ -135,7 +135,7 @@ export default class ItemDialog {
 
        
         
-        if (gb.setting('countPP') && item.type=='power'){
+        if (!gb.systemSetting('noPowerPoints') && item.type=='power'){
             content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${gb.trans('ExtraPP')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('PPHint')}"></i></label><input type="text" id="extrapp" value="">
             </div>`
         }

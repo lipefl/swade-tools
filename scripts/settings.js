@@ -26,14 +26,14 @@ export const registerSettings=()=>{
 		config: true
     });  */
     
-    game.settings.register(gb.moduleName, 'countPP', {
+    /* game.settings.register(gb.moduleName, 'countPP', {
 		name: gb.trans('SettingUsePP'),
 		hint: gb.trans('SettingUsePPHint'),
 		default: true,
 		scope: "world",
 		type: Boolean,
 		config: true
-    });
+    }); */
 
     game.settings.register(gb.moduleName, 'itemNameClick', {
 		name: gb.trans('SettingsItemNameClick'),
@@ -156,5 +156,14 @@ game.settings.register(gb.moduleName, 'gangUp', {
   type: Boolean,
   config: true
   });
+
+  game.settings.register(gb.moduleName, 'alwaysShowSituational', {
+    name: gb.trans('SettingShowSituational'),
+    hint: gb.trans('SettingShowSituationalHint'),
+    default: false,
+    scope: "world",
+    type: Boolean,
+    config: true
+    });
 
 }
