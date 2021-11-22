@@ -143,6 +143,7 @@
     "SWADETOOLS.BlockSetting": "Block",
     "SWADETOOLS.ImprovedBlockSetting": "Improved Block",
     "SWADETOOLS.FrenzySetting": "Frenzy",
+    "SWADETOOLS.FormationFighterSetting": "Formation Fighter",
     "SWADETOOLS.SettingShowSituational": "Always show Situational Modifiers for target",
     "SWADETOOLS.SettingShowSituationalHint": "With this option checked, targets' modifiers will be always visible, no need to click at (?)"
     

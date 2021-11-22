@@ -1197,7 +1197,12 @@ export default class RollControl {
 
         console.log('helping',helping_target);
 
-        let gangup=allies_of_attacker.length-helping_target;
+        let formation_allies_of_attacker = allies_of_attacker.filter(al=>{
+            let alChar = new Char(al)
+            return alChar.hasEdgeSetting('Formation Fighter')
+        })
+
+        let gangup=allies_of_attacker.length+formation_allies_of_attacker.length-helping_target;
 
         if (gangup>4){
             gangup=4
