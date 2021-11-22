@@ -53,6 +53,16 @@ export default class Char {
         }
     }
 
+    hasAbilitySetting(abilityName){
+        
+        let ability=this.getActor().items.filter(el=>el.type=='ability' && el.name.trim()==gb.settingKeyName(abilityName).trim());
+        if (ability && ability.length>0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     data(key){ // after data.data
       //  console.log(this.getActor());
        // console.log(key,this.getActor().data[key]);

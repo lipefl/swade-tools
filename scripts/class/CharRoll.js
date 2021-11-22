@@ -40,6 +40,7 @@ export default class CharRoll extends BasicRoll{
        this.flagUpdate={};
 
        this.edgemod=0;
+       this.abilityMod=0;
        this.vehicle=false;
 
       
@@ -87,6 +88,16 @@ export default class CharRoll extends BasicRoll{
             if (char.hasEdgeSetting(edge)){
                 this.addModifier(mod,gb.settingKeyName(edge))
                 this.edgemod=mod;
+            }
+        }
+    }
+
+    addAbilityModifier(ability,mod){
+        if (mod>this.abilityMod){
+            let char=new Char(this.actor);
+            if (char.hasAbilitySetting(ability)){
+                this.addModifier(mod,gb.settingKeyName(ability))
+                this.abilityMod=mod;
             }
         }
     }
