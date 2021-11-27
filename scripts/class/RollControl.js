@@ -1164,7 +1164,7 @@ export default class RollControl {
             && gb.getRange(target,t)==1 /// adjacent
         )
 
-       console.log('all_around',all_around_target.length)
+     //  console.log('all_around',all_around_target.length)
 
         if (!all_around_target.length){
             return 0
@@ -1175,13 +1175,13 @@ export default class RollControl {
              t.data.disposition==attacker.data.disposition 
         )
 
-       console.log('allies_of_attacker',allies_of_attacker.length);
+     //  console.log('allies_of_attacker',allies_of_attacker.length);
 
         let allies_of_target=all_around_target.filter(t=>
             t.data.disposition==target.data.disposition
         )
         
-        console.log('allies_of_target',allies_of_target.length);
+     //   console.log('allies_of_target',allies_of_target.length);
       
         let helping_target=0;
         if (allies_of_target.length){ ///see if any of them nullify something
@@ -1195,7 +1195,7 @@ export default class RollControl {
             })
         }
 
-        console.log('helping',helping_target);
+     //   console.log('helping',helping_target);
 
         let formation_allies_of_attacker = allies_of_attacker.filter(al=>{
             let alChar = new Char(al)

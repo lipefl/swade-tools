@@ -20,7 +20,7 @@ export default class Char {
         } 
 
         if (!istoken && this.entity.actor!==undefined){
-            console.log(this.entity.actor);
+        //    console.log(this.entity.actor);
             this.istoken=true;
         } */
 
@@ -55,7 +55,7 @@ export default class Char {
 
     hasAbilitySetting(abilityName){
         
-        let ability=this.getActor().items.filter(el=>el.type=='ability' && el.name.trim()==gb.settingKeyName(abilityName).trim());
+        let ability=this.getActor().items.filter(el=>(el.type=='ability' || el.type=='edge') && el.name.trim()==gb.settingKeyName(abilityName).trim());
         if (ability && ability.length>0){
             return true;
         } else {
@@ -162,7 +162,7 @@ export default class Char {
     async rollTable(table){
         let sort=await table.roll();
 
-        console.log(sort);
+      //  console.log(sort);
 
         let chatData={
             user: game.user._id,

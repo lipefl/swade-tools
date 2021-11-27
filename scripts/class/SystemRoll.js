@@ -22,14 +22,12 @@ export default class SystemRoll {
        
          //   this.addJokerModifier();  
          await Hooks.once("renderChatMessage", (chat, html,data) => { 
-            console.log(data);
+           // console.log(data);
             if (data.user.id==game.user.id){
             chat.update({'flags.swade-tools.rolltype':'skill'});
             }
         })
-           this.actor.rollSkill(skillId)/* .then(()=>{ */
-                
-            /* }).catch(()=>{console.log('catch')}); */
+           this.actor.rollSkill(skillId)
         
     }
 
