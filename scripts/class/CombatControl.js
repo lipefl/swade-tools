@@ -150,8 +150,8 @@ export default class CombatControl {
         
 
         charRoll.addEdgeModifier('Combat Reflexes',2)
-        charRoll.addEdgeModifier('Undead',2)
-        charRoll.addEdgeModifier('Construct',2)
+        charRoll.addAbilityModifier('Undead',2)
+        charRoll.addAbilityModifier('Construct',2)
 
 
         
