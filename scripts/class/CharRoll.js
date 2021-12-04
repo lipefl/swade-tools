@@ -110,15 +110,19 @@ export default class CharRoll extends BasicRoll{
             this.addModifier(-2,gb.trans("Distr","SWADE"));
         }
 
+       
         let woundmod=this.actor.data.data.wounds.value-this.actor.data.data.wounds.ignored;
+        
         if (woundmod>0){            
             this.addModifier(0-woundmod,gb.trans("Wounds","SWADE"));
         }
 
-        let fatiguemod=this.actor.data.data.fatigue.value
+        
+        let fatiguemod=this.actor.data.data.fatigue.value        
         if (fatiguemod){
             this.addModifier(0-fatiguemod,gb.trans("Fatigue","SWADE"));
         }
+        
     }
 
         if (game.combat){ /// search for joker
@@ -171,7 +175,7 @@ export default class CharRoll extends BasicRoll{
             this.countShots();
         }
 
-       
+      
         this.rolltype='skill';
         this.skillName=skillName;
        
@@ -181,6 +185,7 @@ export default class CharRoll extends BasicRoll{
         let wildDie=false;
 
         this.baseModifiers();
+        
 
         if (item===undefined){
             skillName=`${gb.trans('Unskilled')} (${skillName})`;
@@ -201,7 +206,7 @@ export default class CharRoll extends BasicRoll{
             this.addModifier(item.data.data.die.modifier,gb.trans('ModSkill'))     
         }
         
-       
+        
         
         this.addFlag('skill',skillName);
         
@@ -209,7 +214,7 @@ export default class CharRoll extends BasicRoll{
         this.flavor+=`<div>${skillName}</div>`;
 
         
-       
+        
         
 
       //  console.log(this.mod);
@@ -256,7 +261,7 @@ export default class CharRoll extends BasicRoll{
       </header>
     
     <div class="card-content" style="display:none">
-        ${item.data.data.description}
+        ${TextEditor.enrichHTML(item.data.data.description)}
       </div></div>`;
 
         if (gb.systemSetting('ammoManagement') && countshots && item.type=="weapon"){
@@ -392,26 +397,38 @@ export default class CharRoll extends BasicRoll{
     noShotsMsg(item){
        // let char=new Char(this.actor);
 
+       let buttons = {
+        cancel: {
+            label: `<i class="fas fa-times"></i> ${gb.trans('Cancel','SWADE')}`,
+            callback: ()=>{
+               
+            }
+        },
+        ok: {
+            label: `<i class="fas fa-redo"></i> ${gb.trans('Reload','SWADE')}`,
+            callback: ()=>{
+                gb.rechargeWeapon(this.actor,this.item);
+
+            }
+        }
+
+        
+    }
+
+    if (gb.setting('reloadX')){
+        buttons.x={
+            label: `<i class="fas fa-spinner"></i> ${gb.trans('Reload','SWADE')} X`,
+            callback: ()=>{
+                gb.rechargeWeaponXDialog(this.actor,this.item);
+
+            }
+        }
+    }
+
         new Dialog({
             title: item.name,
             content: `<p>${item.name} ${gb.trans('NotEnoughShots')}</p>`,
-            buttons: {
-                cancel: {
-                    label: `<i class="fas fa-times"></i> ${gb.trans('Cancel','SWADE')}`,
-                    callback: ()=>{
-                       
-                    }
-                },
-                ok: {
-                    label: `<i class="fas fa-redo"></i> ${gb.trans('Reload','SWADE')}`,
-                    callback: ()=>{
-                        gb.rechargeWeapon(this.actor,this.item);
-
-                    }
-                }
-
-                
-            }
+            buttons: buttons
         }).render(true);
 
       //  char.say(`${item.name} ${gb.trans('NotEnoughShots')} <button  class="swadetools-simplebutton" data-swade-tools-action="rechargeWeapon:${this.actor._id},${item._id}">${gb.trans('RechargeQuestion')}</button>`);
@@ -487,6 +504,7 @@ export default class CharRoll extends BasicRoll{
         
     }
 
+    
   
     addFlag(key,value){
         this.flagUpdate[key]=value;
@@ -494,7 +512,7 @@ export default class CharRoll extends BasicRoll{
 
     autoItemFlags(){
         if (this.item){
-            this.addFlag('itemroll',this.item._id);
+            this.addFlag('itemroll',this.item.id); /// removed _id
             this.addFlag('useactor',this.actor.id);
             this.addFlag('rolltype',this.rolltype);
             this.addFlag('userof',this.rof);
@@ -539,6 +557,11 @@ export default class CharRoll extends BasicRoll{
             dataformodules=`<div style="display:none" data-item-id="${this.item.id}" data-actor-id="${actorid}" ${datatoken}></div>` //maestro etc
         }
         
+        if (this.item){
+            Hooks.call('swadeAction', this.actor, this.item);  /// all item rolls -> can be used for hit/damage (itemDialog) => search for "new itemRoll"
+        }
+
+       
 
         this.autoItemFlags();
 
@@ -547,11 +570,11 @@ export default class CharRoll extends BasicRoll{
         if (this.flagUpdate){
             updateFlags={'swade-tools':this.flagUpdate}
 
-         //   console.log(updateFlags);
+         //  console.log(updateFlags);
         }
 
         let chatData = {
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
          //content: 'this is plus',
          flags: updateFlags,

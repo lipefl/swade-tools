@@ -38,7 +38,9 @@ export default class StatusIcon {
 
     addOptions(){
 
-        if (gb.setting('defaultStatusIcons')){
+        if (gb.setting('defaultStatusIcons')=='system'
+        || gb.setting('defaultStatusIcons')=='1' /// old setting
+        ){
         this.statuses=[
         {stat: 'isShaken', icon: 'systems/swade/assets/icons/status/status_shaken.svg'},
         {stat: 'isDistracted', icon: 'systems/swade/assets/icons/status/status_distracted.svg'},
@@ -61,6 +63,9 @@ export default class StatusIcon {
 
     applyEffect(icon,active,overlay=false){
 
+
+        if (gb.setting('defaultStatusIcons')!='none'){
+
        let stat=this.statuses.filter(el=>el.icon==icon)[0]?.stat;
 
     if (!active || this.noBasicActiveEffect(stat)){
@@ -69,6 +74,8 @@ export default class StatusIcon {
            token.toggleEffect(icon,{active:active,overlay:overlay}) 
         })
     }
+
+}
        /*  if (this.entityType=='actor'){
             this.entity.getActiveTokens().map((token)=>{
                 

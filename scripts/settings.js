@@ -1,5 +1,6 @@
 import SettingName from './class/SettingName.js';
 import SettingRules from './class/SettingRules.js';
+import SettingCustom from './class/SettingCustom.js';
 import * as gb from './gb.js';
 
 export const registerSettings=()=>{
@@ -41,17 +42,17 @@ export const registerSettings=()=>{
 		default: false,
 		scope: "world",
 		type: Boolean,
-		config: true
+		config: false
     });
 
 
     game.settings.register(gb.moduleName, 'defaultStatusIcons', {
 		name: gb.trans('SettingsDefaultStatus'),
 		hint: gb.trans('SettingsDefaultStatusHint'),
-		default: false,
+		default: '',
 		scope: "world",
-		type: Boolean,
-		config: true
+		type: String,
+		config: false
     });
 
 
@@ -70,7 +71,7 @@ export const registerSettings=()=>{
       default: false,
       scope: "world",
       type: Boolean,
-      config: true
+      config: false
       });
 
 
@@ -91,6 +92,16 @@ export const registerSettings=()=>{
       type: SettingRules,
       restricted: true
   });
+
+
+  game.settings.registerMenu(gb.moduleName,'settingCustom',{
+    name: gb.trans('settingCustom'),
+    label: gb.trans('settingCustomButton'),
+    hint: gb.trans('settingCustomHint'),
+    icon: 'fas fa-user-check',
+    type: SettingCustom,
+    restricted: true
+});
 
 
     gb.edgesNaming.map((value)=>{
@@ -154,8 +165,27 @@ game.settings.register(gb.moduleName, 'gangUp', {
   default: true,
   scope: "world",
   type: Boolean,
-  config: true
+  config: false
   });
+
+  game.settings.register(gb.moduleName, 'useScale', {
+    name: gb.trans('SettingScale'),
+    hint: gb.trans('SettingScaleHint'),
+    default: true,
+    scope: "world",
+    type: Boolean,
+    config: false
+    });
+
+
+    game.settings.register(gb.moduleName, 'reloadX', {
+      name: gb.trans('SettingReloadX'),
+      hint: gb.trans('SettingReloadXHint'),
+      default: false,
+      scope: "world",
+      type: Boolean,
+      config: false
+      });
 
   game.settings.register(gb.moduleName, 'alwaysShowSituational', {
     name: gb.trans('SettingShowSituational'),
@@ -163,7 +193,15 @@ game.settings.register(gb.moduleName, 'gangUp', {
     default: false,
     scope: "world",
     type: Boolean,
-    config: true
+    config: false
     });
 
+    game.settings.register(gb.moduleName, 'noStatusAutoRoll', {
+      name: gb.trans('SettingNoAutoRoll'),
+      hint: gb.trans('SettingNoAutoRollHint'),
+      default: false,
+      scope: "world",
+      type: Boolean,
+      config: false
+      });
 }

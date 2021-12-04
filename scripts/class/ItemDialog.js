@@ -144,6 +144,21 @@ export default class ItemDialog {
             content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="raise" value="1"><strong>${gb.trans('RaiseDmg')}</strong></label></div>`;
         }
 
+        
+        if (gb.setting('useScale')){ ///swat
+            let char=new Char(this.actor);
+            if (char.hasAbilitySetting('Swat')){
+                content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="swat" value="1"><strong>${gb.trans('SwatSetting')}</strong></label></div>`;
+            }
+
+        }
+
+
+        if (weaponactions.skill==gb.setting('fightingSkill')){ /// wild attack
+            content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="wildattack" value="1"><strong>${gb.trans('WildAttack')}</strong></label></div>`;
+
+        }
+
         if (damageActions.length>0){
             content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>Dano:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ActDmgHint')}"></i></label> <select id="actiondmg">
             <option value="">${gb.trans('Default')}</option>`;
@@ -240,15 +255,26 @@ export default class ItemDialog {
 
     if (weaponinfo.shots>0 && !weaponinfo.autoReload){
         buttons.reload={
-            label: gb.trans('Reload','SWADE'),
+            label: `<i class="fas fa-redo"></i> `+gb.trans('Reload','SWADE'),
             callback: ()=> {
                 gb.rechargeWeapon(this.actor,this.item);
+            }
+        }
+
+        if (gb.setting('reloadX')){
+            
+            buttons.reloadx={
+                label: `<i class="fas fa-spinner"></i> `+gb.trans('Reload','SWADE')+' X',
+                callback: ()=> {
+                    /// ask how many bullets
+                    gb.rechargeWeaponXDialog(this.actor,this.item);
+                }
             }
         }
     }
 
         if (skillName==gb.setting('fightingSkill')){
-            buttons.wildattack={
+           /*  buttons.wildattack={
                 label: gb.trans('WildAttack'),
                 callback: (html)=>{
                     let itemRoll=new ItemRoll(this.actor,this.item);
@@ -256,12 +282,12 @@ export default class ItemDialog {
             //    console.log(this.item);
                     this.processItemFormDialog(html,itemRoll);
                     
-                    itemRoll.addModifier(2,gb.trans('WildAttack'));
+                   
                     itemRoll.rollBaseSkill();                  
                     itemRoll.wildAttack();
                     itemRoll.display();
                 }
-            }
+            } */
 
             let char=new Char(this.actor);
             if (char.hasEdgeSetting('Frenzy')){
@@ -420,6 +446,16 @@ export default class ItemDialog {
             if (html.find("#raise")[0]?.checked){
                 charRoll.raiseDmg();
             } 
+
+
+            if (html.find("#wildattack")[0]?.checked){
+                charRoll.addModifier(2,gb.trans('WildAttack'));
+                charRoll.wildAttack();
+            } 
+
+            if (html.find("#swat")[0]?.checked){
+                charRoll.addFlag('useswat',1);
+            } 
         
             if (html.find('#extrapp')[0]){
                 charRoll.usePP(html.find('#extrapp')[0].value);
@@ -428,6 +464,8 @@ export default class ItemDialog {
             if (html.find('#actiondmg')[0] && html.find('#actiondmg')[0].value!=''){
                 charRoll.useDamageAction(html.find('#actiondmg')[0].value);
             }
+
+            
         
     }
 }

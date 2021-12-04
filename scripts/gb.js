@@ -7,7 +7,7 @@ export const moduleName='swade-tools'
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
 export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter'];
-export const abilitiesNaming=['Construct','Hardy','Undead'];
+export const abilitiesNaming=['Construct','Hardy','Undead','Swat'];
 export const settingRules=['Dumb Luck','Hard Choices','Unarmored Hero','Wound Cap'];
 
 
@@ -22,6 +22,9 @@ export const stIcons=[
     {stat: 'isEntangled', icon: 'modules/swade-tools/icons/entangled.png'},
     {stat: 'isBound', icon: 'modules/swade-tools/icons/bound.png'}
 ]
+
+
+
 
 export const settingKey=(name)=>{
     return name.replace(' ','')+'Setting';
@@ -248,6 +251,25 @@ export const realInt =(variable)=>{
     return parseInt(variable) || 0;
 }
 
+export const getScale=(size)=>{
+    size=realInt(size);
+    if (size==-4){
+        return -6
+    } else if (size==-3){
+        return -4
+    } else if (size==-2){
+        return -2
+    } else if (size>-2 && size<4){
+        return 0
+    } else if (size>3 && size<8){
+        return 2
+    } else if (size>7 && size<12){
+        return 4
+    } else if (size>11){
+        return 6
+    }
+}
+
 export const setFlagCombatant=(combat,combatant,scope,flag,value)=>{
     let update={_id:combatant._id,['flags.'+scope+'.'+flag]:value}
     //  console.log(update);
@@ -338,17 +360,61 @@ export const bennyAnimation=()=>{
     }
 }
 
-export const rechargeWeapon=async (actor,item,removeShots=false)=>{
+export const settingFieldCheckbox=(setting,title,hint)=>{
+
+    return `<div class="form-group">
+        <label>${title}</label>
+        <div class="form-fields">    
+            <input type="checkbox" name="${setting}" ${game.settings.get(moduleName,setting)?'checked':''}>    
+        </div>    
+        <p class="notes">${hint}</p>
+    </div>`
+    
+
+}
+
+export const rechargeWeaponXDialog=(actor,item)=>{
+    new Dialog({
+        title: `${item.name} ${trans('Reload','SWADE')} X`,
+        content: `<div class="swadetools-formline">How many bullets? <input type="text" id="bullets" class="swadetools-bullets-field" /></div>`,
+        buttons: {
+            cancel: {
+                label: `<i class="fas fa-times"></i> ${trans('Cancel','SWADE')}`,
+                callback: ()=>{
+                
+                }
+            },
+            ok: {
+                label: `<i class="fas fa-redo"></i> ${trans('Reload','SWADE')} X`,
+                callback: (html)=>{
+                    let xvalue=realInt(html.find('#bullets')[0].value)
+                   rechargeWeapon(actor,item,false,xvalue);
+
+                }
+            }
+
+            
+        }
+    }).render(true);
+}
+
+export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>{
     let newshots;
     let shots=realInt(item.data.data.shots);
     let curShots=realInt(item.data.data.currentShots);
     let stop=false;
+    let xbulletsay='';
+
+    if (xbullets!=null){
+        xbullets=realInt(xbullets);
+        xbulletsay=' ('+xbullets+' '+trans('bullets')+')';
+    }
 
     if (shots==curShots){
         ui.notifications.info(trans('ReloadUnneeded','SWADE'));
         stop=true;
     } else {
-    
+          
         if ((systemSetting('ammoFromInventory') && actor.data.type=='character') || (actor.data.type=='npc' && systemSetting('npcAmmo'))){
             let gearname=item.data.data.ammo.trim();
             if (!gearname){
@@ -356,7 +422,13 @@ export const rechargeWeapon=async (actor,item,removeShots=false)=>{
                stop=true;
             } else {
                 let gearitem=actor.items.filter(el=>el.type=='gear' && el.name.trim()==gearname)[0];
+
                 let shotsToFull=shots-curShots;
+
+                if (xbullets!=null){
+                    shotsToFull=xbullets;
+                } 
+                
                 
             
 
@@ -385,7 +457,13 @@ export const rechargeWeapon=async (actor,item,removeShots=false)=>{
             }
         } else {
             /// no ammo gear setting
-            newshots=item.data.data.shots;
+
+            if (xbullets!=null){
+                newshots=curShots+xbullets
+            } else {
+                newshots=item.data.data.shots;
+            }
+            
         }
 
        
@@ -394,16 +472,16 @@ export const rechargeWeapon=async (actor,item,removeShots=false)=>{
            
         } 
 
+
         
 
         if (!stop && newshots!=curShots){
             item.update({"data.currentShots":newshots});
             if (item.data.data.autoReload!==true){  // nao jogar no chat para itens com autoReload
             let char=new Char(actor);
-            char.say(`${item.name} ${trans('Recharged')}`);
+            char.say(`${item.name} ${trans('Recharged')}${xbulletsay}`);
             }
         }
-       
        
       
     }
@@ -522,4 +600,5 @@ export const btnAction = { /// button functions
        let char=new Char(actor);
        char.say(`${item.name} ${trans('Recharged')}`); */
     }
+    
 }

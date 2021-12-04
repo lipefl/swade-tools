@@ -11,6 +11,7 @@ import Char from './class/Char.js';
 
 //// NEXT TODO -> Scale and Size (see about Swat and Stomp - ignore scale)
 /// auto-check (and ask to include) CDT actions for weapons 
+/// fix melee in ranged (vehicles)
 
 // TODO - compat with better rolls
 // TODO - reload only X -> Deadlands ?
@@ -42,7 +43,7 @@ var foundryIsReady=false;
 
 
 Hooks.on('ready',()=>{
-   // game.settings.set('swade','autoInit',false); ///disable auto init in swade to fix bug
+   
     game.swade.rollSkillMacro=(skillName)=>{
         gb.macroRoll('skill',skillName);
     }
@@ -65,10 +66,14 @@ Hooks.on('ready',()=>{
             itemRoll.showDialog();
            
       } else {
+        if (actor.data.type=='vehicle'){
+            actor=gb.getDriver(actor);
+        }
         let itemRoll=new ItemRoll(actor,item)
-        //    console.log(this.item);
+        //  console.log(this.item);
             
             itemRoll.rollBaseSkill();
+            
             itemRoll.display();
       }
     
@@ -97,6 +102,9 @@ Hooks.on('ready',()=>{
 
 }
 
+
+
+
 //console.log(CONFIG.statusEffects)
 
    /* CONFIG.statusEffects.unshift({
@@ -109,33 +117,15 @@ Hooks.on('ready',()=>{
     
 })
 
-/* removed due to v0.17
-
-Hooks.on('deleteOwnedItem',(actor,item,diff,userId)=>{
-    if (game.user.id==userId){
-    gb.updateParry(actor,item,false,true);
+Hooks.on("renderSidebarTab", async (object, html) => {
+    if (object instanceof Settings) {
+      const details = html.find("#game-details");
+      const fxDetails = document.createElement("li");
+      fxDetails.classList.add("donation-link");
+      fxDetails.innerHTML = "SWADE Tools <a title='Donate' href='https://ko-fi.com/lipefl'><img src='https://storage.ko-fi.com/cdn/cup-border.png'></a> <span><a href='https://github.com/lipefl/swade-tools/issues'>Report issue</a></span>";
+      details.append(fxDetails);
     }
-})
-
-Hooks.on('createOwnedItem',(actor,item,diff,userId)=>{
-    if (game.user.id==userId){
-   gb.updateParry(actor,item);
-    }
-    
-})
-
-Hooks.on('updateOwnedItem',(actor,item,data,diff,userId)=>{
-    if (game.user.id==userId){
-    gb.updateParry(actor,item);
-    }
-})
-
-Hooks.on('updateToken',(scene, token, data, options, userId)=>{
-   // console.log(gb.getActorData(token,'data.stats.parry.value',true));
-   if (game.user.id==userId){
-    gb.updateParry(token,data,true);
-   }
-}) */
+  })
 
 Hooks.on("createActor",(actor,options,userid)=>{
 
@@ -296,6 +286,7 @@ Hooks.on('updateToken', (scene, token, data, options, userId) => {
     }
    
 });
+
 
 
 Hooks.on('renderActorSheet',(sheet,html)=>{

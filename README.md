@@ -1,9 +1,7 @@
 # SWADE Tools
 
-## ATTENTION
-Swade Tools v1.4+ is only compatible with Foundry v0.8.7+ (maybe 0.8.6) and SWADE system v0.19+
-
-If you use Foundry v0.7.9 (or 0.7.10), please install Swade Tools v1.3.6 manually (see releases)
+## Buy me a coffee
+If you like the module and want to buy me a coffee: https://ko-fi.com/lipefl
 
 ## About the Module
 A Foundry VTT module for use with Savage Worlds (SWADE system).
@@ -80,10 +78,23 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Apply "Assign Status Effect" via token
 + Calculates Gang Up, Range and Ranged Weapon in Melee (shows a (?) icon in the target with more info)
 + Bonus Macro to turn all your PCs Friendly and NPCs Hostile (to work with Gang Up)
-+ New Edges automations: Block, Improved Block, Dodge, Frenzy
++ New Edges automations: Block, Improved Block, Dodge, Frenzy, Formation Fighter (from Pathfinder, thanks to @bloy)
++ Special abilities are separated from edges and now searched as abilities (thanks to @bloy) or edges
 
 **Fixes**
 + Stunned allows distracted to be removed at the end of next turn (as in the rules)
+
+
+## v1.6.0
++ Calculate Scale automatically (shows a checkbox for creatures with Swat)
++ Option to activate a button to Reload X (instead of full reload)
++ Option to disable Status Icons (so you can use whatever you want with CUB)
++ Option to disable automatic rolls (remove Shaken,Stunned) during combat
++ Compatibility with Automated Animations and SWADE Sfx & Vfx Enchantments
+
+**Fixes**
++ Wild attack is now a checkbox, so you can use it with Frenzy and other attacks.
++ Fixed bugs with attack from vehicles
 
 More features will be added...
 

@@ -21,6 +21,8 @@ export default class RollControl {
 
         this.rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
+       // console.log(this.chat.data.flags?.["swade-tools"]);
+
         //this.actor;
         this.istoken=false;
 
@@ -418,11 +420,11 @@ export default class RollControl {
     }
     
 
-    getActor(orToken=false){
+    getActor(orToken=false,useVehicle=false){
         
             if (this.chat.data.flags["swade-tools"]?.usetoken){
                 let tokenid=this.chat.data.flags["swade-tools"].usetoken
-
+              //  console.log('token',tokenid);
                 this.istoken=true;
                 if (orToken){
                     
@@ -435,8 +437,12 @@ export default class RollControl {
                 
             } else {
                 let actorid=this.chat.data.flags["swade-tools"].useactor
+                if (useVehicle && this.chat.data.flags["swade-tools"]?.usevehicle){
+                    actorid=this.chat.data.flags["swade-tools"].usevehicle
+                }
+              //  console.log('actor',actorid);
                 if (orToken){
-                    return canvas.tokens.placeables.filter(el=>el.actor._id==actorid)[0]
+                    return canvas.tokens.placeables.filter(el=>el.actor.id==actorid)[0]
                 } else {
                     return game.actors.get(actorid);
                 }
@@ -527,9 +533,16 @@ export default class RollControl {
        
         let targetNumber=4;
 
-        let targetRange=gb.getRange(this.getActor(true),target)*canvas.dimensions.distance; /// use Grid Scale for distance (but not for gang up)
+
+        
+
+        /// range, gangup
+
+        let targetRange=gb.getRange(this.getActor(true,true),target)*canvas.dimensions.distance; /// use Grid Scale for distance (but not for gang up)
+
+
        
-        if (skill==gb.setting('fightingSkill') || targetRange==1){
+        if (!this.chat.data.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
             targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
             if (skill!=gb.setting('fightingSkill')){
                 //Ranged Weapons in Melee
@@ -564,7 +577,7 @@ export default class RollControl {
             }
         } else {
 
-        //// ranged attack
+        //// ranged attack or vehicle
 
             let char=new Char(target.actor);
             if (char.hasEdgeSetting('Dodge')){
@@ -614,6 +627,47 @@ export default class RollControl {
             }
 
             
+        }
+
+
+        /// scale 
+        if (gb.setting('useScale')){
+            
+            let atScale=gb.getScale(this.getActor().data.data.stats.size);
+            let dfScale=gb.getScale(target.actor.data.data.stats.size);
+
+            let diffScale=dfScale-atScale;
+
+            let showSwat='';
+            if (diffScale<0 && this.chat.data.flags["swade-tools"]?.useswat){
+                if (diffScale>=-4){
+                    diffScale=0;
+                } else {
+                    diffScale+=4;
+                }
+                showSwat=` (${gb.trans('SwatSetting')})`;
+            }
+
+            if (diffScale){
+
+                
+
+                targetNumber-=diffScale;
+                
+                if (diffScale>0){
+                    diffScale='+'+diffScale; // for writing
+                }
+                targetInfo+=`<li>${gb.trans('Scale')}: ${diffScale}${showSwat}</li>`;
+            }
+
+            /* if (atScale<dfScale){
+                /// attacker is smaller - bonus
+               
+
+            } else if (atScale>dfScale){
+                /// attacker is bigger - penalty
+
+            } */
         }
 
 

@@ -139,14 +139,21 @@ export default class CombatControl {
     unshaken(combatant){
 
      
+        
 
         let actor=combatant.actor;
-      //  console.log(actor);
-        let charRoll=new CharRoll(actor);
+      
         
-      //  this.addJoker(combatant,charRoll);
-          
-        charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
+        
+        if (gb.setting('noStatusAutoRoll')){
+
+            let char=new Char(actor);
+            char.say(gb.trans('sayIsShaken'));
+
+        } else {
+            
+            let charRoll=new CharRoll(actor);
+            charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
         
 
         charRoll.addEdgeModifier('Combat Reflexes',2)
@@ -163,26 +170,12 @@ export default class CombatControl {
             charRoll.addFlag('usetoken',actor.token.id);
         }
            charRoll.display()
+        }
+     
+          
+        
 
-            /* to RollControl
-            
-            let char=new Char(actor);
-
-            if (charRoll.isSuccess()){
-               
-                char.off('isShaken');
-                char.say(gb.trans("RemShaken"))
-            } else {
-                if (char.bennyCount()){
-    
-                    char.say(`<button class="swadetools-simplebutton" data-swade-tools-action="unshakeBenny:${actor.id}">${gb.trans('UnshakenBennyButton')}</button>`)
-    
-                } else {
-                    char.say(`${gb.trans('NoBennies')}, ${gb.trans('StillShaken')}`)
-                } 
-            } 
-            
-            */
+           
           
         
         
@@ -190,6 +183,14 @@ export default class CombatControl {
 
     unstunned(combatant){
         let actor=combatant.actor;
+
+
+        if (gb.setting('noStatusAutoRoll')){
+
+            let char=new Char(actor);
+            char.say(gb.trans('sayIsStunned'));
+
+        } else {
         let charRoll=new CharRoll(actor);        
      //   this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
@@ -207,41 +208,9 @@ export default class CombatControl {
 
         charRoll.display();
 
-       /*  let char=new Char(actor);
-        if (charRoll.raiseCount()==0){
-            
-         //   console.log('unstun');
+    }
 
-           
-           char.off('isStunned')
-          
-
-
-           
-            
-           
-            char.say(gb.trans("RemStunnedSuc"))
-
-            
-
-            setTimeout(()=>{ /// silver tape for bug
-                actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
-            },500) 
-
-                
-   
-           
-            
-            
-
-        } else if (charRoll.raiseCount()>0){
-           
-            char.off('isStunned');
-            char.say(gb.trans("RemStunnedRaise"))
-        } else {
-            /// failure
-            char.say(gb.trans('StillStunned'));
-        } */
+       
     }
 
    async startTurn(combatant){      

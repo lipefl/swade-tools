@@ -14,6 +14,8 @@ export default class ItemRoll extends CharRoll{
         this.addFlavor(item.name);
         this.isItem(item);
 
+        
+
         /* if (actor.data.type=='vehicle'){
             this.usingVehicle(actor);
             actor=game.actors.get(actor.data.data.driver.id);
@@ -103,6 +105,7 @@ export default class ItemRoll extends CharRoll{
 
         
         this.rollSkill(this.data.skill,rof);
+        
         
     }
 

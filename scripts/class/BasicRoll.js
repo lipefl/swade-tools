@@ -214,9 +214,9 @@ export default class BasicRoll {
        }
    }
 
-   isCritical(){
+   /* isCritical(){
 
-   }
+   } */
 
 
 

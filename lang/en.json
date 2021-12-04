@@ -145,7 +145,29 @@
     "SWADETOOLS.FrenzySetting": "Frenzy",
     "SWADETOOLS.FormationFighterSetting": "Formation Fighter",
     "SWADETOOLS.SettingShowSituational": "Always show Situational Modifiers for target",
-    "SWADETOOLS.SettingShowSituationalHint": "With this option checked, targets' modifiers will be always visible, no need to click at (?)"
+    "SWADETOOLS.SettingShowSituationalHint": "With this option checked, targets' modifiers will be always visible, no need to click at (?)",
+    "SWADETOOLS.settingCustom": "Customization",
+    "SWADETOOLS.settingCustomButton": "Customize the module",
+    "SWADETOOLS.settingCustomHint": "Change the default SWADE Tools to work better with the way you play.",
+    "SWADETOOLS.StatusIconsSetting":"Use Status Icons",
+    "SWADETOOLS.StatusIconsSettingHint":"Change to  the default Status icons from the system ou deactivate the icons.",
+    "SWADETOOLS.StatusIconsSettingDefault":"SWADE Tools",
+    "SWADETOOLS.StatusIconsSettingSystem":"SWADE system",
+    "SWADETOOLS.StatusIconsSettingNone":"Deactivate",
+    "SWADETOOLS.SettingNoAutoRoll":"Disable automatic rolls during combat",
+    "SWADETOOLS.SettingNoAutoRollHint":"This option disables automatic rolls to remove Stun or Shaken during combat.",
+    "SWADETOOLS.sayIsShaken": "is Shaken",
+    "SWADETOOLS.sayIsStunned": "is Stunned",
+    "SWADETOOLS.Scale": "Scale",
+    "SWADETOOLS.SettinguseScale": "Use Scale",
+    "SWADETOOLS.SettinguseScaleHint": "Calculate Scale modifiers in attacks. Creatures with Swat (special ability) will show a checkbox in their attack",
+    "SWADETOOLS.SwatSetting": "Swat",
+    "SWADETOOLS.SettingreloadX": "Show Reload X button",
+    "SWADETOOLS.SettingreloadXHint": "Shows a button to reload a specific number of bullets instead of the full reload.",
+    "SWADETOOLS.SituationalRules": "Situational Rules",
+    "SWADETOOLS.Customization": "Customization",
+    "SWADETOOLS.RulesSettings": "Rules for Settings",
+    "SWADETOOLS.bullets": "shots"
     
     
 }
