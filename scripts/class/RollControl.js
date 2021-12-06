@@ -1196,7 +1196,7 @@ export default class RollControl {
 
     gangUp(attacker,target){
         if (!attacker || !target 
-        || attacker.actor.data.type=='vehicle' || target.actor.data.type=='vehicle'
+        || attacker?.actor?.data.type=='vehicle' || target?.actor?.data.type=='vehicle'
         || attacker.data.disposition==target.data.disposition
         || attacker.data.disposition==0
         ) {
@@ -1212,8 +1212,8 @@ export default class RollControl {
             && t.id!=target.id /// not the target
             && t.visible  /// is visible         
             && !t.combatant?.data.defeated /// not defeated
-            && t?.actor.data.data.status.isStunned===false /// not stunned    
-            && t?.actor.data.type!='vehicle'
+            && t?.actor?.data.data.status.isStunned===false /// not stunned    
+            && t?.actor?.data.type!='vehicle'
             && t.data.disposition!=0        
             && gb.getRange(target,t)==1 /// adjacent
         )
