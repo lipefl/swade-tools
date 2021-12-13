@@ -442,7 +442,7 @@ export default class RollControl {
                 }
               //  console.log('actor',actorid);
                 if (orToken){
-                    return canvas.tokens.placeables.filter(el=>el.actor?.id==actorid)[0]
+                    return canvas.tokens.placeables.filter(el=>el?.actor?.id==actorid)[0]
                 } else {
                     return game.actors.get(actorid);
                 }
@@ -1208,7 +1208,7 @@ export default class RollControl {
 
         let all_around_target=canvas.tokens.placeables.filter(t=>
             t.id!=attacker.id // not the attacker
-            && !(attacker.actor.isToken===false && attacker.actor.id==t.actor.id)
+            && !(attacker.actor.isToken===false && attacker.actor.id==t?.actor?.id)
             && t.id!=target.id /// not the target
             && t.visible  /// is visible         
             && !t.combatant?.data.defeated /// not defeated
