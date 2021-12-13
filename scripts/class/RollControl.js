@@ -442,7 +442,7 @@ export default class RollControl {
                 }
               //  console.log('actor',actorid);
                 if (orToken){
-                    return canvas.tokens.placeables.filter(el=>el.actor.id==actorid)[0]
+                    return canvas.tokens.placeables.filter(el=>el.actor?.id==actorid)[0]
                 } else {
                     return game.actors.get(actorid);
                 }
@@ -1212,7 +1212,7 @@ export default class RollControl {
             && t.id!=target.id /// not the target
             && t.visible  /// is visible         
             && !t.combatant?.data.defeated /// not defeated
-            && t?.actor?.data.data.status.isStunned===false /// not stunned    
+            && t?.actor?.data.data.status.isStunned!==true /// not stunned    
             && t?.actor?.data.type!='vehicle'
             && t.data.disposition!=0        
             && gb.getRange(target,t)==1 /// adjacent
