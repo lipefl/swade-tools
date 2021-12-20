@@ -481,6 +481,34 @@ export default class RollControl {
         return this.powerfail;
     }
 
+
+    getParry(actor){
+        if (actor.type=='vehicle'){
+           let skill=gb.getDriverSkill(actor);        
+         //  console.log(skill);   
+           let item=gb.getDriver(actor).items.filter(el=>el.type=='skill' && el.name==skill)[0];
+           let skillValue;
+           if (!item){
+            skillValue=0;
+           } else {
+            skillValue=gb.realInt(item.data.data.die.sides)+gb.realInt(item.data.data.die.modifier)
+           }
+           
+           return Math.floor(skillValue/2)+gb.realInt(actor.data.data.handling)+2;
+        } else {
+            return gb.realInt(actor.data.data.stats.parry.value)+gb.realInt(actor.data.data.stats.parry.modifier)
+        }
+    }
+
+
+    getSize(actor){
+        if (actor.type=='vehicle'){
+            return actor.data.data.size;
+        } else {
+            return actor.data.data.stats.size
+        }
+    }
+
     attackTarget(target,total,rofnumb){
         
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
@@ -543,7 +571,10 @@ export default class RollControl {
 
        
         if (!this.chat.data.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
-            targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
+          //  targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
+
+          targetNumber=this.getParry(target.actor);
+        //  console.log(targetNumber);
             if (skill!=gb.setting('fightingSkill')){
                 //Ranged Weapons in Melee
                 targetInfo+=`<li>${gb.trans('RangedInMelee')}</li>`;
@@ -633,8 +664,8 @@ export default class RollControl {
         /// scale 
         if (gb.setting('useScale')){
             
-            let atScale=gb.getScale(this.getActor().data.data.stats.size);
-            let dfScale=gb.getScale(target.actor.data.data.stats.size);
+            let atScale=gb.getScale(this.getSize(this.getActor()));
+            let dfScale=gb.getScale(this.getSize(target.actor));
 
             let diffScale=dfScale-atScale;
 
