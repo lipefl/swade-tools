@@ -96,6 +96,9 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Wild attack is now a checkbox, so you can use it with Frenzy and other attacks.
 + Fixed bugs with attack from vehicles
 
+## v1.7.0
++ Compatibility with Foundry v9 and SWADE System v0.22
+
 More features will be added...
 
 ### Bonus: Macro

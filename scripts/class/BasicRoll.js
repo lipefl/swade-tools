@@ -36,7 +36,7 @@ export default class BasicRoll {
     }
 
 
-   buildRoll(dieType,wildDie,modifier=0,rof){
+  buildRoll(dieType,wildDie,modifier=0,rof){
 
     if (!parseInt(rof)){
         rof=1;
@@ -53,7 +53,7 @@ export default class BasicRoll {
 
         if (typeof mod == "string" && mod.includes('d')){
          //   console.log(mod);
-            mod=new Roll(mod).roll().total;
+            mod=new Roll(mod).roll({async:false}).total;
             if (mod>0){
                 mod='+'+mod;
             }
@@ -89,11 +89,12 @@ export default class BasicRoll {
 
 //console.log(rollExp);
 
-    this.roll=new Roll(rollExp).roll();
 
+    this.roll=new Roll(rollExp).roll({async:false});
 
+    
     this.addDiceFlavor(rof,wildDie);
-
+   
     //this.roll.terms[0].dice[0].options.flavor='Skill';
     
   // console.log(this.roll);
@@ -105,7 +106,7 @@ export default class BasicRoll {
    addDiceFlavor(rof,wildDie){
 
         let wildkey;
-     //   console.log(this.roll);
+        console.log(this.roll);
 
     
 
@@ -167,7 +168,7 @@ export default class BasicRoll {
         raiseAdd='+1d6x'
     }
     
-    this.roll=new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll();
+    this.roll=new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({async:false});
    // console.log(this.roll);
    // console.log(this.roll._total);
     return this.roll;

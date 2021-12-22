@@ -166,7 +166,7 @@ export default class CharRoll extends BasicRoll{
         return this.buildRoll(dieType,wildDie,this.mod);
     }
 
-    rollSkill(skillName,rof=1){
+   async rollSkill(skillName,rof=1){
       //  console.log(skillName,rof)
 
         this.rof=rof;
@@ -184,6 +184,7 @@ export default class CharRoll extends BasicRoll{
         let dieType;
         let wildDie=false;
 
+        
         this.baseModifiers();
         
 
@@ -210,6 +211,7 @@ export default class CharRoll extends BasicRoll{
         
         this.addFlag('skill',skillName);
         
+      
 
         this.flavor+=`<div>${skillName}</div>`;
 
@@ -223,7 +225,7 @@ export default class CharRoll extends BasicRoll{
        
 
 
-        return this.buildRoll(dieType,wildDie,this.mod,rof);
+        return await this.buildRoll(dieType,wildDie,this.mod,rof);
        
 
     }
@@ -587,7 +589,7 @@ export default class CharRoll extends BasicRoll{
 
        // this.roll.setFlag('swade-tools',)
 
-       
+      // console.log(this.roll);
 
        this.roll.toMessage(chatData)
        /* .then((chat)=>{ => already in chatData

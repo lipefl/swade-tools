@@ -333,6 +333,13 @@ width: calc(100% - 47px);
         .swadetools-term-hit .swadetools-situational-link, .swadetools-term-raise .swadetools-situational-link{
             margin-right:3px
         }
+
+
+        .swadetools-donation-link img {
+            border: none;
+            height: 12px;
+            margin-bottom: -1px;
+        }
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {

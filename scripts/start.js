@@ -121,7 +121,7 @@ Hooks.on("renderSidebarTab", async (object, html) => {
     if (object instanceof Settings) {
       const details = html.find("#game-details");
       const fxDetails = document.createElement("li");
-      fxDetails.classList.add("donation-link");
+      fxDetails.classList.add("swadetools-donation-link");
       fxDetails.innerHTML = "SWADE Tools <a title='Donate' href='https://ko-fi.com/lipefl'><img src='https://storage.ko-fi.com/cdn/cup-border.png'></a> <span><a href='https://github.com/lipefl/swade-tools/issues'>Report issue</a></span>";
       details.append(fxDetails);
     }

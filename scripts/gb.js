@@ -355,7 +355,7 @@ export const raiseCount=(result,targetNumber=4)=>{
 //dsnShowBennyAnimation
 export const bennyAnimation=()=>{
     if (!!game.dice3d && game.user.getFlag('swade', 'dsnShowBennyAnimation')) {
-        const benny = new Roll('1dB').roll();
+        const benny = new Roll('1dB').roll({async:false});
         game.dice3d.showForRoll(benny, game.user, true, null, false);
     }
 }

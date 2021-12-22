@@ -1146,7 +1146,7 @@ export default class RollControl {
             extraflavor=`<div>${reason}: ${modStr}</div>`;
        }
 
-        let roll=new Roll(oldroll.formula+modStr).roll();
+        let roll=new Roll(oldroll.formula+modStr).roll({async:false});
 
         if (oldroll.terms[0]?.dice!==undefined){
 

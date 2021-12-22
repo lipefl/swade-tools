@@ -207,10 +207,11 @@ export default class ItemDialog {
                 
                 let itemRoll=new ItemRoll(this.actor,this.item);
                 
-                //console.log(this.actor);
-                this.processItemFormDialog(html,itemRoll);
-                itemRoll.rollBaseSkill();
+                
+                this.processItemFormDialog(html,itemRoll);               
+                itemRoll.rollBaseSkill();               
                 itemRoll.display();
+               
 
                 /* let data={
                     mod: {

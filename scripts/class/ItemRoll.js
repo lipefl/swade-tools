@@ -101,10 +101,13 @@ export default class ItemRoll extends CharRoll{
 
 
     rollBaseSkill(rof=1){
+
+      
         this.addSkillMod();
 
         
         this.rollSkill(this.data.skill,rof);
+        
         
         
     }
