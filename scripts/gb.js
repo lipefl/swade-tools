@@ -271,9 +271,10 @@ export const getScale=(size)=>{
 }
 
 export const setFlagCombatant=(combat,combatant,scope,flag,value)=>{
-    let update={_id:combatant._id,['flags.'+scope+'.'+flag]:value}
-    //  console.log(update);
-     combat.updateCombatant(update);
+    let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
+   // console.log(update);
+     //combat.updateCombatant(update);
+     combat.updateEmbeddedDocuments('Combatant',update);
 }
 
 export const actorCombatant=(actor)=>{

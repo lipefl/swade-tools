@@ -136,7 +136,8 @@ export default class RollControl {
                    // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
                 },500)
               //  char.updateData({'status.isDistracted':false,'status.isVulnerable':true})/// just to make sure is disabled
-                game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat).updateCombatant({_id:this.chat.data.flags?.["swade-tools"]?.usecombatant,['flags.swade-tools.removeVulnerable']:1});
+              gb.setFlagCombatant(game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat),{id:this.chat.data.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',1)
+            //    game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat).updateCombatant({_id:this.chat.data.flags?.["swade-tools"]?.usecombatant,['flags.swade-tools.removeVulnerable']:1});
               //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
             }
             }

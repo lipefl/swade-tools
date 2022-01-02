@@ -65,9 +65,10 @@ export default class CombatControl {
         combatant.flags.push({{flags:{[scope]:{[flag]:value}}}); */
       //  combatant.flags[scope][flag]=value;
 
-        let update={_id:combatant._id,['flags.'+scope+'.'+flag]:value}
+      //  let update={_id:combatant.id,['flags.'+scope+'.'+flag]:value}
       //  console.log(update);
-        game.combats.get(this.combatid).updateCombatant(update);
+      gb.setFlagCombatant(game.combats.get(this.combatid),combatant,scope,flag,value);
+      //  game.combats.get(this.combatid).updateCombatant(update);
     }
 
     hasJoker(combatant){
@@ -214,7 +215,10 @@ export default class CombatControl {
     }
 
    async startTurn(combatant){      
+
+   // console.log(combatant);
         let actor=combatant.actor;
+        
       //  console.log('start: '+actor.name); 
         let char=new Char(actor);
         let checkDistracted=true;
@@ -265,7 +269,8 @@ export default class CombatControl {
     }
     
     async endTurn(combatant){
-        let actor=combatant._actor;
+      //  console.log(combatant);
+        let actor=combatant.actor;
      //  console.log('end: '+actor.name); 
         let char=new Char(actor);
      //   console.log(combatant);
