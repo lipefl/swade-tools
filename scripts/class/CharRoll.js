@@ -469,14 +469,19 @@ export default class CharRoll extends BasicRoll{
 
 
     changeStr(weaponDamage){
-        if (weaponDamage.includes('@str')){        
-            let regexStr = /[@]str/g;
-                weaponDamage = weaponDamage.replace(regexStr, "1d" + this.actor.data.data.attributes.strength.die.sides);
-                if (this.actor.data.data.attributes.strength.die.modifier){
-                    this.addModifier(this.actor.data.data.attributes.strength.die.modifier,gb.trans('AttrStr','SWADE'));
-                }
-                
-       }
+
+        gb.attributesShort.map(data=>{
+
+            if (weaponDamage.includes(`@${data.short}`)){        
+               // let regexStr = /[@]str/g;
+                    weaponDamage = weaponDamage.replace(`@${data.short}`, "1d" + this.actor.data.data.attributes[data.name].die.sides);
+                    if (this.actor.data.data.attributes[data.name].die.modifier){
+                        this.addModifier(this.actor.data.data.attributes[data.name].die.modifier,gb.trans(`Attr${data.short.charAt(0).toUpperCase()}${data.short.slice(1)}`,'SWADE'));
+                    }
+                    
+           }
+        })
+        
         return weaponDamage;
                
     

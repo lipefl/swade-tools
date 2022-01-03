@@ -23,7 +23,13 @@ export const stIcons=[
     {stat: 'isBound', icon: 'modules/swade-tools/icons/bound.png'}
 ]
 
-
+export const attributesShort=[
+    {name: 'strength', short: 'str'},
+    {name: 'agility', short: 'agi'},
+    {name: 'spirit', short: 'spr'},
+    {name: 'smarts', short: 'sma'},
+    {name: 'vigor', short: 'vig'},
+]
 
 
 export const settingKey=(name)=>{
