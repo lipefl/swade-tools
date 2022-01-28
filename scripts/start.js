@@ -270,7 +270,8 @@ Hooks.on("updateActor", async (actor,data,diff,userId) => {
    
 });
 
-Hooks.on("createToken",(scene,token,diff,userId)=>{
+Hooks.on("createToken",(token,diff,userId)=>{
+   // console.log(token,diff,userId);
     if (game.user.id==userId){
     let upToken=new StatusIcon(token,'token',false);
     upToken.createTokenCheck();

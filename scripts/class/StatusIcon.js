@@ -54,7 +54,7 @@ export default class StatusIcon {
 
     noBasicActiveEffect(statusName){
         
-        if (statusName && this.entity.data.effects.filter(el=>el.data.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
+        if (statusName && this.entity.data.effects.filter(el=>el.data?.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
             return false;
         } else {
             return true;
@@ -69,9 +69,12 @@ export default class StatusIcon {
        let stat=this.statuses.filter(el=>el.icon==icon)[0]?.stat;
 
     if (!active || this.noBasicActiveEffect(stat)){
-        this.getTokens().map(token=>{
-            
-           token.toggleEffect(icon,{active:active,overlay:overlay}) 
+        this.getTokens().map(async token=>{
+            let applied=!active ;
+          // applied=await token.toggleEffect(icon,{active:active,overlay:overlay})
+           while (applied!=active){
+            applied=await token.toggleEffect(icon,{active:active,overlay:overlay})
+           } 
         })
     }
 
@@ -89,7 +92,7 @@ export default class StatusIcon {
         if (this.entityType=='actor'){
            return this.entity.getActiveTokens();
         } else if (this.entityType=='token'){
-           return [canvas.tokens.get(this.entity._id)]; 
+           return [canvas.tokens.get(this.entity.id)]; 
         }
     }
 
@@ -286,7 +289,7 @@ export default class StatusIcon {
     }
 
     createTokenCheck(){
-        let actor=game.actors.get(this.entity.actorId);
+        let actor=this.entity.actor;
     this.statuses.map(item=>{
         if (actor.data.data.status[item.stat]){
             this.applyEffect(item.icon,true);
