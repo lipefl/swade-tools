@@ -40,7 +40,7 @@ export default class SettingName extends FormApplication {
         <select name="defaultStatusIcons">
             <option value="">${gb.trans('StatusIconsSettingDefault')}</option>
             <option value="system" ${game.settings.get(gb.moduleName,'defaultStatusIcons')=='system'?'selected':''}>${gb.trans('StatusIconsSettingSystem')}</option>
-            <option value="none" ${game.settings.get(gb.moduleName,'defaultStatusIcons')=='none'?'selected':''}>${gb.trans('StatusIconsSettingNone')}</option>            
+                        
         </select>
 
     </div>

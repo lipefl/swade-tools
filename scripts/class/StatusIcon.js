@@ -167,23 +167,25 @@ export default class StatusIcon {
     }
 
 
-    chainedStatus(statusName,val){
+    async chainedStatus(statusName,val){
 
       // let char=new Char(this.entity,this.is)
        
-        if (statusName=='isStunned'){
+        if (statusName=='stunned' || statusName=='bound'){
 
            // console.log(this.entity);
          //   console.log(val);
 
-             /// manually to avoid bugs
+           /*   /// manually to avoid bugs
            if (this.istoken){
              //  console.log(this.entity)
                canvas.tokens.get(this.entity._id).update({'actorData.data.status.isDistracted':val,'actorData.data.status.isVulnerable':val})
            } else {
             this.entity.update({'data.status.isDistracted':val,'data.status.isVulnerable':val})
-           }
+           } */
 
+           await gb.statusChange(this.entity,'distracted',val);
+           await gb.statusChange(this.entity,'vulnerable',val);
 
             
             /* setTimeout(()=>{ /// silver tape for bug
@@ -194,23 +196,25 @@ export default class StatusIcon {
            
         }
         else
-        if (statusName=='isEntangled'){
-            if (this.istoken){
+        if (statusName=='entangled'){
+            /* if (this.istoken){
                 canvas.tokens.get(this.entity._id).update({'actorData.data.status.isDistracted':val})
                } else {
                 this.entity.update({'data.status.isDistracted':val})
-               }
+               } */
+
+               await gb.statusChange(this.entity,'distracted',val);
            
         }
-        else
-        if (statusName=='isBound'){
+        /* else
+        if (statusName=='bound'){
             if (this.istoken){
                 canvas.tokens.get(this.entity._id).update({'actorData.data.status.isDistracted':val,'actorData.data.status.isVulnerable':val})
                } else {
                 this.entity.update({'data.status.isDistracted':val,'data.status.isVulnerable':val})
                }
     
-        }
+        } */
        // return true;
     }
 
@@ -280,9 +284,11 @@ export default class StatusIcon {
     
 
     checkAllStatus(){
-        this.statuses.map(item => {        
+       /*  this.statuses.map(item => {        
             this.checkStatusUpdate(item.stat)
-        })
+        }) */
+
+       
         
         this.checkLevels('wounds');
         this.checkLevels('fatigues');
@@ -290,11 +296,11 @@ export default class StatusIcon {
 
     createTokenCheck(){
         let actor=this.entity.actor;
-    this.statuses.map(item=>{
+    /* this.statuses.map(item=>{
         if (actor.data.data.status[item.stat]){
             this.applyEffect(item.icon,true);
         } 
-    });
+    }); */
     
     let woundsval=actor.data.data.wounds.value;
     if (woundsval){

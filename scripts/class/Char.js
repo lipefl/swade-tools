@@ -202,19 +202,23 @@ export default class Char {
 
   
 
-    off(statusName){
+    async off(statusName){
      //  console.log(statusName,this.is(statusName),'off');
+    // console.log(statusName);
         if (this.is(statusName)){
-            this.update('status.'+statusName,false);
+          //  this.update('status.'+statusName,false);
+          await gb.statusChange(this.entity,statusName,false);
            // this.actor.update({['data.status.'+statusName]:false})
        }
        
     }
 
-    on(statusName){
+    async on(statusName){
+      //  console.log(statusName);
      //   console.log(statusName,this.is(statusName),'on');
         if (!this.is(statusName)){
-           this.update('status.'+statusName,true);
+           //this.update('status.'+statusName,true);
+           await gb.statusChange(this.entity,statusName,true);
           //  this.actor.update({['data.status.'+statusName]:true})
         }
        
@@ -267,7 +271,7 @@ export default class Char {
             } else {
                 this.update('bennies.value',actualBennies);
 
-                if (gb.settingKeyName('Hard Choices')){ /// give the GM a BENNY
+                if (gb.systemSetting('hardChoices')){ /// give the GM a BENNY
                     let gmPlayer=gb.GMPlayer();
                     let actualGMBennies=gmPlayer.data.flags.swade.bennies;
                     actualGMBennies++;
@@ -309,7 +313,7 @@ export default class Char {
         let actor=this.getActor();
 
         if (actor.isWildcard){
-            if (!gb.settingKeyName('Hard Choices') || actor.isPC===true){
+            if (!gb.systemSetting('hardChoices') || actor.data.type=='character'){
                 actualBennies=this.dataint('bennies.value');
             }
             

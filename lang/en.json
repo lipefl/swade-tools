@@ -155,7 +155,7 @@
     "SWADETOOLS.StatusIconsSettingSystem":"SWADE system",
     "SWADETOOLS.StatusIconsSettingNone":"Deactivate",
     "SWADETOOLS.SettingNoAutoRoll":"Disable automatic rolls during combat",
-    "SWADETOOLS.SettingNoAutoRollHint":"This option disables automatic rolls to remove Stun or Shaken during combat.",
+    "SWADETOOLS.SettingNoAutoRollHint":"(Requires Reload) This option disables automatic rolls to remove Stun or Shaken during combat.",
     "SWADETOOLS.sayIsShaken": "is Shaken",
     "SWADETOOLS.sayIsStunned": "is Stunned",
     "SWADETOOLS.Scale": "Scale",

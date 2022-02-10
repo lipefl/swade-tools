@@ -106,7 +106,7 @@ export default class BasicRoll {
    addDiceFlavor(rof,wildDie){
 
         let wildkey;
-        console.log(this.roll);
+     //   console.log(this.roll);
 
     
 

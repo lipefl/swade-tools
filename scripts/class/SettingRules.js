@@ -70,7 +70,8 @@ export default class SettingRules extends FormApplication {
             }
             game.settings.set(gb.moduleName,name,value);
 
-            if(value && name==gb.settingKey('Hard Choices')){ /// disable Joker's Wild and GM benny=0
+            /* NOW IN SWADE SYSTEM
+             if(value && name==gb.settingKey('Hard Choices')){ /// disable Joker's Wild and GM benny=0
                
 
                 new Dialog({
@@ -95,7 +96,7 @@ export default class SettingRules extends FormApplication {
                 }).render(true);
 
                 //ui.notifications.warn(gb.trans('HardChoicesWarn'))
-            }
+            } */
         }
 
 

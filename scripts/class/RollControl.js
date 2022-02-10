@@ -467,10 +467,11 @@ export default class RollControl {
             } else {
 
                 let results=this.roll.terms[0].results;
+                //console.log(results);
                // results.sort((a, b) => (a.result < b.result) ? 1 : -1)
                
                 results.map(result=>{
-                    if (gb.raiseCount(result,4)>=0){
+                    if (gb.raiseCount(result.result,4)>=0){
                         this.powerfail=false;
                     }
                 })
@@ -712,6 +713,7 @@ export default class RollControl {
 
         //// distance modifier
 
+      //  console.log(this.failedPower(item));
         
         if (this.failedPower(item)) { /// failed power
             raisecount=-1 /// force failure

@@ -160,7 +160,9 @@ export default class CharRoll extends BasicRoll{
       //  console.log(this.mod);
     //    console.log(this.reasons);
         
-       
+        if (attribute=='agility' && this.actor.isEncumbered){
+            this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
+        }
 
 
         return this.buildRoll(dieType,wildDie,this.mod);
@@ -208,6 +210,9 @@ export default class CharRoll extends BasicRoll{
         }
         
         
+        if (item.data.data.attribute=='agility' && this.actor.isEncumbered){
+            this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
+        }
         
         this.addFlag('skill',skillName);
         

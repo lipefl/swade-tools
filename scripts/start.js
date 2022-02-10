@@ -43,6 +43,8 @@ var foundryIsReady=false;
 
 
 Hooks.on('ready',()=>{
+
+   
    
     game.swade.rollSkillMacro=(skillName)=>{
         gb.macroRoll('skill',skillName);
@@ -95,15 +97,20 @@ Hooks.on('ready',()=>{
    
    if (!gb.setting('defaultStatusIcons')){
    CONFIG.statusEffects.map(data=>{
+      // console.log(data);
        if (gb.statusDefault.includes(data.id)){
            data.icon=gb.stIcons.filter(el=>el.stat==gb.statusDefaultToIs(data.id))[0]?.icon;
+           if (!gb.setting('noStatusAutoRoll') && data?.flags?.swade?.expiration){
+            data.flags.swade.expiration=undefined;
+           }
+           
        }
    })
 
 }
 
 
-
+//gb.statusChange(game.actors.getName('Purple'),'shaken',false);
 
 //console.log(CONFIG.statusEffects)
 
@@ -140,11 +147,18 @@ Hooks.on("createActor",(actor,options,userid)=>{
 
 
 Hooks.on("createActiveEffect", (effect, diff) => { 
-    let actor=effect.parent; 
     
-    let char=new Char(actor);
+    
+   // console.log(effect);
+   
     if (effect.data.flags?.core?.statusId){
-        char.activeEffect(effect.data.flags.core.statusId,false);
+        let actor=effect.parent; 
+        let upActor=new StatusIcon(actor,'actor');
+        upActor.chainedStatus(effect.data.flags.core.statusId,true)
+
+       /*  let act=new SwadeActiveEffect();
+        act.apply(actor,'shaken'); */
+      //  char.activeEffect(effect.data.flags.core.statusId,false);
     }
     
 
@@ -155,11 +169,11 @@ Hooks.on("createActiveEffect", (effect, diff) => {
 
 Hooks.on("deleteActiveEffect", (effect,diff)=>{
 
-    let actor=effect.parent; 
-    
-    let char=new Char(actor);
     if (effect.data.flags?.core?.statusId){
-    char.activeEffect(effect.data.flags.core.statusId,true);
+        let actor=effect.parent; 
+        let upActor=new StatusIcon(actor,'actor');
+        upActor.chainedStatus(effect.data.flags.core.statusId,false)
+      //  char.activeEffect(effect.data.flags.core.statusId,false);
     }
 })
 
@@ -259,8 +273,8 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 });
 
 
-Hooks.on("updateActor", async (actor,data,diff,userId) => {       
-   
+Hooks.on("updateActor", async (actor,data,diff,userId) => {         
+    
     
     if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
@@ -373,17 +387,11 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
     let combatid=combatdata.id;
     cbt.setCombat(combatid);  
     
-    //cbt.jokersWild(combat);
    
-    if (combatdata.current.round!=combatdata.previous.round){
-      //  console.log('new round');
-       /*  setTimeout(async()=>{ /// silver tape => combat not updating correctly on new round
-            combatdata=game.combats.get(combatdata.id);
-            await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
-            await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
-        },500) */
-      //  console.log(combatdata.current.combatantId);
-       // console.log(entity.current.combatantId);
+   
+    /// COMBAT SYNC ERROR 
+    /* if (combatdata.current.round!=combatdata.previous.round){
+      
 
        await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
        let init=0;
@@ -392,11 +400,10 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
        let i=0;
        let combatantsids=new Array;
        let suit=0;
-     //  console.log(combatdata.combatants);
+    
 
        let firstPlayer=Hooks.on('updateCombatant',async(combatant,initdata)=>{
-       //   console.log(combatant,initdata);
-           // console.log(size);
+       
            
             if (initdata.initiative!==null){
                 if (!combatantsids.includes(combatant.id)){
@@ -418,7 +425,7 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
                 }
                 
                 
-             //   console.log(i);
+             
               
             }
 
@@ -427,14 +434,15 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
 
        
         
-    } else {
+    } else { */
         await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
         await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
-    }
+    /* } */
    
     
     }
 });
+
 
 
 /* Hooks.on("renderCombatTracker", async (combatTracker, update) => {

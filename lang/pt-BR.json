@@ -154,7 +154,7 @@
     "SWADETOOLS.StatusIconsSettingSystem":"Sistema SWADE",
     "SWADETOOLS.StatusIconsSettingNone":"Desativar",
     "SWADETOOLS.SettingNoAutoRoll":"Desabilitar rolagens automáticas em combate",
-    "SWADETOOLS.SettingNoAutoRollHint":"Essa opção desabilita as rolagens automáticas para sair de Atordoado e Abalado durante o combate.",
+    "SWADETOOLS.SettingNoAutoRollHint":"(Requer Reiniciar) Essa opção desabilita as rolagens automáticas para sair de Atordoado e Abalado durante o combate.",
     "SWADETOOLS.sayIsShaken": "está Abalado",
     "SWADETOOLS.sayIsStunned": "está Atordoado",
     "SWADETOOLS.Scale": "Escala",

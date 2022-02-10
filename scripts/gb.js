@@ -8,7 +8,7 @@ export const moduleName='swade-tools'
 export const attributes=['agility','smarts','spirit','strength','vigor']
 export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter'];
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat'];
-export const settingRules=['Dumb Luck','Hard Choices','Unarmored Hero','Wound Cap'];
+export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
 
 
@@ -403,6 +403,65 @@ export const rechargeWeaponXDialog=(actor,item)=>{
             
         }
     }).render(true);
+}
+
+/// copy from swade system
+export const statusChange=async(actor,status,active)=>{
+    if (status.startsWith('is')){
+        status=translateActiveEffect(status,true)
+    }
+    const statusConfigData = CONFIG.statusEffects.find((effect) => effect.id === status);
+    if (active) {
+        // Set render AE sheet to false
+        const renderSheet = false;
+        // See if there's a token for this actor on the scene. If there is and we toggle the AE from the sheet, it double applies because of the token.
+        const tokens = game.canvas.tokens?.getDocuments();
+        const token = tokens?.find((t) => t.actor?.id === actor.id);
+        // So, if there is...
+        if (token) {
+            // Toggle the AE from the token which toggles it on the actor sheet, too
+            //@ts-ignore TokenDocument.toggleActiveEffect is documented in the API: https://foundryvtt.com/api/TokenDocument.html#toggleActiveEffect
+            await token.toggleActiveEffect(statusConfigData, {
+                active: true,
+            });
+            // Otherwise
+        }
+        else {
+            // Create the AE, passing the label, data, and renderSheet boolean
+            setProperty(statusConfigData, 'flags.core.statusId', id);
+            await this._createActiveEffect(statusLabel, statusConfigData, renderSheet);
+        }
+        // Otherwise...
+    }
+    else {
+        await actor.update({
+            'data.status': {
+                [translateActiveEffect(status)]: false,
+            },
+        });
+        // Find the existing effect based on label and flag and delete it.
+        for (const effect of actor.data.effects) {
+            if (effect.getFlag('core', 'statusId') === status) {
+                await effect.delete();
+            }
+        }
+    }
+}
+
+
+export const translateActiveEffect=(statusName,removeIs=false)=>{
+    if (!statusName){
+        return false;
+    }
+
+    if (removeIs){
+        return statusName.substring(2).toLowerCase();///remove is and put in lowercase
+    } else {
+        return 'is'+statusName.charAt(0).toUpperCase() + statusName.slice(1) /// is + first letter uppercase
+    }
+    
+
+    
 }
 
 export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>{
