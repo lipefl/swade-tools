@@ -65,9 +65,15 @@ export default class SettingRules extends FormApplication {
                 value=true;
             }
 
-            if (value && name=='grittyDamage'){
-                value=formData[name];
+            if(name=='grittyDamage'){
+                if (value){
+                    value=formData[name];
+                } else {
+                    value='';
+                }
             }
+
+
             game.settings.set(gb.moduleName,name,value);
 
             /* NOW IN SWADE SYSTEM

@@ -416,7 +416,17 @@ export const statusChange=async(actor,status,active)=>{
         const renderSheet = false;
         // See if there's a token for this actor on the scene. If there is and we toggle the AE from the sheet, it double applies because of the token.
         const tokens = game.canvas.tokens?.getDocuments();
-        const token = tokens?.find((t) => t.actor?.id === actor.id);
+
+        let token
+       // console.log(actor);
+        if (actor.isToken){
+            token = tokens?.find((t) => t?.id === actor.id);
+        } else {
+            token = tokens?.find((t) => t.actor?.id === actor.id);
+        }
+        
+
+      //  console.log(token);
         // So, if there is...
         if (token) {
             // Toggle the AE from the token which toggles it on the actor sheet, too
@@ -428,8 +438,14 @@ export const statusChange=async(actor,status,active)=>{
         }
         else {
             // Create the AE, passing the label, data, and renderSheet boolean
-            setProperty(statusConfigData, 'flags.core.statusId', id);
-            await this._createActiveEffect(statusLabel, statusConfigData, renderSheet);
+            await actor.update({
+                'data.status': {
+                    [translateActiveEffect(status)]: false,
+                },
+            });
+            actor.toggleActiveEffect(statusConfigData, {
+                active: true,
+            });
         }
         // Otherwise...
     }
