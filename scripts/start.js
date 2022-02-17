@@ -46,7 +46,7 @@ Hooks.on('ready',()=>{
 
    
    
-    game.swade.rollSkillMacro=(skillName)=>{
+    /* game.swade.rollSkillMacro=(skillName)=>{
         gb.macroRoll('skill',skillName);
     }
 
@@ -56,6 +56,10 @@ Hooks.on('ready',()=>{
 
     game.swade.rollPowerMacro=(powerName)=>{
         gb.macroRoll('power',powerName);
+    } */
+
+    game.swade.rollItemMacro=(itemName)=>{
+        gb.macroRoll(itemName);
     }
 
 

@@ -216,23 +216,28 @@ export const updateActor=(actor,data,val,istoken)=>{
     actor.update({[data]:val});
 }
 
-export const macroRoll=(type,itemName)=>{
+export const macroRoll=(itemName)=>{
     let actor=findUserActor();
+    
 
         if (actor){
-        let item=actor.items.filter(el=>el.type==type && el.name==itemName)[0];
+        let item=actor.items.filter(el=>el.name==itemName)[0];
+
+        console.log(item);
+        
         
         if (item){
+            let type=item.type;
             if (type=='skill'){
                 let sys=new SystemRoll(actor);
                 sys.rollSkill(item._id);
             } else {
-                let itemd=new ItemDialog(actor,item._id);
+                let itemd=new ItemDialog(actor,item.id);
                 itemd.showDialog()
             }
             
         } else {
-            return ui.notifications.warn(`${trans('No'+type+'InActor')} ${itemName}`);
+            return ui.notifications.warn(`${trans('NoweaponInActor')} ${itemName}`);
         }
         }
 }
