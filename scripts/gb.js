@@ -230,7 +230,7 @@ export const macroRoll=(itemName)=>{
             let type=item.type;
             if (type=='skill'){
                 let sys=new SystemRoll(actor);
-                sys.rollSkill(item._id);
+                sys.rollSkill(item.id);
             } else {
                 let itemd=new ItemDialog(actor,item.id);
                 itemd.showDialog()
