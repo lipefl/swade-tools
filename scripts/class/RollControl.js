@@ -21,7 +21,7 @@ export default class RollControl {
 
         this.rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
-       // console.log(this.chat.data.flags?.["swade-tools"]);
+      // console.log(this.chat.data.flags?.["swade-tools"]);
 
         //this.actor;
         this.istoken=false;
@@ -654,7 +654,7 @@ export default class RollControl {
                         targetInfo+=`<li>${gb.trans('TargetTooFar')}</li>`;
                     } else {
                         targetNumber+=distancemod;
-                        targetInfo+=`<li>${gb.trans('Rng','SWADE')}: -${distancemod}${extreme}</li>`;
+                        targetInfo+=`<li>${gb.trans('Range._name','SWADE')}: -${distancemod}${extreme}</li>`;
                     }
                 }
             }

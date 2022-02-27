@@ -1,6 +1,7 @@
 import * as gb from './../gb.js';
-//import CharRoll from './CharRoll.js';
+import CharRoll from './CharRoll.js';
 import ItemDialog from './ItemDialog.js';
+import ItemRoll from './ItemRoll.js';
 import SystemRoll from './SystemRoll.js';
 
 export default class SheetControl {
@@ -13,9 +14,43 @@ export default class SheetControl {
 
     bindAttributes(){
         gb.attributes.map(attribute=>{
-            this.html.find('.attribute[data-attribute="'+attribute+'"] button.attribute-label,.attributes-list .attribute[data-attribute="'+attribute+'"] .attribute-label a').unbind('click').bind('click',()=>{                
+            this.html.find('.attribute[data-attribute="'+attribute+'"] button.attribute-label,.attributes-list .attribute[data-attribute="'+attribute+'"] .attribute-label a').unbind('click').bind('click',()=>{   
+                if (gb.setting('simpleRolls')){
+                   // let item=this.sheet.actor.items.get(skillId);
+                  //  let skillName=item.name;
+                    let content=`<div class="swadetools-itemfulldata">
+                    <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.sheet.actor.data.data.attributes[attribute].die.sides}${gb.realInt(this.sheet.actor.data.data.attributes[attribute].die.modifier)?'+'+this.sheet.actor.data.data.attributes[attribute].die.modifier:''}
+                    </div>
+                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
+                    new Dialog({
+                        title: gb.trans(gb.attrlang[attribute],'SWADE'),
+                        content: content,
+                        default: 'ok',
+                        buttons: {
+                           
+                            ok: {
+                                label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
+                                callback: (html)=>{
+                                
+                                    
+                                    let cr=new CharRoll(this.sheet.actor)
+                                    cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
+                                    cr.rollAtt(attribute)
+                                    cr.addFlag('rolltype','attribute')
+                                    cr.display();
+                                    
+                                }
+                            }
+            
+                            
+                        }
+                    }).render(true);
+                   
+    
+                } else {             
                 let sys=new SystemRoll(this.sheet.actor);
                 sys.rollAtt(attribute);
+                }
             })
         })
     }
@@ -39,12 +74,49 @@ export default class SheetControl {
         // ol.skill-list ....
         this.html.find(addel+'ol.skill-list li.item.skill button.skill-die,ol.skill-list li.item.skill img.skill-icon,.skill-list-main ol.skill-list li.item.skill button.skill-name, .skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',(ev)=>{
             //let skillId=ev.currentTarget.parentElement.dataset.itemId;
+           
             let skillId=$(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
-          
+
+            if (gb.setting('simpleRolls')){
+                let item=this.sheet.actor.items.get(skillId);
+                let skillName=item.name;
+                let content=`<div class="swadetools-itemfulldata">
+                <strong>${skillName}</strong>: d${item.data.data.die.sides}${gb.realInt(item.data.data.die.modifier)?'+'+item.data.data.die.modifier:''}
+                </div>
+                <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
+                new Dialog({
+                    title: skillName,
+                    content: content,
+                    default: 'ok',
+                    buttons: {
+                       
+                        ok: {
+                            label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
+                            callback: (html)=>{
+                            
+                                
+                                let cr=new CharRoll(this.sheet.actor)
+                                cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
+                                cr.rollSkill(skillName)
+                                cr.addFlag('rolltype','skill')
+                                cr.display();
+                                
+                            }
+                        }
+        
+                        
+                    }
+                }).render(true);
+               
+
+            } else {
+
+                
             let sys=new SystemRoll(this.sheet.actor);
 
            
             sys.rollSkill(skillId);
+            }
         })
 
         /* ;

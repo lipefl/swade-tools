@@ -166,6 +166,8 @@
     "SWADETOOLS.SituationalRules": "Regras Situacionais",
     "SWADETOOLS.Customization": "Personalização",
     "SWADETOOLS.RulesSettings": "Regras para cenários",
-    "SWADETOOLS.bullets": "tiros"
+    "SWADETOOLS.bullets": "tiros",
+    "SWADETOOLS.SettingsSimpleRolls":"Rolagens de Características Simples",
+    "SWADETOOLS.SettingsSimpleRollsHint":"Essa opção irá simplificar rolagens de característica mostrando apenas uma opção para um modificador personalizado."
 
 }

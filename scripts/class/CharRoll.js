@@ -6,13 +6,7 @@ import Char from './Char.js';
 
 export default class CharRoll extends BasicRoll{
 
-    attrlang={
-        agility: "AttrAgi",
-        spirit:"AttrSpr",
-        strength: "AttrStr",
-        smarts:  "AttrSma",
-        vigor: "AttrVig"
-    }
+    //attrlang=gb.attrlang;
     
     
 
@@ -152,7 +146,7 @@ export default class CharRoll extends BasicRoll{
          //   console.log(wildDie);
         } 
 
-        this.flavor+=`<div>${gb.trans(this.attrlang[attribute],"SWADE")}</div>`;
+        this.flavor+=`<div>${gb.trans(gb.attrlang[attribute],"SWADE")}</div>`;
 
         
         this.baseModifiers();

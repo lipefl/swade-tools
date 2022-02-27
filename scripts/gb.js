@@ -10,7 +10,13 @@ export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge'
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
-
+export const attrlang={
+    agility: "AttrAgi",
+    spirit:"AttrSpr",
+    strength: "AttrStr",
+    smarts:  "AttrSma",
+    vigor: "AttrVig"
+}
 
 export const statusDefault = ['shaken','distracted','vulnerable','stunned','bound','entangled'];
 
@@ -215,6 +221,8 @@ export const updateActor=(actor,data,val,istoken)=>{
     }
     actor.update({[data]:val});
 }
+
+
 
 export const macroRoll=(itemName)=>{
     let actor=findUserActor();

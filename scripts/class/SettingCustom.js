@@ -29,6 +29,7 @@ export default class SettingName extends FormApplication {
 
 
         data.formHtml+=`<h2>${gb.trans('Customization')}</h2>`;
+        data.formHtml+=gb.settingFieldCheckbox('simpleRolls',gb.trans('SettingsSimpleRolls'),gb.trans('SettingsSimpleRollsHint'));
         data.formHtml+=gb.settingFieldCheckbox('itemNameClick',gb.trans('SettingsItemNameClick'),gb.trans('SettingsItemNameClickHint'));
         data.formHtml+=gb.settingFieldCheckbox('alwaysShowSituational',gb.trans('SettingShowSituational'),gb.trans('SettingShowSituationalHint'));
         data.formHtml+=gb.settingFieldCheckbox('noStatusAutoRoll',gb.trans('SettingNoAutoRoll'),gb.trans('SettingNoAutoRollHint'));

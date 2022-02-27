@@ -75,6 +75,16 @@ export const registerSettings=()=>{
       });
 
 
+      game.settings.register(gb.moduleName, 'simpleRolls', {
+        name: gb.trans('SettingSimpleRolls'),
+        hint: gb.trans('SettingSimpleRollsHint'),
+        default: true,
+        scope: "world",
+        type: Boolean,
+        config: false
+        });
+
+
     game.settings.registerMenu(gb.moduleName,'settingName',{
         name: gb.trans('settingName'),
         label: gb.trans('settingNameButton'),

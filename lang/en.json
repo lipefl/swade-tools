@@ -167,7 +167,9 @@
     "SWADETOOLS.SituationalRules": "Situational Rules",
     "SWADETOOLS.Customization": "Customization",
     "SWADETOOLS.RulesSettings": "Rules for Settings",
-    "SWADETOOLS.bullets": "shots"
+    "SWADETOOLS.bullets": "shots",
+    "SWADETOOLS.SettingsSimpleRolls":"Simple trait rolls",
+    "SWADETOOLS.SettingsSimpleRollsHint":"This option will simplify trait rolls showing only a field for a custom modifier"
     
     
     
