@@ -103,6 +103,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Compatibility with SWADE system v1.0
 + Hard Choices is removed and uses the new system setting
 + Simpler Dialog Rolls for attributes and skills (enabled by default, can disabled in settings)
++ New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
 
 More features will be added...
 

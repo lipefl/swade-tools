@@ -201,12 +201,14 @@ export default class CharRoll extends BasicRoll{
             } 
 
             this.addModifier(item.data.data.die.modifier,gb.trans('ModSkill'))     
+
+            if (item.data.data.attribute=='agility' && this.actor.isEncumbered){
+                this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
+            }
         }
         
         
-        if (item.data.data.attribute=='agility' && this.actor.isEncumbered){
-            this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
-        }
+        
         
         this.addFlag('skill',skillName);
         

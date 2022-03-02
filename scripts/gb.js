@@ -133,6 +133,14 @@ export const stringMod=(mod)=>{
 
 }
 
+
+export const explodeAllDice=(weaponDamage)=>{
+    let regexDiceExplode = /d[0-9]{1,2}/g;
+    weaponDamage = weaponDamage.replace(/x|=/g,'') /// remove x and = if it already has
+    weaponDamage = weaponDamage.replace(regexDiceExplode, "$&x");
+    return weaponDamage;
+   }
+
 export const updateParry=(actor,item,istoken=false,isdelete=false)=>{
   //  console.log(item);
     if (setting('fightingSkill')){
@@ -231,7 +239,7 @@ export const macroRoll=(itemName)=>{
         if (actor){
         let item=actor.items.filter(el=>el.name==itemName)[0];
 
-        console.log(item);
+     //   console.log(item);
         
         
         if (item){

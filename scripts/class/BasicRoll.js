@@ -175,10 +175,7 @@ export default class BasicRoll {
    }
 
    explodeAllDice(weaponDamage){
-    let regexDiceExplode = /d[0-9]{1,2}/g;
-    weaponDamage = weaponDamage.replace(/x|=/g,'') /// remove x and = if it already has
-    weaponDamage = weaponDamage.replace(regexDiceExplode, "$&x");
-    return weaponDamage;
+    return gb.explodeAllDice(weaponDamage);
    }
 
    raiseCount(targetNumber=4){ ///totalbonus => for vulnerable

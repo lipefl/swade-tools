@@ -15,13 +15,17 @@ export default class RollControl {
         this.targetFunction=false;
         this.soakFunction;
         this.titleshow=false;
+        this.gmmod=0;
+        this.usegmtarget=false;
 
         this.user=game.users.get(userId);
         this.userid=userId;
 
         this.rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
 
-      // console.log(this.chat.data.flags?.["swade-tools"]);
+        
+
+     // console.log(this.chat.data.flags?.["swade-tools"]);
 
         //this.actor;
         this.istoken=false;
@@ -32,30 +36,266 @@ export default class RollControl {
       //  console.log(userId);
     }
 
+   
+
+    addEditButton(){
+        if (game.user.isGM){
+
+          //  let fux=this.html
+          //  console.log(this.chat);
+          //  let total=this.roll.total;
+           // console.log(this.html.find('.flavor-text'));
+          //  if (this.rolltype!==undefined && this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
+      //   let over= this.html.find('.swadetools-overroll');
+                this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-editroll swadetools-rollbutton" title="'+gb.trans('EditBtn')+'"><i class="fa fa-plus"></i></button> <button class="swadetools-raisecalc swadetools-rollbutton" title="'+gb.trans('RaiseCalcBtn')+'"><i class="fa fa-calculator"></i></button>').on('click','button.swadetools-editroll',()=>{
+                    
+                    let raises=gb.raiseCount(this.roll.total);
+                    if (raises<0){
+                        raises=0;
+                    }
+
+                    let content=`<div class="swadetools-itemfulldata">
+                    
+                    <div><strong>${gb.trans('Total')}:</strong> ${this.roll.total}</div> 
+                   
+                    
+                    </div>
+                    <div class="swadetools-formpart">
+                    <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div>
+                    </div>
+                   `
+        
+                    new Dialog({
+                        title: gb.trans('EditBtn'),
+                        content: content,
+                        default: 'ok',
+                        buttons: {
+                           
+                            ok: {
+                                label: `<i class="fas fa-plus"></i> ${gb.trans('EditBtn')}`,
+                                callback: async (html)=>{
+                                
+                                    let gmmod=html.find("#mod")[0].value;
+                                   // let gmtarget=html.find("#retarget")[0]?.checked;
+
+                                    if (typeof gmmod == "string" && gmmod.includes('d')){
+                                        let mod=await new Roll(gb.explodeAllDice(gmmod)).roll();
+                                        gmmod=mod.total;
+                                    }
+
+                                   // console.log(gmtarget);
+
+                                    if (gmmod!=''){
+                                  //  this.resetActions();
+                                   // console.log(this.roll,this.chat,this.html.html());
+                                   // total+=gb.realInt(gmmod);   
+                                  //  let newContent=content.find('.dice-total .dice label').replaceWith('10').html()
+                                    let update={};
+
+                                  //  if (gmmod){
+                                        
+                                        update['flags.swade-tools.gmmod']=gmmod;
+                                   // }
+
+                                    /* if (gmtarget){
+                                       // let newTargets;
+                                        let targets=Array.from(game.user.targets);
+                                        let targetsave=new Array;
+                                        targets.map(target=>{
+                                            targetsave.push(target.id);
+                                        })
+                                        update['flags.swade-tools.usetarget']=targetsave.join(',');
+                                    } */
+                                   // console.log(`#chat-log .chat-message[data-message-id="${this.chat.id}"]`);
+                                  // let newTotal=this.roll.total+gb.realInt(gmmod);
+
+                                  
+                                    
+                                    await this.chat.update(update);
+
+                                    
+
+                                   // this.doActions(false);
+
+                                    //await this.html.find('.swadetools-overroll').html('<span>'+newTotal+'</span>');
+
+                                  //  this.addNewTotal(newTotal);
+
+                                   // fux.append('<div>new total</div>');
+                                   // this.html.find('.swadetools-overroll').append();
+
+                                    //this.html.find()
+                                  //  $('#chat-log .chat-message[data-message-id="'+this.chat.id+'"]').find('.swadetools-overroll').text(newTotal);
+                                                                      
+                                    //this.html.find('.dice-total .dice label').text(this.roll.total+gb.realInt(gmmod))
+                                    //await this.chat.updateEmbeddedDocuments('Roll',{'total':9})
+                                   // console.log(this.chat);
+                                    }
+                                    
+                                    
+                                }
+                            }
+            
+                            
+                        }
+                    }).render(true);
+                }).on('click','button.swadetools-raisecalc',()=>{
+                    this.raiseCalcDialog();
+                    
+                   /*  $(document).on('change','input#targetnumber',(event)=>{
+                        el=event.currentTarget;
+                       // console.log($(el).val());
+                    }) 
+
+                    )*/
+                })
+                
+                if (this.chat.data.flags?.["swade-tools"]?.itemroll){
+                this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-retarget swadetools-rollbutton" title="'+gb.trans('RetargetBtn')+'"><i class="fa fa-crosshairs"></i></button>').on('click','button.swadetools-retarget',async ()=>{
+
+                    let targets=Array.from(game.user.targets);
+
+                    if (targets.length<=0){
+
+                        ui.notifications.warn(gb.trans('NoTarget'));
+
+                    } else {
+                    let update={}
+                    
+                                        let targetsave=new Array;
+                                        targets.map(target=>{
+                                            targetsave.push(target.id);
+                                        })
+                                        update['flags.swade-tools.usetarget']=targetsave.join(',');
+
+                                        await this.chat.update(update);
+                    }
+
+                });
+            }
+            }
+      //  }
+    }
+
+    raiseCalcDialog(targetNumber=4){
+
+        let total=this.roll.total+this.gmmod;
+        let raiseStr;
+        let raises=gb.raiseCount(total,targetNumber);
+        if (raises==0){
+            raiseStr=gb.trans('Success');
+        } else
+        if (raises<0){
+            raiseStr=gb.trans('Failure')
+        } else {
+            raiseStr=gb.trans('Raises')+': '+raises;
+        }
+       let content=`<div class="swadetools-itemfulldata">
+       <div class="swadetools-2grid">
+       <div><strong>${gb.trans('Total')}:</strong> ${total}</div> <div><strong>${raiseStr} (${gb.trans('TN')}: ${targetNumber})</strong></div>
+       </div>
+       <div class="swadetools-formpart">
+       <div class="swadetools-mod-add"><label><strong>${gb.trans('TargetNumber')}:</strong></label> <input type="text" id="targetNumber" value=""></div></div>`
+
+        new Dialog({
+            title: gb.trans('RaiseCalcBtn'),
+            content: content,
+            default: 'ok',
+            buttons: {
+                ok : {
+                    label: gb.trans('RaiseCalcBtn'),
+                    callback: (html) => {
+                        this.raiseCalcDialog(html.find("#targetNumber")[0].value)
+                    }
+                }
+            }
+
+                
+          
+        }).render(true);
+        
+    }
+
+    addButtons(){
+        if (this.rolltype!==undefined){ ///roll comes from swade tools
+            this.html.append('<div class="swadetools-relative"><div class="swadetools-rollbuttonwrap"></div></div>');
+            if (!this.isCritical() || gb.settingKeyName('Dumb Luck')){
+                this.addBennyButton();
+            }
+
+            if (!this.isCritical()){
+                this.addEditButton();
+            }
+            
+
+        }
+    }
+
+   
 
     doActions(){
 
      //   console.log('calling do actions');
+
+        
+     
+
+        if (this.chat.data.flags?.["swade-tools"]?.gmmod){
+            this.gmmod=gb.realInt(this.chat.data.flags["swade-tools"].gmmod)
+
+            let total=this.gmmod+this.roll.total;
+
+          //  console.log(this.chat.content,this.chat.data.content);
+
+           // $($0).html('11')
+           
+           this.html.find('.flavor-text').append('<div>'+gb.trans('GMMod')+': '+gb.stringMod(this.gmmod)+'</div>').ready(()=>{
+            this.scrollChat();
+        })
+
+           let modstr='+';
+           if (this.gmmod<0){
+               modstr='-';
+           }
+
+           setTimeout(()=>{ /// silver tape roll prints after
+            this.html.find('.message-content .dice-total').html(total);
+
+            this.html.find('.dice-formula').append('<div class="modifier"><label style="color:black">'+modstr+'</label></div><div class="modifier"><label style="color:black">'+Math.abs(this.gmmod)+'</label></div>')
+           // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
+        },500)  
+           
+         //  this.html.find('.message-content').append('<div class="swadetools-gmmodtotal dice-roll"><span class="swadetools-gmmodtotalnumber dice-total">'+total+'</span></div>');
+         //  console.log(this.html.html());
+           // this.html.append('<div class="rolltotal">10</div>');
+           // this.html.css('background','yellow');
+        }
+
+       
+        this.addButtons();
+        
+        
         
         if (!this.isCritical()){
-            this.addBennyButton();
+           // this.addBennyButton();
             this.findTargets();
         } else {
 
             
 
-            if (gb.settingKeyName('Dumb Luck')){
+           /*  if (gb.settingKeyName('Dumb Luck')){
                 this.addBennyButton();
-            }
+            } */
             this.html.append('<div class="swadetools-criticalfailure">'+gb.trans('CriticalFailure')+'</div>').ready(()=>{
                 this.scrollChat();
             })
         }
 
       //  console.log(this.chat.data.flags['swade-tools']);
-        if (this.rolltype=='skill' && this.chat.data.flags['swade-tools'].userof>1){ ///hide total for rof
+     
+        /* if (this.rolltype=='skill' && this.chat.data.flags['swade-tools'].userof>1){ ///hide total for rof  ----> not working anymore
             this.html.find('h4.dice-total').css('color','transparent');
-        }
+        } */
        
             this.statusRolls();
         
@@ -81,7 +321,7 @@ export default class RollControl {
 
 
         
-        let raisecount=gb.raiseCount(this.roll.total);
+        let raisecount=gb.raiseCount(this.roll.total+this.gmmod);
 
         let content=`<div class="swadetools-chatadd-status">`;
 
@@ -153,7 +393,9 @@ export default class RollControl {
 
         let char=new Char(actor,this.istoken);
 
-        let raisecount=gb.raiseCount(this.roll.total);
+        let total=this.roll.total+this.gmmod;
+
+        let raisecount=gb.raiseCount(total);
         let content=`<div class="swadetools-chatadd-status">`;
         let shakenremove=false;
 
@@ -203,7 +445,7 @@ export default class RollControl {
         new ChatLog().scrollBottom() /// force scroll
     }
 
-    findTargets(){
+   async findTargets(){
         if (this.chat.data.flags["swade-tools"]?.itemroll || this.rolltype=='soak'){ /// show only for items (weapons, powers) and soak
 
             let rolltype=this.rolltype;
@@ -213,11 +455,23 @@ export default class RollControl {
 
             if (this.chat.data.flags["swade-tools"].usetarget){
 
-                this.targets=[canvas.tokens.get(this.chat.data.flags["swade-tools"].usetarget)];
+                let usetargets=this.chat.data.flags["swade-tools"].usetarget.split(',');
+                this.targets=new Array;
+
+                usetargets.map(target=>{
+                    this.targets.push(canvas.tokens.get(target))
+                })
+               // this.targets=[canvas.tokens.get(this.chat.data.flags["swade-tools"].usetarget)];
               //  console.log(this.targets);
               //  console.log(rolltype)
             } else {
                 this.targets=Array.from(this.user.targets);
+                let targetsave=new Array;
+                this.targets.map(target=>{
+                    targetsave.push(target.id);
+                })
+
+                await this.chat.update({'flags.swade-tools.usetarget':targetsave.join(',')})
             }
             
 
@@ -327,6 +581,7 @@ export default class RollControl {
                         });
                     }
                    
+                    this.targetShow=`<div class="swadetools-wrapper">`+this.targetShow+'</div>';
                     
                     this.html.append(this.targetShow).on('click','a.swadetools-rolldamage',(event)=>{
                         let el=event.currentTarget;
@@ -395,7 +650,7 @@ export default class RollControl {
 
     soak(wounds){
 
-        let raises=gb.raiseCount(this.roll.total);
+        let raises=gb.raiseCount(this.roll.total+this.gmmod);
                 if (raises>=0){
                     wounds=wounds-(raises+1);
 
@@ -512,6 +767,9 @@ export default class RollControl {
     }
 
     attackTarget(target,total,rofnumb){
+        
+        
+        total+=this.gmmod;
         
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
         let item=this.getItemOwner().items.get(itemid);
@@ -858,6 +1116,9 @@ export default class RollControl {
         let soakClass='';
         let isvehicle=false;
 
+        let total=this.roll.total+this.gmmod;
+        
+
         if (newWounds===null){
        // let actorid=this.chat.data.flags["swade-tools"].useactor;
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
@@ -892,7 +1153,7 @@ export default class RollControl {
                 apextra=armor;
             }
         }
-         raisecount=gb.raiseCount(this.roll.total,toughness-apextra);
+         raisecount=gb.raiseCount(total,toughness-apextra);
         } else {
             raisecount=newWounds; 
 
@@ -927,7 +1188,7 @@ export default class RollControl {
                 s='s';
             }
 
-            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)}`
+            addTargetTxt=`${raisecount} ${gb.trans('Targetwound'+s)} `
 
            if (isvehicle){
             addTargetTxt+=`+ ${gb.trans('Targetshakenvehicle')}`;
@@ -1067,8 +1328,8 @@ export default class RollControl {
 
         
 
-        if (this.rolltype!==undefined && this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
-        this.html.append('<div class="swadetools-relative"><button class="swadetools-bennyrerroll" title="'+gb.trans('RerollBtn')+'"></button></div>').on('click','button.swadetools-bennyrerroll',()=>{
+        if (this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
+        this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-bennyrerroll swadetools-rollbutton" title="'+gb.trans('RerollBtn')+'"></button>').on('click','button.swadetools-bennyrerroll',()=>{
             
 
             let actor=this.findActor();

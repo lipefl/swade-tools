@@ -168,6 +168,18 @@
     "SWADETOOLS.RulesSettings": "Regras para cenários",
     "SWADETOOLS.bullets": "tiros",
     "SWADETOOLS.SettingsSimpleRolls":"Rolagens de Características Simples",
-    "SWADETOOLS.SettingsSimpleRollsHint":"Essa opção irá simplificar rolagens de característica mostrando apenas uma opção para um modificador personalizado."
+    "SWADETOOLS.SettingsSimpleRollsHint":"Essa opção irá simplificar rolagens de característica mostrando apenas uma opção para um modificador personalizado.",
+    "SWADETOOLS.EditBtn":"Adicionar Mod. de Mestre",
+    "SWADETOOLS.GMMod":"Mod. Mestre",
+    "SWADETOOLS.RetargetBtn":"Usar alvos do Mestre",
+    "SWADETOOLS.NoTarget":"Nenhum alvo selecionado.",
+    "SWADETOOLS.Total":"Total",
+    "SWADETOOLS.TN":"NA",
+    "SWADETOOLS.RaiseCalcBtn":"Contar Ampliações",
+    "SWADETOOLS.Success":"Successo",
+    "SWADETOOLS.Raises":"Ampliações",
+    "SWADETOOLS.Failure":"Falha",
+    "SWADETOOLS.TargetNumber":"Mudar Número Alvo"
+
 
 }

@@ -169,7 +169,19 @@
     "SWADETOOLS.RulesSettings": "Rules for Settings",
     "SWADETOOLS.bullets": "shots",
     "SWADETOOLS.SettingsSimpleRolls":"Simple trait rolls",
-    "SWADETOOLS.SettingsSimpleRollsHint":"This option will simplify trait rolls showing only a field for a custom modifier"
+    "SWADETOOLS.SettingsSimpleRollsHint":"This option will simplify trait rolls showing only a field for a custom modifier",
+    "SWADETOOLS.EditBtn":"Add GM Modifier",
+    "SWADETOOLS.GMMod":"GM Mod.",
+    "SWADETOOLS.RetargetBtn":"Use GM targets",
+    "SWADETOOLS.NoTarget":"No targets selected.",
+    "SWADETOOLS.Total":"Total",
+    "SWADETOOLS.TN":"TN",
+    "SWADETOOLS.RaiseCalcBtn":"Count Raises",
+    "SWADETOOLS.Success":"Success",
+    "SWADETOOLS.Raises":"Raises",
+    "SWADETOOLS.Failure":"Failure",
+    "SWADETOOLS.TargetNumber":"Change Target Number"
+
     
     
     
