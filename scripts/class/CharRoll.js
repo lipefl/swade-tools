@@ -488,7 +488,7 @@ export default class CharRoll extends BasicRoll{
     
     }
 
-    rollDamage(damage,extraflavor=''){
+    rollDamage(damage,extraflavor='',raisedie=6){
         this.rolltype='damage';
 
         let raisetext=``;
@@ -499,8 +499,8 @@ export default class CharRoll extends BasicRoll{
         
         this.flavor+=`<div>${gb.trans('Dmg','SWADE')}: ${damage} ${raisetext} ${extraflavor}</div>`;
         this.baseModifiers(true);
-      //  console.log(this.dmgraise);
-        this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise);
+      //  console.log(raisedie);
+        this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise,raisedie);
     }
 
     addFlavor(flavorText,atend=false){

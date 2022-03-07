@@ -64,14 +64,25 @@ export default class ItemRoll extends CharRoll{
                 
             }
 
+           
+
             this.addDmgMod();
-            this.rollDamage(damage);
+            this.rollDamage(damage,'',this.raiseDie());
         }
 
         
         
 
         
+    }
+
+    raiseDie(){
+        let raisedie=6;
+        if (this.item.data?.data?.bonusDamageDie){
+            raisedie=this.item.data.data.bonusDamageDie;
+        }
+
+        return raisedie;
     }
 
     /// universal mods
@@ -118,7 +129,7 @@ export default class ItemRoll extends CharRoll{
         if (this.item.data.data.ap){
             extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.data.data.ap}) `;
         }
-        this.rollDamage(this.item.data.data.damage,extrainfo);
+        this.rollDamage(this.item.data.data.damage,extrainfo,this.raiseDie());
     }
 
     

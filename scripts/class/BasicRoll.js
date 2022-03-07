@@ -107,12 +107,12 @@ export default class BasicRoll {
 
         let wildkey;
      //   console.log(this.roll);
-
+     let i=0;
     
 
        if (rof>1){
 
-        let i=0;
+        
         if (this.skillName){
             while (i<rof){
             this.roll.terms[0].dice[i].options.flavor=this.skillName;
@@ -125,7 +125,11 @@ export default class BasicRoll {
         wildkey=i;
         }
 
+        i++
+
        } else {
+
+        i=2;
         if (this.skillName && wildDie){
             this.roll.terms[0].dice[0].options.flavor=this.skillName;
         } else {
@@ -137,6 +141,14 @@ export default class BasicRoll {
         wildkey=1;
         }
 
+       }
+
+       /// extra dice
+       //console.log(this.roll.terms);
+      // console.log(i,this.roll.terms[0]?.dice[i]);
+       while (this.roll.terms[0]?.dice[i]!==undefined){
+        this.roll.terms[0].dice[i].options.flavor=gb.trans('Modifier','SWADE')
+        i++;
        }
 
 
@@ -159,13 +171,14 @@ export default class BasicRoll {
     }
    }
 
-   buildDamageRoll(damage,modifier,raise){
+   buildDamageRoll(damage,modifier,raise,raisedie=6){
 
     damage=this.explodeAllDice(damage);
-  //  console.log(damage);
+   // console.log(raisedie);
     let raiseAdd=''
     if (raise){
-        raiseAdd='+1d6x'
+        
+        raiseAdd='+1d'+raisedie+'x'
     }
     
     this.roll=new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({async:false});
