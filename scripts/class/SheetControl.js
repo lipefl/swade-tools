@@ -9,9 +9,14 @@ export default class SheetControl {
     constructor(sheet,html){
         this.sheet=sheet;
         this.rollWithouDialog=false;  /// allow disable/enable dialog in the user configuration
-        this.html=$('div#actor-'+this.sheet.actor.id);
 
-        console.log(sheet,html);
+        let divid=this.sheet.actor.id;
+        if (this.sheet.actor.isToken){
+            divid+='-'+this.sheet.actor.token.id
+        }
+        this.html=$('div#actor-'+divid);
+
+      //  console.log(sheet,html);
     }
 
     bindAttributes(){
