@@ -9,7 +9,9 @@ export default class SheetControl {
     constructor(sheet,html){
         this.sheet=sheet;
         this.rollWithouDialog=false;  /// allow disable/enable dialog in the user configuration
-        this.html=html;
+        this.html=$('div#actor-'+this.sheet.actor.id);
+
+        console.log(sheet,html);
     }
 
     bindAttributes(){
