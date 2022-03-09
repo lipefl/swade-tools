@@ -104,6 +104,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Hard Choices is removed and uses the new system setting
 + Simpler Dialog Rolls for attributes and skills (enabled by default, can be disabled in settings)
 + New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
++ Auto Initiative config removed since Auto Iniative from system is now doing the same.
 
 More features will be added...
 

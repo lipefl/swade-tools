@@ -146,7 +146,7 @@ export default class BasicRoll {
        /// extra dice
        //console.log(this.roll.terms);
       // console.log(i,this.roll.terms[0]?.dice[i]);
-       while (this.roll.terms[0]?.dice[i]!==undefined){
+       while (this.roll.terms[0]?.dice?.[i]!==undefined){
         this.roll.terms[0].dice[i].options.flavor=gb.trans('Modifier','SWADE')
         i++;
        }

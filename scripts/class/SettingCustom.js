@@ -33,7 +33,7 @@ export default class SettingName extends FormApplication {
         data.formHtml+=gb.settingFieldCheckbox('itemNameClick',gb.trans('SettingsItemNameClick'),gb.trans('SettingsItemNameClickHint'));
         data.formHtml+=gb.settingFieldCheckbox('alwaysShowSituational',gb.trans('SettingShowSituational'),gb.trans('SettingShowSituationalHint'));
         data.formHtml+=gb.settingFieldCheckbox('noStatusAutoRoll',gb.trans('SettingNoAutoRoll'),gb.trans('SettingNoAutoRollHint'));
-        data.formHtml+=gb.settingFieldCheckbox('disableAutoInitStart',gb.trans('SettingsAutoInitStart'),gb.trans('SettingsAutoInitStartHint')+' '+gb.trans('AutoDisableWarn')+' '+gb.trans('AutoInit','SWADE'));
+     //   data.formHtml+=gb.settingFieldCheckbox('disableAutoInitStart',gb.trans('SettingsAutoInitStart'),gb.trans('SettingsAutoInitStartHint')+' '+gb.trans('AutoDisableWarn')+' '+gb.trans('AutoInit','SWADE'));
         data.formHtml+=`<div class="form-group">
     <label>${gb.trans('StatusIconsSetting')}</label>
     <div class="form-fields">

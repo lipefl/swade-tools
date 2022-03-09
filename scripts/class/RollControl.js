@@ -1459,14 +1459,16 @@ export default class RollControl {
 
         if (this.rolltype!='damage' && this.roll){
 
-      //  console.log(this.roll);
+       // console.log(this.roll);
 
         let dices=this.roll.terms[0].dice;
        // console.log(dices);
+        if (dices!==undefined){ /// extras roll one dice only
         let ones=dices.filter(el=>el.total==1);
         if (ones.length>1 && ones.length>(dices.length/2)){
             return true;
         } 
+        }
 
         }
             return false;

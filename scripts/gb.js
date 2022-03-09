@@ -301,7 +301,9 @@ export const setFlagCombatant=(combat,combatant,scope,flag,value)=>{
     let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
    // console.log(update);
      //combat.updateCombatant(update);
+     
      combat.updateEmbeddedDocuments('Combatant',update);
+    
 }
 
 export const actorCombatant=(actor)=>{
@@ -329,8 +331,7 @@ export const actorIsJoker=(actor)=>{
 
         return true;
     } else {
-      //  console.log(actor);
-     //   console.log('nojoker');
+     
         return false;
     }
 }

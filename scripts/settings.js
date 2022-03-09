@@ -65,14 +65,14 @@ export const registerSettings=()=>{
 		config: true
     }); */
 
-    game.settings.register(gb.moduleName, 'disableAutoInitStart', {
+    /* game.settings.register(gb.moduleName, 'disableAutoInitStart', {
       name: gb.trans('SettingsAutoInitStart'),
       hint: gb.trans('SettingsAutoInitStartHint')+' '+gb.trans('AutoDisableWarn')+' '+gb.trans('AutoInit','SWADE'),
       default: false,
       scope: "world",
       type: Boolean,
       config: false
-      });
+      }); */
 
 
       game.settings.register(gb.moduleName, 'simpleRolls', {

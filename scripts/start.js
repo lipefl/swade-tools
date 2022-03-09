@@ -332,10 +332,11 @@ Hooks.on('renderTokenActionHUD',()=>{
 Hooks.on('ready',()=>{ /// disable autoInit
     if (gb.mainGM()){
        // console.log('initializing');
-    if (!gb.systemSetting('autoInit') && !gb.setting('disableAutoInitStart')){
+       //// already done in swade system
+    /* if (!gb.systemSetting('autoInit') && !gb.setting('disableAutoInitStart')){
         game.settings.set('swade','autoInit',true);
         ui.notifications.info(gb.trans('AutoInit','SWADE')+' '+gb.trans('ConfigEnabled'));
-    } 
+    }  */
     
 
     /* if (gb.systemSettingExists("jokersWild")){
@@ -358,14 +359,15 @@ Hooks.on('ready',()=>{ /// disable autoInit
     }
 
 
-    if (!gb.setting('disableAutoInitStart')){
+    /// disabled -> swade already doing it.
+    /* if (!gb.setting('disableAutoInitStart')){
         $(document).on('click','a[data-control="startCombat"]',()=>{
           //  console.log('clicked');
             if (!game.combat.started && game.combat.combatants.filter(el=>el.flags===undefined || el.flags.swade===undefined || el.flags.swade.cardValue===null).length>0){
                 game.combat.rollAll();    
             }
         })
-    }
+    } */
 }
         
 
