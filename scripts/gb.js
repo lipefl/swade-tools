@@ -75,11 +75,91 @@ export const getDriverSkill=(vehicle)=>{
 
 // canvas.tokens.placeables => all tokens in the scene
 
-export const getRange=(origin,target)=>{
+export const getTokenCoordinates=(token)=>{
+    let coo=new Array;    
+    
+
+  //  console.log(token);
+    let gridsize=token.scene.data.grid;
+    let middlegrid=Math.round(gridsize/2);
+
+    if (token.data.width>1 || token.data.height>1){
+    
+    let cx=new Array
+    let cy=new Array
+
+    cx.push(token.x+middlegrid);
+    cy.push(token.y+middlegrid);
+
+    if (token.data.width>1){
+        
+        let sizew=token.data.width;
+        
+       
+
+        for (let i=1;i<sizew;i++){
+        cx.push(token.x+middlegrid+(gridsize*i))
+        }
+
+       // console.log(cx);
+    }
+
+    if (token.data.height>1){
+        
+        let sizey=token.data.height;
+        for (let i=1;i<sizey;i++){
+        cy.push(token.y+middlegrid+(gridsize*i))
+        }
+
+     //   console.log(cy);
+    }
+
+    cx.flatMap(d => cy.map(v => coo.push({x:d,y:v})))
+} else {
+    coo.push({x:token.x+middlegrid,y:token.y+middlegrid}); 
+}
+    return coo;
+    
+}
+
+export const getDistance=(origin,target,grid=false)=>{
+   
     const ray = new Ray(origin, target);
+    let distance = canvas.grid.measureDistances([{ ray }], {gridSpaces: grid})[0];
+    return distance;
+}
+
+export const getRange=(origin,target)=>{
+   // const ray = new Ray(origin, target);
     const grid_unit = canvas.grid.grid.options.dimensions.distance
-    let distance = canvas.grid.measureDistances([{ ray }], {gridSpaces: true})[0];
-    distance = Math.round(distance / grid_unit)
+    let grid=false;
+   if (origin.scene.data.gridType==1){
+       grid=true;
+   }
+
+    let origin_coo=getTokenCoordinates(origin);
+    let target_coo=getTokenCoordinates(target);
+
+   // console.log(origin_coo);
+
+    let distances=new Array;
+
+    origin_coo.flatMap(d => target_coo.map(v => distances.push(getDistance(d,v,grid))))
+
+   // console.log(distances);
+
+    let distance=Math.round(Math.min(...distances)/grid_unit);
+   
+   
+  // console.log(distance,'distance');
+   // distance = Math.round(distance / grid_unit) 
+
+   // console.log(distance,'distance-big');
+
+    /// bigger tokens
+
+    
+
 
     // adding flying
     let alt=Math.abs(origin.data.elevation-target.data.elevation);
@@ -92,6 +172,8 @@ export const getRange=(origin,target)=>{
     if (distance<1){
         distance=1;
     }
+
+   // console.log(distance);
    
     return distance;
 }

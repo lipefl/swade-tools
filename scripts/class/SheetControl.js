@@ -10,11 +10,13 @@ export default class SheetControl {
         this.sheet=sheet;
         this.rollWithouDialog=false;  /// allow disable/enable dialog in the user configuration
 
-        let divid=this.sheet.actor.id;
+        /* let divid=this.sheet.actor.id;
         if (this.sheet.actor.isToken){
             divid+='-'+this.sheet.actor.token.id
         }
-        this.html=$('div#actor-'+divid);
+        this.html=$('div#actor-'+divid); */
+
+        this.html=html;
 
       //  console.log(sheet,html);
     }

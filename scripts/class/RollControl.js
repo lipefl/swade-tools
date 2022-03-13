@@ -25,7 +25,7 @@ export default class RollControl {
 
         
 
-     // console.log(this.chat.data.flags?.["swade-tools"]);
+    // console.log(this.chat.data.flags?.["swade-tools"]);
 
         //this.actor;
         this.istoken=false;

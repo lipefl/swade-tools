@@ -183,6 +183,7 @@ export default class CharRoll extends BasicRoll{
         
         this.baseModifiers();
         
+        this.addFlag('skill',skillName);
 
         if (item===undefined){
             skillName=`${gb.trans('Unskilled')} (${skillName})`;
@@ -210,7 +211,7 @@ export default class CharRoll extends BasicRoll{
         
         
         
-        this.addFlag('skill',skillName);
+        
         
       
 

@@ -84,7 +84,6 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 **Fixes**
 + Stunned allows distracted to be removed at the end of next turn (as in the rules)
 
-
 ## v1.6.0
 + Calculate Scale automatically (shows a checkbox for creatures with Swat)
 + Option to activate a button to Reload X (instead of full reload)
@@ -101,10 +100,14 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 
 ## v1.8.0
 + Compatibility with SWADE system v1.0
-+ Hard Choices is removed and uses the new system setting
 + Simpler Dialog Rolls for attributes and skills (enabled by default, can be disabled in settings)
 + New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
+
+**Fixes**
 + Auto Initiative config removed since Auto Iniative from system is now doing the same.
++ Hard Choices is removed and uses the new system setting
++ Fixed a bug with distance and bigger tokens. Better distance calc for grid vs no-grid
++ Fixed a minor bug when the Character is using Fighting but don't have the skill
 
 More features will be added...
 
