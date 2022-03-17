@@ -11,8 +11,11 @@
 display:flex;
 position:relative;
 align-items: center;
-}
 
+}
+.swadetools-formpart > div {
+    margin-bottom: 5px;
+}
 .swadetools-formline {
     display:flex;
     position:relative;
@@ -330,11 +333,18 @@ width: calc(100% - 47px);
         .swadetools-rof-results {
             flex:1
         }
+        .swadetools-damage-actions {
+            grid-column: span 2
+        }
 
+        .swadetools-damage-actions.swadetools-mod-add label {
+           flex:none;
+           margin-right:10px;
+        }
         .swadetools-damage-actions select {
-            margin-left:auto;
+            
             flex:1;
-            max-width:100px;
+           
         }
 
         .swadetools-situational-info {

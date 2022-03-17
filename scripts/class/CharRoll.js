@@ -105,7 +105,13 @@ export default class CharRoll extends BasicRoll{
         }
 
        
-        let woundmod=this.actor.data.data.wounds.value-this.actor.data.data.wounds.ignored;
+        let woundmod=this.actor.data.data.wounds.value
+
+        if (woundmod>3){
+            woundmod=3;
+        }
+        
+        woundmod=woundmod-this.actor.data.data.wounds.ignored;
         
         if (woundmod>0){            
             this.addModifier(0-woundmod,gb.trans("Wounds","SWADE"));
@@ -116,7 +122,32 @@ export default class CharRoll extends BasicRoll{
         if (fatiguemod){
             this.addModifier(0-fatiguemod,gb.trans("Fatigue","SWADE"));
         }
+
+        if (this.flagUpdate['usecalled']){
+        if (this.flagUpdate['usecalled']=='Arms' || this.flagUpdate['usecalled']=='Legs'){
+            this.addModifier(-2,gb.trans('CalledShot')+ ' ('+gb.trans(this.flagUpdate['usecalled'],'SWADE')+')');
+        }
+
+        if (this.flagUpdate['usecalled']=='Head'){
+            this.addModifier(-4,gb.trans('CalledShot')+ ' ('+gb.trans(this.flagUpdate['usecalled'],'SWADE')+')');
+        }
+
+        }
+
         
+        
+    } else {
+
+        if (this.flagUpdate['usecalled']){
+        /// damage to the head
+        
+        if (this.flagUpdate?.['usecalled']=='Head'){
+            this.addModifier(4,gb.trans('CalledShot')+ ' ('+gb.trans(this.flagUpdate['usecalled'],'SWADE')+')');
+        } else {
+            this.addFlavor('<div>'+gb.trans('CalledShot')+ ' ('+gb.trans(this.flagUpdate['usecalled'],'SWADE')+')</div>',true);
+        }
+
+        }
     }
 
         if (game.combat){ /// search for joker

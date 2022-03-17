@@ -25,6 +25,7 @@ export default class RollControl {
 
         
 
+        gb.log(this.chat.data.flags?.["swade-tools"]);
     // console.log(this.chat.data.flags?.["swade-tools"]);
 
         //this.actor;
@@ -1092,6 +1093,15 @@ export default class RollControl {
                 charRoll.raiseDmg();
             }
 
+            if (this.chat.data.flags["swade-tools"]?.usecalled){
+                charRoll.addFlag('usecalled',this.chat.data.flags["swade-tools"].usecalled);
+
+                /* if (this.chat.data.flags["swade-tools"].usecalled=='Head'){
+                    charRoll.addModifier(4,gb.trans('CalledShot')+ ' ('+gb.trans('Head','SWADE')+')')
+                } */
+            }
+
+
             if (this.chat.data.flags["swade-tools"].damageaction){
                 charRoll.rollAction(this.chat.data.flags["swade-tools"].damageaction)
             } else {
@@ -1115,7 +1125,7 @@ export default class RollControl {
         let raisecount;
         let soakClass='';
         let isvehicle=false;
-
+        let area='torso';
         let total=this.roll.total+this.gmmod;
         
 
@@ -1133,7 +1143,16 @@ export default class RollControl {
             isvehicle=true;
         } else {
             toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
-            armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
+           // armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
+           if (this.chat.data.flags['swade-tools'].usecalled){
+               area=this.chat.data.flags['swade-tools'].usecalled;
+               armor=gb.realInt(gb.getArmorArea(target.actor,area)) 
+               toughness=toughness-gb.getArmorArea(target.actor)+armor; /// remove default armor, add location armor to final toughness
+              // console.log(toughness,'final toughness')
+           }
+           
+
+          // console.log(armor,'armor');
         }
 
        // let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);

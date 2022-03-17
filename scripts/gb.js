@@ -484,6 +484,31 @@ export const settingFieldCheckbox=(setting,title,hint)=>{
 
 }
 
+export const settingTextArea=(setting,title,hint)=>{
+
+    return `<div class="form-group">
+        <label>${title}</label>
+        <div class="form-fields">    
+            <textarea type="checkbox" name="${setting}">${game.settings.get(moduleName,setting)}</textarea>
+        </div>    
+        <p class="notes">${hint}</p>
+    </div>`
+    
+
+}
+
+export const log=(...args)=>{
+    if (setting('debugger')){
+        console.log(args);
+    }
+    
+}
+
+export const getArmorArea=(actor,area='torso')=>{
+   // let armorData=actor.armorPerLocation;
+    return actor.armorPerLocation[area.toLowerCase()];
+}
+
 export const rechargeWeaponXDialog=(actor,item)=>{
     new Dialog({
         title: `${item.name} ${trans('Reload','SWADE')} X`,

@@ -102,11 +102,13 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Compatibility with SWADE system v1.0
 + Simpler Dialog Rolls for attributes and skills (enabled by default, can be disabled in settings)
 + New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
++ Added an option to use Called Shots (calculated automatically)
++ Added an option to use Wild Attack with other skills (like in Pathfinder setting)
 
 **Fixes**
 + Auto Initiative config removed since Auto Iniative from system is now doing the same.
 + Hard Choices is removed and uses the new system setting
-+ Fixed a bug with distance and bigger tokens. Better distance calc for grid vs no-grid
++ Fixed a bug with distance and bigger tokens. Better distance calc for grid vs no-grid (based on scene config)
 + Fixed a minor bug when the Character is using Fighting but don't have the skill
 
 More features will be added...

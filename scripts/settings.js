@@ -27,14 +27,14 @@ export const registerSettings=()=>{
 		config: true
     });  */
     
-    /* game.settings.register(gb.moduleName, 'countPP', {
-		name: gb.trans('SettingUsePP'),
-		hint: gb.trans('SettingUsePPHint'),
-		default: true,
+    game.settings.register(gb.moduleName, 'debugger', {
+		name: 'Debugger',
+		hint: 'system only debugger',
+		default: false,
 		scope: "world",
 		type: Boolean,
-		config: true
-    }); */
+		config: false
+    }); 
 
     game.settings.register(gb.moduleName, 'itemNameClick', {
 		name: gb.trans('SettingsItemNameClick'),
@@ -45,6 +45,15 @@ export const registerSettings=()=>{
 		config: false
     });
 
+    game.settings.register(gb.moduleName, 'askCalledShots', {
+      name: gb.trans('SettingAskCalledShots'),
+      hint: gb.trans('SettingAskCalledShotsHint'),
+      default: false,
+      scope: "world",
+      type: Boolean,
+      config: false
+      });
+
 
     game.settings.register(gb.moduleName, 'defaultStatusIcons', {
 		name: gb.trans('SettingsDefaultStatus'),
@@ -54,6 +63,16 @@ export const registerSettings=()=>{
 		type: String,
 		config: false
     });
+
+
+    game.settings.register(gb.moduleName, 'wildAttackSkills', {
+      name: gb.trans('SettingWildAttackSkills'),
+      hint: gb.trans('SettingWildAttackSkillsHint'),
+      default: gb.trans('Fighting'),
+      scope: "world",
+      type: String,
+      config: false
+      });
 
 
    /*  game.settings.register(gb.moduleName, 'disableJokersWild', {

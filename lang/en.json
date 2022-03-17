@@ -180,7 +180,14 @@
     "SWADETOOLS.Success":"Success",
     "SWADETOOLS.Raises":"Raises",
     "SWADETOOLS.Failure":"Failure",
-    "SWADETOOLS.TargetNumber":"Change Target Number"
+    "SWADETOOLS.TargetNumber":"Change Target Number",
+    "SWADETOOLS.SettingWildAttackSkills": "Skills to use for Wild Attack",
+    "SWADETOOLS.SettingWildAttackSkillsHint": "List of skills to use for Wild Attack, separated by comma. Ex: Fighting, Athtletics, Shooting",
+    "SWADETOOLS.SettingAskCalledShots": "Called Shots option for Items",
+    "SWADETOOLS.SettingAskCalledShotsHint": "This option shows a select for called shots when using attack items",
+    "SWADETOOLS.CalledShot": "Called Shot",
+    "SWADETOOLS.CalledShotHint": "Penalties are added automatically, add extra modifiers manually. Head shots apply +4 damage."
+ 
 
     
     
