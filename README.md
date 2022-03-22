@@ -3,6 +3,9 @@
 ## Buy me a coffee
 If you like the module and want to buy me a coffee: https://ko-fi.com/lipefl
 
+## Translation
+If you want your language handled by gitlocalize.com (a much easier interface), please open an issue.
+
 ## About the Module
 A Foundry VTT module for use with Savage Worlds (SWADE system).
 
