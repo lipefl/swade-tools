@@ -140,6 +140,8 @@ Hooks.on("renderSidebarTab", async (object, html) => {
 
 Hooks.on("createActor",(actor,options,userid)=>{
 
+  //  gb.log(game.user.id,userid);
+    if (game.user.id==userid){
     if (gb.setting('gangUp')){
         if (actor.data.type=='character'){
             actor.update({'token.disposition':1})
@@ -147,6 +149,7 @@ Hooks.on("createActor",(actor,options,userid)=>{
             actor.update({'token.disposition':-1})
         }
     }
+}
 })
 
 
@@ -279,7 +282,7 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
 Hooks.on("updateActor", async (actor,data,diff,userId) => {         
     
-    
+   // gb.log(game.user.id,userId);
     if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
         upActor.checkAllStatus();

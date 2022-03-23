@@ -472,7 +472,9 @@ export default class RollControl {
                     targetsave.push(target.id);
                 })
 
+                if (gb.mainGM()){ // only main GM update chat
                 await this.chat.update({'flags.swade-tools.usetarget':targetsave.join(',')})
+                }
             }
             
 
