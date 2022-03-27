@@ -497,9 +497,9 @@ export const settingTextArea=(setting,title,hint)=>{
 
 }
 
-export const log=(...args)=>{
+export const log=(...args,trace=false)=>{
     if (setting('debugger')){
-        console.log(args);
+        console.trace(args);
     }
     
 }

@@ -44,8 +44,12 @@ export default class CharRoll extends BasicRoll{
 
     usingVehicle(vehicle){
         this.vehicle=vehicle;
+        gb.log(vehicle,'vehicle');
         this.addFlavor(' ('+vehicle.name+') ');
         this.flagUpdate['usevehicle']=vehicle.id;
+        if (vehicle.isToken==true){
+            this.flagUpdate['usevehicletoken']=vehicle.parent.id
+        }
     }
 
    /*  combatRoll(itemId){
@@ -558,10 +562,12 @@ export default class CharRoll extends BasicRoll{
             this.addFlag('userof',this.rof);
             this.addFlag('usetarget',this.usetarget);
 
+            gb.log(this.actor,'actor');
+
             if (this.actor.isToken===true){
                // console.log(this.actor);
               //  console.log(this.actor.parent._object.id);
-              this.addFlag('usetoken',this.actor.parent._object.id);
+              this.addFlag('usetoken',this.actor.parent.id);
             }
         }
     }

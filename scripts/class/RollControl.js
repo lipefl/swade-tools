@@ -672,7 +672,12 @@ export default class RollControl {
 
     getItemOwner(){
         if (this.chat.data.flags["swade-tools"]?.usevehicle){
-            return game.actors.get(this.chat.data.flags["swade-tools"].usevehicle);
+            if (this.chat.data.flags["swade-tools"]?.usevehicletoken){
+                return canvas.tokens.get(this.chat.data.flags["swade-tools"].usevehicletoken).actor;
+            } else {
+                return game.actors.get(this.chat.data.flags["swade-tools"].usevehicle);
+            }
+            
         } else {
             return this.getActor();
         }
@@ -714,6 +719,7 @@ export default class RollControl {
 
 
     failedPower(item){
+        gb.log(item);
         if (this.powerfail===null && item.type=='power'){
             let rof=this.chat.data.flags["swade-tools"].userof;
             this.powerfail=true;
@@ -776,6 +782,8 @@ export default class RollControl {
         
         let itemid=this.chat.data.flags["swade-tools"].itemroll;
         let item=this.getItemOwner().items.get(itemid);
+
+        gb.log(item,'item');
 
         let rof=1;
 
