@@ -880,7 +880,7 @@ export default class RollControl {
             }
 
 
-            if (item.data.data.range.includes('/')){
+            if (item?.data?.data?.range.includes('/')){
                 let distances=item.data.data.range.split('/')
                 let distancemod=0;
                 let toofar=false;
