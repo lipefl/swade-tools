@@ -146,50 +146,10 @@ export default class CombatControl {
       
         
         
-        if (gb.setting('noStatusAutoRoll')){
+        if (!this.isAutoRoll(actor)){
 
             let char=new Char(actor);
             char.say(gb.trans('sayIsShaken'));
-
-        } else {
-            
-            let charRoll=new CharRoll(actor);
-            charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
-        
-
-        charRoll.addEdgeModifier('Combat Reflexes',2)
-        charRoll.addAbilityModifier('Undead',2)
-        charRoll.addAbilityModifier('Construct',2)
-
-
-        
-        charRoll.rollAtt('spirit')
-        charRoll.addFlag('useactor',actor.id);
-        charRoll.addFlag('rolltype','unshaken');
-
-        if (actor.isToken===true){
-            charRoll.addFlag('usetoken',actor.token.id);
-        }
-           charRoll.display()
-        }
-     
-          
-        
-
-           
-          
-        
-        
-    }
-
-    unstunned(combatant){
-        let actor=combatant.actor;
-
-
-        if (gb.setting('noStatusAutoRoll')){
-
-            let char=new Char(actor);
-            char.say(gb.trans('sayIsStunned'));
 
         } else {
         let charRoll=new CharRoll(actor);        
@@ -212,6 +172,25 @@ export default class CombatControl {
     }
 
        
+    }
+
+    isAutoRoll(actor){
+        let autoroll=gb.setting('noStatusAutoRoll')
+        if (autoroll){
+            if (autoroll===true || autoroll=='all'){
+                return false;
+            } else 
+            if (autoroll=='npconly'){
+               if (actor.type=='npc'){
+                    return true
+               } else {
+                   return false;
+               }
+            }
+
+        } else {
+            return true;
+        }
     }
 
    async startTurn(combatant){      

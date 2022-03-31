@@ -185,7 +185,9 @@
     "SWADETOOLS.SettingAskCalledShots": "Ataques Localizados para Itens",
     "SWADETOOLS.SettingAskCalledShotsHint": "Essa opção habilita uma opção de Ataque Localizado quando usando itens de ataque",
     "SWADETOOLS.CalledShot": "Ataque Localizado",
-    "SWADETOOLS.CalledShotHint": "Penalidades são adicionadas automaticamente, adicione modificadores extras manualmente. Ataques na cabeça causam +4 de dano."
+    "SWADETOOLS.CalledShotHint": "Penalidades são adicionadas automaticamente, adicione modificadores extras manualmente. Ataques na cabeça causam +4 de dano.",
+    "SWADETOOLS.YesButPC": "Sim, mas somente para PCs"
+   
 
 
 }

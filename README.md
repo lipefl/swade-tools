@@ -107,6 +107,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
 + Added an option to use Called Shots (calculated automatically)
 + Added an option to use Wild Attack with other skills (like in Pathfinder setting)
++ Added an option to disable automatic rolls (Shaken, Stunned) only for PCs
 
 **Fixes**
 + Auto Initiative config removed since Auto Iniative from system is now doing the same.

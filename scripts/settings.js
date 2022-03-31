@@ -228,9 +228,9 @@ game.settings.register(gb.moduleName, 'gangUp', {
     game.settings.register(gb.moduleName, 'noStatusAutoRoll', {
       name: gb.trans('SettingNoAutoRoll'),
       hint: gb.trans('SettingNoAutoRollHint'),
-      default: false,
+      default: '',
       scope: "world",
-      type: Boolean,
+      type: String,
       config: false
       });
 }

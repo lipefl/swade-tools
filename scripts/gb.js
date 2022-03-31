@@ -484,6 +484,33 @@ export const settingFieldCheckbox=(setting,title,hint)=>{
 
 }
 
+
+export const settingFieldSelect=(setting,title,hint,options)=>{
+
+    let ret=`<div class="form-group">
+    <label>${title}</label>
+    <div class="form-fields">`
+
+    ret+=`<select name="${setting}">`
+
+    options.map(o=>{
+        ret+=`<option value="${o.value}" ${game.settings.get(moduleName,setting)==o.value?'selected':''}>${o.text}</option>`
+    })
+           /*  <option value="">${gb.trans('StatusIconsSettingDefault')}</option>
+            <option value="system" ${game.settings.get(gb.moduleName,'defaultStatusIcons')=='system'?'selected':''}>${gb.trans('StatusIconsSettingSystem')}</option>` */
+                        
+        ret+=`</select>
+
+    </div>
+
+    <p class="notes">${hint}</p>
+</div>`
+
+return ret
+    
+
+}
+
 export const settingTextArea=(setting,title,hint)=>{
 
     return `<div class="form-group">

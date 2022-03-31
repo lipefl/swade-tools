@@ -186,10 +186,9 @@
     "SWADETOOLS.SettingAskCalledShots": "Called Shots option for Items",
     "SWADETOOLS.SettingAskCalledShotsHint": "This option shows a select for called shots when using attack items",
     "SWADETOOLS.CalledShot": "Called Shot",
-    "SWADETOOLS.CalledShotHint": "Penalties are added automatically, add extra modifiers manually. Head shots apply +4 damage."
- 
-
-    
+    "SWADETOOLS.CalledShotHint": "Penalties are added automatically, add extra modifiers manually. Head shots apply +4 damage.",
+    "SWADETOOLS.YesButPC": "Yes, but only for PCs"
+     
     
     
 }
