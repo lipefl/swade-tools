@@ -186,5 +186,6 @@
   "SWADETOOLS.SettingAskCalledShots": "Opción Disparo Apuntado en armas",
   "SWADETOOLS.SettingAskCalledShotsHint": "Esta opción muestra un selector para disparos apuntados cuando se utilizan armas del equipo.",
   "SWADETOOLS.CalledShot": "Disparo Apuntado",
-  "SWADETOOLS.CalledShotHint": "Penalizador aplicado automáticamente, añade modificadores extra manualmente. Disparos a la cabeza aplican +4 daño."
+  "SWADETOOLS.CalledShotHint": "Penalizador aplicado automáticamente, añade modificadores extra manualmente. Disparos a la cabeza aplican +4 daño.",
+  "SWADETOOLS.YesButPC": "Si, sólo en PJs"
 }
