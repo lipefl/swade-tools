@@ -152,6 +152,46 @@ export default class CombatControl {
             char.say(gb.trans('sayIsShaken'));
 
         } else {
+            
+            let charRoll=new CharRoll(actor);
+            charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
+        
+
+        charRoll.addEdgeModifier('Combat Reflexes',2)
+        charRoll.addAbilityModifier('Undead',2)
+        charRoll.addAbilityModifier('Construct',2)
+
+
+        
+        charRoll.rollAtt('spirit')
+        charRoll.addFlag('useactor',actor.id);
+        charRoll.addFlag('rolltype','unshaken');
+
+        if (actor.isToken===true){
+            charRoll.addFlag('usetoken',actor.token.id);
+        }
+           charRoll.display()
+        }
+     
+          
+        
+
+           
+          
+        
+        
+    }
+
+    unstunned(combatant){
+        let actor=combatant.actor;
+
+
+        if (!this.isAutoRoll(actor)){
+
+            let char=new Char(actor);
+            char.say(gb.trans('sayIsStunned'));
+
+        } else {
         let charRoll=new CharRoll(actor);        
      //   this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
