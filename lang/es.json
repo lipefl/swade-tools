@@ -175,10 +175,16 @@
   "SWADETOOLS.RetargetBtn": "Utilizar objetivos DJ",
   "SWADETOOLS.NoTarget": "Sin objetivos seleccionados.",
   "SWADETOOLS.Total": "Total",
-  "SWADETOOLS.TN": "NO",
+  "SWADETOOLS.TN": "VO",
   "SWADETOOLS.RaiseCalcBtn": "Contar Aumentos",
   "SWADETOOLS.Success": "Éxito",
   "SWADETOOLS.Raises": "Aumentos",
   "SWADETOOLS.Failure": "Fallo",
-  "SWADETOOLS.TargetNumber": "Cambiar Número Objetivo"
+  "SWADETOOLS.TargetNumber": "Cambiar Valor Objetivo",
+  "SWADETOOLS.SettingWildAttackSkills": "Habilidades utilizan Ataque Salvaje",
+  "SWADETOOLS.SettingWildAttackSkillsHint": "Lista de habilidades que utilizan el Ataque Salvaje, separadas por coma. Ej: Pelea, Atletismo, Disparar",
+  "SWADETOOLS.SettingAskCalledShots": "Opción Disparo Apuntado en armas",
+  "SWADETOOLS.SettingAskCalledShotsHint": "Esta opción muestra un selector para disparos apuntados cuando se utilizan armas del equipo.",
+  "SWADETOOLS.CalledShot": "Disparo Apuntado",
+  "SWADETOOLS.CalledShotHint": "Penalizador aplicado automáticamente, añade modificadores extra manualmente. Disparos a la cabeza aplican +4 daño."
 }
