@@ -99,19 +99,23 @@ Hooks.on('ready',()=>{
    // console.log(gb.realInt(swadeversion[1]));
 
    
-   if (!gb.setting('defaultStatusIcons')){
+   
    CONFIG.statusEffects.map(data=>{
       // console.log(data);
        if (gb.statusDefault.includes(data.id)){
+
+        if (!gb.setting('defaultStatusIcons')){
            data.icon=gb.stIcons.filter(el=>el.stat==gb.statusDefaultToIs(data.id))[0]?.icon;
-           if (!gb.setting('noStatusAutoRoll') && data?.flags?.swade?.expiration){
+        }
+
+           if (data?.flags?.swade?.expiration){ /// disable dialog -> enable for no-autoRoll in the future ????
             data.flags.swade.expiration=undefined;
            }
            
        }
    })
 
-}
+
 
 
 //gb.statusChange(game.actors.getName('Purple'),'shaken',false);
