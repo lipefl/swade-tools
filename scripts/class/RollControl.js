@@ -222,6 +222,7 @@ export default class RollControl {
             this.html.append('<div class="swadetools-relative"><div class="swadetools-rollbuttonwrap"></div></div>');
             if (!this.isCritical() || gb.settingKeyName('Dumb Luck')){
                 this.addBennyButton();
+                this.addFreeRerollButton();
             }
 
             if (!this.isCritical()){
@@ -1351,12 +1352,22 @@ export default class RollControl {
     }
 
 
-    
+    addFreeRerollButton() {
+        this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').
+            append('<button class="swadetools-freereroll swadetools-rollbutton" title="' +
+                   gb.trans('FreeRerollBtn') +
+                   '"><i class="fa fa-redo"></i></button>').
+            on('click', 'button.swadetools-freereroll', () => {
+                let actor=this.findActor();
+
+                if (actor) {
+                    this.rerollBasic(actor, false);
+                }
+            }
+        );
+    } 
 
     addBennyButton(){
-
-        
-
         if (this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
         this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-bennyrerroll swadetools-rollbutton" title="'+gb.trans('RerollBtn')+'"></button>').on('click','button.swadetools-bennyrerroll',()=>{
             
@@ -1373,7 +1384,7 @@ export default class RollControl {
                
 
 
-                this.rerollBasic(actor);
+                this.rerollBasic(actor, true);
                
                 
             
@@ -1403,7 +1414,7 @@ export default class RollControl {
         }
     }
 
-    rerollBasic(actor){
+    rerollBasic(actor, usedBenny){
 
         let char=new Char(actor);
         let mod=0;
@@ -1411,26 +1422,24 @@ export default class RollControl {
         let edgebonus=false;
         let oldroll=this.chat._roll
 
+        //  console.log(this.chat.data.flags);
+        if (usedBenny) {
+            if (this.rolltype=='damage'){
 
-      //  console.log(this.chat.data.flags);
+                if (this.chat.data.flags['swade-tools']?.edgebonus!="nomercy" && char.hasEdgeSetting('No Mercy')){
+                    mod=2
+                    reason=gb.settingKeyName('No Mercy');
+                    edgebonus='nomercy'
+                }
 
-        if (this.rolltype=='damage'){
-
-            if (this.chat.data.flags['swade-tools']?.edgebonus!="nomercy" && char.hasEdgeSetting('No Mercy')){
-                mod=2
-                reason=gb.settingKeyName('No Mercy');
-                edgebonus='nomercy'
-            }
-
-        } else {
-            if (this.chat.data.flags['swade-tools']?.edgebonus!="elan" && char.hasEdgeSetting('Elan')){
-                mod=2
-                reason=gb.settingKeyName('Elan');    
-                edgebonus='elan'
+            } else {
+                if (this.chat.data.flags['swade-tools']?.edgebonus!="elan" && char.hasEdgeSetting('Elan')){
+                    mod=2
+                    reason=gb.settingKeyName('Elan');    
+                    edgebonus='elan'
+                }
             }
         }
-
-       
 
        let modStr='';
        let extraflavor='';

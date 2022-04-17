@@ -102,6 +102,11 @@ button.swadetools-rollbutton {
     justify-content: center;
 }
 
+button.swadetools-freereroll {
+    position: absolute;
+    right: calc(1.5em + 6px);
+    bottom: 0;
+}
 
 button.swadetools-bennyrerroll {
    

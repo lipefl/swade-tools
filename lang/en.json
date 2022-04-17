@@ -35,6 +35,7 @@
     "SWADETOOLS.NoActorFoundReroll": "No Actor was found to spend the Benny (or there are actors with the same name), spend the benny and reroll manually",
     "SWADETOOLS.CriticalFailure": "Critical Failure!",
     "SWADETOOLS.RerollBtn": "Reroll Spending a Benny",
+    "SWADETOOLS.FreeRerollBtn": "Free Reroll",
     "SWADETOOLS.AutoInitWarn": "This is enabled by default when using SWADE Tools, but it's disabled in the system configs to avoid conflict",
     "SWADETOOLS.Fighting": "Fighting",
     "SWADETOOLS.SettingFighting": "Fighting Skill Name",
