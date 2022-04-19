@@ -302,6 +302,24 @@ export default class ItemDialog {
             }
         }
     }
+        if (skillName == gb.setting('shootingSkill')) {
+            let char = new Char(this.actor);
+            if (char.hasEdgeSetting('Rapid Fire')) {
+                buttons.rapidFire={
+                    label: gb.settingKeyName('Rapid Fire'),
+                    callback: (html)=>{
+                        let itemRoll=new ItemRoll(this.actor,this.item);
+                        this.processItemFormDialog(html,itemRoll);
+                        let rof = gb.realInt(this.item?.data?.data?.rof);
+                        if (!rof || rof == 0) {
+                            rof = 1;
+                        }
+                        itemRoll.rollBaseSkill(rof + 1);
+                        itemRoll.display();
+                    }
+                }
+            }
+        }
 
         if (skillName==gb.setting('fightingSkill')){
            /*  buttons.wildattack={

@@ -39,6 +39,7 @@ export default class SettingName extends FormApplication {
         })
 
         data.fightingName=gb.setting('fightingSkill')
+        data.shootingName=gb.setting('shootingSkill')
 
         return data
     }

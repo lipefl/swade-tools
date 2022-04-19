@@ -12,6 +12,15 @@ export const registerSettings=()=>{
 		type: String,
 		config: false
     }); 
+
+    game.settings.register(gb.moduleName, 'shootingSkill', {
+		name: gb.trans('SettingShooting'),
+		hint: gb.trans('SettingShootingHint'),
+		default: gb.trans('Shooting'),
+		scope: "world",
+		type: String,
+		config: false
+    }); 
     
     /*
 
