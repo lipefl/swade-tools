@@ -6,9 +6,17 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
-export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter'];
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire'];
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
+
+export const RoFBullets={
+    2: 5,
+    3: 10,
+    4: 20,
+    5: 40,
+    6: 50
+}
 
 export const attrlang={
     agility: "AttrAgi",
@@ -525,6 +533,13 @@ export const settingTextArea=(setting,title,hint)=>{
 }
 
 export const log=(...args)=>{
+    if (setting('debugger')){
+        console.log(args);
+    }
+    
+}
+
+export const trace=(...args)=>{
     if (setting('debugger')){
         console.trace(args);
     }

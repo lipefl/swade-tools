@@ -187,7 +187,12 @@
     "SWADETOOLS.SettingAskCalledShotsHint": "This option shows a select for called shots when using attack items",
     "SWADETOOLS.CalledShot": "Called Shot",
     "SWADETOOLS.CalledShotHint": "Penalties are added automatically, add extra modifiers manually. Head shots apply +4 damage.",
-    "SWADETOOLS.YesButPC": "Yes, but only for PCs"
+    "SWADETOOLS.YesButPC": "Yes, but only for PCs",
+    "SWADETOOLS.NoTokenSelected": "No token selected",
+    "SWADETOOLS.OtherUnskilled": "Other (Unskilled)",
+    "SWADETOOLS.Shooting": "Shooting",
+    "SWADETOOLS.RapidFireSetting": "Rapid Fire",
+    "SWADETOOLS.SettingShootingHint": "Skill to use for Shooting based Edges."
      
     
     

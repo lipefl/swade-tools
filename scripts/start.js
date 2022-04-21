@@ -8,6 +8,9 @@ import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
 import Char from './class/Char.js';
+import CharRoll from './class/CharRoll.js';
+import CharUp from './class/CharUp.js';
+
 
 //// NEXT TODO -> Scale and Size (see about Swat and Stomp - ignore scale)
 /// auto-check (and ask to include) CDT actions for weapons 
@@ -84,6 +87,30 @@ Hooks.on('ready',()=>{
       }
     
   };
+
+  game.swade.swadetoolsRollTrait=(actor,name,mod,attr=false)=>{
+
+    let char=new CharRoll(actor);
+    char.addModifier(mod,gb.trans('Additional'))
+
+                        if (attr){
+                            
+                            char.rollAtt(name);
+                            
+                        } else {
+                           // char.addFlag('rolltype','skill');
+                            char.rollSkill(name);
+                        } 
+
+                        
+                        
+                        
+
+                        char.display();
+    
+    
+
+  }
 
      
   registerSettings();
@@ -286,10 +313,14 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
 Hooks.on("updateActor", async (actor,data,diff,userId) => {         
     
-   // gb.log(game.user.id,userId);
+   gb.log(actor,data,diff,userId);
     if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
         upActor.checkAllStatus();
+
+        let charup=new CharUp(actor,data);
+        charup.checkAll();
+       
     }
    
    

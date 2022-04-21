@@ -77,6 +77,12 @@ button.swadetools-rollbutton i {
     margin-right:0;
 }
 
+button.swadetools-freereroll {
+    position: absolute;
+    right: calc(1.5em + 6px);
+    bottom: 0;
+}
+
 .swadetools-rollbuttonwrap {
     bottom: 5px;
     position: absolute;

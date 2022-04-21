@@ -25,7 +25,7 @@ export default class RollControl {
 
         
 
-        gb.log(this.chat.data.flags?.["swade-tools"]);
+        gb.log(this.chat.data.flags?.["swade-tools"],'flags');
     // console.log(this.chat.data.flags?.["swade-tools"]);
 
         //this.actor;
@@ -222,6 +222,7 @@ export default class RollControl {
             this.html.append('<div class="swadetools-relative"><div class="swadetools-rollbuttonwrap"></div></div>');
             if (!this.isCritical() || gb.settingKeyName('Dumb Luck')){
                 this.addBennyButton();
+                this.addFreeRerollButton();
             }
 
             if (!this.isCritical()){
@@ -1351,6 +1352,20 @@ export default class RollControl {
     }
 
 
+    addFreeRerollButton() {
+        this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').
+            append('<button class="swadetools-freereroll swadetools-rollbutton" title="' +
+                   gb.trans('FreeReroll','SWADE') +
+                   '"><i class="fa fa-redo"></i></button>').
+            on('click', 'button.swadetools-freereroll', () => {
+                let actor=this.findActor();
+
+                if (actor) {
+                    this.rerollBasic(actor, true);
+                }
+            }
+        );
+    } 
     
 
     addBennyButton(){
@@ -1403,17 +1418,18 @@ export default class RollControl {
         }
     }
 
-    rerollBasic(actor){
+    rerollBasic(actor,freeReroll=false){
 
         let char=new Char(actor);
         let mod=0;
         let reason='';
         let edgebonus=false;
-        let oldroll=this.chat._roll
+        let oldroll=this.chat.roll
 
 
       //  console.log(this.chat.data.flags);
 
+      if (!freeReroll){
         if (this.rolltype=='damage'){
 
             if (this.chat.data.flags['swade-tools']?.edgebonus!="nomercy" && char.hasEdgeSetting('No Mercy')){
@@ -1429,14 +1445,18 @@ export default class RollControl {
                 edgebonus='elan'
             }
         }
-
+    } 
        
 
        let modStr='';
        let extraflavor='';
+       if (freeReroll){
+        extraflavor+=`<div><strong>${gb.trans('FreeReroll','SWADE')}</strong></div>`;
+    }
+
        if (mod){
            modStr=gb.stringMod(mod);
-            extraflavor=`<div>${reason}: ${modStr}</div>`;
+            extraflavor+=`<div>${reason}: ${modStr}</div>`;
        }
 
         let roll=new Roll(oldroll.formula+modStr).roll({async:false});
@@ -1452,6 +1472,8 @@ export default class RollControl {
             /// 1 die
             roll.terms[0].options=oldroll.terms[0].options
         }
+
+        
 
          ////
    //  console.log(this.chat._roll.terms[0].dice); /// if undefined its 1 die, use this.chat._roll.terms[0].options

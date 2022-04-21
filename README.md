@@ -115,6 +115,13 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Fixed a bug with distance and bigger tokens. Better distance calc for grid vs no-grid (based on scene config)
 + Fixed a minor bug when the Character is using Fighting but don't have the skill
 
+## v1.9.0
++ New Macro "Roll From Selected" to roll a trait from all selected tokens
++ Free Reroll button (thanks to @bloy)
++ Rapid Fire autodetection (thanks to @bloy)
++ Auto Update Max Wounds based on Wildcard/Extra and Size
++ Auto Update Token width/height based on Size.
+
 More features will be added...
 
 ### Bonus: Macro

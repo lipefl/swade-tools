@@ -336,6 +336,26 @@ export default class ItemDialog {
                 }
             }
         }
+
+
+        if (skillName == gb.setting('shootingSkill')) {
+            let rof = gb.realInt(this.item?.data?.data?.rof)+1;
+              
+            let char = new Char(this.actor);
+            if (char.hasEdgeSetting('Rapid Fire')) {
+                buttons.rapidFire={
+                    label: gb.settingKeyName('Rapid Fire') +' ('+gb.trans('RoF','SWADE')+' '+rof+')',
+                    callback: (html)=>{
+                        let itemRoll=new ItemRoll(this.actor,this.item);
+                        itemRoll.useShots(gb.RoFBullets[rof])
+                        this.processItemFormDialog(html,itemRoll);
+                        
+                        itemRoll.rollBaseSkill(rof);
+                        itemRoll.display();
+                    }
+                }
+            }
+        }
       
 
         for (const id in weaponactions.additional){

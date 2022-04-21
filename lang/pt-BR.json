@@ -143,6 +143,7 @@
     "SWADETOOLS.BlockSetting": "Bloquear",
     "SWADETOOLS.ImprovedBlockSetting": "Bloquear Aprimorado",
     "SWADETOOLS.FrenzySetting": "Frenesi",
+    "SWADETOOLS.FormationFighterSetting": "Guerreiro Treinado",
     "SWADETOOLS.SettingShowSituational": "Sempre mostrar modificadores situacionais do alvo",
     "SWADETOOLS.SettingShowSituationalHint": "Com essa opção ativada, os modificadores do alvo ficarão sempre visíveis, sem precisar clicar em (?)",
     "SWADETOOLS.settingCustom": "Customização",
@@ -186,7 +187,12 @@
     "SWADETOOLS.SettingAskCalledShotsHint": "Essa opção habilita uma opção de Ataque Localizado quando usando itens de ataque",
     "SWADETOOLS.CalledShot": "Ataque Localizado",
     "SWADETOOLS.CalledShotHint": "Penalidades são adicionadas automaticamente, adicione modificadores extras manualmente. Ataques na cabeça causam +4 de dano.",
-    "SWADETOOLS.YesButPC": "Sim, mas somente para PCs"
+    "SWADETOOLS.YesButPC": "Sim, mas somente para PCs",
+    "SWADETOOLS.NoTokenSelected": "Nenhum token selecionado",
+    "SWADETOOLS.OtherUnskilled": "Outro (Sem Perícia)",
+    "SWADETOOLS.Shooting": "Atirar",
+    "SWADETOOLS.RapidFireSetting": "Disparo Rápido",
+    "SWADETOOLS.SettingShootingHint": "Perícia usada para Vantagens baseadas em Atirar."
    
 
 

@@ -193,6 +193,7 @@ export default class CharRoll extends BasicRoll{
             this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
         }
 
+        this.addFlag('rolltype','attribute');
 
         return this.buildRoll(dieType,wildDie,this.mod);
     }
@@ -219,6 +220,7 @@ export default class CharRoll extends BasicRoll{
         this.baseModifiers();
         
         this.addFlag('skill',skillName);
+        this.addFlag('rolltype','skill');
 
         if (item===undefined){
             skillName=`${gb.trans('Unskilled')} (${skillName})`;

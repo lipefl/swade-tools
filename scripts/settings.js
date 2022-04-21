@@ -233,4 +233,12 @@ game.settings.register(gb.moduleName, 'gangUp', {
       type: String,
       config: false
       });
+
+      game.settings.register(gb.moduleName, 'shootingSkill', {
+        name: gb.trans('SettingShooting'),
+        default: gb.trans('Shooting'),
+        scope: "world",
+        type: String,
+        config: false
+        });
 }
