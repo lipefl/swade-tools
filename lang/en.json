@@ -192,7 +192,19 @@
     "SWADETOOLS.OtherUnskilled": "Other (Unskilled)",
     "SWADETOOLS.Shooting": "Shooting",
     "SWADETOOLS.RapidFireSetting": "Rapid Fire",
-    "SWADETOOLS.SettingShootingHint": "Skill to use for Shooting based Edges."
+    "SWADETOOLS.SettingShootingHint": "Skill to use for Shooting based Edges.",
+    "SWADETOOLS.DieSteps": "Die Steps",
+    "SWADETOOLS.Rounds": "rounds",
+    "SWADETOOLS.NotBelowd4": "can't have a trait below d4",
+    "SWADETOOLS.BoostLowerHint": "Use negative number to Lower Trait",
+    "SWADETOOLS.DurationHint": "Leave it blank for no duration",
+    "SWADETOOLS.BoostMark": "Boost",
+    "SWADETOOLS.BoostSkill": "will be added with a [Boost] marker for",
+    "SWADETOOLS.LowerSkillIgnored": "will be ignored for",
+    "SWADETOOLS.NoSkill": "don't have the skill",
+    "SWADETOOLS.DeleteManually": "Delete Manualmente"
+    
+    
      
     
     

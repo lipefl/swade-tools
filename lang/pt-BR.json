@@ -192,7 +192,17 @@
     "SWADETOOLS.OtherUnskilled": "Outro (Sem Perícia)",
     "SWADETOOLS.Shooting": "Atirar",
     "SWADETOOLS.RapidFireSetting": "Disparo Rápido",
-    "SWADETOOLS.SettingShootingHint": "Perícia usada para Vantagens baseadas em Atirar."
+    "SWADETOOLS.SettingShootingHint": "Perícia usada para Vantagens baseadas em Atirar.",
+    "SWADETOOLS.DieSteps": "N. de Passos",
+    "SWADETOOLS.Rounds": "rodadas",
+    "SWADETOOLS.NotBelowd4": "não pode ter uma característica abaixo de d4",
+    "SWADETOOLS.BoostLowerHint": "Use um número negativo para Reduzir Característica",
+    "SWADETOOLS.DurationHint": "Deixe em branco para sem duração",
+    "SWADETOOLS.BoostMark": "Aumentar",
+    "SWADETOOLS.BoostSkill": "será adicionada com um marcador [Aumentar] para",
+    "SWADETOOLS.LowerSkillIgnored": "será ignorado para",
+    "SWADETOOLS.NoSkill": "não tem a perícia",
+    "SWADETOOLS.DeleteManually": "Delete Manualmente"
    
 
 

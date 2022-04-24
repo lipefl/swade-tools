@@ -116,11 +116,12 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Fixed a minor bug when the Character is using Fighting but don't have the skill
 
 ## v1.9.0
-+ New Macro "Roll From Selected" to roll a trait from all selected tokens
++ "Roll From Selected" macro to roll a trait from all selected tokens
 + Free Reroll button (thanks to @bloy)
 + Rapid Fire autodetection (thanks to @bloy)
 + Auto Update Max Wounds based on Wildcard/Extra and Size
 + Auto Update Token width/height based on Size.
++ "Boost/Lower Trait" macro for selected tokens (add skill if actor doesnt have it)
 
 **Fixes**
 + Items now allow Attributes as roll trait
