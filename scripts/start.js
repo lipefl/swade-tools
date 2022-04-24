@@ -143,7 +143,12 @@ Hooks.on('ready',()=>{
    })
 
 
+   /// build attr names
+   gb.attributesShort.forEach(attr=>{
+       attr.trans=gb.trans(gb.attrlang[attr.name],'SWADE')
+   })
 
+  
 
 //gb.statusChange(game.actors.getName('Purple'),'shaken',false);
 

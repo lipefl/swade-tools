@@ -37,6 +37,13 @@ export default class ItemDialog {
         this.actor.items.filter(el=>el.data.type=='skill').map(skill=>{
             content+=`<option value="${skill.name}">${skill.name}</option>`;
         })
+
+        content+=`<optgroup label="${gb.trans('Attributes','SWADE')}">`;
+        gb.attributesShort.map(attr=>{
+            content+=`<option value="${attr.trans}">${attr.trans}</option>`
+        })
+        content+=`</optgroup>`
+
         content+=`</select></p>`;
 
         new Dialog({

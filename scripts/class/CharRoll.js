@@ -169,7 +169,7 @@ export default class CharRoll extends BasicRoll{
 
  
 
-    rollAtt(attribute){
+    rollAtt(attribute,rof=1){
         let dieType=this.actor.data.data.attributes[attribute].die.sides;
         
       //  let modDice=this.actor.data.data.attributes[attribute].die.modifier+modifier;
@@ -195,7 +195,7 @@ export default class CharRoll extends BasicRoll{
 
         this.addFlag('rolltype','attribute');
 
-        return this.buildRoll(dieType,wildDie,this.mod);
+        return this.buildRoll(dieType,wildDie,this.mod,rof);
     }
 
    async rollSkill(skillName,rof=1){

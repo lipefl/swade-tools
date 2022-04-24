@@ -122,6 +122,9 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Auto Update Max Wounds based on Wildcard/Extra and Size
 + Auto Update Token width/height based on Size.
 
+**Fixes**
++ Items now allow Attributes as roll trait
+
 More features will be added...
 
 ### Bonus: Macro

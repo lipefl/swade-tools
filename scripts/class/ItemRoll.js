@@ -116,8 +116,15 @@ export default class ItemRoll extends CharRoll{
       
         this.addSkillMod();
 
+        let attr=gb.findAttr(this.data.skill)
+        gb.log(this.data.skill,attr);
+        if (attr){
+            this.rollAtt(attr,rof);
+        } else {
+            this.rollSkill(this.data.skill,rof);
+        }
         
-        this.rollSkill(this.data.skill,rof);
+       
         
         
         

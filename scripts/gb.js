@@ -46,6 +46,8 @@ export const attributesShort=[
 ]
 
 
+
+
 export const settingKey=(name)=>{
     return name.replace(' ','')+'Setting';
 }
@@ -194,6 +196,14 @@ export const trans=(term,initialFlag=false)=>{
         initialFlag='SWADETOOLS';
     }
     return game.i18n.localize(initialFlag+'.'+term)
+}
+
+export const findAttr=(attr)=>{
+    
+    //attr=attr.trim();
+    log(attributesShort.filter(el=>el.trans==attr.trim()));
+    return attributesShort.filter(el=>el.trans==attr.trim())[0]?.name
+
 }
 
 export const GMPlayer=()=>{return game.users.filter((el)=> el.isGM===true)[0]}
