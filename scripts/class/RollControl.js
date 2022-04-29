@@ -1155,16 +1155,20 @@ export default class RollControl {
         } else {
             toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
            // armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
+           
            if (this.chat.data.flags['swade-tools'].usecalled){
                area=this.chat.data.flags['swade-tools'].usecalled;
+           }
                armor=gb.realInt(gb.getArmorArea(target.actor,area)) 
                toughness=toughness-gb.getArmorArea(target.actor)+armor; /// remove default armor, add location armor to final toughness
               // console.log(toughness,'final toughness')
-           }
+            
            
 
           // console.log(armor,'armor');
         }
+
+   //     console.log(armor,'armor');
 
        // let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
 
@@ -1183,6 +1187,8 @@ export default class RollControl {
                 apextra=armor;
             }
         }
+
+       // gb.log(apextra,'ap-extra');
          raisecount=gb.raiseCount(total,toughness-apextra);
         } else {
             raisecount=newWounds; 

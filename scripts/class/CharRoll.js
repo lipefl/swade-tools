@@ -36,6 +36,7 @@ export default class CharRoll extends BasicRoll{
        this.edgemod=0;
        this.abilityMod=0;
        this.vehicle=false;
+       this.action='';
 
       
       
@@ -574,6 +575,10 @@ export default class CharRoll extends BasicRoll{
         }
     }
 
+    defineAction(action){
+        this.action=action;
+    }
+
    display(flags=false){
 
        
@@ -606,7 +611,7 @@ export default class CharRoll extends BasicRoll{
         }
         
         if (this.item){
-            Hooks.call('swadeAction', this.actor, this.item);  /// all item rolls -> can be used for hit/damage (itemDialog) => search for "new itemRoll"
+            Hooks.call('swadeAction', this.actor, this.item,this.action,this.roll, game.user.id);  /// all item rolls -> can be used for hit/damage (itemDialog) => search for "new itemRoll"
         }
 
        

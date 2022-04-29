@@ -31,6 +31,8 @@ export default class ItemRoll extends CharRoll{
     rollAction(actionId){
         let action=this.actions[actionId];
 
+        this.defineAction(actionId);
+
 
         if (action.type=='skill'){
            
@@ -113,7 +115,7 @@ export default class ItemRoll extends CharRoll{
 
     rollBaseSkill(rof=1){
 
-      
+        this.defineAction('formula');
         this.addSkillMod();
 
         let attr=gb.findAttr(this.data.skill)
@@ -131,11 +133,13 @@ export default class ItemRoll extends CharRoll{
     }
 
     rollBaseDamage(){
+        this.defineAction('damage');
         this.addDmgMod();
         let extrainfo='';
         if (this.item.data.data.ap){
             extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.data.data.ap}) `;
         }
+        
         this.rollDamage(this.item.data.data.damage,extrainfo,this.raiseDie());
     }
 
