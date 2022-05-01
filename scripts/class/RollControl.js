@@ -26,15 +26,14 @@ export default class RollControl {
         
 
         gb.log(this.chat.data.flags?.["swade-tools"],'flags');
-    // console.log(this.chat.data.flags?.["swade-tools"]);
+    
 
         //this.actor;
         this.istoken=false;
 
         this.powerfail=null;
 
-     //   console.log(this.chat.data.flags);
-      //  console.log(userId);
+     
     }
 
    
@@ -43,21 +42,21 @@ export default class RollControl {
         if (game.user.isGM){
 
           //  let fux=this.html
-          //  console.log(this.chat);
+         
           //  let total=this.roll.total;
-           // console.log(this.html.find('.flavor-text'));
+      
           //  if (this.rolltype!==undefined && this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
       //   let over= this.html.find('.swadetools-overroll');
                 this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-editroll swadetools-rollbutton" title="'+gb.trans('EditBtn')+'"><i class="fa fa-plus"></i></button> <button class="swadetools-raisecalc swadetools-rollbutton" title="'+gb.trans('RaiseCalcBtn')+'"><i class="fa fa-calculator"></i></button>').on('click','button.swadetools-editroll',()=>{
                     
-                    let raises=gb.raiseCount(this.roll.total);
-                    if (raises<0){
-                        raises=0;
-                    }
+                   
+                    let htmltotal=this.getResults().join(',');
+                    
+
 
                     let content=`<div class="swadetools-itemfulldata">
                     
-                    <div><strong>${gb.trans('Total')}:</strong> ${this.roll.total}</div> 
+                    <div><strong>${gb.trans('Total')}:</strong> ${htmltotal}</div> 
                    
                     
                     </div>
@@ -234,6 +233,26 @@ export default class RollControl {
     }
 
    
+    getResults(){
+        let rof=1;
+           if (this.chat.data.flags?.["swade-tools"]?.userof){
+            rof=this.chat.data.flags?.["swade-tools"]?.userof
+            }
+
+            let totaldice=[];
+
+            if (rof>1){
+                let results=this.roll.terms[0].results;
+                
+                results.map(r=>{
+                    totaldice.push(r.result)
+                })
+               }  else {
+                   totaldice.push(this.roll.total)
+               }
+
+               return totaldice;
+    }
 
     doActions(){
 
@@ -245,7 +264,7 @@ export default class RollControl {
         if (this.chat.data.flags?.["swade-tools"]?.gmmod){
             this.gmmod=gb.realInt(this.chat.data.flags["swade-tools"].gmmod)
 
-            let total=this.gmmod+this.roll.total;
+           // let total=this.gmmod+this.roll.total;
 
           //  console.log(this.chat.content,this.chat.data.content);
 
@@ -260,8 +279,19 @@ export default class RollControl {
                modstr='-';
            }
 
+           let totaldice=this.getResults();
+
            setTimeout(()=>{ /// silver tape roll prints after
-            this.html.find('.message-content .dice-total').html(total);
+
+            
+          //  
+        let totalhtml='';
+          totaldice.forEach(t=>{
+              t+=this.gmmod;
+              totalhtml+=`<div class="dice">${t}</div>`
+          })
+
+          this.html.find('.message-content .dice-total').html(totalhtml);
 
             this.html.find('.dice-formula').append('<div class="modifier"><label style="color:black">'+modstr+'</label></div><div class="modifier"><label style="color:black">'+Math.abs(this.gmmod)+'</label></div>')
            // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
