@@ -1325,10 +1325,11 @@ export default class RollControl {
                
                 
                 charRoll.addFlavor(gb.trans('DoSoak'))
-                charRoll.addFlag('rolltype','soak');
+                
                 charRoll.addFlag('usetarget',target.id);
                 charRoll.addFlag('wounds',raisecount);
                 charRoll.rollAtt('vigor');
+                charRoll.addFlag('rolltype','soak'); //here to overwrite rolltype attribute
                 charRoll.display();
                 
             }
