@@ -186,5 +186,21 @@
     "SWADETOOLS.SettingAskCalledShots": "Options d'Attaques Ciblées pour les objets",
     "SWADETOOLS.SettingAskCalledShotsHint": "Cette option affiche une liste de sélection pour les attaques ciblées",
     "SWADETOOLS.CalledShot": "Attaque Aiblée",
-    "SWADETOOLS.CalledShotHint": "Les pénalités sont ajoutées automatiquement, ajoutez les modificateurs supplémentairs manuellement. Un tir à la tête fournit +4 dommages."
+    "SWADETOOLS.CalledShotHint": "Les pénalités sont ajoutées automatiquement, ajoutez les modificateurs supplémentairs manuellement. Un tir à la tête fournit +4 dommages.",
+    "SWADETOOLS.YesButPC": "Oui, mais seulement pour les PJs",
+    "SWADETOOLS.NoTokenSelected": "Aucun token selectionné",
+    "SWADETOOLS.OtherUnskilled": "Autre (Incompétent)",
+    "SWADETOOLS.Shooting": "Tir",
+    "SWADETOOLS.RapidFireSetting": "Tir Rapide",
+    "SWADETOOLS.SettingShootingHint": "Compétence à utiliser pour les Atouts de Tir.",
+    "SWADETOOLS.DieSteps": "Etapes de décés",
+    "SWADETOOLS.Rounds": "rounds",
+    "SWADETOOLS.NotBelowd4": "pas de trait en dessous de d4",
+    "SWADETOOLS.BoostLowerHint": "Utiliser un nombre négatif pour diminuer le trait",
+    "SWADETOOLS.DurationHint": "Laissez vide pour pas de durée",
+    "SWADETOOLS.BoostMark": "Boost",
+    "SWADETOOLS.BoostSkill": "sera ajouté avec un marqueur de [Boost] pour",
+    "SWADETOOLS.LowerSkillIgnored": "sera ignoré pour",
+    "SWADETOOLS.NoSkill": "ne possède pas la compétence",
+    "SWADETOOLS.DeleteManually": "Supprimer manuellement"
 }
