@@ -88,7 +88,7 @@ Hooks.on('ready',()=>{
     
   };
 
-  game.swade.swadetoolsBoostLower=(trait)=>{
+  /* game.swade.swadetoolsBoostLower=(trait)=>{
     const attrlang={
         agility: "AttrAgi",
         spirit:"AttrSpr",
@@ -161,9 +161,7 @@ Hooks.on('ready',()=>{
                             let att=false;
                             if (type=='att-'){
                             att=true;
-                            } /* else if (type=='uns-'){
-                            name='';
-                            } */
+                            } 
                         
                         if (steps){
                         tokens.map(t=>{
@@ -327,7 +325,7 @@ Hooks.on('ready',()=>{
         
     
     }
-  }
+  } */
 
   game.swade.swadetoolsRollTrait=(actor,name,mod,attr=false)=>{
 

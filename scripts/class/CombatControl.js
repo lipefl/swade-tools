@@ -238,7 +238,7 @@ export default class CombatControl {
    // console.log(combatant);
         let actor=combatant.actor;
         
-    //   console.log('start: '+actor.name); 
+    gb.log('start: '+actor.name); 
         let char=new Char(actor);
         let checkDistracted=true;
         let checkVulnerable=true;
@@ -290,7 +290,7 @@ export default class CombatControl {
     async endTurn(combatant){
       //  console.log(combatant);
         let actor=combatant.actor;
-    //  console.log('end: '+actor.name); 
+    gb.log('end: '+actor.name); 
         let char=new Char(actor);
      //   console.log(combatant);
     ///   console.log(combatant.flags.swade);
