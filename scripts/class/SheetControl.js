@@ -181,20 +181,20 @@ export default class SheetControl {
 
         /// v0.0.5
 
-        let nthkey='1';
+        let nthkey='2';
         if (this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true)){
        // if (Object.keys(this.sheet.actor.data.data.powerPoints).length !== 0){
          //  console.log(this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true));
        //   console.log('has powers');
-            nthkey='-n+2';
+            nthkey='-n+3';
         }
 
-
+       // nthkey=2;
         
         // .swade-official
-        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item.weapon .item-img, .inventory .item.weapon .item-show, .item.power .item-image,.item.power .item-show,'
+        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item.weapon .item-img, .inventory .item.weapon .item-show, .item.power .item-image,.item.power .item-show,.item.power .item-name, .inventory .item.weapon .item-name,.inventory .item.weapon .damage-roll,'
 
-        
+       //
 
         /// .npc and .community
         findEl+='.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image,';
@@ -202,6 +202,9 @@ export default class SheetControl {
 
         ///v0.17
         findEl+='.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'
+
+
+       
         
 
         if(!gb.setting('itemNameClick')){
@@ -211,16 +214,23 @@ export default class SheetControl {
         }
 
     
-       
-       
+       this.html.find(findEl).css('background','yellow');
+       gb.log(this.html);
+       gb.log(findEl);
            // console.log(findEl);
             this.html.find(findEl).unbind('click').bind('click',ev=>{
-                let itemId=$(ev.currentTarget).parents('.item').data('itemId');
-               
-                let item=new ItemDialog(this.sheet.actor,itemId);
-                item.showDialog();
+                this.doItem(ev.currentTarget)
+
+                
             })
         
+    }
+
+    doItem(target){
+        let itemId=$(target).parents('.item').data('itemId');
+               
+        let item=new ItemDialog(this.sheet.actor,itemId);
+        item.showDialog();
     }
 
 

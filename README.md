@@ -125,6 +125,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 
 **Fixes**
 + Items now allow Attributes as roll trait
++ Compatibility with swade system v1.1.1 (from SWADE Tools v1.9.6, open an issue if you see any problems)
 
 More features will be added...
 
