@@ -214,7 +214,7 @@ export default class SheetControl {
         }
 
     
-       this.html.find(findEl).css('background','yellow');
+      // this.html.find(findEl).css('background','yellow');
        gb.log(this.html);
        gb.log(findEl);
            // console.log(findEl);
