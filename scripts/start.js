@@ -424,6 +424,15 @@ Hooks.on("createActor",(actor,options,userid)=>{
             actor.update({'token.disposition':-1})
         }
     }
+
+    gb.log(actor);
+
+   if (actor.data.data.wildcard===true){
+       actor.update({'token.actorLink':true})
+       gb.log('actorLink');
+   }
+    
+
 }
 })
 

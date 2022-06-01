@@ -122,10 +122,12 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Auto Update Max Wounds based on Wildcard/Extra and Size
 + Auto Update Token width/height based on Size.
 + "Boost/Lower Trait" macro for selected tokens (add skill if actor doesnt have it)
++ Automatically link (and unlink) tokens if the actor is wildcard (or not)
 
 **Fixes**
 + Items now allow Attributes as roll trait
 + Compatibility with swade system v1.1.1 (from SWADE Tools v1.9.6, open an issue if you see any problems)
++ Now allow an item to have an empty trait (hides trait button)
 
 More features will be added...
 

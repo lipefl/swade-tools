@@ -53,11 +53,16 @@ export default class CharUp {
             let maxw=0;
             if (wild===true){
                 maxw=3
+
+                this.updates['token.actorLink']=true; /// link token
+            } else {
+                this.updates['token.actorLink']=false; /// link token
             }
 
             maxw+=this.checkSizeUp()
 
             this.updates['data.wounds.max']=maxw
+            
         }
     }
 

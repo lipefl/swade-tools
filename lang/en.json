@@ -202,7 +202,8 @@
     "SWADETOOLS.BoostSkill": "will be added with a [Boost] marker for",
     "SWADETOOLS.LowerSkillIgnored": "will be ignored for",
     "SWADETOOLS.NoSkill": "don't have the skill",
-    "SWADETOOLS.DeleteManually": "Delete Manualmente"
+    "SWADETOOLS.DeleteManually": "Delete Manualmente",
+    "SWADETOOLS.LeaveItBlank": "Leave it blank"
     
     
      

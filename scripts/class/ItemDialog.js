@@ -31,7 +31,9 @@ export default class ItemDialog {
     }
 
     noSkillItem(){
-        let item=this.item;
+        
+        let item=this.item;       
+        
         let content=`<p><strong>${this.item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>`;
         content+=`<p><select id="skillitem">`;
         this.actor.items.filter(el=>el.data.type=='skill').map(skill=>{
@@ -50,13 +52,22 @@ export default class ItemDialog {
             title: item.name,
             content: content,
             buttons: {
+                no: {
+                    label: `<i class="fas fa-times"></i> ${gb.trans('LeaveItBlank')}`,
+                    callback: async ()=>{
+                        await item.setFlag('swade-tools','skillitem',true);
+                        this.dontDisplay=false;
+                        this.showDialog();
+                        
+                    }
+                },/* 
                 cancel: {
                     label: `<i class="fas fa-times"></i> ${gb.trans('Unskilled')}`,
                     callback: ()=>{
                         this.saveSkill(gb.trans('Unskilled'));
                         
                     }
-                },
+                }, */
                 ok: {
                     label: `<i class="fas fa-check"></i> ${gb.trans('UseSkillSelected')}`,
                     callback: (html)=>{
@@ -71,6 +82,8 @@ export default class ItemDialog {
         }).render(true);
 
         this.dontDisplay=true;
+    
+    
     }
 
     showDialog(){
@@ -224,11 +237,25 @@ export default class ItemDialog {
         let buttons={};
 
         let skillName=weaponactions.skill;
+        let skillflag=item.getFlag('swade-tools','skillitem')
+        let noMainSkill=false;
+       
         if (!skillName){
-            skillName=this.noSkillItem();
+
+            if (skillflag!==true){
+                skillName=this.noSkillItem();
+            } else {
+                noMainSkill=true;
+            }
+            
            
            // skillName=gb.trans('Unskilled');
         }
+
+       
+           
+           // skillName=gb.trans('Unskilled');
+        
 
         
 
@@ -236,6 +263,8 @@ export default class ItemDialog {
         let skillIcon='<i class="fas fa-bullseye"></i> ';
         let damageIcon='<i class="fas fa-tint"></i> ';
         
+
+        if (!noMainSkill){  //// hide button for main skill if there's no skill
 
         buttons.mainSkill={
             label: skillIcon+skillName+gb.stringMod(weaponactions.skillMod),
@@ -262,6 +291,7 @@ export default class ItemDialog {
                 this.processRoll(html,data); */
             }
         }
+    }
         
         if (showDamage){
         buttons.mainDamage={
