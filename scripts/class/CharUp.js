@@ -10,12 +10,15 @@ export default class CharUp {
        // gb.log(this.data);
         this.updates={}
 
+       
+
         
     }
 
     checkAll(){
         this.resizeToken();
         this.wildOrExtra();
+    //   this.calcPace();
 
         this.doUpdates();
     }
@@ -34,6 +37,26 @@ export default class CharUp {
         return wh;
     }
 
+    /*  calcPace(){ /// from swade system
+        let pace = this.actor.data.data.stats.speed.value;
+        //subtract encumbrance, if necessary
+        if (this.actor.isEncumbered)
+            pace -= 2;
+        //modify pace with wounds
+        if (game.settings.get('swade', 'enableWoundPace')) {
+            //bound maximum wound penalty to -3
+            const wounds = Math.min(this.actor.data.data.wounds.value, 3);
+            //subtract wounds
+            pace -= wounds;
+        }
+
+        pace+= gb.penalArmorMinStr(this.actor)
+
+        this.lateupdates['data.stats.speed.adjusted']=Math.max(pace, 1)
+        //make sure the pace doesn't go below 1
+       // this.data.data.stats.speed.adjusted = Math.max(pace, 1);
+    } 
+ */
     resizeToken(){
        // gb.log(this.data.data.stats.size);
         if (this.data?.data?.stats?.size!==undefined){
@@ -67,8 +90,10 @@ export default class CharUp {
     }
 
     doUpdates(){
-      //  gb.log(this.updates,'updates');
+       
         this.actor.update(this.updates);
+
+        
     }
 
 }

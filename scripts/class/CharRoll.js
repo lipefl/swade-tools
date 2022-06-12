@@ -209,25 +209,13 @@ export default class CharRoll extends BasicRoll{
         }
 
         /// check equipped armor
-        let armorMod=this.penalArmorMinStr()
+        let armorMod=gb.penalArmorMinStr(this.actor)
         if (armorMod){
             this.addModifier(armorMod,`${gb.trans('UnderMinStr')} (${gb.trans('Armor','SWADE')})`)
         }
     }
 
-    penalArmorMinStr(){
-        let penal=0;
-       let  actorstr=this.actor.data.data.attributes.strength.die.sides
-       let minstr;
-        this.actor.items.filter(el=>el.type=='armor' && el.data.data.equipped).map(item=>{
-            minstr=gb.getMinStr(item)
-            if (minstr>actorstr){
-                penal+=(minstr-actorstr)/2
-            }
-        })
-
-        return 0-penal;
-    }
+    
 
    async rollSkill(skillName,rof=1){
       //  console.log(skillName,rof)

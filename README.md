@@ -123,7 +123,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Auto Update Token width/height based on Size.
 + "Boost/Lower Trait" macro for selected tokens (add skill if actor doesnt have it)
 + Automatically link (and unlink) tokens if the actor is wildcard (or not)
-+ Min Str affects damage dice and also trait rolls based on armor equipped or ranged weapon
++ Min Str affects damage dice and also trait rolls based on armor equipped or ranged weapon (not able to affect Pace, since swade system auto-calculates it)
 
 **Fixes**
 + Items now allow Attributes as roll trait

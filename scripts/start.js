@@ -437,12 +437,13 @@ Hooks.on("createActor",(actor,options,userid)=>{
 })
 
 
-Hooks.on("createActiveEffect", (effect, diff) => { 
+Hooks.on("createActiveEffect", (effect, diff,userid) => { 
     
+   // console.log(plus,'ae-data-create');
     
    // console.log(effect);
    
-    if (effect.data.flags?.core?.statusId){
+    if (game.user.id==userid && effect.data.flags?.core?.statusId){
         let actor=effect.parent; 
         let upActor=new StatusIcon(actor,'actor');
         upActor.chainedStatus(effect.data.flags.core.statusId,true)
@@ -458,9 +459,11 @@ Hooks.on("createActiveEffect", (effect, diff) => {
    
 })
 
-Hooks.on("deleteActiveEffect", (effect,diff)=>{
+Hooks.on("deleteActiveEffect", (effect,diff,userid)=>{
 
-    if (effect.data.flags?.core?.statusId){
+    
+
+    if (game.user.id==userid && effect.data.flags?.core?.statusId){
         let actor=effect.parent; 
         let upActor=new StatusIcon(actor,'actor');
         upActor.chainedStatus(effect.data.flags.core.statusId,false)

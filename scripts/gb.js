@@ -401,6 +401,22 @@ export const getScale=(size)=>{
     }
 }
 
+export const penalArmorMinStr=(actor)=>{
+    let penal=0;
+   let  actorstr=actor.data.data.attributes.strength.die.sides
+   let minstr;
+    actor.items.filter(el=>el.type=='armor' && el.data.data.equipped).map(item=>{
+        minstr=getMinStr(item)
+        if (minstr>actorstr){
+            penal+=(minstr-actorstr)/2
+        }
+    })
+
+    return 0-penal;
+}
+
+
+
 export const  setFlagCombatant=async (combat,combatant,scope,flag,value)=>{
     let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
    // console.log(update);
