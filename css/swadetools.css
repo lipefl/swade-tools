@@ -396,6 +396,12 @@ width: calc(100% - 47px);
         .swadetools-gmmodtotal {
             position:relative;
         }
+
+        .chat-portrait-text-size-name-swade { /* /// minor fix for chat portrait css bug */
+            display:block !important
+            }
+
+
 /*     .swadetools-targetwrap a,
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
     .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {

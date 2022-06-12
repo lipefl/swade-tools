@@ -123,11 +123,15 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Auto Update Token width/height based on Size.
 + "Boost/Lower Trait" macro for selected tokens (add skill if actor doesnt have it)
 + Automatically link (and unlink) tokens if the actor is wildcard (or not)
++ Min Str affects damage dice and also trait rolls based on armor equipped or ranged weapon
 
 **Fixes**
 + Items now allow Attributes as roll trait
 + Compatibility with swade system v1.1.1 (from SWADE Tools v1.9.6, open an issue if you see any problems)
 + Now allow an item to have an empty trait (hides trait button)
++ Wild attack between turns/rounds now work properly 
++ Combat round start fixed
++ Token hud compatibility with Simple Trait Roll option
 
 More features will be added...
 

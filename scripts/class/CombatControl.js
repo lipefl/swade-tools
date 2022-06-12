@@ -9,15 +9,38 @@ export default class CombatControl {
     constructor(){
         this.previousTurn=false;   
         this.combatid=false;  
+        this.combatinfo={}
+        this.acting=false;
        
        // this.combatant=false;   
     }
 
     setCombat(id){
-        if (this.combatid!=id){
+        if (this.combatid!=id){ /// changed combat
             this.previousTurn=false;
+
+            this.combatinfo={
+                round: game.combats.get(id).current.round,
+                turn: game.combats.get(id).current.turn
+            }
         }
         this.combatid=id;
+
+        
+    }
+
+
+    isNewTurn(){
+        let combat= game.combats.get(this.combatid);
+        if (this.combatinfo.round!=combat.current.round || this.combatinfo.turn!=combat.current.turn){
+            this.combatinfo={
+                round: combat.current.round,
+                turn: combat.current.turn
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
    
     /* async act(combatant){ ///not used anymore
@@ -239,6 +262,8 @@ export default class CombatControl {
         let actor=combatant.actor;
         
     gb.log('start: '+actor.name); 
+
+        this.acting=combatant;
         let char=new Char(actor);
         let checkDistracted=true;
         let checkVulnerable=true;
@@ -287,8 +312,10 @@ export default class CombatControl {
         /// Entangled
     }
     
-    async endTurn(combatant){
+    async endTurn(){
       //  console.log(combatant);
+      let combatant=this.acting;
+      if (combatant){
         let actor=combatant.actor;
     gb.log('end: '+actor.name); 
         let char=new Char(actor);
@@ -317,5 +344,7 @@ export default class CombatControl {
             char.say(`${gb.trans('ConvEnd')}<button class="swadetools-simplebutton swadetools-unshake-button" data-swade-tools-action="keepConviction:${actor.id}">${gb.trans('ConvKepp')}</button>`)
             char.update('details.conviction.active',false);
         }
+
+    }
     }
 }

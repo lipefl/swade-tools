@@ -24,42 +24,16 @@ export default class SheetControl {
     bindAttributes(){
         gb.attributes.map(attribute=>{
             this.html.find('.attribute[data-attribute="'+attribute+'"] button.attribute-label,.attributes-list .attribute[data-attribute="'+attribute+'"] .attribute-label a').unbind('click').bind('click',()=>{   
-                if (gb.setting('simpleRolls')){
+                /* if (gb.setting('simpleRolls')){
                    // let item=this.sheet.actor.items.get(skillId);
                   //  let skillName=item.name;
-                    let content=`<div class="swadetools-itemfulldata">
-                    <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.sheet.actor.data.data.attributes[attribute].die.sides}${gb.realInt(this.sheet.actor.data.data.attributes[attribute].die.modifier)?'+'+this.sheet.actor.data.data.attributes[attribute].die.modifier:''}
-                    </div>
-                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
-                    new Dialog({
-                        title: gb.trans(gb.attrlang[attribute],'SWADE'),
-                        content: content,
-                        default: 'ok',
-                        buttons: {
-                           
-                            ok: {
-                                label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
-                                callback: (html)=>{
-                                
-                                    
-                                    let cr=new CharRoll(this.sheet.actor)
-                                    cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
-                                    cr.rollAtt(attribute)
-                                    cr.addFlag('rolltype','attribute')
-                                    cr.display();
-                                    
-                                }
-                            }
-            
-                            
-                        }
-                    }).render(true);
+                    
                    
     
-                } else {             
+                } else {   */           
                 let sys=new SystemRoll(this.sheet.actor);
                 sys.rollAtt(attribute);
-                }
+               /*  } */
             })
         })
     }
@@ -86,7 +60,7 @@ export default class SheetControl {
            
             let skillId=$(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
 
-            if (gb.setting('simpleRolls')){
+           /*  if (gb.setting('simpleRolls')){
                 let item=this.sheet.actor.items.get(skillId);
                 let skillName=item.name;
                 let content=`<div class="swadetools-itemfulldata">
@@ -118,14 +92,14 @@ export default class SheetControl {
                 }).render(true);
                
 
-            } else {
+            } else { */
 
                 
             let sys=new SystemRoll(this.sheet.actor);
 
            
             sys.rollSkill(skillId);
-            }
+           /*  } */
         })
 
         /* ;

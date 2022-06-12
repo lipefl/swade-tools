@@ -374,6 +374,10 @@ export const findUserActor=()=>{
     return actor;
 }
 
+export const getMinStr=item=>{
+    return Array.from(item.data.data.minStr.matchAll(/d(\d+)/g), m => m[1])[0];
+}
+
 export const realInt =(variable)=>{
     return parseInt(variable) || 0;
 }
@@ -397,18 +401,26 @@ export const getScale=(size)=>{
     }
 }
 
-export const setFlagCombatant=(combat,combatant,scope,flag,value)=>{
+export const  setFlagCombatant=async (combat,combatant,scope,flag,value)=>{
     let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
    // console.log(update);
      //combat.updateCombatant(update);
+
+    /*  log(combat.id);
+     log(combatant.id);
+     log(update); */
      
-     combat.updateEmbeddedDocuments('Combatant',update);
+    await combat.updateEmbeddedDocuments('Combatant',update);
+    
+}
+
+export const simpleAttRoll=(attribute,actor)=>{
     
 }
 
 export const actorCombatant=(actor)=>{
     if (game.combat){
-        let combatant=game.combat.combatants.find(el=>el?.actor?._id===actor._id);
+        let combatant=game.combat.combatants.find(el=>el?.actor?.id===actor.id);
         if (!combatant){
             return false;
         } else {

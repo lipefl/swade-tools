@@ -51,6 +51,8 @@ export default class ItemRoll extends CharRoll{
                 skill=action.skillOverride;
             }
             this.addSkillMod();
+
+           
             
             this.rollSkill(skill,rof);
 

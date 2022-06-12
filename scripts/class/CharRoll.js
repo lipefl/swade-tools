@@ -190,13 +190,43 @@ export default class CharRoll extends BasicRoll{
       //  console.log(this.mod);
     //    console.log(this.reasons);
         
-        if (attribute=='agility' && this.actor.isEncumbered){
-            this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
+        if (attribute=='agility'){
+            
+            this.agilityMods();
         }
+
+
 
         this.addFlag('rolltype','attribute');
 
         return this.buildRoll(dieType,wildDie,this.mod,rof);
+    }
+
+
+    agilityMods(){
+        if (this.actor.isEncumbered){
+            this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
+        }
+
+        /// check equipped armor
+        let armorMod=this.penalArmorMinStr()
+        if (armorMod){
+            this.addModifier(armorMod,`${gb.trans('UnderMinStr')} (${gb.trans('Armor','SWADE')})`)
+        }
+    }
+
+    penalArmorMinStr(){
+        let penal=0;
+       let  actorstr=this.actor.data.data.attributes.strength.die.sides
+       let minstr;
+        this.actor.items.filter(el=>el.type=='armor' && el.data.data.equipped).map(item=>{
+            minstr=gb.getMinStr(item)
+            if (minstr>actorstr){
+                penal+=(minstr-actorstr)/2
+            }
+        })
+
+        return 0-penal;
     }
 
    async rollSkill(skillName,rof=1){
@@ -208,6 +238,15 @@ export default class CharRoll extends BasicRoll{
             this.countShots();
         }
 
+        if (this.item && skillName==gb.setting('shootingSkill')){
+            let minstr=gb.getMinStr(this.item)
+            let actorstr=this.actor.data.data.attributes.strength.die.sides
+            //console.log(minstr);
+            if (minstr>actorstr){
+                let penal=0-((minstr-actorstr)/2)
+                this.addModifier(penal,gb.trans('UnderMinStr'));
+            }
+        }
       
         this.rolltype='skill';
         this.skillName=skillName;
@@ -241,8 +280,8 @@ export default class CharRoll extends BasicRoll{
 
             this.addModifier(item.data.data.die.modifier,gb.trans('ModSkill'))     
 
-            if (item.data.data.attribute=='agility' && this.actor.isEncumbered){
-                this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
+            if (item.data.data.attribute=='agility'){
+                this.agilityMods();
             }
         }
         
@@ -490,15 +529,16 @@ export default class CharRoll extends BasicRoll{
         this.shotsUsed=gb.realInt(shots);
     }
 
-    wildAttack(){
+    async wildAttack(){
         
         this.addFlag('wildattack',1);
         let char=new Char(this.actor);
         char.on('isVulnerable');
         ///remove combat flag -> force Vulnerable
         let combatant=gb.actorCombatant(this.actor)
+      //  gb.log(combatant,'wild');
         if (combatant){
-            gb.setFlagCombatant(game.combat,combatant,gb.moduleName,'removeVulnerable',0);
+            await gb.setFlagCombatant(game.combat,combatant,gb.moduleName,'removeVulnerable',0);
         }
     }
 
@@ -509,6 +549,19 @@ export default class CharRoll extends BasicRoll{
 
 
     changeStr(weaponDamage){
+
+
+        if (weaponDamage.includes(`@str`)){
+           // let minStr=gb.getMinStr(this.item)
+           // gb.log(minStr,'minstr');
+            let actorStr=this.actor.data.data.attributes.strength.die.sides
+           // gb.log(actorStr,'actorstr');
+            if (actorStr<gb.getMinStr(this.item)){
+                weaponDamage=weaponDamage.replace(/d\d+/g,`d${actorStr}`)
+               // console.log(weaponDamage);
+            }
+        }
+
 
         gb.attributesShort.map(data=>{
 
@@ -521,11 +574,19 @@ export default class CharRoll extends BasicRoll{
                     
            }
         })
+
+
+
+        ///min str
+        
         
         return weaponDamage;
                
     
     }
+
+
+
 
     rollDamage(damage,extraflavor='',raisedie=6){
         this.rolltype='damage';
@@ -535,6 +596,12 @@ export default class CharRoll extends BasicRoll{
         if (this.dmgraise){
             raisetext=`(+${gb.trans('Targetraise')})`;
         }
+
+
+        if (gb.getMinStr(this.item)>this.actor.data.data.attributes.strength.die.sides){
+            this.addFlavor(`<div>${gb.trans('UnderMinStr')}</div>`,true);
+        }
+
         
         this.flavor+=`<div>${gb.trans('Dmg','SWADE')}: ${damage} ${raisetext} ${extraflavor}</div>`;
         this.baseModifiers(true);

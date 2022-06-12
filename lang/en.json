@@ -203,7 +203,9 @@
     "SWADETOOLS.LowerSkillIgnored": "will be ignored for",
     "SWADETOOLS.NoSkill": "don't have the skill",
     "SWADETOOLS.DeleteManually": "Delete Manualmente",
-    "SWADETOOLS.LeaveItBlank": "Leave it blank"
+    "SWADETOOLS.LeaveItBlank": "Leave it blank",
+    "SWADETOOLS.UnderMinStr": "Under MinStr"
+    
     
     
      

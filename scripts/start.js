@@ -685,7 +685,7 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
     cbt.setCombat(combatid);  
     
    
-   
+    
     /// COMBAT SYNC ERROR 
     /* if (combatdata.current.round!=combatdata.previous.round){
       
@@ -732,8 +732,14 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
        
         
     } else { */
-        await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
+
+        if (cbt.isNewTurn()){
+        await cbt.endTurn();
         await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
+        } /* else {
+          //  await cbt.endPrevious();
+            gb.log('not a new turn')
+        } */
     /* } */
    
     
