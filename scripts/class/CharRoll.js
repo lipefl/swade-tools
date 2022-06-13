@@ -226,7 +226,7 @@ export default class CharRoll extends BasicRoll{
             this.countShots();
         }
 
-        if (this.item && skillName==gb.setting('shootingSkill')){
+        if (this.item && this.item.type=='weapon' && skillName==gb.setting('shootingSkill')){
             let minstr=gb.getMinStr(this.item)
             let actorstr=this.actor.data.data.attributes.strength.die.sides
             //console.log(minstr);
@@ -539,7 +539,7 @@ export default class CharRoll extends BasicRoll{
     changeStr(weaponDamage){
 
 
-        if (weaponDamage.includes(`@str`)){
+        if (this.item.type=='weapon' && weaponDamage.includes(`@str`)){
            // let minStr=gb.getMinStr(this.item)
            // gb.log(minStr,'minstr');
             let actorStr=this.actor.data.data.attributes.strength.die.sides
@@ -586,7 +586,7 @@ export default class CharRoll extends BasicRoll{
         }
 
 
-        if (gb.getMinStr(this.item)>this.actor.data.data.attributes.strength.die.sides){
+        if (this.item.type=='weapon' && gb.getMinStr(this.item)>this.actor.data.data.attributes.strength.die.sides){
             this.addFlavor(`<div>${gb.trans('UnderMinStr')}</div>`,true);
         }
 
