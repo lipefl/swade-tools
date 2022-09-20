@@ -105,25 +105,25 @@ export default class CharRoll extends BasicRoll{
     baseModifiers(damage=false){
 
     if (!damage){
-        if (this.actor.data.data.status.isDistracted){
+        if (this.actor.system.status.isDistracted){
             this.addModifier(-2,gb.trans("Distr","SWADE"));
         }
 
        
-        let woundmod=this.actor.data.data.wounds.value
+        let woundmod=this.actor.system.wounds.value
 
         if (woundmod>3){
             woundmod=3;
         }
         
-        woundmod=woundmod-this.actor.data.data.wounds.ignored;
+        woundmod=woundmod-this.actor.system.wounds.ignored;
         
         if (woundmod>0){            
             this.addModifier(0-woundmod,gb.trans("Wounds","SWADE"));
         }
 
         
-        let fatiguemod=this.actor.data.data.fatigue.value        
+        let fatiguemod=this.actor.system.fatigue.value        
         if (fatiguemod){
             this.addModifier(0-fatiguemod,gb.trans("Fatigue","SWADE"));
         }
@@ -171,14 +171,14 @@ export default class CharRoll extends BasicRoll{
  
 
     rollAtt(attribute,rof=1){
-        let dieType=this.actor.data.data.attributes[attribute].die.sides;
+        let dieType=this.actor.system.attributes[attribute].die.sides;
         
       //  let modDice=this.actor.data.data.attributes[attribute].die.modifier+modifier;
         let wildCard=this.actor.isWildcard;
         let wildDie=false;
 
         if (wildCard){
-            wildDie=this.actor.data.data.attributes[attribute]["wild-die"].sides;
+            wildDie=this.actor.system.attributes[attribute]["wild-die"].sides;
          //   console.log(wildDie);
         } 
 
@@ -186,7 +186,7 @@ export default class CharRoll extends BasicRoll{
 
         
         this.baseModifiers();
-        this.addModifier(this.actor.data.data.attributes[attribute].die.modifier,gb.trans('ModAttr'))
+        this.addModifier(this.actor.system.attributes[attribute].die.modifier,gb.trans('ModAttr'))
       //  console.log(this.mod);
     //    console.log(this.reasons);
         
@@ -228,7 +228,7 @@ export default class CharRoll extends BasicRoll{
 
         if (this.item && this.item.type=='weapon' && skillName==gb.setting('shootingSkill')){
             let minstr=gb.getMinStr(this.item)
-            let actorstr=this.actor.data.data.attributes.strength.die.sides
+            let actorstr=this.actor.system.attributes.strength.die.sides
             //console.log(minstr);
             if (minstr>actorstr){
                 let penal=0-((minstr-actorstr)/2)
@@ -260,15 +260,15 @@ export default class CharRoll extends BasicRoll{
             } 
 
         } else {
-            dieType=item.data.data.die.sides;
+            dieType=item.system.die.sides;
 
             if (wildCard){
-                wildDie=item.data.data["wild-die"].sides;
+                wildDie=item.system["wild-die"].sides;
             } 
 
-            this.addModifier(item.data.data.die.modifier,gb.trans('ModSkill'))     
+            this.addModifier(item.system.die.modifier,gb.trans('ModSkill'))     
 
-            if (item.data.data.attribute=='agility'){
+            if (item.system.attribute=='agility'){
                 this.agilityMods();
             }
         }
@@ -323,6 +323,7 @@ export default class CharRoll extends BasicRoll{
         this.item=item;
 
      //   console.log(item);
+     const description=TextEditor.enrichHTML(item.system.description,{async:false}) /// async false will be removed
 
         this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">
@@ -330,7 +331,7 @@ export default class CharRoll extends BasicRoll{
       </header>
     
     <div class="card-content" style="display:none">
-        ${TextEditor.enrichHTML(item.data.data.description)}
+        ${description}
       </div></div>`;
 
         if (gb.systemSetting('ammoManagement') && countshots && item.type=="weapon"){
@@ -346,13 +347,13 @@ export default class CharRoll extends BasicRoll{
 
     getActualPP(){
        
-        let actualPP=this.actor.data.data.powerPoints.value;
+        let actualPP=this.actor.system.powerPoints.value;
        
-        let arcane=this.item.data.data.arcane
+        let arcane=this.item.system.arcane
         
 
         if (arcane){
-            actualPP=this.actor.data.data.powerPoints[arcane].value;
+            actualPP=this.actor.system.powerPoints[arcane].value;
             
         }
 
@@ -374,7 +375,7 @@ export default class CharRoll extends BasicRoll{
 
             let actualPP=this.getActualPP();
             let updateKey='data.powerPoints.value';
-            let arcane=this.item.data.data.arcane
+            let arcane=this.item.system.arcane
 
             if (arcane){
                // actualPP=this.actor.data.data.powerPoints[arcane].value;
@@ -401,8 +402,8 @@ export default class CharRoll extends BasicRoll{
         let update;
        // let entity;
         if (this.item.type=='weapon'){
-            maxshots=gb.realInt(this.item.data.data.shots);
-            currentShots=gb.realInt(this.item.data.data.currentShots)
+            maxshots=gb.realInt(this.item.system.shots);
+            currentShots=gb.realInt(this.item.system.currentShots)
          //   entity=this.item
             update='data.currentShots';
         } else if (this.item.type=='power'){
@@ -424,7 +425,7 @@ export default class CharRoll extends BasicRoll{
 
                 if (currentShots<0){
                     if (this.item.type=='weapon'){
-                        if (this.item.data.data.autoReload===true && maxshots>=this.shotsUsed){
+                        if (this.item.system.autoReload===true && maxshots>=this.shotsUsed){
 
                             gb.rechargeWeapon(this.actor,this.item,this.shotsUsed)
                             
@@ -542,7 +543,7 @@ export default class CharRoll extends BasicRoll{
         if (this.item.type=='weapon' && weaponDamage.includes(`@str`)){
            // let minStr=gb.getMinStr(this.item)
            // gb.log(minStr,'minstr');
-            let actorStr=this.actor.data.data.attributes.strength.die.sides
+            let actorStr=this.actor.system.attributes.strength.die.sides
            // gb.log(actorStr,'actorstr');
             if (actorStr<gb.getMinStr(this.item)){
                 weaponDamage=weaponDamage.replace(/d\d+/g,`d${actorStr}`)
@@ -555,9 +556,9 @@ export default class CharRoll extends BasicRoll{
 
             if (weaponDamage.includes(`@${data.short}`)){        
                // let regexStr = /[@]str/g;
-                    weaponDamage = weaponDamage.replace(`@${data.short}`, "1d" + this.actor.data.data.attributes[data.name].die.sides);
-                    if (this.actor.data.data.attributes[data.name].die.modifier){
-                        this.addModifier(this.actor.data.data.attributes[data.name].die.modifier,gb.trans(`Attr${data.short.charAt(0).toUpperCase()}${data.short.slice(1)}`,'SWADE'));
+                    weaponDamage = weaponDamage.replace(`@${data.short}`, "1d" + this.actor.system.attributes[data.name].die.sides);
+                    if (this.actor.system.attributes[data.name].die.modifier){
+                        this.addModifier(this.actor.system.attributes[data.name].die.modifier,gb.trans(`Attr${data.short.charAt(0).toUpperCase()}${data.short.slice(1)}`,'SWADE'));
                     }
                     
            }
@@ -586,7 +587,7 @@ export default class CharRoll extends BasicRoll{
         }
 
 
-        if (this.item.type=='weapon' && gb.getMinStr(this.item)>this.actor.data.data.attributes.strength.die.sides){
+        if (this.item.type=='weapon' && gb.getMinStr(this.item)>this.actor.system.attributes.strength.die.sides){
             this.addFlavor(`<div>${gb.trans('UnderMinStr')}</div>`,true);
         }
 

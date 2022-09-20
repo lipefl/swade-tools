@@ -30,7 +30,7 @@ export default class Char {
         }
 
       // console.log(this.entity);
-        if (this.getActor().data.type=='vehicle'){
+        if (this.getActor().type=='vehicle'){
             this.isvehicle=true;
         }
     }
@@ -69,7 +69,7 @@ export default class Char {
         let keys=key.split('.');
        // let actor=
      //  console.log(this.entity,this.getActor());
-        let data=this.getActor().data.data;
+        let data=this.getActor().system;
        
         keys.map(k=>{
         //    console.log(k);
@@ -175,7 +175,7 @@ export default class Char {
     updateData(dataobj){
         if (this.hasPerm()){
         let entity=this.entity;
-        let prefix='data.';
+        let prefix='system.';
         if (this.istoken){
             prefix="actorData.data.";
             entity=canvas.tokens.get(this.entity.id)
@@ -225,10 +225,12 @@ export default class Char {
     }
 
     applyWounds(wounds){
+      //  console.log(wounds);
         let actualwounds=gb.realInt(this.data('wounds.value'))+gb.realInt(wounds);
        // let maxwounds=this.actor.data.data.wounds.max
 
        this.update('wounds.value',actualwounds);
+      // console.log(actualwounds);
       //  this.actor.update({'data.wounds.value':actualwounds});
         /* if(actualwounds>=maxwounds){
             /// mark defeated
@@ -313,7 +315,7 @@ export default class Char {
         let actor=this.getActor();
 
         if (actor.isWildcard){
-            if (!gb.systemSetting('hardChoices') || actor.data.type=='character'){
+            if (!gb.systemSetting('hardChoices') || actor.type=='character'){
                 actualBennies=this.dataint('bennies.value');
             }
             
@@ -322,13 +324,13 @@ export default class Char {
 
         
 
-        if (actualBennies<=0 && actor.data.type=='npc'){
+        if (actualBennies<=0 && actor.type=='npc'){
             this.gmBenny=true; /// uses gm benny if it's an enemy and has no bennies.
         }
     
         if (this.gmBenny){
             let gmPlayer=gb.GMPlayer();
-            actualBennies=gmPlayer.data.flags.swade.bennies;
+            actualBennies=gmPlayer.bennies;
           //  console.log(gmPlayer);
         }
 

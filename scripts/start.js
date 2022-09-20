@@ -75,7 +75,7 @@ Hooks.on('ready',()=>{
             itemRoll.showDialog();
            
       } else {
-        if (actor.data.type=='vehicle'){
+        if (actor.type=='vehicle'){
             actor=gb.getDriver(actor);
         }
         let itemRoll=new ItemRoll(actor,item)
@@ -357,10 +357,10 @@ Hooks.on('ready',()=>{
 
 
     // check version
-    let swadeversion=game.system.data.version.split('.');
+    /* let swadeversion=game.system.data.version.split('.');
     if (gb.realInt(swadeversion[0])==0 && gb.realInt(swadeversion[1])<17){
         ui.notifications.error(gb.trans('UpdateSWADE'));
-    }
+    } */
 
    // console.log(gb.realInt(swadeversion[1]));
 
@@ -381,6 +381,31 @@ Hooks.on('ready',()=>{
        }
    })
 
+/* 
+   const levelsStatus=[{   /// for wounds and fatigue
+        icon: '/modules/swade-tools/icons/w1.png',
+        id: 'wound1',
+        label: `1 ${gb.trans('Wound','SWADE')}`
+   },
+   {   /// for wounds and fatigue
+    icon: '/modules/swade-tools/icons/w2.png',
+    id: 'wound2',
+    label: `2 ${gb.trans('Wounds','SWADE')}`
+},
+{   /// for wounds and fatigue
+    icon: '/modules/swade-tools/icons/w3.png',
+    id: 'wound3',
+    label: `3 ${gb.trans('Wounds','SWADE')}`
+},
+{   /// for wounds and fatigue
+    icon: '/modules/swade-tools/icons/w4.png',
+    id: 'wound4',
+    label: `4 ${gb.trans('Wounds','SWADE')}`
+},]
+
+   CONFIG.statusEffects.push(...levelsStatus) */
+
+  
 
    /// build attr names
    gb.attributesShort.forEach(attr=>{
@@ -418,16 +443,16 @@ Hooks.on("createActor",(actor,options,userid)=>{
   //  gb.log(game.user.id,userid);
     if (game.user.id==userid){
     if (gb.setting('gangUp')){
-        if (actor.data.type=='character'){
+        if (actor.type=='character'){
             actor.update({'token.disposition':1})
-        } else if (actor.data.type=='npc'){
+        } else if (actor.type=='npc'){
             actor.update({'token.disposition':-1})
         }
     }
 
     gb.log(actor);
 
-   if (actor.data.data.wildcard===true){
+   if (actor.system.wildcard===true){
        actor.update({'token.actorLink':true})
        gb.log('actorLink');
    }
@@ -443,10 +468,10 @@ Hooks.on("createActiveEffect", (effect, diff,userid) => {
     
    // console.log(effect);
    
-    if (game.user.id==userid && effect.data.flags?.core?.statusId){
+    if (game.user.id==userid && effect.flags?.core?.statusId){
         let actor=effect.parent; 
         let upActor=new StatusIcon(actor,'actor');
-        upActor.chainedStatus(effect.data.flags.core.statusId,true)
+        upActor.chainedStatus(effect.flags.core.statusId,true)
 
        /*  let act=new SwadeActiveEffect();
         act.apply(actor,'shaken'); */
@@ -463,10 +488,10 @@ Hooks.on("deleteActiveEffect", (effect,diff,userid)=>{
 
     
 
-    if (game.user.id==userid && effect.data.flags?.core?.statusId){
+    if (game.user.id==userid && effect.flags?.core?.statusId){
         let actor=effect.parent; 
         let upActor=new StatusIcon(actor,'actor');
-        upActor.chainedStatus(effect.data.flags.core.statusId,false)
+        upActor.chainedStatus(effect.flags.core.statusId,false)
       //  char.activeEffect(effect.data.flags.core.statusId,false);
     }
 })
@@ -510,8 +535,9 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
      //   console.log(chatItem.data.user);
 
     
+     //console.log(chatItem);
 
-        let roll=new RollControl(chatItem,html,chatItem.data.user);
+        let roll=new RollControl(chatItem,html,chatItem.user);
        
         roll.doActions();
 
@@ -569,10 +595,10 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
 Hooks.on("updateActor", async (actor,data,diff,userId) => {         
     
-   gb.log(actor,data,diff,userId);
+ //  console.log(actor,data,diff,userId);
     if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
-        upActor.checkAllStatus();
+        await upActor.checkAllStatus();
 
         let charup=new CharUp(actor,data);
         charup.checkAll();
@@ -591,11 +617,11 @@ Hooks.on("createToken",(token,diff,userId)=>{
    
 })
 
-Hooks.on('updateToken', (scene, token, data, options, userId) => {
+Hooks.on('updateToken', async (scene, token, data, options, userId) => {
     if (game.user.id==userId){
       //  console.log(token);
    let upToken=new StatusIcon(token,'token',data)
-    upToken.checkAllStatus();
+    await upToken.checkAllStatus();
     }
    
 });

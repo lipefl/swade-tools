@@ -1,64 +1,80 @@
 {
-    "name": "swade-tools",
-    "title": "SWADE Tools",
-    "description": "A series of automations to use with Savage Worlds (SWADE) system. Joker's Wild (with bonus), Status Management (with icons), Reroll with a benny for every roll and other enhancements",
-    "author": "Felipe Figueiredo",
-    "version": "1.9.10",
-    "compatibleCoreVersion": "9",
-    "minimumCoreVersion": "0.8.6",
-     "url":"https://github.com/lipefl/swade-tools",
-    "manifest":"https://raw.githubusercontent.com/lipefl/swade-tools/main/module.json",
-    "download":"https://github.com/lipefl/swade-tools/archive/main.zip",
-    "esmodules": [
-        "scripts/start.js"
-    ],
-    "styles": ["css/swadetools.css"],
-    "languages": [
-        {
-          "lang": "en",
-          "name": "English",
-          "path": "lang/en.json"
-        },
-        {
-          "lang": "fr",
-          "name": "French",
-          "path": "lang/fr.json"
-        },
-        {
-          "lang": "pt-BR",
-          "name": "Português (Brasil)",
-          "path": "lang/pt-BR.json"
-        },
-        {
-          "lang": "es",
-          "name": "Español",
-          "path": "lang/es.json"
-        },
-        {
-          "lang": "it",
-          "name": "Italiano (Italian)",
-          "path": "lang/it.json"
-        },
-        {
-          "lang": "de",
-          "name": "Deutsch",
-          "path": "lang/de.json"
-        },
-        {
-          "lang": "ca",
-          "name": "Català",
-          "path": "lang/ca.json"
-        }
-    ],
-    "packs": [
-      {
-        "name": "macros",
-        "label": "Macros SwadeTools",
-        "system": "swade",
-        "module": "swade-tools",
-        "path": "./packs/macros.db",
-        "entity": "Macro"
-      }
-    ]
-
+  "title": "SWADE Tools",
+  "description": "A series of automations to use with Savage Worlds (SWADE) system. Joker's Wild (with bonus), Status Management (with icons), Reroll with a benny for every roll and other enhancements",
+  "version": "1.10.0",
+  "url": "https://github.com/lipefl/swade-tools",
+  "manifest": "https://raw.githubusercontent.com/lipefl/swade-tools/main/module.json",
+  "download": "https://github.com/lipefl/swade-tools/archive/main.zip",
+  "esmodules": [
+    "scripts/start.js"
+  ],
+  "styles": [
+    "css/swadetools.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "fr",
+      "name": "French",
+      "path": "lang/fr.json",
+      "flags": {}
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json",
+      "flags": {}
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json",
+      "flags": {}
+    },
+    {
+      "lang": "it",
+      "name": "Italiano (Italian)",
+      "path": "lang/it.json",
+      "flags": {}
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json",
+      "flags": {}
+    },
+    {
+      "lang": "ca",
+      "name": "Català",
+      "path": "lang/ca.json",
+      "flags": {}
+    }
+  ],
+  "packs": [
+    {
+      "name": "macros",
+      "label": "Macros SwadeTools",
+      "system": "swade",
+      "path": "packs/macros.db",
+      "type": "Macro",
+      "private": false,
+      "flags": {}
+    }
+  ],
+  "id": "swade-tools",
+  "authors": [
+    {
+      "name": "Felipe Figueiredo",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10"
   }
+}

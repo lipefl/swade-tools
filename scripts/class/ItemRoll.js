@@ -6,7 +6,7 @@ export default class ItemRoll extends CharRoll{
         super();
         this.actor=actor;
         this.item=item;
-        this.data=item.data.data.actions;
+        this.data=item.system.actions;
         this.actions=this.data.additional;
         
         //this.combatRoll(this.item._id);
@@ -46,7 +46,7 @@ export default class ItemRoll extends CharRoll{
                rof=action.rof;
             }
 
-            let skill=this.data.skill;
+            let skill=this.skill;
             if (action.skillOverride){
                 skill=action.skillOverride;
             }
@@ -58,7 +58,7 @@ export default class ItemRoll extends CharRoll{
 
         } else if (action.type=='damage'){
             this.addModifier(action.dmgMod,action.name);
-            let damage=this.item.data.data.damage;            
+            let damage=this.item.system.damage;            
 
             if (action.dmgOverride){
                 damage=action.dmgOverride;
@@ -82,8 +82,8 @@ export default class ItemRoll extends CharRoll{
 
     raiseDie(){
         let raisedie=6;
-        if (this.item.data?.data?.bonusDamageDie){
-            raisedie=this.item.data.data.bonusDamageDie;
+        if (this.item.system?.bonusDamageDie){
+            raisedie=this.item.system.bonusDamageDie;
         }
 
         return raisedie;
@@ -106,7 +106,7 @@ export default class ItemRoll extends CharRoll{
 
     usePP(extraPP){
         if (this.item.type=='power'){
-            let usepp=gb.realInt(this.item.data.data.pp)+gb.realInt(extraPP);
+            let usepp=gb.realInt(this.item.system.pp)+gb.realInt(extraPP);
             if (usepp<0){ /// min 0
                 usepp=0
             }
@@ -138,11 +138,11 @@ export default class ItemRoll extends CharRoll{
         this.defineAction('damage');
         this.addDmgMod();
         let extrainfo='';
-        if (this.item.data.data.ap){
-            extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.data.data.ap}) `;
+        if (this.item.system.ap){
+            extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.system.ap}) `;
         }
         
-        this.rollDamage(this.item.data.data.damage,extrainfo,this.raiseDie());
+        this.rollDamage(this.item.system.damage,extrainfo,this.raiseDie());
     }
 
     

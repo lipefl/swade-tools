@@ -5,11 +5,12 @@ import ItemRoll from './ItemRoll.js';
 
 export default class RollControl {
     
-    constructor(chat,html,userId){
+    constructor(chat,html,user){
 
         this.chat=chat;
         this.html=html;
-        this.roll=chat._roll;
+        this.roll=chat.rolls[0];
+      //  console.log(chat);
         this.targetShow='';
         this.targetPrint=[];
         this.targetFunction=false;
@@ -18,14 +19,17 @@ export default class RollControl {
         this.gmmod=0;
         this.usegmtarget=false;
 
-        this.user=game.users.get(userId);
-        this.userid=userId;
+        this.user=user;
+       // console.log(userId);
+       // this.userid=userId;
 
-        this.rolltype=this.chat.data.flags?.["swade-tools"]?.rolltype;
+      // console.log(this.chat);
+
+        this.rolltype=this.chat.flags?.["swade-tools"]?.rolltype;
 
         
 
-        gb.log(this.chat.data.flags?.["swade-tools"],'flags');
+        gb.log(this.chat.flags?.["swade-tools"],'flags');
     
 
         //this.actor;
@@ -150,7 +154,7 @@ export default class RollControl {
                     )*/
                 })
                 
-                if (this.chat.data.flags?.["swade-tools"]?.itemroll){
+                if (this.chat.flags?.["swade-tools"]?.itemroll){
                 this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-retarget swadetools-rollbutton" title="'+gb.trans('RetargetBtn')+'"><i class="fa fa-crosshairs"></i></button>').on('click','button.swadetools-retarget',async ()=>{
 
                     let targets=Array.from(game.user.targets);
@@ -235,8 +239,8 @@ export default class RollControl {
    
     getResults(){
         let rof=1;
-           if (this.chat.data.flags?.["swade-tools"]?.userof){
-            rof=this.chat.data.flags?.["swade-tools"]?.userof
+           if (this.chat.flags?.["swade-tools"]?.userof){
+            rof=this.chat.flags?.["swade-tools"]?.userof
             }
 
             let totaldice=[];
@@ -261,8 +265,8 @@ export default class RollControl {
         
      
 
-        if (this.chat.data.flags?.["swade-tools"]?.gmmod){
-            this.gmmod=gb.realInt(this.chat.data.flags["swade-tools"].gmmod)
+        if (this.chat.flags?.["swade-tools"]?.gmmod){
+            this.gmmod=gb.realInt(this.chat.flags["swade-tools"].gmmod)
 
            // let total=this.gmmod+this.roll.total;
 
@@ -408,7 +412,7 @@ export default class RollControl {
                    // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
                 },500)
               //  char.updateData({'status.isDistracted':false,'status.isVulnerable':true})/// just to make sure is disabled
-              gb.setFlagCombatant(game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat),{id:this.chat.data.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',1)
+              gb.setFlagCombatant(game.combats.get(this.chat.flags?.["swade-tools"]?.usecombat),{id:this.chat.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',1)
             //    game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat).updateCombatant({_id:this.chat.data.flags?.["swade-tools"]?.usecombatant,['flags.swade-tools.removeVulnerable']:1});
               //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
             }
@@ -478,25 +482,26 @@ export default class RollControl {
     }
 
    async findTargets(){
-        if (this.chat.data.flags["swade-tools"]?.itemroll || this.rolltype=='soak'){ /// show only for items (weapons, powers) and soak
+        if (this.chat.flags["swade-tools"]?.itemroll || this.rolltype=='soak'){ /// show only for items (weapons, powers) and soak
 
             let rolltype=this.rolltype;
-            let rof=this.chat.data.flags["swade-tools"].userof;
+            let rof=this.chat.flags["swade-tools"].userof;
 
 
 
-            if (this.chat.data.flags["swade-tools"].usetarget){
+            if (this.chat.flags["swade-tools"].usetarget){
 
-                let usetargets=this.chat.data.flags["swade-tools"].usetarget.split(',');
+                let usetargets=this.chat.flags["swade-tools"].usetarget.split(',');
                 this.targets=new Array;
 
                 usetargets.map(target=>{
                     this.targets.push(canvas.tokens.get(target))
                 })
-               // this.targets=[canvas.tokens.get(this.chat.data.flags["swade-tools"].usetarget)];
+               // this.targets=[canvas.tokens.get(this.chat.flags["swade-tools"].usetarget)];
               //  console.log(this.targets);
               //  console.log(rolltype)
             } else {
+              // console.log(this.user);
                 this.targets=Array.from(this.user.targets);
                 let targetsave=new Array;
                 this.targets.map(target=>{
@@ -543,7 +548,7 @@ export default class RollControl {
                         
                     } else if (rolltype=='soak'){
 
-                        let prevWounds=this.chat.data.flags["swade-tools"].wounds;
+                        let prevWounds=this.chat.flags["swade-tools"].wounds;
                         this.damageTarget(target,this.soak(prevWounds));
                     }
 
@@ -702,11 +707,11 @@ export default class RollControl {
     } */
 
     getItemOwner(){
-        if (this.chat.data.flags["swade-tools"]?.usevehicle){
-            if (this.chat.data.flags["swade-tools"]?.usevehicletoken){
-                return canvas.tokens.get(this.chat.data.flags["swade-tools"].usevehicletoken).actor;
+        if (this.chat.flags["swade-tools"]?.usevehicle){
+            if (this.chat.flags["swade-tools"]?.usevehicletoken){
+                return canvas.tokens.get(this.chat.flags["swade-tools"].usevehicletoken).actor;
             } else {
-                return game.actors.get(this.chat.data.flags["swade-tools"].usevehicle);
+                return game.actors.get(this.chat.flags["swade-tools"].usevehicle);
             }
             
         } else {
@@ -717,8 +722,8 @@ export default class RollControl {
 
     getActor(orToken=false,useVehicle=false){
         
-            if (this.chat.data.flags["swade-tools"]?.usetoken){
-                let tokenid=this.chat.data.flags["swade-tools"].usetoken
+            if (this.chat.flags["swade-tools"]?.usetoken){
+                let tokenid=this.chat.flags["swade-tools"].usetoken
               //  console.log('token',tokenid);
                 this.istoken=true;
                 if (orToken){
@@ -731,9 +736,9 @@ export default class RollControl {
                 
                 
             } else {
-                let actorid=this.chat.data.flags["swade-tools"].useactor
-                if (useVehicle && this.chat.data.flags["swade-tools"]?.usevehicle){
-                    actorid=this.chat.data.flags["swade-tools"].usevehicle
+                let actorid=this.chat.flags["swade-tools"].useactor
+                if (useVehicle && this.chat.flags["swade-tools"]?.usevehicle){
+                    actorid=this.chat.flags["swade-tools"].usevehicle
                 }
               //  console.log('actor',actorid);
                 if (orToken){
@@ -752,7 +757,7 @@ export default class RollControl {
     failedPower(item){
         gb.log(item);
         if (this.powerfail===null && item.type=='power'){
-            let rof=this.chat.data.flags["swade-tools"].userof;
+            let rof=this.chat.flags["swade-tools"].userof;
             this.powerfail=true;
             
             if (rof<2){
@@ -788,21 +793,21 @@ export default class RollControl {
            if (!item){
             skillValue=0;
            } else {
-            skillValue=gb.realInt(item.data.data.die.sides)+gb.realInt(item.data.data.die.modifier)
+            skillValue=gb.realInt(item.system.die.sides)+gb.realInt(item.system.die.modifier)
            }
            
-           return Math.floor(skillValue/2)+gb.realInt(actor.data.data.handling)+2;
+           return Math.floor(skillValue/2)+gb.realInt(actor.system.handling)+2;
         } else {
-            return gb.realInt(actor.data.data.stats.parry.value)+gb.realInt(actor.data.data.stats.parry.modifier)
+            return gb.realInt(actor.system.stats.parry.value)+gb.realInt(actor.system.stats.parry.modifier)
         }
     }
 
 
     getSize(actor){
         if (actor.type=='vehicle'){
-            return actor.data.data.size;
+            return actor.system.size;
         } else {
-            return actor.data.data.stats.size
+            return actor.system.stats.size
         }
     }
 
@@ -811,7 +816,7 @@ export default class RollControl {
         
         total+=this.gmmod;
         
-        let itemid=this.chat.data.flags["swade-tools"].itemroll;
+        let itemid=this.chat.flags["swade-tools"].itemroll;
         let item=this.getItemOwner().items.get(itemid);
 
         gb.log(item,'item');
@@ -849,7 +854,7 @@ export default class RollControl {
         } */
 
 
-        let skill=this.chat.data.flags["swade-tools"].skill;
+        let skill=this.chat.flags["swade-tools"].skill;
 
         
 
@@ -872,7 +877,7 @@ export default class RollControl {
 
 
        
-        if (!this.chat.data.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
+        if (!this.chat.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
           //  targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
 
           targetNumber=this.getParry(target.actor);
@@ -919,8 +924,8 @@ export default class RollControl {
             }
 
 
-            if (item?.data?.data?.range.includes('/')){
-                let distances=item.data.data.range.split('/')
+            if (item.system?.range.includes('/')){
+                let distances=item.system.range.split('/')
                 let distancemod=0;
                 let toofar=false;
                 let extreme='';
@@ -972,7 +977,7 @@ export default class RollControl {
             let diffScale=dfScale-atScale;
 
             let showSwat='';
-            if (diffScale<0 && this.chat.data.flags["swade-tools"]?.useswat){
+            if (diffScale<0 && this.chat.flags["swade-tools"]?.useswat){
                 if (diffScale>=-4){
                     diffScale=0;
                 } else {
@@ -1121,11 +1126,11 @@ export default class RollControl {
            
             let charRoll=new ItemRoll(this.getItemOwner(),item);
 
-            if (this.chat.data.flags["swade-tools"]?.usevehicle){
+            if (this.chat.flags["swade-tools"]?.usevehicle){
                 charRoll.usingVehicle(this.getItemOwner());
             }
 
-            if (this.chat.data.flags["swade-tools"]?.wildattack){
+            if (this.chat.flags["swade-tools"]?.wildattack){
                 charRoll.addModifier(2,gb.trans('WildAttack'));
             }
 
@@ -1134,8 +1139,8 @@ export default class RollControl {
                 charRoll.raiseDmg();
             }
 
-            if (this.chat.data.flags["swade-tools"]?.usecalled){
-                charRoll.addFlag('usecalled',this.chat.data.flags["swade-tools"].usecalled);
+            if (this.chat.flags["swade-tools"]?.usecalled){
+                charRoll.addFlag('usecalled',this.chat.flags["swade-tools"].usecalled);
 
                 /* if (this.chat.data.flags["swade-tools"].usecalled=='Head'){
                     charRoll.addModifier(4,gb.trans('CalledShot')+ ' ('+gb.trans('Head','SWADE')+')')
@@ -1143,8 +1148,8 @@ export default class RollControl {
             }
 
 
-            if (this.chat.data.flags["swade-tools"].damageaction){
-                charRoll.rollAction(this.chat.data.flags["swade-tools"].damageaction)
+            if (this.chat.flags["swade-tools"].damageaction){
+                charRoll.rollAction(this.chat.flags["swade-tools"].damageaction)
             } else {
                 charRoll.rollBaseDamage();
             }
@@ -1172,22 +1177,22 @@ export default class RollControl {
 
         if (newWounds===null){
        // let actorid=this.chat.data.flags["swade-tools"].useactor;
-        let itemid=this.chat.data.flags["swade-tools"].itemroll;
+        let itemid=this.chat.flags["swade-tools"].itemroll;
 
       //  console.log(target);
 
         let toughness;
         let armor;
-        if (target.actor.data.type=='vehicle'){
-            toughness=gb.realInt(target.actor.data.data.toughness.total);
-            armor=gb.realInt(target.actor.data.data.toughness.armor);
+        if (target.actor.type=='vehicle'){
+            toughness=gb.realInt(target.actor.system.toughness.total);
+            armor=gb.realInt(target.actor.system.toughness.armor);
             isvehicle=true;
         } else {
-            toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
+            toughness=gb.realInt(target.actor.system.stats.toughness.value);
            // armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
            
-           if (this.chat.data.flags['swade-tools'].usecalled){
-               area=this.chat.data.flags['swade-tools'].usecalled;
+           if (this.chat.flags['swade-tools'].usecalled){
+               area=this.chat.flags['swade-tools'].usecalled;
            }
                armor=gb.realInt(gb.getArmorArea(target.actor,area)) 
                toughness=toughness-gb.getArmorArea(target.actor)+armor; /// remove default armor, add location armor to final toughness
@@ -1211,8 +1216,8 @@ export default class RollControl {
        // console.log(item);
      /// adds AP
         let apextra=0;
-        if (item.data.data.ap){
-            apextra=gb.realInt(item.data.data.ap);
+        if (item.system.ap){
+            apextra=gb.realInt(item.system.ap);
             if (apextra>armor){
                 apextra=armor;
             }
@@ -1319,7 +1324,7 @@ export default class RollControl {
                
                 
 
-                if(gb.settingKeyName('Unarmored Hero') && gb.realInt(target.actor.data.data.stats.toughness.armor)==0){
+                if(gb.settingKeyName('Unarmored Hero') && gb.realInt(target.actor.system.stats.toughness.armor)==0){
                     charRoll.addModifier(2,gb.trans(gb.settingKey('Unarmored Hero')));
                 }
                
@@ -1440,8 +1445,8 @@ export default class RollControl {
     findActor(){
 
         let actor;
-        if (this.chat.data.flags["swade-tools"]?.useactor){
-            actor=game.actors.get(this.chat.data.flags["swade-tools"].useactor)
+        if (this.chat.flags["swade-tools"]?.useactor){
+            actor=game.actors.get(this.chat.flags["swade-tools"].useactor)
         } else {
             actor=game.actors.filter(el=>el.name==this.chat.alias)[0];
         }
@@ -1469,14 +1474,14 @@ export default class RollControl {
       if (!freeReroll){
         if (this.rolltype=='damage'){
 
-            if (this.chat.data.flags['swade-tools']?.edgebonus!="nomercy" && char.hasEdgeSetting('No Mercy')){
+            if (this.chat.flags['swade-tools']?.edgebonus!="nomercy" && char.hasEdgeSetting('No Mercy')){
                 mod=2
                 reason=gb.settingKeyName('No Mercy');
                 edgebonus='nomercy'
             }
 
         } else {
-            if (this.chat.data.flags['swade-tools']?.edgebonus!="elan" && char.hasEdgeSetting('Elan')){
+            if (this.chat.flags['swade-tools']?.edgebonus!="elan" && char.hasEdgeSetting('Elan')){
                 mod=2
                 reason=gb.settingKeyName('Elan');    
                 edgebonus='elan'
@@ -1524,14 +1529,14 @@ export default class RollControl {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: actor }),
          //content: 'this is plus',
-        flavor: this.chat.data.flavor+extraflavor
+        flavor: this.chat.flavor+extraflavor
         };
 
         
 
        roll.toMessage(chatData).then((chat)=>{
-        if (this.chat.data.flags["swade-tools"]){
-            let flags=this.chat.data.flags["swade-tools"];
+        if (this.chat.flags["swade-tools"]){
+            let flags=this.chat.flags["swade-tools"];
 
            
             
@@ -1582,9 +1587,9 @@ export default class RollControl {
 
     gangUp(attacker,target){
         if (!attacker || !target 
-        || attacker?.actor?.data.type=='vehicle' || target?.actor?.data.type=='vehicle'
-        || attacker.data.disposition==target.data.disposition
-        || attacker.data.disposition==0
+        || attacker?.actor?.type=='vehicle' || target?.actor?.type=='vehicle'
+        || attacker.document.disposition==target.document.disposition
+        || attacker.document.disposition==0
         ) {
           //  console.log('nothing');
             return 0;
@@ -1597,10 +1602,10 @@ export default class RollControl {
             && !(attacker.actor.isToken===false && attacker.actor.id==t?.actor?.id)
             && t.id!=target.id /// not the target
             && t.visible  /// is visible         
-            && !t.combatant?.data.defeated /// not defeated
-            && t?.actor?.data.data.status.isStunned!==true /// not stunned    
-            && t?.actor?.data.type!='vehicle'
-            && t.data.disposition!=0        
+            && !t.combatant?.defeated /// not defeated
+            && t?.actor?.system.status.isStunned!==true /// not stunned    
+            && t?.actor?.type!='vehicle'
+            && t.document.disposition!=0        
             && gb.getRange(target,t)==1 /// adjacent
         )
 
@@ -1612,13 +1617,13 @@ export default class RollControl {
 
 
         let allies_of_attacker=all_around_target.filter(t=>
-             t.data.disposition==attacker.data.disposition 
+             t.document.disposition==attacker.document.disposition 
         )
 
      //  console.log('allies_of_attacker',allies_of_attacker.length);
 
         let allies_of_target=all_around_target.filter(t=>
-            t.data.disposition==target.data.disposition
+            t.document.disposition==target.document.disposition
         )
         
      //   console.log('allies_of_target',allies_of_target.length);

@@ -7,6 +7,7 @@ export default class CharUp {
 
         this.actor=actor;
         this.data=data;
+     //   console.log(data);
        // gb.log(this.data);
         this.updates={}
 
@@ -25,7 +26,7 @@ export default class CharUp {
 
     checkSizeUp(){
         let wh=0;
-        let size=this.actor.data.data.stats.size;
+        let size=this.actor.system.stats.size;
         if (size>3 && size<8){
             wh=1
         } else if (size>7 && size<12){
@@ -59,7 +60,7 @@ export default class CharUp {
  */
     resizeToken(){
        // gb.log(this.data.data.stats.size);
-        if (this.data?.data?.stats?.size!==undefined){
+        if (this.data?.system?.stats?.size!==undefined){
             let wh=this.checkSizeUp()+1;           
             
             this.updates['token.width']=wh;
@@ -71,8 +72,8 @@ export default class CharUp {
     }
 
     wildOrExtra() {
-        if (this.data?.data?.wildcard!==undefined || this.data?.data?.stats?.size!==undefined){
-            let wild=this.actor.data.data.wildcard;
+        if (this.data?.system?.wildcard!==undefined || this.data?.system?.stats?.size!==undefined){
+            let wild=this.actor.system.wildcard;
             let maxw=0;
             if (wild===true){
                 maxw=3

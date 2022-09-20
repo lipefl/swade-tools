@@ -9,7 +9,7 @@ export default class ItemDialog {
      //   this.vehicle=false;
        
 
-        if (actor.data.type=='vehicle'){
+        if (actor.type=='vehicle'){
             this.vehicle=actor;
            // console.log(this.vehicle);
             actor=gb.getDriver(actor);
@@ -25,7 +25,7 @@ export default class ItemDialog {
 
     saveSkill(newSkill){
         this.item.update({'data.actions.skill':newSkill});
-        this.item.data.data.actions.skill=newSkill;
+        this.item.system.actions.skill=newSkill;
         this.dontDisplay=false;
         this.showDialog();
     }
@@ -36,7 +36,7 @@ export default class ItemDialog {
         
         let content=`<p><strong>${this.item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>`;
         content+=`<p><select id="skillitem">`;
-        this.actor.items.filter(el=>el.data.type=='skill').map(skill=>{
+        this.actor.items.filter(el=>el.type=='skill').map(skill=>{
             content+=`<option value="${skill.name}">${skill.name}</option>`;
         })
 
@@ -90,8 +90,8 @@ export default class ItemDialog {
         
       //  let actor=this.sheet.actor;
         let item=this.item;
-        let weaponinfo=item.data.data;
-        let weaponactions=item.data.data.actions;
+        let weaponinfo=item.system;
+        let weaponactions=item.system.actions;
         let showDamage=true;
         let showRaiseDmg=true;
         
@@ -141,7 +141,7 @@ export default class ItemDialog {
                 content+=`<div><strong>${gb.trans('Dmg','SWADE')}</strong>: ${weaponinfo.damage}${patxt}</div>`;
             }
             
-            content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(this.actor.data.data.powerPoints.value)}</div>
+            content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(this.actor.system.powerPoints.value)}</div>
             <div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
             <div><strong>${gb.trans('Range._name','SWADE')}</strong>: ${weaponinfo.range}</div>
         `

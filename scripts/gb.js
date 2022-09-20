@@ -57,8 +57,8 @@ export const settingKeyName=(name)=>{
 }
 
 export const getDriver=(vehicle)=>{
-    if (vehicle.data.data?.driver?.id){
-        let driverid=vehicle.data.data.driver.id.split('.');
+    if (vehicle.system?.driver?.id){
+        let driverid=vehicle.system.driver.id.split('.');
         return game.actors.get(driverid[1]);
     } else {
         ui.notifications.error(trans('NoOperator'));
@@ -72,10 +72,10 @@ export const statusDefaultToIs=(status)=>{
 }
 
 export const getDriverSkill=(vehicle)=>{
-    if (vehicle.data.data?.driver?.skill){
-        return vehicle.data.data.driver.skill
-    } else if(vehicle.data.data?.driver?.skillAlternative) {
-        return vehicle.data.data.driver.skillAlternative;
+    if (vehicle.system?.driver?.skill){
+        return vehicle.system.driver.skill
+    } else if(vehicle.system?.driver?.skillAlternative) {
+        return vehicle.system.driver.skillAlternative;
     } else {
         ui.notifications.error(trans('NoOperatorSkill'));
         return false;
@@ -89,11 +89,13 @@ export const getTokenCoordinates=(token)=>{
     let coo=new Array;    
     
 
-  //  console.log(token);
-    let gridsize=token.scene.data.grid;
+   // console.log(token);
+    let gridsize=token.scene.grid;
     let middlegrid=Math.round(gridsize/2);
+    let width=token.document.width;
+    let height=token.document.height;
 
-    if (token.data.width>1 || token.data.height>1){
+    if (width>1 || height>1){
     
     let cx=new Array
     let cy=new Array
@@ -101,9 +103,9 @@ export const getTokenCoordinates=(token)=>{
     cx.push(token.x+middlegrid);
     cy.push(token.y+middlegrid);
 
-    if (token.data.width>1){
+    if (width>1){
         
-        let sizew=token.data.width;
+        let sizew=width;
         
        
 
@@ -114,9 +116,9 @@ export const getTokenCoordinates=(token)=>{
        // console.log(cx);
     }
 
-    if (token.data.height>1){
+    if (height>1){
         
-        let sizey=token.data.height;
+        let sizey=height;
         for (let i=1;i<sizey;i++){
         cy.push(token.y+middlegrid+(gridsize*i))
         }
@@ -143,7 +145,7 @@ export const getRange=(origin,target)=>{
    // const ray = new Ray(origin, target);
     const grid_unit = canvas.grid.grid.options.dimensions.distance
     let grid=false;
-   if (origin.scene.data.gridType==1){
+   if (origin.scene.gridType==1){
        grid=true;
    }
 
@@ -172,7 +174,7 @@ export const getRange=(origin,target)=>{
 
 
     // adding flying
-    let alt=Math.abs(origin.data.elevation-target.data.elevation);
+    let alt=Math.abs(origin.elevation-target.elevation);
 
     if (alt){
         ///hipotenusa
@@ -375,7 +377,7 @@ export const findUserActor=()=>{
 }
 
 export const getMinStr=item=>{
-    return Array.from(item.data.data.minStr.matchAll(/d(\d+)/g), m => m[1])[0];
+    return Array.from(item.system.minStr.matchAll(/d(\d+)/g), m => m[1])[0];
 }
 
 export const realInt =(variable)=>{
@@ -403,9 +405,9 @@ export const getScale=(size)=>{
 
 export const penalArmorMinStr=(actor)=>{
     let penal=0;
-   let  actorstr=actor.data.data.attributes.strength.die.sides
+   let  actorstr=actor.system.attributes.strength.die.sides
    let minstr;
-    actor.items.filter(el=>el.type=='armor' && el.data.data.equipped).map(item=>{
+    actor.items.filter(el=>el.type=='armor' && el.system.equipped).map(item=>{
         minstr=getMinStr(item)
         if (minstr>actorstr){
             penal+=(minstr-actorstr)/2
@@ -451,7 +453,7 @@ export const actorIsJoker=(actor)=>{
 
    // actor.token.id==el.tokenId
   /// removed  flags.swade.hasJoker (swade bug)
-    if(game.combat && game.combat.combatants.filter(el=>el.data.flags?.swade?.cardValue>14 && el?.actor?.id===actor.id && 
+    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade?.cardValue>14 && el?.actor?.id===actor.id && 
         (!actor?.isToken || actor.token.id==el.token.id)  /// check if it's the same token
         ).length>0){
 
@@ -467,7 +469,7 @@ export const actorIsJoker=(actor)=>{
 export const actorIsConvicted=(actor)=>{
    // let actor=game.actors.get(actorId);
    
-    if (actor?.data?.data?.details?.conviction.active===true){
+    if (actor.system?.details?.conviction.active===true){
        // console.log('conviction is on');
         return true;
        
@@ -665,7 +667,7 @@ export const statusChange=async(actor,status,active)=>{
             },
         });
         // Find the existing effect based on label and flag and delete it.
-        for (const effect of actor.data.effects) {
+        for (const effect of actor.effects) {
             if (effect.getFlag('core', 'statusId') === status) {
                 await effect.delete();
             }
@@ -691,8 +693,8 @@ export const translateActiveEffect=(statusName,removeIs=false)=>{
 
 export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>{
     let newshots;
-    let shots=realInt(item.data.data.shots);
-    let curShots=realInt(item.data.data.currentShots);
+    let shots=realInt(item.system.shots);
+    let curShots=realInt(item.system.currentShots);
     let stop=false;
     let xbulletsay='';
 
@@ -706,8 +708,8 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
         stop=true;
     } else {
           
-        if ((systemSetting('ammoFromInventory') && actor.data.type=='character') || (actor.data.type=='npc' && systemSetting('npcAmmo'))){
-            let gearname=item.data.data.ammo.trim();
+        if ((systemSetting('ammoFromInventory') && actor.type=='character') || (actor.type=='npc' && systemSetting('npcAmmo'))){
+            let gearname=item.system.ammo.trim();
             if (!gearname){
                ui.notifications.error(trans('NoAmmoSet','SWADE'));
                stop=true;
@@ -728,7 +730,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
                     newshots=0
 
                 } else {
-                    let gearshots=realInt(gearitem.data.data.quantity);
+                    let gearshots=realInt(gearitem.system.quantity);
                     let usedgearshots;
                     if (gearshots<shotsToFull){
                         ui.notifications.warn(trans('NotEnoughAmmoToReload','SWADE'));
@@ -752,7 +754,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
             if (xbullets!=null){
                 newshots=curShots+xbullets
             } else {
-                newshots=item.data.data.shots;
+                newshots=item.system.shots;
             }
             
         }
@@ -768,7 +770,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
 
         if (!stop && newshots!=curShots){
             item.update({"data.currentShots":newshots});
-            if (item.data.data.autoReload!==true){  // nao jogar no chat para itens com autoReload
+            if (item.system.autoReload!==true){  // nao jogar no chat para itens com autoReload
             let char=new Char(actor);
             char.say(`${item.name} ${trans('Recharged')}${xbulletsay}`);
             }
@@ -820,11 +822,11 @@ export const btnAction = { /// button functions
       charRoll.combatRoll(argsArray[1]);
     //  charRoll.damageTarget(target);
         charRoll.addFlavor(item.name);
-        charRoll.addModifier(item.data.data.actions.dmgMod,trans('ModItem'));
+        charRoll.addModifier(item.system.actions.dmgMod,trans('ModItem'));
         if (argsArray[3]){
             charRoll.raiseDmg();
         }
-      charRoll.rollDamage(`${item.data.data.damage}`);
+      charRoll.rollDamage(`${item.system.damage}`);
       charRoll.display();
     },
 
@@ -837,7 +839,7 @@ export const btnAction = { /// button functions
         let char=new Char(target);
         let isvehicle=false;
 
-        if (target.data.type=='vehicle'){
+        if (target.type=='vehicle'){
             isvehicle=true;
         }
 

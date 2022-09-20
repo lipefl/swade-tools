@@ -25,7 +25,7 @@ export default class SystemRoll {
             let item=this.actor.items.get(skillId);
             let skillName=item.name;
             let content=`<div class="swadetools-itemfulldata">
-            <strong>${skillName}</strong>: d${item.data.data.die.sides}${gb.realInt(item.data.data.die.modifier)?'+'+item.data.data.die.modifier:''}
+            <strong>${skillName}</strong>: d${item.system.die.sides}${gb.realInt(item.system.die.modifier)?'+'+item.system.die.modifier:''}
             </div>
             <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
             new Dialog({
@@ -79,7 +79,7 @@ export default class SystemRoll {
         if (gb.setting('simpleRolls')){
 
             let content=`<div class="swadetools-itemfulldata">
-                    <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.actor.data.data.attributes[attribute].die.sides}${gb.realInt(this.actor.data.data.attributes[attribute].die.modifier)?'+'+this.actor.data.data.attributes[attribute].die.modifier:''}
+                    <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.actor.system.attributes[attribute].die.sides}${gb.realInt(this.actor.system.attributes[attribute].die.modifier)?'+'+this.actor.system.attributes[attribute].die.modifier:''}
                     </div>
                     <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
                     new Dialog({

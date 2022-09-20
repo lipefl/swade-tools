@@ -156,7 +156,7 @@ export default class SheetControl {
         /// v0.0.5
 
         let nthkey='2';
-        if (this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true)){
+        if (this.sheet.actor.items.find(el=>el.type=='edge' && el.system.isArcaneBackground===true)){
        // if (Object.keys(this.sheet.actor.data.data.powerPoints).length !== 0){
          //  console.log(this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true));
        //   console.log('has powers');

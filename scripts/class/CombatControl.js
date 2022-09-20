@@ -112,12 +112,12 @@ export default class CombatControl {
     giveJokersBennies(combat,combatant){
 
         let gmJoker=false; ///PC - all players get a benny
-            if (combatant.actor.data.type=='npc'){ /// NPC - GM gets a benny and each NonPC-WC
+            if (combatant.actor.type=='npc'){ /// NPC - GM gets a benny and each NonPC-WC
                 gmJoker=true;
             } 
 
             if (gmJoker){
-                combat.combatants.filter(el=>el.actor.data.type=='npc' && el.actor.isWildcard===true).map(combatant=>{
+                combat.combatants.filter(el=>el.actor.type=='npc' && el.actor.isWildcard===true).map(combatant=>{
                     let char=new Char(combatant.actor);
                     char.giveBenny();
                 })
@@ -129,7 +129,7 @@ export default class CombatControl {
 
             } else {
 
-                combat.combatants.filter(el=>el.actor.data.type=='character' && el.actor.isWildcard===true).map(combatant=>{
+                combat.combatants.filter(el=>el.actor.type=='character' && el.actor.isWildcard===true).map(combatant=>{
                    let char=new Char(combatant.actor);
                     char.giveBenny();
                 })

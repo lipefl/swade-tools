@@ -33,6 +33,8 @@ export default class StatusIcon {
         }
 
         this.addOptions();
+
+        this.applied=[];
         
     }
 
@@ -54,27 +56,56 @@ export default class StatusIcon {
 
     noBasicActiveEffect(statusName){
         
-        if (statusName && this.entity.data.effects.filter(el=>el.data?.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
+        if (statusName && this.entity.effects.filter(el=>el.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
             return false;
         } else {
             return true;
         }
     }
 
-    applyEffect(icon,active,overlay=false){
+    async applyEffect(icon,active,overlay=false){
 
+
+        
 
         if (gb.setting('defaultStatusIcons')!='none'){
 
        let stat=this.statuses.filter(el=>el.icon==icon)[0]?.stat;
 
     if (!active || this.noBasicActiveEffect(stat)){
+      //  console.log(this.getTokens());
         this.getTokens().map(async token=>{
-            let applied=!active ;
-          // applied=await token.toggleEffect(icon,{active:active,overlay:overlay})
-           while (applied!=active){
-            applied=await token.toggleEffect(icon,{active:active,overlay:overlay})
-           } 
+
+            //token.effects.parent.document.effects
+
+         
+            /// should be just this
+         ///await token.toggleEffect(icon,{active:active,overlay:overlay})
+
+         ///silver tape 
+                setTimeout(async ()=>{
+
+                    let doit=false;
+                    if (active && !token.effects.parent.document.effects.includes(icon)){
+                        doit=true;
+                    }
+                    if (!active && token.effects.parent.document.effects.includes(icon)){
+                        doit=true;
+                    }
+
+
+                    if (doit){
+                        await token.toggleEffect(icon,{active:active,overlay:overlay})
+                    }
+                    
+                },500)
+            
+                
+            
+            
+                
+            
+           
         })
     }
 
@@ -100,7 +131,7 @@ export default class StatusIcon {
         let statusvar;
     
         if (this.entityType=='actor'){
-            statusvar=this.data?.data?.status?.[statusName];
+            statusvar=this.data?.system?.status?.[statusName];
         } else if (this.entityType=='token'){
             statusvar=this.data?.actorData?.data?.status?.[statusName];
         }
@@ -109,7 +140,7 @@ export default class StatusIcon {
         if (statusvar!==undefined){
             let varcheck;
             if (this.entityType=='actor'){
-                varcheck=this.data.data.status[statusName];
+                varcheck=this.system.status[statusName];
             } else if (this.entityType=='token'){
                 varcheck=this.data.actorData.data.status[statusName];
             }
@@ -219,14 +250,14 @@ export default class StatusIcon {
     }
 
 
-    checkLevels(levelType){
+    async checkLevels(levelType){
 
         let statval
         let levels;
     
         if (levelType=='wounds'){
             if (this.entityType=='actor'){
-                statval=this.data?.data?.wounds?.value;
+                statval=this.data.system?.wounds?.value;
             } else if (this.entityType=='token'){
                 statval=this.data?.actorData?.data?.wounds?.value;
             }
@@ -235,24 +266,26 @@ export default class StatusIcon {
         } else if (levelType=='fatigues'){
     
             if (this.entityType=='actor'){
-                statval=this.data?.data?.fatigue?.value;
+                statval=this.data.system?.fatigue?.value;
             } else if (this.entityType=='token'){
                 statval=this.data?.actorData?.data?.fatigue?.value;
             }
             
             levels=this.fatigues;
         }
+
+        //console.log(levelType,levels,statval);
     
         if (statval!==undefined){
 
             /// mark defeated
             this.markDefeated(levelType,statval);
 
-            levels.map(item => {
+            levels.map(async item => {
                 if (item.value==statval){
-                    this.applyEffect(item.icon,true)
+                     await this.applyEffect(item.icon,true)
                 } else {
-                    this.applyEffect(item.icon,false)
+                    await this.applyEffect(item.icon,false)
                 }
             })
             
@@ -283,15 +316,15 @@ export default class StatusIcon {
     }
     
 
-    checkAllStatus(){
+    async checkAllStatus(){
        /*  this.statuses.map(item => {        
             this.checkStatusUpdate(item.stat)
         }) */
 
        
         
-        this.checkLevels('wounds');
-        this.checkLevels('fatigues');
+        await this.checkLevels('wounds');
+        await this.checkLevels('fatigues');
     }
 
     createTokenCheck(){
@@ -302,14 +335,14 @@ export default class StatusIcon {
         } 
     }); */
     
-    let woundsval=actor.data.data.wounds.value;
+    let woundsval=actor.system?.wounds?.value;
     if (woundsval){
        
         this.applyEffect(this.wounds.filter(el=>el.value==woundsval)[0].icon,true);
       
     }
 
-    let fatigueval=actor.data.data?.fatigue?.value;
+    let fatigueval=actor.system?.fatigue?.value;
     if (fatigueval){        
         this.applyEffect(this.fatigues.filter(el=>el.value==fatigueval)[0].icon,true);
     }

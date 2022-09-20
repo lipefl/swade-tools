@@ -13,6 +13,10 @@ A series of automations for swade: Joker's Wild (with bonus); Status Management 
 
 This is my first big module, please report if you see any bugs and be nice :)
 
+## Last Update (v1.10.0)
+
+Only compatible with Foundry v10. This is a beta version made to be usable. Since a lot of changes were made, bugs may occur. Please, open a issue if you find any. 
+
 ## Features Available (v1.0.0)
 
 1. Automatically rolls initiative when combat starts 
@@ -132,6 +136,12 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Wild attack between turns/rounds now work properly 
 + Combat round start fixed
 + Token hud compatibility with Simple Trait Roll option
+
+## v1.10.0
+
+**Fixes**
++ Compatibility with Foundry v10
+
 
 More features will be added...
 
