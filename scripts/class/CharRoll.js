@@ -228,7 +228,7 @@ export default class CharRoll extends BasicRoll{
 
         if (this.item && this.item.type=='weapon' && skillName==gb.setting('shootingSkill')){
             let minstr=gb.getMinStr(this.item)
-            let actorstr=this.actor.system.attributes.strength.die.sides
+            let actorstr=gb.getStrForMinStr(this.actor)
             //console.log(minstr);
             if (minstr>actorstr){
                 let penal=0-((minstr-actorstr)/2)
@@ -543,7 +543,7 @@ export default class CharRoll extends BasicRoll{
         if (this.item.type=='weapon' && weaponDamage.includes(`@str`)){
            // let minStr=gb.getMinStr(this.item)
            // gb.log(minStr,'minstr');
-            let actorStr=this.actor.system.attributes.strength.die.sides
+            let actorStr=gb.getStrForMinStr(this.actor);
            // gb.log(actorStr,'actorstr');
             if (actorStr<gb.getMinStr(this.item)){
                 weaponDamage=weaponDamage.replace(/d\d+/g,`d${actorStr}`)
@@ -587,7 +587,7 @@ export default class CharRoll extends BasicRoll{
         }
 
 
-        if (this.item.type=='weapon' && gb.getMinStr(this.item)>this.actor.system.attributes.strength.die.sides){
+        if (this.item.type=='weapon' && gb.getMinStr(this.item)>gb.getStrForMinStr(this.actor)){
             this.addFlavor(`<div>${gb.trans('UnderMinStr')}</div>`,true);
         }
 

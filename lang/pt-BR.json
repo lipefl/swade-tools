@@ -142,6 +142,8 @@
     "SWADETOOLS.DodgeSetting": "Esquiva",
     "SWADETOOLS.BlockSetting": "Bloquear",
     "SWADETOOLS.ImprovedBlockSetting": "Bloquear Aprimorado",
+    "SWADETOOLS.SoldierSetting": "Soldado",
+    "SWADETOOLS.BrawnySetting": "Musculoso",
     "SWADETOOLS.FrenzySetting": "Frenesi",
     "SWADETOOLS.FormationFighterSetting": "Guerreiro Treinado",
     "SWADETOOLS.SettingShowSituational": "Sempre mostrar modificadores situacionais do alvo",

@@ -166,7 +166,7 @@ export default class SheetControl {
        // nthkey=2;
         
         // .swade-official
-        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item.weapon .item-img, .inventory .item.weapon .item-show, .item.power .item-image,.item.power .item-show,.item.power .item-name, .inventory .item.weapon .item-name,.inventory .item.weapon .damage-roll,'
+        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show,.item.power .item-name, .inventory .item .weapon .item-name,.inventory .item .weapon .damage-roll,'
 
        //
 

@@ -35,6 +35,22 @@ export default class Char {
         }
     }
 
+    getStrForMinStr(){
+        let str=this.getActor().system.attributes.strength.die.sides;
+
+       
+            if (this.hasEdgeSetting('Soldier')){
+                str=str+2
+            }
+            if (this.hasEdgeSetting('Brawny')){
+                str=str+2
+            }
+        
+
+       // console.log(str);
+        return str;
+    }
+
     is(statusName){
         if (this.data('status.'+statusName)){
             return true;

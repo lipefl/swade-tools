@@ -142,6 +142,8 @@
     "SWADETOOLS.DodgeSetting": "Dodge",
     "SWADETOOLS.BlockSetting": "Block",
     "SWADETOOLS.ImprovedBlockSetting": "Improved Block",
+    "SWADETOOLS.SoldierSetting": "Soldier",
+    "SWADETOOLS.BrawnySetting": "Brawny",
     "SWADETOOLS.FrenzySetting": "Frenzy",
     "SWADETOOLS.FormationFighterSetting": "Formation Fighter",
     "SWADETOOLS.SettingShowSituational": "Always show Situational Modifiers for target",

@@ -13,7 +13,7 @@ A series of automations for swade: Joker's Wild (with bonus); Status Management 
 
 This is my first big module, please report if you see any bugs and be nice :)
 
-## Last Update (v1.10.0)
+## Last Update (v1.10.x)
 
 Only compatible with Foundry v10. This is a beta version made to be usable. Since a lot of changes were made, bugs may occur. Please, open a issue if you find any. 
 
@@ -141,6 +141,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 
 **Fixes**
 + Compatibility with Foundry v10
++ MinStr now checks for Soldier and Brawny edges
 
 
 More features will be added...

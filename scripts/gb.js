@@ -6,7 +6,7 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
-export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire'];
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny'];
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
@@ -403,9 +403,17 @@ export const getScale=(size)=>{
     }
 }
 
+
+export const getStrForMinStr=actor=>{
+    let char=new Char(actor);
+    return char.getStrForMinStr();
+}
+
+
 export const penalArmorMinStr=(actor)=>{
     let penal=0;
-   let  actorstr=actor.system.attributes.strength.die.sides
+   
+   let  actorstr=getStrForMinStr(actor);
    let minstr;
     actor.items.filter(el=>el.type=='armor' && el.system.equipped).map(item=>{
         minstr=getMinStr(item)
