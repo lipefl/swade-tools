@@ -9,7 +9,7 @@ export default class TokenHud {
             this.doItem(el)
         })
 
-        $('#token-action-hud #tah-category-inventory .tah-action').each((ev,el)=>{
+        $('#token-action-hud #tah-category-gear .tah-action').each((ev,el)=>{
 
             this.doItem(el)
             /* let data=$(el).val().split('|');
