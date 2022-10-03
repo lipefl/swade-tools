@@ -171,8 +171,5 @@ Most of the module will be enabled by default, so if you want to disable somethi
 ![](https://i.imgur.com/wh2j1Wx.jpg)
 
 ## Next Planned Features
-+ Re-targeting button
-+ Raise Calculator button
-+ Adventure Cards integration
 + Review of character points distribution
 

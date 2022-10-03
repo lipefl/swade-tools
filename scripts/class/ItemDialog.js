@@ -376,7 +376,7 @@ export default class ItemDialog {
 
 
         if (skillName == gb.setting('shootingSkill')) {
-            let rof = gb.realInt(this.item?.data?.data?.rof)+1;
+            let rof = gb.realInt(this.item?.system?.rof)+1;
               
             let char = new Char(this.actor);
             if (char.hasEdgeSetting('Rapid Fire')) {

@@ -1211,17 +1211,20 @@ export default class RollControl {
         
         let item=this.getItemOwner().items.get(itemid);
 
-       
+      // console.log(target.actor);
 
        // console.log(item);
      /// adds AP
         let apextra=0;
         if (item.system.ap){
             apextra=gb.realInt(item.system.ap);
+           // console.log(apextra);
             if (apextra>armor){
                 apextra=armor;
             }
         }
+
+        
 
        // gb.log(apextra,'ap-extra');
          raisecount=gb.raiseCount(total,toughness-apextra);

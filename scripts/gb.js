@@ -596,7 +596,12 @@ export const trace=(...args)=>{
 
 export const getArmorArea=(actor,area='torso')=>{
    // let armorData=actor.armorPerLocation;
+   if (area=='torso'){
+    return actor.system.stats.toughness.value;
+   } else {
     return actor.armorPerLocation[area.toLowerCase()];
+   }
+    
 }
 
 export const rechargeWeaponXDialog=(actor,item)=>{
