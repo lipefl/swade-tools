@@ -604,6 +604,10 @@ export const getArmorArea=(actor,area='torso')=>{
     
 }
 
+export const itemSkillMod=item=>{
+    return realInt(item.system.actions.skillMod)+realInt(item.system.trademark)
+}
+
 export const rechargeWeaponXDialog=(actor,item)=>{
     new Dialog({
         title: `${item.name} ${trans('Reload','SWADE')} X`,

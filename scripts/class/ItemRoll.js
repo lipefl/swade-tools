@@ -35,6 +35,10 @@ export default class ItemRoll extends CharRoll{
 
 
         if (action.type=='skill'){
+
+          //  if (this.item.system.trademark){
+         //   this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
+           // }
            
            this.addModifier(action.skillMod,action.name);
            if (action.shotsUsed!==''){
@@ -94,7 +98,9 @@ export default class ItemRoll extends CharRoll{
 
     /// universal mods
     addSkillMod(){
+        this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
         this.addModifier(this.data.skillMod,gb.trans('ModItem'));
+        
     }
 
     addDmgMod(){

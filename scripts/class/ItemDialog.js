@@ -267,7 +267,7 @@ export default class ItemDialog {
         if (!noMainSkill){  //// hide button for main skill if there's no skill
 
         buttons.mainSkill={
-            label: skillIcon+skillName+gb.stringMod(weaponactions.skillMod),
+            label: skillIcon+skillName+gb.stringMod(gb.itemSkillMod(this.item)),
             callback: (html)=>{
                 
                 let itemRoll=new ItemRoll(this.actor,this.item);
