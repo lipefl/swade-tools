@@ -90,10 +90,12 @@ export const getTokenCoordinates=(token)=>{
     
 
    // console.log(token);
-    let gridsize=token.scene.grid;
+    let gridsize=token.scene.grid.size;
     let middlegrid=Math.round(gridsize/2);
     let width=token.document.width;
     let height=token.document.height;
+
+    //console.log(gridsize,middlegrid,width,height);
 
     if (width>1 || height>1){
     
@@ -152,7 +154,7 @@ export const getRange=(origin,target)=>{
     let origin_coo=getTokenCoordinates(origin);
     let target_coo=getTokenCoordinates(target);
 
-   // console.log(origin_coo);
+    
 
     let distances=new Array;
 
@@ -228,6 +230,9 @@ export const stringMod=(mod)=>{
     if (modval>0){
         return `+${String(modval)}`;
     } else {
+        if (modval==0){
+            return '';
+        }
         return String(mod);
     }
 
@@ -597,7 +602,7 @@ export const trace=(...args)=>{
 export const getArmorArea=(actor,area='torso')=>{
    // let armorData=actor.armorPerLocation;
    if (area=='torso'){
-    return actor.system.stats.toughness.value;
+    return actor.system.stats.toughness.armor;
    } else {
     return actor.armorPerLocation[area.toLowerCase()];
    }

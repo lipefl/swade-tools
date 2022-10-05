@@ -875,7 +875,7 @@ export default class RollControl {
 
         let targetRange=gb.getRange(this.getActor(true,true),target)*canvas.dimensions.distance; /// use Grid Scale for distance (but not for gang up)
 
-
+       // console.log(targetRange);
        
         if (!this.chat.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
           //  targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
@@ -926,6 +926,7 @@ export default class RollControl {
 
             if (item.system?.range.includes('/')){
                 let distances=item.system.range.split('/')
+                
                 let distancemod=0;
                 let toofar=false;
                 let extreme='';
@@ -1196,7 +1197,7 @@ export default class RollControl {
            }
                armor=gb.realInt(gb.getArmorArea(target.actor,area)) 
                toughness=toughness-gb.getArmorArea(target.actor)+armor; /// remove default armor, add location armor to final toughness
-              // console.log(toughness,'final toughness')
+           //   console.log(toughness,'final toughness')
             
            
 
@@ -1224,7 +1225,7 @@ export default class RollControl {
             }
         }
 
-        
+      //  console.log(total,toughness,apextra);
 
        // gb.log(apextra,'ap-extra');
          raisecount=gb.raiseCount(total,toughness-apextra);
