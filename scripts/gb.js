@@ -242,7 +242,7 @@ export const stringMod=(mod)=>{
 
 
 export const explodeAllDice=(weaponDamage)=>{
-    let regexDiceExplode = /d[0-9]{1,2}/g;
+    let regexDiceExplode = /d[0-9]{1,4}/g;
     weaponDamage = weaponDamage.replace(/x|=/g,'') /// remove x and = if it already has
     weaponDamage = weaponDamage.replace(regexDiceExplode, "$&x");
     return weaponDamage;
