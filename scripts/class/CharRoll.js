@@ -546,7 +546,7 @@ export default class CharRoll extends BasicRoll{
             let actorStr=gb.getStrForMinStr(this.actor);
            // gb.log(actorStr,'actorstr');
             if (actorStr<gb.getMinStr(this.item)){
-                weaponDamage=weaponDamage.replace(/d\d+/g,`d${actorStr}`)
+                weaponDamage=weaponDamage.replaceAll(/d\d+/g,`d${actorStr}`)
                // console.log(weaponDamage);
             }
         }
@@ -556,7 +556,7 @@ export default class CharRoll extends BasicRoll{
 
             if (weaponDamage.includes(`@${data.short}`)){        
                // let regexStr = /[@]str/g;
-                    weaponDamage = weaponDamage.replace(`@${data.short}`, "1d" + this.actor.system.attributes[data.name].die.sides);
+                    weaponDamage = weaponDamage.replaceAll(`@${data.short}`, "1d" + this.actor.system.attributes[data.name].die.sides);
                     if (this.actor.system.attributes[data.name].die.modifier){
                         this.addModifier(this.actor.system.attributes[data.name].die.modifier,gb.trans(`Attr${data.short.charAt(0).toUpperCase()}${data.short.slice(1)}`,'SWADE'));
                     }
