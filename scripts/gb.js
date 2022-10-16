@@ -136,14 +136,28 @@ export const getTokenCoordinates=(token)=>{
     
 }
 
-export const getDistance=(origin,target,grid=false)=>{
+export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
    
     const ray = new Ray(origin, target);
-    let distance = canvas.grid.measureDistances([{ ray }], {gridSpaces: grid})[0];
-    return distance;
+
+    if (checkWalls){
+        if (canvas.walls.checkCollision(ray,{type:"move",mode:"any"})===true){ 
+            console.log('collision');
+            return null
+        }
+    }
+
+   // let distance = ;
+   // console.log(origin,target,);
+  //  console.log(CONFIG.Canvas.losBackend.testCollision(origin,target));
+  //  console.log(ray.getRayCollisions());
+    
+    
+    //console.log(getRayCollisions(ray,{mode:'any'}))
+    return canvas.grid.measureDistances([{ ray }], {gridSpaces: grid})[0];
 }
 
-export const getRange=(origin,target)=>{
+export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
    // const ray = new Ray(origin, target);
     const grid_unit = canvas.grid.grid.options.dimensions.distance
     let grid=false;
@@ -158,9 +172,13 @@ export const getRange=(origin,target)=>{
 
     let distances=new Array;
 
-    origin_coo.flatMap(d => target_coo.map(v => distances.push(getDistance(d,v,grid))))
+    origin_coo.flatMap(d => target_coo.map(v => distances.push(getDistance(d,v,grid,checkWalls))))
 
    // console.log(distances);
+
+    if (checkWalls && distances.includes(null)){ /// checking for collisions
+        return null
+    }
 
     let distance=Math.round(Math.min(...distances)/grid_unit);
    

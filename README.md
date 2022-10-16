@@ -142,6 +142,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 **Fixes**
 + Compatibility with Foundry v10
 + MinStr now checks for Soldier and Brawny edges
++ GangUp now ignores tokens behind walls
 
 
 More features will be added...

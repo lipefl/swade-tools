@@ -1605,12 +1605,13 @@ export default class RollControl {
             t.id!=attacker.id // not the attacker
             && !(attacker.actor.isToken===false && attacker.actor.id==t?.actor?.id)
             && t.id!=target.id /// not the target
-            && t.visible  /// is visible         
+            && t.visible  /// is visible   
+            && t.document.overlayEffect!=CONFIG.controlIcons.defeated   /// not defeated (out of combat)
             && !t.combatant?.defeated /// not defeated
             && t?.actor?.system.status.isStunned!==true /// not stunned    
             && t?.actor?.type!='vehicle'
             && t.document.disposition!=0        
-            && gb.getRange(target,t)==1 /// adjacent
+            && gb.getRange(target,t,true)==1 /// adjacent
         )
 
      //  console.log('all_around',all_around_target.length)

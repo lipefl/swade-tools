@@ -215,8 +215,12 @@ export default class StatusIcon {
             this.entity.update({'data.status.isDistracted':val,'data.status.isVulnerable':val})
            } */
 
-           await gb.statusChange(this.entity,'distracted',val);
+           
            await gb.statusChange(this.entity,'vulnerable',val);
+
+           setTimeout(async ()=>{
+            await gb.statusChange(this.entity,'distracted',val);
+           },250)
 
             
             /* setTimeout(()=>{ /// silver tape for bug

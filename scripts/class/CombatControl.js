@@ -258,6 +258,9 @@ export default class CombatControl {
 
    async startTurn(combatant){      
 
+    if (combatant.defeated){ //do nothing if it's defeated
+        return
+    }
    // console.log(combatant);
         let actor=combatant.actor;
         
@@ -313,8 +316,15 @@ export default class CombatControl {
     }
     
     async endTurn(){
+
+        
       //  console.log(combatant);
       let combatant=this.acting;
+
+      if (combatant.defeated){ //do nothing if it's defeated
+        return
+    }
+
       if (combatant){
         let actor=combatant.actor;
     gb.log('end: '+actor.name); 
