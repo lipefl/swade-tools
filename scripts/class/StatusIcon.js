@@ -127,7 +127,7 @@ export default class StatusIcon {
         }
     }
 
-    checkStatusUpdate(statusName){
+    /* checkStatusUpdate(statusName){ ///not used anymore
         let statusvar;
     
         if (this.entityType=='actor'){
@@ -156,16 +156,16 @@ export default class StatusIcon {
             }
             
            
-            /* if (varcheck){
-                this.applyEffect(icon,true);
-            } else {
-                this.applyEffect(icon,false);
-            } */
+            // if (varcheck){
+            //     this.applyEffect(icon,true);
+            // } else {
+            //     this.applyEffect(icon,false);
+            // } 
 
             
         }
        
-    }
+    } */
 
 
     translateActiveEffect(statusName){
@@ -198,22 +198,12 @@ export default class StatusIcon {
     }
 
 
-    async chainedStatus(statusName,val){
+    /* async chainedStatus(statusName,val){ ///removed  => done by swade system
 
-      // let char=new Char(this.entity,this.is)
-       
+     
         if (statusName=='stunned' || statusName=='bound'){
 
-           // console.log(this.entity);
-         //   console.log(val);
-
-           /*   /// manually to avoid bugs
-           if (this.istoken){
-             //  console.log(this.entity)
-               canvas.tokens.get(this.entity._id).update({'actorData.data.status.isDistracted':val,'actorData.data.status.isVulnerable':val})
-           } else {
-            this.entity.update({'data.status.isDistracted':val,'data.status.isVulnerable':val})
-           } */
+   
 
            
            await gb.statusChange(this.entity,'vulnerable',val);
@@ -223,35 +213,19 @@ export default class StatusIcon {
            },250)
 
             
-            /* setTimeout(()=>{ /// silver tape for bug
-                this.upStatus('isDistracted',val);
-                this.upStatus('isVulnerable',val);
-            },250) */
+            
            
            
         }
         else
         if (statusName=='entangled'){
-            /* if (this.istoken){
-                canvas.tokens.get(this.entity._id).update({'actorData.data.status.isDistracted':val})
-               } else {
-                this.entity.update({'data.status.isDistracted':val})
-               } */
+            
 
                await gb.statusChange(this.entity,'distracted',val);
            
         }
-        /* else
-        if (statusName=='bound'){
-            if (this.istoken){
-                canvas.tokens.get(this.entity._id).update({'actorData.data.status.isDistracted':val,'actorData.data.status.isVulnerable':val})
-               } else {
-                this.entity.update({'data.status.isDistracted':val,'data.status.isVulnerable':val})
-               }
-    
-        } */
-       // return true;
-    }
+        
+    } */
 
 
     async checkLevels(levelType){

@@ -40,7 +40,7 @@ export const stIcons=[
 export const attributesShort=[
     {name: 'strength', short: 'str'},
     {name: 'agility', short: 'agi'},
-    {name: 'spirit', short: 'spr'},
+    {name: 'spirit', short: 'spi'},
     {name: 'smarts', short: 'sma'},
     {name: 'vigor', short: 'vig'},
 ]
@@ -142,7 +142,7 @@ export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
 
     if (checkWalls){
         if (canvas.walls.checkCollision(ray,{type:"move",mode:"any"})===true){ 
-            console.log('collision');
+         //   console.log('collision');
             return null
         }
     }
@@ -211,6 +211,24 @@ export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
 }
 
 
+/* export const tokenIsDefeated=token=>{
+   
+    if (token.combatant.defeated){
+       
+        return true;
+    }
+    if (token.document?.overlayEffect==CONFIG.controlIcons.defeated) {
+       
+        return true;
+    }
+    ;
+    if (Array.from(token?.actor?.effects).find(el=>el._statusId=='incapacitaded')?.length>0) {
+        
+        return true;
+    }
+
+    return false;
+} */
 
 
 export const trans=(term,initialFlag=false)=>{ 
@@ -469,7 +487,13 @@ export const simpleAttRoll=(attribute,actor)=>{
 
 export const actorCombatant=(actor)=>{
     if (game.combat){
-        let combatant=game.combat.combatants.find(el=>el?.actor?.id===actor.id);
+        let combatant=false;
+        if (actor?.token?.id){ /// token actor
+            combatant=game.combat.combatants.find(el=>el?.tokenId===actor?.token.id)
+        } else {
+            combatant=game.combat.combatants.find(el=>el?.actor?.id===actor.id);
+        }
+     
         if (!combatant){
             return false;
         } else {

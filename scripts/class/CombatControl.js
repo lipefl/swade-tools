@@ -68,8 +68,8 @@ export default class CombatControl {
 
 
    async getFlag(combatant,scope,flag){
-        if (combatant.data.flags?.[scope]?.[flag]!==undefined){
-            return combatant.data.flags[scope][flag]
+        if (combatant.flags?.[scope]?.[flag]!==undefined){
+            return combatant.flags[scope][flag]
         } else {
             return false;
         }

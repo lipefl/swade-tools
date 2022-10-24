@@ -166,31 +166,31 @@ export default class SheetControl {
        // nthkey=2;
         
         // .swade-official
-        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show,.item.power .item-name, .inventory .item .weapon .item-name,.inventory .item .weapon .damage-roll,'
+        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll' 
 
        //
 
         /// .npc and .community
-        findEl+='.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image,';
+        findEl+=',.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image';
 
 
         ///v0.17
-        findEl+='.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'
+        findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'
 
 
        
-        
+        findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-name';
 
         if(!gb.setting('itemNameClick')){
-            findEl+=',.quick-main .quick-list:nth-of-type('+nthkey+') .item-name,.gear-list.weapon-list .item.weapon .item-name'  /// swade-official, npc
+            findEl+=',.quick-main .quick-list:nth-of-type('+nthkey+') .item-name,.gear-list.weapon-list .item.weapon .item-name, .item.power .item-name, .inventory .item .weapon .item-name'  /// swade-official, npc
             //v0.17
-            findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-name';
+           
         }
 
     
       // this.html.find(findEl).css('background','yellow');
        gb.log(this.html);
-       gb.log(findEl);
+     //  console.log(findEl);
            // console.log(findEl);
             this.html.find(findEl).unbind('click').bind('click',ev=>{
                 this.doItem(ev.currentTarget)

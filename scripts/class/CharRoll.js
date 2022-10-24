@@ -524,8 +524,9 @@ export default class CharRoll extends BasicRoll{
         let char=new Char(this.actor);
         char.on('isVulnerable');
         ///remove combat flag -> force Vulnerable
+      //  console.log(this.actor);
         let combatant=gb.actorCombatant(this.actor)
-      //  gb.log(combatant,'wild');
+      //  console.log(this.actor,combatant.id,'wild');
         if (combatant){
             await gb.setFlagCombatant(game.combat,combatant,gb.moduleName,'removeVulnerable',0);
         }

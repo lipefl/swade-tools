@@ -381,6 +381,14 @@ Hooks.on('ready',()=>{
        }
    })
 
+   /// remove swade dialogs
+   if (gb.setting('noStatusAutoRoll')!='all'){
+    const effectCallbacks = game.swade.effectCallbacks;
+    effectCallbacks.set('shaken', ()=>{});
+    effectCallbacks.set('stunned', ()=>{});
+   }
+   
+
 /* 
    const levelsStatus=[{   /// for wounds and fatigue
         icon: '/modules/swade-tools/icons/w1.png',
@@ -462,7 +470,7 @@ Hooks.on("createActor",(actor,options,userid)=>{
 })
 
 
-Hooks.on("createActiveEffect", (effect, diff,userid) => { 
+/* Hooks.on("createActiveEffect", (effect, diff,userid) => { 
     
    // console.log(plus,'ae-data-create');
     
@@ -473,8 +481,8 @@ Hooks.on("createActiveEffect", (effect, diff,userid) => {
         let upActor=new StatusIcon(actor,'actor');
         upActor.chainedStatus(effect.flags.core.statusId,true)
 
-       /*  let act=new SwadeActiveEffect();
-        act.apply(actor,'shaken'); */
+       //  let act=new SwadeActiveEffect();
+      //  act.apply(actor,'shaken'); 
       //  char.activeEffect(effect.data.flags.core.statusId,false);
     }
     
@@ -495,7 +503,7 @@ Hooks.on("deleteActiveEffect", (effect,diff,userid)=>{
       //  char.activeEffect(effect.data.flags.core.statusId,false);
     }
 })
-
+ */
 
 
 ///data-swade-tools-action='func:arg1,arg2'
