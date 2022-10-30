@@ -152,12 +152,31 @@ export default class ItemDialog {
         <div class="swadetools-formpart swadetools-2grid">
         
         <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div>`
-
-       
         
         if (!gb.systemSetting('noPowerPoints') && item.type=='power'){
             content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${gb.trans('ExtraPP')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('PPHint')}"></i></label><input type="text" id="extrapp" value="">
             </div>`
+        }
+
+        // content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><strong>${gb.trans('MAPenalty.Label','SWADE')}:</strong></label>
+        // <label><input type="radio" name="multiaction" id="multiaction" value="0" checked><strong>${gb.trans('MAPenalty.None','SWADE')}</strong></label>
+        // <label><input type="radio" name="multiaction" id="multiaction-2" value="-2"><strong> -2 </strong></label>
+        // <label><input type="radio" name="multiaction" id="multiaction-4" value="-4"><strong> -4 </strong></label></div>`;
+        if ( true ){
+            content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><strong>${gb.trans('MAPenalty.Label','SWADE')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('MAPenalty.Label','SWADE')}"></i></label> <select id="multiaction">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let illumination=[
+                {val:'0',text:gb.trans('MAPenalty.None','SWADE')},
+                {val:'-2',text:' -2 '},
+                {val:'-4',text:' -4 '},
+            ]
+         
+            illumination.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
         }
 
         if (showRaiseDmg){
@@ -178,6 +197,42 @@ export default class ItemDialog {
         if (gb.setting('wildAttackSkills').split(',').map(s => s.trim()).includes(weaponactions.skill)){ /// wild attack
             content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="wildattack" value="1"><strong>${gb.trans('WildAttack')}</strong></label></div>`;
 
+        }
+
+        if ( true ){
+            content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><strong>${gb.trans('Cover._name','SWADE')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('Cover._name','SWADE')}"></i></label> <select id="cover">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let cover=[
+                {val:'None',text:gb.trans('MAPenalty.None','SWADE')+' (0)'},
+                {val:'Light',text:gb.trans('Cover.Light','SWADE')+ ' (-2)'},
+                {val:'Medium',text:gb.trans('Cover.Medium','SWADE')+ ' (-4)'},
+                {val:'Heavy',text:gb.trans('Cover.Heavy','SWADE')+ ' (-6)'},
+                {val:'Total',text:gb.trans('Cover.Total','SWADE')+ ' (-8)'}
+            ]
+         
+            cover.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
+        }
+        if ( true ){
+            content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><strong>${gb.trans('Illumination._name','SWADE')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('Illumination._name','SWADE')}"></i></label> <select id="illumination">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let illumination=[
+                {val:'None',text:gb.trans('MAPenalty.None','SWADE')+' (0)'},
+                {val:'Dim',text:gb.trans('Illumination.Dim','SWADE')+ ' (-2)'},
+                {val:'Dark',text:gb.trans('Illumination.Dark','SWADE')+ ' (-4)'},
+                {val:'Pitch',text:gb.trans('Illumination.Pitch','SWADE')+ ' (-6)'}
+            ]
+         
+            illumination.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
         }
 
         if (damageActions.length>0){
@@ -554,7 +609,38 @@ export default class ItemDialog {
                 
             }
 
-            
+            if (html.find("#multiaction")[0]){
+                charRoll.addModifier(parseInt(html.find('#multiaction')[0].value),gb.trans('MAPenalty.Label','SWADE'));
+            } 
+            if (html.find('#cover')[0]){
+                switch (html.find('#cover')[0].value) {
+                    case 'Light':
+                        charRoll.addModifier(-2,gb.trans('Cover.Light','SWADE'));
+                        break;
+                    case 'Medium':
+                        charRoll.addModifier(-4,gb.trans('Cover.Medium','SWADE'));
+                        break;
+                    case 'Heavy':
+                        charRoll.addModifier(-6,gb.trans('Cover.Heavy','SWADE'));
+                        break;
+                    case 'Total':
+                        charRoll.addModifier(-8,gb.trans('Cover.Total','SWADE'));
+                        break;
+                }
+            }
+            if (html.find('#illumination')[0]){
+                switch (html.find('#illumination')[0].value) {
+                    case 'Dim':
+                        charRoll.addModifier(-2,gb.trans('Illumination.Dim','SWADE'));
+                        break;
+                    case 'Dark':
+                        charRoll.addModifier(-4,gb.trans('Illumination.Dark','SWADE'));
+                        break;
+                    case 'Pitch':
+                        charRoll.addModifier(-6,gb.trans('Illumination.Pitch','SWADE'));
+                        break;
+                }
+            }
 
             if (html.find('#actiondmg')[0] && html.find('#actiondmg')[0].value!=''){
                 charRoll.useDamageAction(html.find('#actiondmg')[0].value);

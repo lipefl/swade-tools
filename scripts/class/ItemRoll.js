@@ -126,7 +126,7 @@ export default class ItemRoll extends CharRoll{
 
     rollBaseSkill(rof=1){
 
-        this.defineAction('formula');
+        this.defineAction('formula'+rof);
         this.addSkillMod();
 
         let attr=gb.findAttr(this.data.skill)

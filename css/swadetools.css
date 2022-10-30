@@ -53,6 +53,11 @@ align-items: center;
     vertical-align: middle;
 }
 
+.swadetools-raise select {
+    flex:1;
+           
+}
+
 .item-image, .item.weapon .item-img,.item-show, .item.weapon .damage,.powers-list h4.item-name, .item-list .item.weapon h4, ol.skill-list li.item.skill img.skill-icon {
     cursor: pointer;
 }

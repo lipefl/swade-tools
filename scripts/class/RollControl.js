@@ -1220,7 +1220,7 @@ export default class RollControl {
         if (item.system.ap){
             apextra=gb.realInt(item.system.ap);
            // console.log(apextra);
-            if (apextra>armor){
+            if (apextra>armor || armor==0){
                 apextra=armor;
             }
         }
