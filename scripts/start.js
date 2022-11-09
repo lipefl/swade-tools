@@ -384,8 +384,10 @@ Hooks.on('ready',()=>{
    /// remove swade dialogs
    if (gb.setting('noStatusAutoRoll')!='all'){
     const effectCallbacks = game.swade.effectCallbacks;
-    effectCallbacks.set('shaken', ()=>{});
+    effectCallbacks.set('shaken', ()=>{console.log('shaken')});
+    effectCallbacks.set('vulnerable', ()=>{console.log('vulnerable')});
     effectCallbacks.set('stunned', ()=>{});
+    
    }
    
 
@@ -458,11 +460,11 @@ Hooks.on("createActor",(actor,options,userid)=>{
         }
     }
 
-    gb.log(actor);
+   // gb.log(actor);
 
    if (actor.system.wildcard===true){
        actor.update({'token.actorLink':true})
-       gb.log('actorLink');
+     //  gb.log('actorLink');
    }
     
 
@@ -716,12 +718,15 @@ let cbt=new CombatControl;
 Hooks.on('updateCombat',async (entity,data,options,userid)=>{
   //  console.log(JSON.parse(JSON.stringify(entity)))
   //console.log(entity);
+
+    gb.log('SWADETOOLS','A',gb.mainGM(),foundryIsReady);
     if (foundryIsReady && gb.mainGM()){
+    
     let combatdata=entity;
     let combatid=combatdata.id;
     cbt.setCombat(combatid);  
     
-   
+    gb.log('SWADETOOLS','B',combatid);
     
     /// COMBAT SYNC ERROR 
     /* if (combatdata.current.round!=combatdata.previous.round){
@@ -771,8 +776,11 @@ Hooks.on('updateCombat',async (entity,data,options,userid)=>{
     } else { */
 
         if (cbt.isNewTurn()){
+            gb.log('SWADETOOLS','C');
         await cbt.endTurn();
         await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
+
+        gb.log('SWADETOOLS','D');
         } /* else {
           //  await cbt.endPrevious();
             gb.log('not a new turn')

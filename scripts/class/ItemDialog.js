@@ -152,13 +152,17 @@ export default class ItemDialog {
         <div class="swadetools-formpart swadetools-2grid">
         
         <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div>`
-
-       
         
         if (!gb.systemSetting('noPowerPoints') && item.type=='power'){
             content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${gb.trans('ExtraPP')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('PPHint')}"></i></label><input type="text" id="extrapp" value="">
             </div>`
         }
+
+        // content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><strong>${gb.trans('MAPenalty.Label','SWADE')}:</strong></label>
+        // <label><input type="radio" name="multiaction" id="multiaction" value="0" checked><strong>${gb.trans('MAPenalty.None','SWADE')}</strong></label>
+        // <label><input type="radio" name="multiaction" id="multiaction-2" value="-2"><strong> -2 </strong></label>
+        // <label><input type="radio" name="multiaction" id="multiaction-4" value="-4"><strong> -4 </strong></label></div>`;
+        
 
         if (showRaiseDmg){
             content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="raise" value="1"><strong>${gb.trans('RaiseDmg')}</strong></label></div>`;
@@ -180,6 +184,8 @@ export default class ItemDialog {
 
         }
 
+        
+
         if (damageActions.length>0){
             content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('Damage')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ActDmgHint')}"></i></label> <select id="actiondmg">
             <option value="">${gb.trans('Default')}</option>`;
@@ -200,6 +206,60 @@ export default class ItemDialog {
             </div>`;
         }
 
+        if ( gb.setting('selectModifiers') || gb.setting('askCalledShots') ){
+        content+=`<div class="swadetools-damage-actions swadetools-mod-add swadetools-mid-title"><h3>${gb.trans("ModOther",'SWADE')}</h3></div>`;
+        }
+
+
+        if ( gb.setting('selectModifiers') ){
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('MAPenalty.Label','SWADE')}:</strong></label> <select id="multiaction">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let multiaction=[
+                {val:'0',text:gb.trans('MAPenalty.None','SWADE')+' (0)'},
+                {val:'-2',text:' -2 '},
+                {val:'-4',text:' -4 '},
+            ]
+         
+            multiaction.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
+        
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('Cover._name','SWADE')}:</strong></label> <select id="cover">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let cover=[
+                {val:'None',text:gb.trans('MAPenalty.None','SWADE')+' (0)'},
+                {val:'Light',text:gb.trans('Cover.Light','SWADE')+ ' (-2)'},
+                {val:'Medium',text:gb.trans('Cover.Medium','SWADE')+ ' (-4)'},
+                {val:'Heavy',text:gb.trans('Cover.Heavy','SWADE')+ ' (-6)'},
+                {val:'Total',text:gb.trans('Cover.Total','SWADE')+ ' (-8)'}
+            ]
+         
+            cover.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
+      
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('Illumination._name','SWADE')}:</strong></label> <select id="illumination">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let illumination=[
+                {val:'None',text:gb.trans('MAPenalty.None','SWADE')+' (0)'},
+                {val:'Dim',text:gb.trans('Illumination.Dim','SWADE')+ ' (-2)'},
+                {val:'Dark',text:gb.trans('Illumination.Dark','SWADE')+ ' (-4)'},
+                {val:'Pitch',text:gb.trans('Illumination.Pitch','SWADE')+ ' (-6)'}
+            ]
+         
+            illumination.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
+        }
 
         if (gb.setting('askCalledShots')){
             content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('CalledShot')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('CalledShotHint')}"></i></label> <select id="calledshots">`
@@ -554,7 +614,38 @@ export default class ItemDialog {
                 
             }
 
-            
+            if (html.find("#multiaction")[0]){
+                charRoll.addModifier(parseInt(html.find('#multiaction')[0].value),gb.trans('MAPenalty.Label','SWADE'));
+            } 
+            if (html.find('#cover')[0]){
+                switch (html.find('#cover')[0].value) {
+                    case 'Light':
+                        charRoll.addModifier(-2,gb.trans('Cover.Light','SWADE'));
+                        break;
+                    case 'Medium':
+                        charRoll.addModifier(-4,gb.trans('Cover.Medium','SWADE'));
+                        break;
+                    case 'Heavy':
+                        charRoll.addModifier(-6,gb.trans('Cover.Heavy','SWADE'));
+                        break;
+                    case 'Total':
+                        charRoll.addModifier(-8,gb.trans('Cover.Total','SWADE'));
+                        break;
+                }
+            }
+            if (html.find('#illumination')[0]){
+                switch (html.find('#illumination')[0].value) {
+                    case 'Dim':
+                        charRoll.addModifier(-2,gb.trans('Illumination.Dim','SWADE'));
+                        break;
+                    case 'Dark':
+                        charRoll.addModifier(-4,gb.trans('Illumination.Dark','SWADE'));
+                        break;
+                    case 'Pitch':
+                        charRoll.addModifier(-6,gb.trans('Illumination.Pitch','SWADE'));
+                        break;
+                }
+            }
 
             if (html.find('#actiondmg')[0] && html.find('#actiondmg')[0].value!=''){
                 charRoll.useDamageAction(html.find('#actiondmg')[0].value);

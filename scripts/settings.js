@@ -27,14 +27,7 @@ export const registerSettings=()=>{
 		config: true
     });  */
     
-    game.settings.register(gb.moduleName, 'debugger', {
-		name: 'Debugger',
-		hint: 'system only debugger',
-		default: false,
-		scope: "world",
-		type: Boolean,
-		config: false
-    }); 
+
 
     game.settings.register(gb.moduleName, 'itemNameClick', {
 		name: gb.trans('SettingsItemNameClick'),
@@ -241,4 +234,32 @@ game.settings.register(gb.moduleName, 'gangUp', {
         type: String,
         config: false
         });
+
+        game.settings.register(gb.moduleName, 'selectModifiers', {
+          name: gb.trans('SelectModifiers'),
+          default: false,
+          scope: "world",
+          type: Boolean,
+          config: false
+          });
+
+
+          game.settings.register(gb.moduleName, 'ignoreRange', {
+            name: gb.trans('IgnoreRange'),
+            default: false,
+            scope: "world",
+            type: Boolean,
+            config: false
+            });
+
+
+            game.settings.register(gb.moduleName, 'debugger', {
+              name: gb.trans('Debugger'),
+              hint: gb.trans('DebuggerHint'),
+              default: false,
+              scope: "world",
+              type: Boolean,
+              config: true
+              }); 
+  
 }

@@ -29,7 +29,7 @@ export default class RollControl {
 
         
 
-        gb.log(this.chat.flags?.["swade-tools"],'flags');
+        //gb.log(this.chat.flags?.["swade-tools"],'flags');
     
 
         //this.actor;
@@ -755,7 +755,7 @@ export default class RollControl {
 
 
     failedPower(item){
-        gb.log(item);
+       // gb.log(item);
         if (this.powerfail===null && item.type=='power'){
             let rof=this.chat.flags["swade-tools"].userof;
             this.powerfail=true;
@@ -819,7 +819,7 @@ export default class RollControl {
         let itemid=this.chat.flags["swade-tools"].itemroll;
         let item=this.getItemOwner().items.get(itemid);
 
-        gb.log(item,'item');
+      //  gb.log(item,'item');
 
         let rof=1;
 
@@ -924,7 +924,7 @@ export default class RollControl {
             }
 
 
-            if (item.system?.range.includes('/')){
+            if (!gb.setting('ignoreRange') && item.system?.range.includes('/')){
                 let distances=item.system.range.split('/')
                 
                 let distancemod=0;
@@ -1174,6 +1174,8 @@ export default class RollControl {
         let isvehicle=false;
         let area='torso';
         let total=this.roll.total+this.gmmod;
+
+        
         
 
         if (newWounds===null){
@@ -1240,10 +1242,14 @@ export default class RollControl {
      //   console.log(raisecount);
         let addTarget='none';
 
+        
+        
+
         if (raisecount>=0){
             applyDmg=true;
             
             addTarget='shaken';
+            
             
             
             if (raisecount>0){
@@ -1252,6 +1258,27 @@ export default class RollControl {
                     raisecount=4;
                 }
                 addTarget='wounds';
+            }
+
+            ///unstoppable
+            if (raisecount>1){
+                let char=new Char(target.actor);                
+                
+                if (char.hasAbilitySetting('Unstoppable')){
+
+                    let attackerIsJoker=false;
+                    if (this.chat.flags?.["swade-tools"]?.useactor){
+                        if (gb.actorIsJoker(game.actors.get(this.chat.flags["swade-tools"].useactor))){
+                            attackerIsJoker=true;
+                        }
+                    }
+
+
+                    if (!attackerIsJoker){
+                        raisecount=1
+                    }                
+                    
+                }
             }
         } 
 

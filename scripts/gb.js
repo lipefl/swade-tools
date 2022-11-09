@@ -7,7 +7,7 @@ export const moduleName='swade-tools'
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
 export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny'];
-export const abilitiesNaming=['Construct','Hardy','Undead','Swat'];
+export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
 export const RoFBullets={

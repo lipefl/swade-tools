@@ -138,6 +138,9 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Token hud compatibility with Simple Trait Roll option
 
 ## v1.10.0
++ Checks for Unstoppable (and ignores it if the attacker has a Joker)
++ Option to disable automatic Range calculation and modifiers
++ Option to show common modifiers as selection - Multi-Action, Cover, Illumination (thanks to @EternalRider)
 
 **Fixes**
 + Compatibility with Foundry v10

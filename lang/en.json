@@ -164,6 +164,7 @@
     "SWADETOOLS.SettinguseScale": "Use Scale",
     "SWADETOOLS.SettinguseScaleHint": "Calculate Scale modifiers in attacks. Creatures with Swat (special ability) will show a checkbox in their attack",
     "SWADETOOLS.SwatSetting": "Swat",
+    "SWADETOOLS.UnstoppableSetting": "Unstoppable",
     "SWADETOOLS.SettingreloadX": "Show Reload X button",
     "SWADETOOLS.SettingreloadXHint": "Shows a button to reload a specific number of bullets instead of the full reload.",
     "SWADETOOLS.SituationalRules": "Situational Rules",
@@ -206,7 +207,12 @@
     "SWADETOOLS.NoSkill": "don't have the skill",
     "SWADETOOLS.DeleteManually": "Delete Manualmente",
     "SWADETOOLS.LeaveItBlank": "Leave it blank",
-    "SWADETOOLS.UnderMinStr": "Under MinStr"
+    "SWADETOOLS.UnderMinStr": "Under MinStr",
+    "SWADETOOLS.SelectModifiers": "Show pre-defined Other Modifiers",
+    "SWADETOOLS.SelectModifiersHint": "Shows a pre-defined selection of modifiers for Multi-Action, Cover and Illumination",
+    "SWADETOOLS.IgnoreRange": "Disable automatic modifiers for Range",
+    "SWADETOOLS.Debugger": "Debugger",
+    "SWADETOOLS.DebuggerHint": "Enable only for troubleshooting purposes"
     
     
     

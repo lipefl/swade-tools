@@ -164,6 +164,7 @@
     "SWADETOOLS.SettinguseScale": "Usar Escala",
     "SWADETOOLS.SettinguseScaleHint": "Calcular modificadores de ataque baseado em escala. Criaturas com Esmagar (habilidade especial) mostrarão uma caixa de marcação no ataque",
     "SWADETOOLS.SwatSetting": "Esmagar",
+    "SWADETOOLS.UnstoppableSetting": "Imparável",
     "SWADETOOLS.SettingreloadX": "Mostrar botão Recarregar X",
     "SWADETOOLS.SettingreloadXHint": "Exibe um botão para Recarregar um número de balas ao invés do pente todo.",
     "SWADETOOLS.SituationalRules": "Regras Situacionais",
@@ -206,7 +207,12 @@
     "SWADETOOLS.NoSkill": "não tem a perícia",
     "SWADETOOLS.DeleteManually": "Delete Manualmente",
     "SWADETOOLS.LeaveItBlank": "Deixar em branco",
-    "SWADETOOLS.UnderMinStr": "Abaixo da For. Mín."
+    "SWADETOOLS.UnderMinStr": "Abaixo da For. Mín.",
+    "SWADETOOLS.SelectModifiers": "Mostrar Outros Modificadores pré-definidos",
+    "SWADETOOLS.SelectModifiersHint": "Mostra seleção pré-definida para modificadores de Ação Múltipla, Cobertura e Iluminação",
+    "SWADETOOLS.IgnoreRange": "Desabilitar modificadores de Distância automáticos",
+    "SWADETOOLS.Debugger": "Debugger",
+    "SWADETOOLS.DebuggerHint": "Habilite apenas para solução de problemas"
    
 
 

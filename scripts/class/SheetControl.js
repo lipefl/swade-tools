@@ -189,7 +189,7 @@ export default class SheetControl {
 
     
       // this.html.find(findEl).css('background','yellow');
-       gb.log(this.html);
+     //  gb.log(this.html);
      //  console.log(findEl);
            // console.log(findEl);
             this.html.find(findEl).unbind('click').bind('click',ev=>{

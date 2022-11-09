@@ -45,7 +45,7 @@ export default class CharRoll extends BasicRoll{
 
     usingVehicle(vehicle){
         this.vehicle=vehicle;
-        gb.log(vehicle,'vehicle');
+       // gb.log(vehicle,'vehicle');
         this.addFlavor(' ('+vehicle.name+') ');
         this.flagUpdate['usevehicle']=vehicle.id;
         if (vehicle.isToken==true){
@@ -622,7 +622,7 @@ export default class CharRoll extends BasicRoll{
             this.addFlag('userof',this.rof);
             this.addFlag('usetarget',this.usetarget);
 
-            gb.log(this.actor,'actor');
+           // gb.log(this.actor,'actor');
 
             if (this.actor.isToken===true){
                // console.log(this.actor);

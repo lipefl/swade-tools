@@ -53,6 +53,11 @@ align-items: center;
     vertical-align: middle;
 }
 
+.swadetools-raise select {
+    flex:1;
+           
+}
+
 .item-image, .item.weapon .item-img,.item-show, .item.weapon .damage,.powers-list h4.item-name, .item-list .item.weapon h4, ol.skill-list li.item.skill img.skill-icon {
     cursor: pointer;
 }
@@ -340,7 +345,20 @@ width: calc(100% - 47px);
             flex:1
         }
         .swadetools-damage-actions {
-            grid-column: span 2
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 3px 10px;
+        }
+
+        .swadetools-damage-actions.swadetools-mid-title {
+            grid-column: span 2;
+            display: block;
+            margin-top:10px;
+        }
+
+        .swadetools-damage-actions label {
+            text-align: right;
         }
 
         .swadetools-damage-actions.swadetools-mod-add label {
