@@ -147,6 +147,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + MinStr now checks for Soldier and Brawny edges
 + GangUp now ignores tokens behind walls
 + Linked Status (Stunned, Entagled, Bound) are now managed only by SWADE system to avoid bugs or compatibility errors
++ Rerolling a failed power now detects success and removes PP accordingly (and hide failure message)
 
 
 More features will be added...

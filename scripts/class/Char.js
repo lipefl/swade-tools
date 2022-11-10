@@ -147,6 +147,37 @@ export default class Char {
     }
 
 
+    getActualPP(arcane='') {
+        if (!arcane){
+            arcane='general'
+        }
+        
+        return this.entity.system.powerPoints[arcane].value;
+           
+            
+    }
+    
+    spendPP(pp,arcane=''){
+    
+        if (!arcane){
+            // actualPP=this.actor.data.data.powerPoints[arcane].value;
+             arcane='general';
+         }
+    
+         
+        let actualPP=this.getActualPP(arcane);
+               // let updateKey='data.powerPoints.general.value';
+               
+    
+               
+                let updateKey='data.powerPoints.'+arcane+'.value'
+    
+                let newpp=gb.realInt(actualPP)-pp;
+               
+                this.entity.update({[updateKey]:newpp})
+    }
+
+
 
     outOfControl(){
         let vehicle=this.getActor();

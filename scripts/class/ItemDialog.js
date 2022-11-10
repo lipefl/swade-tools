@@ -94,6 +94,7 @@ export default class ItemDialog {
         let weaponactions=item.system.actions;
         let showDamage=true;
         let showRaiseDmg=true;
+        let char=new Char(this.actor)
         
         let damageActions=[];
       //  let showReload=false;
@@ -141,7 +142,8 @@ export default class ItemDialog {
                 content+=`<div><strong>${gb.trans('Dmg','SWADE')}</strong>: ${weaponinfo.damage}${patxt}</div>`;
             }
             
-            content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(this.actor.system.powerPoints.value)}</div>
+            
+            content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(char.getActualPP(item.system.arcane))}</div>
             <div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
             <div><strong>${gb.trans('Range._name','SWADE')}</strong>: ${weaponinfo.range}</div>
         `

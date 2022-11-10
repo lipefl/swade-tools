@@ -1497,7 +1497,9 @@ export default class RollControl {
         let mod=0;
         let reason='';
         let edgebonus=false;
-        let oldroll=this.chat.roll
+        let oldroll=this.chat.rolls[0];
+        let flavor=this.chat.flavor;
+        let chatflags=this.chat.flags['swade-tools'];
 
 
       //  console.log(this.chat.data.flags);
@@ -1518,13 +1520,21 @@ export default class RollControl {
                 edgebonus='elan'
             }
         }
+
+      
+       
     } 
        
+   
 
        let modStr='';
        let extraflavor='';
        if (freeReroll){
-        extraflavor+=`<div><strong>${gb.trans('FreeReroll','SWADE')}</strong></div>`;
+        let freeRerollHTML=`<div><strong>${gb.trans('FreeReroll','SWADE')}</strong></div>`;
+        if (flavor.search(freeRerollHTML)<0){
+            extraflavor+=freeRerollHTML
+        }
+        
     }
 
        if (mod){
@@ -1554,20 +1564,31 @@ export default class RollControl {
  // console.log(this.chat._roll.terms[0].dice); /// defined, use this.chat._roll.terms[0].dice[i].options
 
         /// also copy roll.options addDiceFlavor TODO
+
+       // console.log(this.chat.flags?.['swade-tools']);
+        
+        if (gb.raiseCount(roll.total)>=0 && chatflags?.arcanefail?.pp){
+            char.spendPP(chatflags?.arcanefail?.pp,chatflags?.arcanefail?.arcane);
+            flavor=flavor.replace(`<div>${gb.trans('FailedPP')}</div>`,'');
+            chatflags.arcanefail={}; ///remove arcane fail pp to avoid repeat
+        }
             
 
         let chatData = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: actor }),
          //content: 'this is plus',
-        flavor: this.chat.flavor+extraflavor
+        flavor: flavor+extraflavor
         };
+
+
+        
 
         
 
        roll.toMessage(chatData).then((chat)=>{
-        if (this.chat.flags["swade-tools"]){
-            let flags=this.chat.flags["swade-tools"];
+        if (chatflags){
+            let flags=chatflags;
 
            
             

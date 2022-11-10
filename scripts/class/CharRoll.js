@@ -345,21 +345,13 @@ export default class CharRoll extends BasicRoll{
     }
 
 
-    getActualPP(){
+   /*  getActualPP(){
        
-        let actualPP=this.actor.system.powerPoints.value;
        
-        let arcane=this.item.system.arcane
-        
 
-        if (arcane){
-            actualPP=this.actor.system.powerPoints[arcane].value;
-            
-        }
+        return gb.getActualPP(this.item);
 
-        return actualPP;
-
-    }
+    } */
   
 
     powerCount(){
@@ -367,26 +359,33 @@ export default class CharRoll extends BasicRoll{
         if (!gb.systemSetting('noPowerPoints') && this.item && this.rolltype=='skill' && this.item.type=='power'){
             let ppspent=1;
 
+            let arcane=this.item.system.arcane
+
             if (this.raiseCount()>=0){
                 ppspent=this.shotsUsed;
             } else {
                 this.flavorAdd.end+=`<div>${gb.trans('FailedPP')}</div>`
+                this.addFlag('arcanefail',{pp:this.shotsUsed-1,arcane:arcane});
+              //  this.addFlag('failedarcane',arcane);
             }
 
-            let actualPP=this.getActualPP();
-            let updateKey='data.powerPoints.value';
-            let arcane=this.item.system.arcane
+            let char=new Char(this.actor);
+            char.spendPP(ppspent,this.item.system.arcane)
 
-            if (arcane){
+            /* let actualPP=this.getActualPP();
+           // let updateKey='data.powerPoints.general.value';
+           
+
+            if (!arcane){
                // actualPP=this.actor.data.data.powerPoints[arcane].value;
-                updateKey='data.powerPoints.'+arcane+'.value'
+                arcane='general';
             }
 
-            
+            let updateKey='data.powerPoints.'+arcane+'.value'
 
             let newpp=gb.realInt(actualPP)-ppspent;
            
-            this.actor.update({[updateKey]:newpp})
+            this.actor.update({[updateKey]:newpp}) */
            
         }
         
@@ -407,7 +406,8 @@ export default class CharRoll extends BasicRoll{
          //   entity=this.item
             update='data.currentShots';
         } else if (this.item.type=='power'){
-            maxshots=gb.realInt(this.getActualPP())
+            let char=new Char(this.actor);
+            maxshots=gb.realInt(char.getActualPP(this.item.system.arcane))
             currentShots=maxshots;
             if (!maxshots){
                 this.noPowerPointsMsg();

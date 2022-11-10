@@ -241,7 +241,7 @@ export const trans=(term,initialFlag=false)=>{
 export const findAttr=(attr)=>{
     
     //attr=attr.trim();
-    log(attributesShort.filter(el=>el.trans==attr.trim()));
+   // log(attributesShort.filter(el=>el.trans==attr.trim()));
     return attributesShort.filter(el=>el.trans==attr.trim())[0]?.name
 
 }
@@ -586,6 +586,8 @@ export const settingFieldCheckbox=(setting,title,hint)=>{
     
 
 }
+
+
 
 
 export const settingFieldSelect=(setting,title,hint,options)=>{
