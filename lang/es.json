@@ -164,6 +164,7 @@
   "SWADETOOLS.SettinguseScale": "Utilizar Escala",
   "SWADETOOLS.SettinguseScaleHint": "Calcular los modificadores de Escala (Tamaño) en los ataques. Criaturas con Mamporro (habilidad especial) mostrarán una casilla en su ataque",
   "SWADETOOLS.SwatSetting": "Mamporro",
+  "SWADETOOLS.UnstoppableSetting": "Imparable",
   "SWADETOOLS.SettingreloadX": "Mostrar botón Recarga X",
   "SWADETOOLS.SettingreloadXHint": "Muestra un botón para recargar un número específico de balas en vez de todo el cargardor.",
   "SWADETOOLS.SituationalRules": "Reglas Especiales",
@@ -206,5 +207,10 @@
   "SWADETOOLS.NoSkill": "no tienes la habilidad",
   "SWADETOOLS.DeleteManually": "Borrar Manualmente",
   "SWADETOOLS.LeaveItBlank": "Dejar vacío",
-  "SWADETOOLS.UnderMinStr": "Por debajo FUE min"
+  "SWADETOOLS.UnderMinStr": "Por debajo FUE min",
+  "SWADETOOLS.SelectModifiers": "Mostrar otros Modificadores predefinidos",
+  "SWADETOOLS.SelectModifiersHint": "Muestra una selección predefinida de modificadores para Multi-Acción, Cobertura e Iluminación.",
+  "SWADETOOLS.IgnoreRange": "Desactivar modificadores automáticos Alcance",
+  "SWADETOOLS.Debugger": "Depuración",
+  "SWADETOOLS.DebuggerHint": "Activar sólo para resolución de problemas"
 }
