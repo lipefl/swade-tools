@@ -261,5 +261,14 @@ game.settings.register(gb.moduleName, 'gangUp', {
               type: Boolean,
               config: true
               }); 
+
+              game.settings.register(gb.moduleName, 'desperateAttack', {
+                name: gb.trans('SettingDesperateAttack'),
+                hint: gb.trans('SettingDesperateAttackHint'),
+                default: false,
+                scope: "world",
+                type: Boolean,
+                config: false
+                }); 
   
 }

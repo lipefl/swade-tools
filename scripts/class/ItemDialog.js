@@ -181,9 +181,17 @@ export default class ItemDialog {
 
 
 
+
+        let showDesperate=false;
+
         if (gb.setting('wildAttackSkills').split(',').map(s => s.trim()).includes(weaponactions.skill)){ /// wild attack
             content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="wildattack" value="1"><strong>${gb.trans('WildAttack')}</strong></label></div>`;
 
+            if (gb.setting('desperateAttack')){
+                showDesperate=true;
+
+            }
+            
         }
 
         
@@ -208,8 +216,25 @@ export default class ItemDialog {
             </div>`;
         }
 
-        if ( gb.setting('selectModifiers') || gb.setting('askCalledShots') ){
+        if ( gb.setting('selectModifiers') || gb.setting('askCalledShots') || showDesperate){
         content+=`<div class="swadetools-damage-actions swadetools-mod-add swadetools-mid-title"><h3>${gb.trans("ModOther",'SWADE')}</h3></div>`;
+        }
+
+        if (showDesperate){
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('DesperateAttack')}:</strong></label> <select id="desperate">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let multiaction=[
+                {val:'0',text:gb.trans('MAPenalty.None','SWADE')+' (0)'},
+                {val:'2',text:`${gb.trans('Skill')} +2 / ${gb.trans('Dmg','SWADE')} -2`},
+                {val:'4',text:`${gb.trans('Skill')} +4 / ${gb.trans('Dmg','SWADE')} -4`},
+            ]
+         
+            multiaction.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
         }
 
 
@@ -362,7 +387,7 @@ export default class ItemDialog {
             callback: (html)=>{
                
                 let itemRoll=new ItemRoll(this.actor,this.item)
-                this.processItemFormDialog(html,itemRoll);
+                this.processItemFormDialog(html,itemRoll,'damage');
                 itemRoll.rollBaseDamage();
                 itemRoll.display();
 
@@ -426,7 +451,7 @@ export default class ItemDialog {
                         let itemRoll=new ItemRoll(this.actor,this.item);
                     
             //    console.log(this.item);
-                    this.processItemFormDialog(html,itemRoll);                    
+                    this.processItemFormDialog(html,itemRoll,'skill');                    
                     
                     itemRoll.rollBaseSkill(2);                  
                    
@@ -447,7 +472,7 @@ export default class ItemDialog {
                     callback: (html)=>{
                         let itemRoll=new ItemRoll(this.actor,this.item);
                         itemRoll.useShots(gb.RoFBullets[rof])
-                        this.processItemFormDialog(html,itemRoll);
+                        this.processItemFormDialog(html,itemRoll,'skill');
                         
                         itemRoll.rollBaseSkill(rof);
                         itemRoll.display();
@@ -474,7 +499,7 @@ export default class ItemDialog {
 
 
                     let itemRoll=new ItemRoll(this.actor,this.item)
-                this.processItemFormDialog(html,itemRoll);
+                this.processItemFormDialog(html,itemRoll,action.type);
 
                 itemRoll.rollAction(id);
               //  itemRoll.rollBaseDamage();
@@ -585,7 +610,7 @@ export default class ItemDialog {
         charRoll.display();
     } */
 
-    processItemFormDialog(html,charRoll){
+    processItemFormDialog(html,charRoll,actionType){
         
         if (this.vehicle){
             charRoll.usingVehicle(this.vehicle);
@@ -617,8 +642,18 @@ export default class ItemDialog {
             }
 
             if (html.find("#multiaction")[0]){
-                charRoll.addModifier(parseInt(html.find('#multiaction')[0].value),gb.trans('MAPenalty.Label','SWADE'));
+                charRoll.addModifier(html.find('#multiaction')[0].value,gb.trans('MAPenalty.Label','SWADE'));
             } 
+
+            if (html.find("#desperate")[0]){
+                let despmod=html.find('#desperate')[0].value;
+                if (actionType=='damage'){
+                    despmod=0-gb.realInt(html.find('#desperate')[0].value)
+                }
+                charRoll.addModifier(despmod,gb.trans('DesperateAttack'));
+                charRoll.addFlag('desperateattack',html.find('#desperate')[0].value);
+            } 
+
             if (html.find('#cover')[0]){
                 switch (html.find('#cover')[0].value) {
                     case 'Light':

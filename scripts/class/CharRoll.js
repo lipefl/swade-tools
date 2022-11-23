@@ -169,6 +169,23 @@ export default class CharRoll extends BasicRoll{
     }
 
  
+    rollRun(){
+        this.flavor+=`<div>${gb.trans('Running','SWADE')}</div>`;
+
+        if (gb.systemSetting('enableWoundPace')){
+            let woundMod=0-gb.realInt(this.actor.system.wounds.value);
+            if (woundMod<-3){
+                woundMod=-3
+            }
+            this.addModifier(woundMod,gb.trans('Wounds','SWADE'));
+        }
+        
+        /// wounds
+       // this.addModifier(-2,gb.trans('Wounds','SWADE'))
+        this.addModifier(this.actor.system.stats.speed.adjusted,gb.trans('Pace','SWADE'))
+     //   this.baseModifiers();
+       return this.buildRoll(this.actor.system.stats.speed.runningDie,false,this.mod);
+    }
 
     rollAtt(attribute,rof=1){
         let dieType=this.actor.system.attributes[attribute].die.sides;

@@ -641,17 +641,7 @@ export default class RollControl {
                         let el=event.currentTarget;
                         $(el).closest('.swadetools-targetwrap').find('.swadetools-situational-info').slideToggle();
 
-                        /* new Dialog({
-                            title: $(el).attr('data-title'),
-                            content: info,
-                            buttons: {
-                                ok: {
-                                    label: `<i class="fas fa-check"></i> ${gb.trans('OK')}`
-                                }
-                
-                                
-                            }
-                        }).render(true); */
+                        
 
 
                     }).ready(()=>{
@@ -677,6 +667,13 @@ export default class RollControl {
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
                         this.soakFunction(targetid,raise);
+                    }).on('click','a.swadetools-situational-link',(event)=>{
+                        let el=event.currentTarget;
+                        $(el).closest('.swadetools-targetwrap').find('.swadetools-situational-info').slideToggle();
+
+                        
+
+
                     }).ready(()=>{
                         this.scrollChat();
                      })
@@ -1135,6 +1132,11 @@ export default class RollControl {
                 charRoll.addModifier(2,gb.trans('WildAttack'));
             }
 
+            if (this.chat.flags["swade-tools"]?.desperateattack){
+                let despmod=0-gb.realInt(this.chat.flags["swade-tools"].desperateattack)
+                charRoll.addModifier(despmod,gb.trans('DesperateAttack'));
+            }
+
             charRoll.useTarget(targetid);
             if (raiseDmg){
                 charRoll.raiseDmg();
@@ -1174,15 +1176,28 @@ export default class RollControl {
         let isvehicle=false;
         let area='torso';
         let total=this.roll.total+this.gmmod;
+        let targetInfo='';
 
         
         
 
         if (newWounds===null){
-       // let actorid=this.chat.data.flags["swade-tools"].useactor;
+      
         let itemid=this.chat.flags["swade-tools"].itemroll;
+        let item=this.getItemOwner().items.get(itemid);
+      
 
-      //  console.log(target);
+
+      if (this.chat.flags['swade-tools'].usecalled){ // called shot
+        area=this.chat.flags['swade-tools'].usecalled;
+    }
+
+    
+      /// heavy armor check
+      if (gb.isHeavyArmor(target.actor,area) && !item?.system?.isHeavyWeapon){ //heavy armor but no heavy weapon
+        raisecount=-1 // no damage
+        targetInfo+=`<li>${gb.trans('HeavyArmorWarn')}</li>`;
+      } else {
 
         let toughness;
         let armor;
@@ -1192,45 +1207,32 @@ export default class RollControl {
             isvehicle=true;
         } else {
             toughness=gb.realInt(target.actor.system.stats.toughness.value);
-           // armor=gb.realInt(target.actor.data.data.stats.toughness.armor) 
            
-           if (this.chat.flags['swade-tools'].usecalled){
-               area=this.chat.flags['swade-tools'].usecalled;
-           }
+           
+           
                armor=gb.realInt(gb.getArmorArea(target.actor,area)) 
                toughness=toughness-gb.getArmorArea(target.actor)+armor; /// remove default armor, add location armor to final toughness
-           //   console.log(toughness,'final toughness')
+           
             
            
 
-          // console.log(armor,'armor');
         }
 
-   //     console.log(armor,'armor');
-
-       // let toughness=gb.realInt(target.actor.data.data.stats.toughness.value);
-
-      //  console.log(toughness);
-        
-        let item=this.getItemOwner().items.get(itemid);
-
-      // console.log(target.actor);
-
-       // console.log(item);
+ 
+     
      /// adds AP
         let apextra=0;
         if (item.system.ap){
             apextra=gb.realInt(item.system.ap);
-           // console.log(apextra);
+           
             if (apextra>armor){
                 apextra=armor;
             }
         }
 
-      //  console.log(total,toughness,apextra);
-
-       // gb.log(apextra,'ap-extra');
+     
          raisecount=gb.raiseCount(total,toughness-apextra);
+    }
         } else {
             raisecount=newWounds; 
 
@@ -1339,6 +1341,16 @@ export default class RollControl {
             if (soakClass){ 
                 this.targetShow+=`<a class="swadetools-soakdamage" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}" title="${gb.trans('SoakDmg')}"><i class="fas fa-tint-slash"></i></a>`;
             }
+        }
+
+
+        if (targetInfo){
+
+            let displaycss=' style="display:none" ';
+            if (gb.setting('alwaysShowSituational')){
+                displaycss='';
+            }
+            this.targetShow+=`<a class="swadetools-situational-link" title="${gb.trans('SeeSituational')}"><i class="fa fa-question-circle"></i></a><div class="swadetools-situational-info" ${displaycss}><ul>${targetInfo}</ul></div>`;
         }
         
         this.targetShow+=`</div>`;

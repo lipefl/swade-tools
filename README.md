@@ -141,6 +141,8 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Checks for Unstoppable (and ignores it if the attacker has a Joker)
 + Option to disable automatic Range calculation and modifiers
 + Option to show common modifiers as selection - Multi-Action, Cover, Illumination (thanks to @EternalRider)
++ Desperate Attack (option must be enabled in settings)
++ Heavy Armor detection (only Heavy Weapon does damage)
 
 **Fixes**
 + Compatibility with Foundry v10
@@ -148,6 +150,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + GangUp now ignores tokens behind walls
 + Linked Status (Stunned, Entagled, Bound) are now managed only by SWADE system to avoid bugs or compatibility errors
 + Rerolling a failed power now detects success and removes PP accordingly (and hide failure message)
++ Running die also simplified when "Simple Rolls" is enabled
 
 
 More features will be added...

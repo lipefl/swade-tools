@@ -23,7 +23,7 @@ export default class SheetControl {
 
     bindAttributes(){
         gb.attributes.map(attribute=>{
-            this.html.find('.attribute[data-attribute="'+attribute+'"] button.attribute-label,.attributes-list .attribute[data-attribute="'+attribute+'"] .attribute-label a').unbind('click').bind('click',()=>{   
+            this.html.find('.attribute button.attribute-value[data-attribute="'+attribute+'"]').unbind('click').bind('click',()=>{   
                 /* if (gb.setting('simpleRolls')){
                    // let item=this.sheet.actor.items.get(skillId);
                   //  let skillName=item.name;
@@ -35,6 +35,13 @@ export default class SheetControl {
                 sys.rollAtt(attribute);
                /*  } */
             })
+        })
+    }
+
+    bindRun(){
+        this.html.find('.running-die').unbind('click').bind('click',()=>{
+            let sys=new SystemRoll(this.sheet.actor);
+            sys.rollRun();
         })
     }
 
@@ -213,6 +220,7 @@ export default class SheetControl {
         this.bindSkills();
         this.bindDamage();
         this.bindItem();
+        this.bindRun();
     }
 
     /* showItem(itemId){

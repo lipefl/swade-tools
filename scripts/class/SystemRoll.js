@@ -66,6 +66,41 @@ export default class SystemRoll {
         
     }
 
+    async rollRun(){
+        if (gb.setting('simpleRolls')){
+            let content=`<div class="swadetools-itemfulldata">
+                    <strong>${gb.trans('Running','SWADE')}</strong>: ${this.actor.system.stats.speed.adjusted}+d${this.actor.system.stats.speed.runningDie}${gb.stringMod(this.actor.system.stats.speed.runningMod)}
+                    </div>
+                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
+                    new Dialog({
+                        title: gb.trans('Running','SWADE'),
+                        content: content,
+                        default: 'ok',
+                        buttons: {
+                           
+                            ok: {
+                                label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
+                                callback: (html)=>{
+                                
+                                    
+                                    let cr=new CharRoll(this.actor)
+                                    cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
+                                    cr.rollRun()
+                                   // cr.addFlag('rolltype','attribute')
+                                    cr.display();
+                                    
+                                }
+                            }
+            
+                            
+                        }
+                    }).render(true);
+        } else {
+            this.actor.rollRunningDie();
+        }
+        
+    }
+
     /* addJokerModifier(){ /// removed, now in system
         if (gb.actorIsJoker(this.actor)){
             Hooks.once('renderDialog',(dialog,html,data)=>{

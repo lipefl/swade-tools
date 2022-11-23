@@ -212,7 +212,12 @@
     "SWADETOOLS.SelectModifiersHint": "Mostra seleção pré-definida para modificadores de Ação Múltipla, Cobertura e Iluminação",
     "SWADETOOLS.IgnoreRange": "Desabilitar modificadores de Distância automáticos",
     "SWADETOOLS.Debugger": "Debugger",
-    "SWADETOOLS.DebuggerHint": "Habilite apenas para solução de problemas"
+    "SWADETOOLS.DebuggerHint": "Habilite apenas para solução de problemas",
+    "SWADETOOLS.DesperateAttack": "Ataque Desesperado",
+    "SWADETOOLS.SettingDesperateAttack": "Habilitar Ataque Desesperado",
+    "SWADETOOLS.SettingDesperateAttackHint": "Adiciona um campo para Ataque Desesperado (como no cenário Pathfinder). Este campo irá ser exibido para as mesmas perícias definidas para Ataque Selvagem",
+    "SWADETOOLS.Skill": "Perícia",
+    "SWADETOOLS.HeavyArmorWarn": "Alvo tem Armadura Pesada, só é afetado por Arma Pesada"
    
 
 

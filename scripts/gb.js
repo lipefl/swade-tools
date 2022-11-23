@@ -653,6 +653,16 @@ export const getArmorArea=(actor,area='torso')=>{
     
 }
 
+export const isHeavyArmor=(actor,area='torso')=>{
+   
+    if (actor.items.filter(el=>el.type=='armor' && el.system?.isHeavyArmor===true && el.system.locations[area.toLowerCase()]===true).length>0){
+        return true
+    } else {
+        return false;
+    }
+
+}
+
 export const itemSkillMod=item=>{
     return realInt(item.system.actions.skillMod)+realInt(item.system.trademark)
 }
