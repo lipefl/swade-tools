@@ -212,5 +212,10 @@
   "SWADETOOLS.SelectModifiersHint": "Muestra una selección predefinida de modificadores para Multi-Acción, Cobertura e Iluminación.",
   "SWADETOOLS.IgnoreRange": "Desactivar modificadores automáticos Alcance",
   "SWADETOOLS.Debugger": "Depuración",
-  "SWADETOOLS.DebuggerHint": "Activar sólo para resolución de problemas"
+  "SWADETOOLS.DebuggerHint": "Activar sólo para resolución de problemas",
+  "SWADETOOLS.DesperateAttack": "Ataque Desesperado",
+  "SWADETOOLS.SettingDesperateAttack": "Activar Ataque Desesperado",
+  "SWADETOOLS.SettingDesperateAttackHint": "Añadir un campo para Ataque Desesperado (Pathfinder). Este campo se muestra en las habilidades definidas para Ataque Salvaje.",
+  "SWADETOOLS.Skill": "Habilidad",
+  "SWADETOOLS.HeavyArmorWarn": "El objetivo tiene una Armadura Pesada, sólo afectada por las Armas Pesadas."
 }
