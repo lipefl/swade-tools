@@ -8,7 +8,10 @@ export default class BasicRoll {
         this.targetNumber=4;
         this.roll;
         this.diceModifier='';
+
+        this.runDie=false;
     }
+
 
     prepareModifier(modifier){
         modifier=parseInt(modifier) || 0;
@@ -35,12 +38,17 @@ export default class BasicRoll {
 
     }
 
+    isRunDie(){
+        this.runDie=true;
+    }
+
 
   buildRoll(dieType,wildDie,modifier=0,rof){
 
     if (!parseInt(rof)){
         rof=1;
     }
+    
     
    
     
@@ -78,9 +86,13 @@ export default class BasicRoll {
 
     } else {
 
+      let x='x';
+      if (this.runDie){
+          x='';
+      }
     
     if (!wildDie){
-        rollExp=`1d${dieType}x${this.prepareModifier(modifier)}`;
+        rollExp=`1d${dieType}${x}${this.prepareModifier(modifier)}`;
     } else {
         rollExp=`{1d${dieType}x,1d${wildDie}x}kh${this.prepareModifier(modifier)}`
     }
@@ -120,6 +132,8 @@ export default class BasicRoll {
             }
         }
 
+        
+
         if (wildDie){
         this.roll.terms[0].dice[i].options.flavor=gb.trans('WildDie','SWADE');
         wildkey=i;
@@ -132,6 +146,9 @@ export default class BasicRoll {
         i=2;
         if (this.skillName && wildDie){
             this.roll.terms[0].dice[0].options.flavor=this.skillName;
+        } else if (this.runDie) {
+            this.roll.terms[0].options.flavor=gb.trans('Running','SWADE');
+
         } else {
             this.roll.terms[0].options.flavor=this.skillName;
         }

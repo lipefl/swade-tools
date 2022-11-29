@@ -184,6 +184,7 @@ export default class CharRoll extends BasicRoll{
        // this.addModifier(-2,gb.trans('Wounds','SWADE'))
         this.addModifier(this.actor.system.stats.speed.adjusted,gb.trans('Pace','SWADE'))
      //   this.baseModifiers();
+     this.isRunDie();
        return this.buildRoll(this.actor.system.stats.speed.runningDie,false,this.mod);
     }
 
