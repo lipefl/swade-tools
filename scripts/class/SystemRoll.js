@@ -161,6 +161,7 @@ export default class SystemRoll {
 
         } else {
     
+         //   console.log('called');
            // this.addJokerModifier();   
            await Hooks.once("renderChatMessage", (chat, html,data) => { 
             if (data.user.id==game.user.id){

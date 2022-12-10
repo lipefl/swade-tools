@@ -31,7 +31,7 @@ export default class TokenHud {
     }
 
     bindAttributes(){ /// and RUNNING
-        $('#token-action-hud #tah-category-attributes .tah-action').unbind('click').bind('click',(ev)=>{
+        $('#token-action-hud #tah-category-attributes .tah-action').unbind('click').unbind('mousedown').bind('click',(ev)=>{
             let data=$(ev.currentTarget).find('button').val().split('|');
             let actor=canvas.tokens.get(data[1]).actor;
             let attribute=data[2];
@@ -51,7 +51,7 @@ export default class TokenHud {
    
 
     bindSkills(){
-        $('#token-action-hud #tah-category-skills .tah-action').unbind('click').bind('click',(ev)=>{
+        $('#token-action-hud #tah-category-skills .tah-action').unbind('click').unbind('mousedown').bind('click',(ev)=>{
             let data=$(ev.currentTarget).find('button').val().split('|');
             let actor=canvas.tokens.get(data[1]).actor;
             let skillId=data[2];
@@ -71,7 +71,7 @@ export default class TokenHud {
             let itemId=data[2];
             let item=actor.items.get(itemId);
             if (item.type=='weapon' || item.type=='power'){
-                $(el).unbind('click').bind('click',()=>{
+                $(el).unbind('click').unbind('mousedown').bind('click',()=>{
                     let item=new ItemDialog(actor,itemId);
                     item.showDialog();
                 })
