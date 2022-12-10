@@ -384,8 +384,8 @@ Hooks.on('ready',()=>{
    /// remove swade dialogs
    if (gb.setting('noStatusAutoRoll')!='all'){
     const effectCallbacks = game.swade.effectCallbacks;
-    effectCallbacks.set('shaken', ()=>{console.log('shaken')});
-    effectCallbacks.set('vulnerable', ()=>{console.log('vulnerable')});
+    effectCallbacks.set('shaken', ()=>{});
+    effectCallbacks.set('vulnerable', ()=>{});
     effectCallbacks.set('stunned', ()=>{});
     
    }

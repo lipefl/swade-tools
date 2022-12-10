@@ -866,7 +866,7 @@ export default class RollControl {
         let targetNumber=4;
 
 
-        
+   
 
         /// range, gangup
 

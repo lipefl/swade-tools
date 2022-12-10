@@ -45,6 +45,24 @@ export default class SheetControl {
         })
     }
 
+    bindManeuver(){
+        this.html.find('#maneuverCheck').unbind('click').bind('click', async ()=>{
+            
+            console.log(this.sheet.actor.system);
+            let skillId;
+            if (this.sheet.actor.system.driver.skill){
+                skillId=this.sheet.actor.system.driver.skill
+            } else {
+                skillId=this.sheet.actor.system.driver.skillAlternative
+            }
+
+            const realActor=await this.sheet.actor.getDriver();
+            let sys=new SystemRoll(realActor);
+            sys.useManeuver(this.sheet.actor);
+            sys.rollSkill(skillId);
+        })
+    }
+
     bindSkills(){
 
         /* let skillList=this.html.find('.skill-list-main ol.skill-list li.item.skill')
@@ -221,6 +239,7 @@ export default class SheetControl {
         this.bindDamage();
         this.bindItem();
         this.bindRun();
+        this.bindManeuver();
     }
 
     /* showItem(itemId){

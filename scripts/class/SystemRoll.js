@@ -4,6 +4,7 @@ import CharRoll from './CharRoll.js';
 export default class SystemRoll {
     constructor(actor){
         this.actor=actor;
+        this.vehicle=false;
     }
 
 
@@ -19,13 +20,27 @@ export default class SystemRoll {
         
     }
 
+    useManeuver(vehicle){
+        this.vehicle=vehicle
+    }
+
     async rollSkill(skillId){
        
         if (gb.setting('simpleRolls')){
             let item=this.actor.items.get(skillId);
-            let skillName=item.name;
+
+            let skillName;
+            let exp;
+            if (!item){
+                skillName=skillId;
+                exp=`d4-2`
+            } else {
+                skillName=item.name;
+                exp=`d${item.system.die.sides}${gb.realInt(item.system.die.modifier)?'+'+item.system.die.modifier:''}`
+            }
+            
             let content=`<div class="swadetools-itemfulldata">
-            <strong>${skillName}</strong>: d${item.system.die.sides}${gb.realInt(item.system.die.modifier)?'+'+item.system.die.modifier:''}
+            <strong>${skillName}</strong>: ${exp}
             </div>
             <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
             new Dialog({
@@ -39,7 +54,10 @@ export default class SystemRoll {
                         callback: (html)=>{
                         
                             
-                            let cr=new CharRoll(this.actor)
+                            let cr=new CharRoll(this.actor);
+                            if (this.vehicle){
+                                cr.addModifier(0-this.vehicle.system.wounds.value,gb.trans('Handling','SWADE'))
+                            }
                             cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
                             cr.rollSkill(skillName)
                             cr.addFlag('rolltype','skill')

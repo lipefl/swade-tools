@@ -159,6 +159,8 @@ export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
 
 export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
    // const ray = new Ray(origin, target);
+
+ 
     const grid_unit = canvas.grid.grid.options.dimensions.distance
     let grid=false;
    if (origin.scene.gridType==1){
@@ -194,7 +196,10 @@ export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
 
 
     // adding flying
-    let alt=Math.abs(origin.elevation-target.elevation);
+    let alt=Math.abs(origin.document.elevation-target.document.elevation);
+
+  //  console.log(alt,'altitude');
+  //  console.log(origin,target);
 
     if (alt){
         ///hipotenusa
@@ -205,7 +210,7 @@ export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
         distance=1;
     }
 
-   // console.log(distance);
+  //  console.log(distance,'distance');
    
     return distance;
 }
