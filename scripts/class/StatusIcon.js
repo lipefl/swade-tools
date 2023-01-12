@@ -6,20 +6,16 @@ export default class StatusIcon {
     statuses = gb.stIcons
     
     wounds = [
-        {value: 1, icon: "/modules/swade-tools/icons/w1.png"},
-        {value: 2, icon: "/modules/swade-tools/icons/w2.png"},
-        {value: 3, icon: "/modules/swade-tools/icons/w3.png"},
-        {value: 4, icon: "/modules/swade-tools/icons/w4.png"},
-        {value: 5, icon: "/modules/swade-tools/icons/w5.png"},
-        {value: 6, icon: "/modules/swade-tools/icons/w6.png"}    
-       
+        {value: 1, icon: "modules/swade-tools/icons/w1.png"},
+        {value: 2, icon: "modules/swade-tools/icons/w2.png"},
+        {value: 3, icon: "modules/swade-tools/icons/w3.png"},
+        {value: 4, icon: "modules/swade-tools/icons/w4.png"},
+        {value: 5, icon: "modules/swade-tools/icons/w5.png"},
+        {value: 6, icon: "modules/swade-tools/icons/w6.png"}    
     ]
-    
-    
     fatigues = [
-        {value: 1, icon: "/modules/swade-tools/icons/f1.png"},
-        {value: 2, icon: "/modules/swade-tools/icons/f2.png"}
-       
+        {value: 1, icon: "modules/swade-tools/icons/f1.png"},
+        {value: 2, icon: "modules/swade-tools/icons/f2.png"}
     ]
 
     constructor(entity,entityType,data){
