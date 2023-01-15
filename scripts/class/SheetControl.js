@@ -48,7 +48,7 @@ export default class SheetControl {
     bindManeuver(){
         this.html.find('#maneuverCheck').unbind('click').bind('click', async ()=>{
             
-            console.log(this.sheet.actor.system);
+          //  console.log(this.sheet.actor.system);
             let skillId;
             if (this.sheet.actor.system.driver.skill){
                 skillId=this.sheet.actor.system.driver.skill

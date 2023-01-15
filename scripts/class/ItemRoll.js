@@ -120,8 +120,12 @@ export default class ItemRoll extends CharRoll{
                 usepp=0
             }
             this.useShots(usepp);
+        } else if (this.item.isArcaneDevice){
+            this.useShots(gb.realInt(extraPP))
         }
     }
+
+
 
 
     rollBaseSkill(rof=1){

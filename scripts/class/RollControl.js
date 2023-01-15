@@ -651,7 +651,8 @@ export default class RollControl {
                     this.html.append(this.targetShow).on('click','a.swadetools-applydamage',(event)=>{
                         
                         let el=event.currentTarget;
-                        $(el).attr('disabled','disabled');
+                        this.html.find('a.swadetools-applydamage').attr('disabled','disabled');
+                      //  $(el).attr('disabled','disabled');
                         this.html.off('click','a.swadetools-applydamage');
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
@@ -1580,9 +1581,13 @@ export default class RollControl {
        // console.log(this.chat.flags?.['swade-tools']);
         
         if (gb.raiseCount(roll.total)>=0 && chatflags?.arcanefail?.pp){
-            char.spendPP(chatflags?.arcanefail?.pp,chatflags?.arcanefail?.arcane);
-            flavor=flavor.replace(`<div>${gb.trans('FailedPP')}</div>`,'');
-            chatflags.arcanefail={}; ///remove arcane fail pp to avoid repeat
+
+            if (chatflags?.arcanefail?.arcaneitem){
+                char.spendPP(chatflags?.arcanefail?.pp,chatflags.arcanefail.arcaneitem);
+                flavor=flavor.replace(`<div>${gb.trans('FailedPP')}</div>`,'');
+                chatflags.arcanefail={}; ///remove arcane fail pp to avoid repeat
+            }
+            
         }
             
 

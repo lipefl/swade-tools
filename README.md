@@ -30,7 +30,7 @@ Only compatible with Foundry v10. This is a beta version made to be usable. Sinc
 9. Translation support (English, Portuguese BR, Spanish, Italian, Catalan and German available)
 10. DiceSoNice Support (with benny animations)
 
-## v1.1.0
+## v1.1.x
 
 11. Conviction Support: +1d6 Bonus is automatically added to item/power rolls now. In combat, will auto deactivate Conviction at the end of the turn, offering to spend a Benny to keep it active for another round.
 12. Soak Damage: Shows an icon next to the "apply damage" button to soak damage.
@@ -38,7 +38,7 @@ Only compatible with Foundry v10. This is a beta version made to be usable. Sinc
 **Fixes**
 + bug fixes related to targeting, button behaviour and synthetic actors status and items not working properly
 
-## v1.2.0
+## v1.2.x
 
 13. Detect Edges/Abilities and apply bonus. Supported: Elan, No Mercy, Iron Jaw, Combat Reflexes, Construct, Hardy, Undead
 14. Allow configuring some Setting Rules to modify how Swade Tools behave. Supported: Dumb Luck, Hard Choices, Unarmored Hero, Wound Cap
@@ -52,12 +52,12 @@ Only compatible with Foundry v10. This is a beta version made to be usable. Sinc
 + Token Action Hud, Maestro and other modules compatibility
 + Italian translation added
 
-## v1.3.0
+## v1.3.x
 Version compatible with SWADE system v0.17+ only
 
 15. Added Out of Control and Gritty Damage auto roll tables (v1.3.1)
 
-## v1.4.0
+## v1.4.x
 Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 
 **Changes**
@@ -81,7 +81,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Fixed problem with "Doesn't need reload" option
 
 
-## v1.5.0
+## v1.5.x
 + Apply "Assign Status Effect" via token
 + Calculates Gang Up, Range and Ranged Weapon in Melee (shows a (?) icon in the target with more info)
 + Bonus Macro to turn all your PCs Friendly and NPCs Hostile (to work with Gang Up)
@@ -91,7 +91,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 **Fixes**
 + Stunned allows distracted to be removed at the end of next turn (as in the rules)
 
-## v1.6.0
+## v1.6.x
 + Calculate Scale automatically (shows a checkbox for creatures with Swat)
 + Option to activate a button to Reload X (instead of full reload)
 + Option to disable Status Icons (so you can use whatever you want with CUB)
@@ -102,10 +102,10 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Wild attack is now a checkbox, so you can use it with Frenzy and other attacks.
 + Fixed bugs with attack from vehicles
 
-## v1.7.0
+## v1.7.x
 + Compatibility with Foundry v9 and SWADE System v0.22
 
-## v1.8.0
+## v1.8.x
 + Compatibility with SWADE system v1.0
 + Simpler Dialog Rolls for attributes and skills (enabled by default, can be disabled in settings)
 + New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
@@ -119,7 +119,7 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Fixed a bug with distance and bigger tokens. Better distance calc for grid vs no-grid (based on scene config)
 + Fixed a minor bug when the Character is using Fighting but don't have the skill
 
-## v1.9.0
+## v1.9.x
 + "Roll From Selected" macro to roll a trait from all selected tokens
 + Free Reroll button (thanks to @bloy)
 + Rapid Fire autodetection (thanks to @bloy)
@@ -137,12 +137,13 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Combat round start fixed
 + Token hud compatibility with Simple Trait Roll option
 
-## v1.10.0
+## v1.10.x
 + Checks for Unstoppable (and ignores it if the attacker has a Joker)
 + Option to disable automatic Range calculation and modifiers
 + Option to show common modifiers as selection - Multi-Action, Cover, Illumination (thanks to @EternalRider)
 + Desperate Attack (option must be enabled in settings)
 + Heavy Armor detection (only Heavy Weapon does damage)
++ Button to activate Arcane Device (roll and spend PP from item)
 
 **Fixes**
 + Compatibility with Foundry v10

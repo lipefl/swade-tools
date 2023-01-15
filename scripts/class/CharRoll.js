@@ -233,6 +233,29 @@ export default class CharRoll extends BasicRoll{
         }
     }
 
+
+    async rollArcaneDevice(){
+
+        this.manageshots=true;
+        this.countShots();
+        this.flavor+=`<div>${gb.trans('ActivateArcaneDevice','SWADE')}</div>`;
+        this.rolltype='skill';
+        this.addFlag('arcanedevice',1);
+        this.baseModifiers();
+
+        this.addModifier(this.item.system.arcaneSkillDie.modifier,gb.trans('ModSkill'))  
+        
+        let dieType=this.item.system.arcaneSkillDie.sides // change in the future for Skill wild die
+
+        let wildDie=false;
+        if (this.actor.isWildcard){
+            wildDie=6; // change in the future for Skill wild die
+        }
+
+       
+
+        return await this.buildRoll(dieType,wildDie,this.mod,1);
+    }
     
 
    async rollSkill(skillName,rof=1){
@@ -356,7 +379,7 @@ export default class CharRoll extends BasicRoll{
             this.manageshots=countshots;
         }
         
-        if (countshots && item.type=="power" && !gb.systemSetting('noPowerPoints')){
+        if (countshots && ((item.type=="power" && !gb.systemSetting('noPowerPoints')) || item.isArcaneDevice)){
             this.manageshots=countshots;
         }
         
@@ -374,21 +397,23 @@ export default class CharRoll extends BasicRoll{
 
     powerCount(){
 
-        if (!gb.systemSetting('noPowerPoints') && this.item && this.rolltype=='skill' && this.item.type=='power'){
+       // console.log(this.rolltype);
+
+        if (this.item && this.rolltype=='skill' && (this.item.isArcaneDevice || (!gb.systemSetting('noPowerPoints') &&  this.item.type=='power'))){
             let ppspent=1;
 
-            let arcane=this.item.system.arcane
+           // let arcane=this.item.system.arcane
 
             if (this.raiseCount()>=0){
                 ppspent=this.shotsUsed;
             } else {
                 this.flavorAdd.end+=`<div>${gb.trans('FailedPP')}</div>`
-                this.addFlag('arcanefail',{pp:this.shotsUsed-1,arcane:arcane});
+                this.addFlag('arcanefail',{pp:this.shotsUsed-1,arcaneItem:this.item._id});
               //  this.addFlag('failedarcane',arcane);
             }
 
             let char=new Char(this.actor);
-            char.spendPP(ppspent,this.item.system.arcane)
+            char.spendPP(ppspent,this.item._id)
 
             /* let actualPP=this.getActualPP();
            // let updateKey='data.powerPoints.general.value';
@@ -410,19 +435,29 @@ export default class CharRoll extends BasicRoll{
     }
 
     countShots(){
-     //   console.log('counting shots');
+        
         if (this.manageshots){
        //let item=this.actor.items.get(this.itemid);
-     //  console.log(item);
+     //  console.log('counting shots');
         let maxshots;
         let currentShots;
         let update;
        // let entity;
+       if (this.item.isArcaneDevice){
+
+        maxshots=gb.realInt(this.item.system.powerPoints.value)
+        currentShots=maxshots;
+
+        
+        if (!maxshots){
+            this.noPowerPointsMsg(this.item);
+        }
+    }else 
         if (this.item.type=='weapon'){
             maxshots=gb.realInt(this.item.system.shots);
             currentShots=gb.realInt(this.item.system.currentShots)
          //   entity=this.item
-            update='data.currentShots';
+            update='system.currentShots';
         } else if (this.item.type=='power'){
             let char=new Char(this.actor);
             maxshots=gb.realInt(char.getActualPP(this.item.system.arcane))
@@ -432,7 +467,7 @@ export default class CharRoll extends BasicRoll{
             }
            // entity=this.actor;
             update=false;
-        }
+        } 
        
         
         
@@ -458,8 +493,8 @@ export default class CharRoll extends BasicRoll{
                             this.noShotsMsg(this.item);
                         }
                         
-                    } else if (this.item.type=='power'){
-                        this.noPowerPointsMsg();
+                    } else if (this.item.type=='power' || this.item.isArcaneDevice){
+                        this.noPowerPointsMsg(this.item);
                     }
                    
                     return false;
@@ -525,15 +560,21 @@ export default class CharRoll extends BasicRoll{
     }
 
 
-    noPowerPointsMsg(){
+    noPowerPointsMsg(item=false){
+
+        let sayBefore='';
+        if (item && item.isArcaneDevice){
+            sayBefore=`${item.name} `
+        }
         let char=new Char(this.actor);
-        char.say(gb.trans('NotEnoughPP'));
+        char.say(sayBefore+gb.trans('NotEnoughPP'));
         this.dontDisplay=true;
       //  return false;
     }
 
     useShots(shots){
         this.shotsUsed=gb.realInt(shots);
+        
     }
 
     async wildAttack(){

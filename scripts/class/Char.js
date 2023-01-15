@@ -157,24 +157,43 @@ export default class Char {
             
     }
     
-    spendPP(pp,arcane=''){
+    spendPP(pp,itemId){
     
-        if (!arcane){
+        let item=this.entity.items.get(itemId);
+
+        let arcane=item.system.arcane;
+        if (!item.system.arcane){
             // actualPP=this.actor.data.data.powerPoints[arcane].value;
              arcane='general';
          }
+
+         let actualPP;
+         let updateKey;
+         let entity;
+        
     
-         
-        let actualPP=this.getActualPP(arcane);
+         if (item.isArcaneDevice){
+
+            actualPP=item.system.powerPoints.value;
+            updateKey='system.powerPoints.value';
+            entity=item;
+
+         } else {
+
+            actualPP=this.getActualPP(arcane);
                // let updateKey='data.powerPoints.general.value';
                
     
                
-                let updateKey='data.powerPoints.'+arcane+'.value'
+                updateKey='system.powerPoints.'+arcane+'.value'
     
-                let newpp=gb.realInt(actualPP)-pp;
+                entity=this.entity
                
-                this.entity.update({[updateKey]:newpp})
+         }
+         
+         let newpp=gb.realInt(actualPP)-pp;
+        
+                entity.update({[updateKey]:newpp})
     }
 
 

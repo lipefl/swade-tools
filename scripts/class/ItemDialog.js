@@ -155,8 +155,18 @@ export default class ItemDialog {
         
         <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div>`
         
-        if (!gb.systemSetting('noPowerPoints') && item.type=='power'){
-            content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${gb.trans('ExtraPP')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('PPHint')}"></i></label><input type="text" id="extrapp" value="">
+        if ((!gb.systemSetting('noPowerPoints') && item.type=='power') || item.isArcaneDevice){
+            let defaultValue='';
+            let transTerm=gb.trans('ExtraPP');
+            let initialFlag='';
+            let hint=gb.trans('PPHint');
+            if (item.isArcaneDevice){
+                defaultValue=1;
+                transTerm=gb.trans('PPCost','SWADE');
+                initialFlag='SWADE'
+                hint=gb.trans('ArcaneDevicePPHint');
+            }   
+            content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${transTerm}</strong> <i class="far fa-question-circle swadetools-hint" title="${hint}"></i></label><input type="text" id="extrapp" value="${defaultValue}">
             </div>`
         }
 
@@ -477,6 +487,23 @@ export default class ItemDialog {
                         itemRoll.rollBaseSkill(rof);
                         itemRoll.display();
                     }
+                }
+            }
+        }
+
+
+        if (item.isArcaneDevice){
+            buttons['arcanedevice']={
+                label: gb.trans('ActivateArcaneDevice','SWADE'),
+                callback: (html)=>{
+
+
+                    let itemRoll=new ItemRoll(this.actor,this.item)
+                this.processItemFormDialog(html,itemRoll,'skill');
+
+                itemRoll.rollArcaneDevice();
+              //  itemRoll.rollBaseDamage();
+                itemRoll.display();
                 }
             }
         }
