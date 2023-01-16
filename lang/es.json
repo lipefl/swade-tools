@@ -43,7 +43,7 @@
   "SWADETOOLS.Recharged": "Recargado",
   "SWADETOOLS.NotEnoughShots": "no tienes suficiente munición",
   "SWADETOOLS.NotEnoughPP": "no tienes suficientes Puntos de Poder",
-  "SWADETOOLS.FailedPP": "Ha Fallado el Poder (1 PP Gastado)",
+  "SWADETOOLS.FailedPP": "Poder Fallido (Consume 1PP)",
   "SWADETOOLS.ExtraPP": "PP Extra",
   "SWADETOOLS.SettingUseShots": "Contar Munición",
   "SWADETOOLS.SettingUseShotsHint": "Si no quieres que se gestione automáticamente la munición al usar armas, desactiva esta opción.",
@@ -217,5 +217,6 @@
   "SWADETOOLS.SettingDesperateAttack": "Activar Ataque Desesperado",
   "SWADETOOLS.SettingDesperateAttackHint": "Añadir un campo para Ataque Desesperado (Pathfinder). Este campo se muestra en las habilidades definidas para Ataque Salvaje.",
   "SWADETOOLS.Skill": "Habilidad",
-  "SWADETOOLS.HeavyArmorWarn": "El objetivo tiene una Armadura Pesada, sólo afectada por las Armas Pesadas."
+  "SWADETOOLS.HeavyArmorWarn": "El objetivo tiene una Armadura Pesada, sólo afectada por las Armas Pesadas.",
+  "SWADETOOLSArcaneDevicePPHint": "Coste total en PP para activar el dispositivo"
 }
