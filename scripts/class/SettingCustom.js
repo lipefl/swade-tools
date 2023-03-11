@@ -26,6 +26,8 @@ export default class SettingName extends FormApplication {
         data.formHtml+=gb.settingFieldCheckbox('askCalledShots',gb.trans('SettingAskCalledShots'),gb.trans('SettingAskCalledShotsHint'));
         data.formHtml+=gb.settingFieldCheckbox('ignoreRange',gb.trans('IgnoreRange'),'');
 
+        
+
         data.formHtml+=`<h2>${gb.trans('RulesSettings')}</h2>`;
         data.formHtml+=gb.settingFieldCheckbox('reloadX',gb.trans('SettingreloadX'),gb.trans('SettingreloadXHint'));
         data.formHtml+=gb.settingFieldCheckbox('desperateAttack',gb.trans('SettingDesperateAttack'),gb.trans('SettingDesperateAttackHint'));
@@ -47,6 +49,9 @@ export default class SettingName extends FormApplication {
      //   data.formHtml+=gb.settingFieldCheckbox('disableAutoInitStart',gb.trans('SettingsAutoInitStart'),gb.trans('SettingsAutoInitStartHint')+' '+gb.trans('AutoDisableWarn')+' '+gb.trans('AutoInit','SWADE'));
 
      data.formHtml+=gb.settingFieldSelect('defaultStatusIcons',gb.trans('StatusIconsSetting'),gb.trans('StatusIconsSettingHint'),[{value:'',text:gb.trans('StatusIconsSettingDefault')},{value:'system',text:gb.trans('StatusIconsSettingSystem')}])
+
+
+     data.formHtml+=gb.settingFieldCheckbox('noWoundFatigueIcon',gb.trans('SettingnoWoundFatigueIcon'),'');
 
     // data.formHtml+=gb.settingFieldCheckbox('debugger',gb.trans('Debugger'),gb.trans('DebuggerHint'));
 

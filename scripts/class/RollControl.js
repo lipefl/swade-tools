@@ -45,12 +45,7 @@ export default class RollControl {
     addEditButton(){
         if (game.user.isGM){
 
-          //  let fux=this.html
-         
-          //  let total=this.roll.total;
-      
-          //  if (this.rolltype!==undefined && this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
-      //   let over= this.html.find('.swadetools-overroll');
+    
                 this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-editroll swadetools-rollbutton" title="'+gb.trans('EditBtn')+'"><i class="fa fa-plus"></i></button> <button class="swadetools-raisecalc swadetools-rollbutton" title="'+gb.trans('RaiseCalcBtn')+'"><i class="fa fa-calculator"></i></button>').on('click','button.swadetools-editroll',()=>{
                     
                    
@@ -87,53 +82,23 @@ export default class RollControl {
                                         gmmod=mod.total;
                                     }
 
-                                   // console.log(gmtarget);
+                            
 
                                     if (gmmod!=''){
-                                  //  this.resetActions();
-                                   // console.log(this.roll,this.chat,this.html.html());
-                                   // total+=gb.realInt(gmmod);   
-                                  //  let newContent=content.find('.dice-total .dice label').replaceWith('10').html()
+                          
                                     let update={};
 
-                                  //  if (gmmod){
+                              
                                         
                                         update['flags.swade-tools.gmmod']=gmmod;
-                                   // }
+                                
 
-                                    /* if (gmtarget){
-                                       // let newTargets;
-                                        let targets=Array.from(game.user.targets);
-                                        let targetsave=new Array;
-                                        targets.map(target=>{
-                                            targetsave.push(target.id);
-                                        })
-                                        update['flags.swade-tools.usetarget']=targetsave.join(',');
-                                    } */
-                                   // console.log(`#chat-log .chat-message[data-message-id="${this.chat.id}"]`);
-                                  // let newTotal=this.roll.total+gb.realInt(gmmod);
 
                                   
                                     
                                     await this.chat.update(update);
 
-                                    
-
-                                   // this.doActions(false);
-
-                                    //await this.html.find('.swadetools-overroll').html('<span>'+newTotal+'</span>');
-
-                                  //  this.addNewTotal(newTotal);
-
-                                   // fux.append('<div>new total</div>');
-                                   // this.html.find('.swadetools-overroll').append();
-
-                                    //this.html.find()
-                                  //  $('#chat-log .chat-message[data-message-id="'+this.chat.id+'"]').find('.swadetools-overroll').text(newTotal);
-                                                                      
-                                    //this.html.find('.dice-total .dice label').text(this.roll.total+gb.realInt(gmmod))
-                                    //await this.chat.updateEmbeddedDocuments('Roll',{'total':9})
-                                   // console.log(this.chat);
+                                
                                     }
                                     
                                     
@@ -146,12 +111,7 @@ export default class RollControl {
                 }).on('click','button.swadetools-raisecalc',()=>{
                     this.raiseCalcDialog();
                     
-                   /*  $(document).on('change','input#targetnumber',(event)=>{
-                        el=event.currentTarget;
-                       // console.log($(el).val());
-                    }) 
-
-                    )*/
+                 
                 })
                 
                 if (this.chat.flags?.["swade-tools"]?.itemroll){
@@ -651,9 +611,15 @@ export default class RollControl {
                     this.html.append(this.targetShow).on('click','a.swadetools-applydamage',(event)=>{
                         
                         let el=event.currentTarget;
-                        this.html.find('a.swadetools-applydamage').attr('disabled','disabled');
-                      //  $(el).attr('disabled','disabled');
-                        this.html.off('click','a.swadetools-applydamage');
+
+                        /// testing -> ALLOW SAME DAMAGE ROLL TO MULTIPLE TARGETS
+                        
+                        $(el).removeClass('swadetools-applydamage').attr('disabled','disabled');
+                       // $(el).parent().find('.swadetools-soakdamage').removeClass('swadetools-soakdamage').attr('disabled','disabled');
+                       // this.html.find(el).off('click');
+
+                        // this.html.find('a.swadetools-applydamage').attr('disabled','disabled');                     
+                      ///  this.html.off('click','a.swadetools-applydamage');  
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
                         this.targetFunction(targetid,raise);
@@ -663,8 +629,10 @@ export default class RollControl {
             
                     }).on('click','a.swadetools-soakdamage',(event)=>{
                         let el=event.currentTarget;
-                        $(el).attr('disabled','disabled');
-                        this.html.off('click','a.swadetools-soakdamage');
+
+                        $(el).attr('disabled','disabled').removeClass('swadetools-soakdamage');
+                      /*   $(el).attr('disabled','disabled');
+                        this.html.off('click','a.swadetools-soakdamage'); */
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
                         this.soakFunction(targetid,raise);
@@ -1099,6 +1067,8 @@ export default class RollControl {
             }
             print+=`<a class="swadetools-situational-link" title="${gb.trans('SeeSituational')}"><i class="fa fa-question-circle"></i></a><div class="swadetools-situational-info" ${displaycss}><ul>${targetInfo}</ul></div>`;
         }
+    
+
         print+=`</div>`;
 
 
@@ -1328,7 +1298,7 @@ export default class RollControl {
 
         if (applyDmg){
             ///data-swade-tools-action-once=1 data-swade-tools-action="applyTargetDmg:${target.id},${raisecount}"
-            this.targetShow+=`<a class="swadetools-applydamage" title="${gb.trans('ApplyDamage')}" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}"><i class="fas fa-tint"></i>`
+            this.targetShow+=`<a class="swadetools-applydamage swadetools-chat-dmg-button" title="${gb.trans('ApplyDamage')}" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}"><i class="fas fa-tint"></i>`
         } else {
             this.targetShow+=`<i class="fas fa-times-circle"></i>`;
         }
@@ -1340,7 +1310,7 @@ export default class RollControl {
         if (applyDmg){
             this.targetShow+=`</a>`
             if (soakClass){ 
-                this.targetShow+=`<a class="swadetools-soakdamage" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}" title="${gb.trans('SoakDmg')}"><i class="fas fa-tint-slash"></i></a>`;
+                this.targetShow+=`<a class="swadetools-soakdamage swadetools-chat-soak-button" data-swadetools-raise=${raisecount} data-swadetools-targetid="${target.id}" title="${gb.trans('SoakDmg')}"><i class="fas fa-tint-slash"></i></a>`;
             }
         }
 

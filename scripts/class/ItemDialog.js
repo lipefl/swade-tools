@@ -32,7 +32,9 @@ export default class ItemDialog {
 
     noSkillItem(){
         
-        let item=this.item;       
+        let item=this.item;  
+        
+        if (!item.system?.innate){
         
         let content=`<p><strong>${this.item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>`;
         content+=`<p><select id="skillitem">`;
@@ -82,6 +84,8 @@ export default class ItemDialog {
         }).render(true);
 
         this.dontDisplay=true;
+
+        }
     
     
     }
@@ -153,7 +157,7 @@ export default class ItemDialog {
 
         <div class="swadetools-formpart swadetools-2grid">
         
-        <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div>`
+        <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" size=3 class="swadetools-input-number"></div>`
         
         if ((!gb.systemSetting('noPowerPoints') && item.type=='power') || item.isArcaneDevice){
             let defaultValue='';
@@ -166,8 +170,7 @@ export default class ItemDialog {
                 initialFlag='SWADE'
                 hint=gb.trans('ArcaneDevicePPHint');
             }   
-            content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${transTerm}</strong> <i class="far fa-question-circle swadetools-hint" title="${hint}"></i></label><input type="text" id="extrapp" value="${defaultValue}">
-            </div>`
+            content+=`<div class="swade-tools-pp-extra swadetools-mod-add"><label><strong>${transTerm}</strong> <i class="far fa-question-circle swadetools-hint" title="${hint}"></i></label><input type="text" size=3 id="extrapp" value="${defaultValue}" class="swadetools-input-number"></div>`
         }
 
         // content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><strong>${gb.trans('MAPenalty.Label','SWADE')}:</strong></label>
@@ -336,6 +339,10 @@ export default class ItemDialog {
         let skillName=weaponactions.skill;
         let skillflag=item.getFlag('swade-tools','skillitem')
         let noMainSkill=false;
+
+        if (this.item.system?.innate){
+            skillName=gb.trans('InnatePower');
+        }
        
         if (!skillName){
 
@@ -359,6 +366,8 @@ export default class ItemDialog {
 
         let skillIcon='<i class="fas fa-bullseye"></i> ';
         let damageIcon='<i class="fas fa-tint"></i> ';
+        let resistIcon='<i class="fas fa-shield"></i> ';
+        let genericIcon='<i class="fas fa-circle"></i> '
         
 
         if (!noMainSkill){  //// hide button for main skill if there's no skill
@@ -518,66 +527,32 @@ export default class ItemDialog {
                 actionIcon=skillIcon;
             } else if (action.type=='damage'){
                 actionIcon=damageIcon;
+            }else if (action.type=='resist'){
+                actionIcon=resistIcon;
+            } else {
+                actionIcon=genericIcon
             }
        
-            buttons[id]={
-                label: actionIcon+action.name,
-                callback: (html)=>{
 
+           /// go to RollControl
+                buttons[id]={
+                    label: actionIcon+action.name,
+                    callback: (html)=>{
 
-                    let itemRoll=new ItemRoll(this.actor,this.item)
-                this.processItemFormDialog(html,itemRoll,action.type);
+                        if (action.type=='resist'){ 
 
-                itemRoll.rollAction(id);
-              //  itemRoll.rollBaseDamage();
-                itemRoll.display();
-
-
-                   /*  if(action.type=='skill'){
-
-                        let skill=weaponactions.skill;
-
-
-
-                        if (action.skillOverride){
-                            skill=action.skillOverride;
-                        }
-
-                        let data={
-                            mod: {
-                                value: action.skillMod,
-                                reason: gb.trans('ModItem')
-                            },
-                            skill: skill,
-                            rof: action.rof,
-                            weapon: item.name,
-                            weaponid: item._id,
-                            shots: action.shotUsed
-                        }
-        
-                        this.processRoll(html,data);
-
+                            gb.rollResist(action.skillOverride,action.skillMod);
                         
-                       
-                    } else if (action.type=='damage'){
-
-                        let data={
-                            mod: {
-                                value: action.dmgMod,
-                                reason: gb.trans('ModItem')
-                            },
-                            damage: action.dmgOverride,
-                            weapon: item.name+patxt,
-                            weaponid: item._id
+                        } else  {
+                            let itemRoll=new ItemRoll(this.actor,this.item)
+                            this.processItemFormDialog(html,itemRoll,action.type);
+                            itemRoll.rollAction(id);
+                            itemRoll.display();
                         }
 
-                        this.processRoll(html,data);
-                    
-                    } */
-
-
+                    }
                 }
-            }
+            
         }
 
       
@@ -587,11 +562,39 @@ export default class ItemDialog {
         new Dialog({
             title: item.name,
             content: content,
-            buttons: buttons
+            buttons: buttons,
+            render: (html)=>{
+
+                html.find('.swadetools-input-number').each((index,el)=>{
+                    $(el).parent().append('<span class="swadetools-number-controls-wrapper"><button class="swadetools-plus">+</button><button class="swadetools-minus">-</button></span>')
+                    .on('click','button.swadetools-plus,button.swadetools-minus',ev=>{
+
+                        console.log(ev);
+
+                        let input=$(el)
+                        let val=gb.realInt(input.val());
+
+                        console.log(ev);
+
+                        if ($(ev.currentTarget).hasClass('swadetools-minus')){                       
+                            let newvalue=val-1;
+                            console.log(newvalue);
+                            input.val(newvalue);
+                        } else if ($(ev.currentTarget).hasClass('swadetools-plus')){
+                            let newvalue=val+1
+                            input.val(newvalue);
+                        } 
+                    })
+                })
+                
+            }
         },{classes:['dialog swadetools-vertical']}).render(true);
         }
         
     }
+
+
+    
 
 
     /* processRoll(html,data){

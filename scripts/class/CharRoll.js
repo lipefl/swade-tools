@@ -38,6 +38,8 @@ export default class CharRoll extends BasicRoll{
        this.vehicle=false;
        this.action='';
 
+       this.canCast=true;
+
       
       
        
@@ -262,9 +264,21 @@ export default class CharRoll extends BasicRoll{
       //  console.log(skillName,rof)
 
         this.rof=rof;
+       
 
         if (this.item && this.manageshots){
             this.countShots();
+        }
+
+        
+        if (this.item && this.item.system?.innate){ ///innate power -> no roll
+
+            if (this.canCast){
+                this.powerCount();
+                gb.say(`${gb.trans('InnatePower')}: ${this.item.name}`,this.actor.name);
+            }
+            this.dontDisplay=true;            
+            return 
         }
 
         if (this.item && this.item.type=='weapon' && skillName==gb.setting('shootingSkill')){
@@ -399,12 +413,14 @@ export default class CharRoll extends BasicRoll{
 
        // console.log(this.rolltype);
 
-        if (this.item && this.rolltype=='skill' && (this.item.isArcaneDevice || (!gb.systemSetting('noPowerPoints') &&  this.item.type=='power'))){
+        if (this.item && 
+            (this.item.system?.innate || this.rolltype=='skill') && 
+            (this.item.isArcaneDevice || (!gb.systemSetting('noPowerPoints') &&  this.item.type=='power'))){
             let ppspent=1;
 
            // let arcane=this.item.system.arcane
 
-            if (this.raiseCount()>=0){
+            if (this.item.system?.innate || this.raiseCount()>=0){
                 ppspent=this.shotsUsed;
             } else {
                 this.flavorAdd.end+=`<div>${gb.trans('FailedPP')}</div>`
@@ -464,6 +480,7 @@ export default class CharRoll extends BasicRoll{
             currentShots=maxshots;
             if (!maxshots){
                 this.noPowerPointsMsg();
+                
             }
            // entity=this.actor;
             update=false;
@@ -569,8 +586,11 @@ export default class CharRoll extends BasicRoll{
         let char=new Char(this.actor);
         char.say(sayBefore+gb.trans('NotEnoughPP'));
         this.dontDisplay=true;
+        this.canCast=false;
       //  return false;
     }
+
+    
 
     useShots(shots){
         this.shotsUsed=gb.realInt(shots);

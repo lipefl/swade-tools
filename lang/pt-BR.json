@@ -218,7 +218,9 @@
     "SWADETOOLS.SettingDesperateAttackHint": "Adiciona um campo para Ataque Desesperado (como no cenário Pathfinder). Este campo irá ser exibido para as mesmas perícias definidas para Ataque Selvagem",
     "SWADETOOLS.Skill": "Perícia",
     "SWADETOOLS.HeavyArmorWarn": "Alvo tem Armadura Pesada, só é afetado por Arma Pesada",
-    "SWADETOOLSArcaneDevicePPHint": "O custo total em PP para ativar o dispositivo"
+    "SWADETOOLS.ArcaneDevicePPHint": "O custo total em PP para ativar o dispositivo",
+    "SWADETOOLS.SettingnoWoundFatigueIcon":"Não monstrar ícones de Ferimentos/Fadiga sobre o token",
+    "SWADETOOLS.InnatePower":"Poder Inato"
    
 
 

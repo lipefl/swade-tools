@@ -40,11 +40,15 @@ export default class ItemRoll extends CharRoll{
          //   this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
            // }
            
-           this.addModifier(action.skillMod,action.name);
+          
            if (action.shotsUsed!==''){
             this.useShots(action.shotsUsed);
             }
             
+            
+
+           
+            this.addModifier(action.skillMod,action.name);
             let rof=1;
             if (action.rof!==undefined){
                rof=action.rof;
@@ -62,6 +66,7 @@ export default class ItemRoll extends CharRoll{
            
             
             this.rollSkill(skill,rof);
+            
 
         } else if (action.type=='damage'){
             this.addModifier(action.dmgMod,action.name);
@@ -137,6 +142,7 @@ export default class ItemRoll extends CharRoll{
         this.defineAction('formula'+rofstr);
         
         
+       
         this.addSkillMod();
 
         let attr=gb.findAttr(this.data.skill)

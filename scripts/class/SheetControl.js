@@ -49,14 +49,20 @@ export default class SheetControl {
         this.html.find('#maneuverCheck').unbind('click').bind('click', async ()=>{
             
           //  console.log(this.sheet.actor.system);
-            let skillId;
+            let driveSkill;
             if (this.sheet.actor.system.driver.skill){
-                skillId=this.sheet.actor.system.driver.skill
+                driveSkill=this.sheet.actor.system.driver.skill
             } else {
-                skillId=this.sheet.actor.system.driver.skillAlternative
+                driveSkill=this.sheet.actor.system.driver.skillAlternative
             }
 
+
+
+
             const realActor=await this.sheet.actor.getDriver();
+           
+            let skillId=realActor.items.find(el=>el.name==driveSkill && el.type=='skill')?.id;
+
             let sys=new SystemRoll(realActor);
             sys.useManeuver(this.sheet.actor);
             sys.rollSkill(skillId);
@@ -171,6 +177,36 @@ export default class SheetControl {
 
     bindItem(){
 
+
+
+        /* this.html.find('.quickaccess .quick-list li:first-child[data-item-id]').each((index,el)=>{
+
+            let itemId=$(el).data('itemId')
+            let type=this.sheet.actor.items.find(el=>el.id==itemId)?.type;
+
+            if (type){
+
+                let $list=$(el).closest('.quick-list')
+                $list.attr('data-type',type);
+
+                if (type=='power'){
+                    $list.find('li').each((li_index,li_el)=>{
+                        let clone=$(li_el).find('button[data-action="template"]').clone(true).each((i,e)=>{
+                          
+                          
+                            $(li_el).prepend($(e));
+                        });
+                       
+                        
+                    })
+                }
+            }
+           
+        }) */
+        
+
+        /// TODO melhorar -> pegar item da lista, checar o tipo e aplicar o bind para -> weapon - power
+
         /// v0.0.4
        /*  this.html.find('.item-show, .item-image, .card-header .item-name,.item.weapon .item-img').unbind('click').bind('click',ev=>{
             let itemId=$(ev.currentTarget).parents('.item').data('itemId');
@@ -191,7 +227,7 @@ export default class SheetControl {
        // nthkey=2;
         
         // .swade-official
-        let findEl='.quick-main .quick-list:nth-of-type('+nthkey+') .item-image,.quick-main .quick-list:nth-of-type('+nthkey+') .item-show,.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll' 
+        let findEl='.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll' 
 
        //
 
@@ -200,38 +236,87 @@ export default class SheetControl {
 
 
         ///v0.17
-        findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'
+        findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'       
+        
 
 
-       
-        findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-name';
+
 
         if(!gb.setting('itemNameClick')){
-            findEl+=',.quick-main .quick-list:nth-of-type('+nthkey+') .item-name,.gear-list.weapon-list .item.weapon .item-name, .item.power .item-name, .inventory .item .weapon .item-name'  /// swade-official, npc
+            findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-name';
+            findEl+=',.gear-list.weapon-list .item.weapon .item-name, .item.power .item-name, .inventory .item .weapon .item-name'  /// swade-official, npc
             //v0.17
            
         }
 
+
+
+        this.html.find(findEl).each((index,el)=>{
+            this.doItem($(el));
+        })
+       
     
-      // this.html.find(findEl).css('background','yellow');
+      /* // this.html.find(findEl).css('background','yellow');
      //  gb.log(this.html);
      //  console.log(findEl);
            // console.log(findEl);
             this.html.find(findEl).unbind('click').bind('click',ev=>{
-                this.doItem(ev.currentTarget)
+
 
                 
-            })
+               
+        //   if (!$(ev.target).parent().find('button.effect-action').length){ ///is not an effect
+                this.doItem(ev.currentTarget)
+          //  }
+
+
+                
+
+                
+            }) */
         
     }
 
     doItem(target){
-        let itemId=$(target).parents('.item').data('itemId');
-               
-        let item=new ItemDialog(this.sheet.actor,itemId);
-        item.showDialog();
+        let itemId=target.parents('.item').data('itemId');
+        const actions=['weapon','power']
+
+        if (itemId){
+
+            let actorItem=this.sheet.actor.items.find(el=>el.id==itemId)
+            let type=actorItem?.type;
+
+            if (actions.includes(type)){
+                target.unbind('click').bind('click',ev=>{
+                    let item=new ItemDialog(this.sheet.actor,itemId);
+                     item.showDialog();
+                })
+
+
+                if (type=='power' && !target.closest('li').find('.swade-tools-template-buttons').length){
+
+                   
+
+                    target.closest('li').find('.item-controls').prepend(`<span class="swade-tools-template-buttons">${gb.getTemplatesHTML(actorItem)}</span>`).on('click','button[data-template]',button=>{
+                        
+                        let templateType=$(button.currentTarget).data("template");
+
+                        gb.showTemplate(templateType);
+                        
+                       
+                    })
+                }
+            }
+
+            
+       
+
+            
+          }     
+       
     }
 
+   
 
     rebindAll(){
         this.bindAttributes();
@@ -240,6 +325,8 @@ export default class SheetControl {
         this.bindItem();
         this.bindRun();
         this.bindManeuver();
+
+        
     }
 
     /* showItem(itemId){

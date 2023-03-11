@@ -153,6 +153,17 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Rerolling a failed power now detects success and removes PP accordingly (and hide failure message)
 + Running die also simplified when "Simple Rolls" is enabled
 
+## v1.11.x
++ Added quick template buttons for powers
++ Added + and - buttons for number inputs (Mod field still accepts dice modifier)
++ Resist actions compatibility with SWADE System
++ Option to disable Wounds/Fatigue Icons
++ Allow using the same damage roll for multiple targets
+
+**Fixes**
++ Size Effect items now updates the sheet (as in the Size input)
++ Vehicle Maneuver button fixed
+
 
 More features will be added...
 

@@ -226,6 +226,8 @@ export default class StatusIcon {
 
     async checkLevels(levelType){
 
+        if (!gb.setting('noWoundFatigueIcon')){
+
         let statval
         let levels;
     
@@ -264,7 +266,7 @@ export default class StatusIcon {
             })
             
         }
-
+        }
     }
 
 

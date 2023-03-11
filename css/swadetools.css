@@ -161,7 +161,7 @@ align-items: center;
 flex-wrap: wrap;
 }
 
-.swadetools-rolldamage-style, .swadetools-applydamage {
+.swadetools-rolldamage-style, .swadetools-chat-dmg-button {
     display: flex;
     
     align-items: center;
@@ -178,8 +178,10 @@ color:green
     color:purple
     }
 
-    .swadetools-term-miss, .swadetools-term-none,.swadetools-applydamage[disabled],.swadetools-soakdamage[disabled], .swadetools-bar, .swadetools-rof-disable a.swadetools-rolldamage-style {  /* ///miss hit raise &&& none shaken wounds  */
-        color:gray
+    .swadetools-term-miss, .swadetools-term-none,.swadetools-chat-dmg-button[disabled],.swadetools-chat-soak-button[disabled], .swadetools-bar, .swadetools-rof-disable a.swadetools-rolldamage-style {  /* ///miss hit raise &&& none shaken wounds  */
+        color:gray;
+        text-shadow: none;
+        cursor:auto;
         }
 
         .swadetools-term-rof {
@@ -244,7 +246,7 @@ padding: 0 5px;
 
 .swadetools-term-rof .swadetools-target-name {display:inline-block}
 
-.swadetools-soakdamage {
+.swadetools-chat-soak-button {
     
     padding-left:20px;
     background-size: contain;
@@ -253,7 +255,7 @@ padding: 0 5px;
 }
 
 
-.swadetools-damage-with-soak .swadetools-applydamage{
+.swadetools-damage-with-soak .swadetools-chat-dmg-button{
 width: calc(100% - 47px);
 }
 
@@ -264,19 +266,19 @@ width: calc(100% - 47px);
     border-radius:none;
     }
     
-    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {
+    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-chat-dmg-button, .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-chat-soak-button {
     border: 1px solid #737171;
         border-radius: 3px;
         background-color: #f3f3e7;
     }
     
-    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage {
+    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-chat-soak-button {
     position:relative;
     margin-left:5px;
     padding:3px 20px 3px 
     }
     
-    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage:before {
+    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-chat-soak-button:before {
     position:absolute;
     content:'';
     display:block;
@@ -289,7 +291,7 @@ width: calc(100% - 47px);
     background-size: 100%;
     }
 
-    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-soakdamage[disabled]:before{
+    .swadetools-targetwrap.swadetools-damage-with-soak .swadetools-chat-soak-button[disabled]:before{
         filter:grayscale(1)
     }
 
@@ -419,14 +421,28 @@ width: calc(100% - 47px);
             display:block !important
             }
 
+            .swade-tools-template-buttons
+             {
+                display:flex;
+            }
 
-/*     .swadetools-targetwrap a,
-    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage, 
-    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage {
-        transition:0.5s ease;
-    }
-    .swadetools-targetwrap a:hover,
-    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-applydamage:hover, 
-    .swadetools-targetwrap.swadetools-damage-with-soak a.swadetools-soakdamage:hover {
-        background-color: #f9f9d0;
-    } */
+.swadetools-number-controls-wrapper button {
+    height:50%;
+    line-height: 11px;
+    padding: 1px 3px;
+    margin: 0;
+    display: block;
+    transition:0.5s ease;
+     background:#972824;
+color:white;
+}
+.swadetools-number-controls-wrapper button:focus,
+.swadetools-number-controls-wrapper button:hover {
+     box-shadow:none;
+}
+.swadetools-number-controls-wrapper button:hover {
+   
+   background:#521412;
+    
+}
+

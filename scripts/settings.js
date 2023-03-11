@@ -270,5 +270,14 @@ game.settings.register(gb.moduleName, 'gangUp', {
                 type: Boolean,
                 config: false
                 }); 
+
+
+                game.settings.register(gb.moduleName, 'noWoundFatigueIcon', {
+                  name: gb.trans('SettingnoWoundFatigueIcon'),
+                  default: false,
+                  scope: "world",
+                  type: Boolean,
+                  config: false
+                  }); 
   
 }

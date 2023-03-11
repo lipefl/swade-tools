@@ -218,7 +218,10 @@
     "SWADETOOLS.SettingDesperateAttackHint": "Add a field for Desperate Attack (as in Pathfinder Setting). This field will be shown for the same skills defined for Wild Attack",
     "SWADETOOLS.Skill": "Skill",
     "SWADETOOLS.HeavyArmorWarn": "Target has Heavy Armor, only affected by Heavy Weapon",
-    "SWADETOOLSArcaneDevicePPHint": "The full cost in PP to activate the device"
+    "SWADETOOLS.ArcaneDevicePPHint": "The full cost in PP to activate the device",
+    "SWADETOOLS.SettingnoWoundFatigueIcon":"Don't show Wounds/Fatigue counter over token",
+    "SWADETOOLS.InnatePower":"Innate Power"
+    
     
     
     

@@ -29,6 +29,8 @@ export default class SystemRoll {
         if (gb.setting('simpleRolls')){
             let item=this.actor.items.get(skillId);
 
+            
+
             let skillName;
             let exp;
             if (!item){
@@ -56,7 +58,11 @@ export default class SystemRoll {
                             
                             let cr=new CharRoll(this.actor);
                             if (this.vehicle){
-                                cr.addModifier(0-this.vehicle.system.wounds.value,gb.trans('Handling','SWADE'))
+                                let penalty=0-this.vehicle.system.wounds.value;
+                                if (penalty<-4){
+                                    penalty=-4
+                                }
+                                cr.addModifier(penalty,gb.trans('Handling','SWADE'))
                             }
                             cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
                             cr.rollSkill(skillName)
@@ -79,7 +85,30 @@ export default class SystemRoll {
             chat.update({'flags.swade-tools.rolltype':'skill'});
             }
         })
-           this.actor.rollSkill(skillId)
+
+
+        let opts={};
+        if (this.vehicle){
+
+            let penalty=0-this.vehicle.system.wounds.value;
+            if (penalty<-4){
+                penalty=-4
+            }
+
+            if (penalty){
+                opts={
+                    additionalMods: [
+                        {
+                            label: game.i18n.localize('SWADE.Handling'),
+                            value: penalty,
+                        },
+                    ],
+                }
+            }
+        }
+
+
+           this.actor.rollSkill(skillId,opts);
     }
         
     }

@@ -328,6 +328,7 @@ Hooks.on('ready',()=>{
   } */
 
   game.swade.swadetoolsRollTrait=(actor,name,mod,attr=false)=>{
+    
 
     let char=new CharRoll(actor);
     char.addModifier(mod,gb.trans('Additional'))
@@ -605,11 +606,12 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
 Hooks.on("updateActor", async (actor,data,diff,userId) => {         
     
- //  console.log(actor,data,diff,userId);
+ // console.log(actor,data,diff,userId);
     if (game.user.id==userId){ 
         let upActor=new StatusIcon(actor,'actor',data);
         await upActor.checkAllStatus();
 
+        
         let charup=new CharUp(actor,data);
         charup.checkAll();
        
@@ -617,6 +619,39 @@ Hooks.on("updateActor", async (actor,data,diff,userId) => {
    
    
 });
+
+
+Hooks.on("updateActiveEffect", async (effect,info,diff,userId) => { 
+
+   // console.log(effect);
+
+    if (game.user.id==userId){ 
+    let actor=effect.parent;
+
+
+    let data = effect.changes.reduce(function (r, o) {
+        var path = o.key.split('.'),
+            last = path.pop();
+
+        path.reduce(function (p, k) {
+            return p[k] = p[k] || {};
+        }, r)[last] = o.value;
+        return r;
+    }, {});
+
+    let upActor=new StatusIcon(actor,'actor',data);
+    await upActor.checkAllStatus();
+
+    let charup=new CharUp(actor,data);
+    charup.checkAll();
+
+  
+
+    
+
+    }
+
+})
 
 Hooks.on("createToken",(token,diff,userId)=>{
    // console.log(token,diff,userId);

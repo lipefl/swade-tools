@@ -555,6 +555,106 @@ export const systemSetting=(settingName)=>{
     return game.settings.get('swade',settingName);
 }
 
+export const getTemplatesHTML=item=>{
+    const templateTypes=[
+        {model:'cone',icon:'fa-solid fa-location-pin fa-rotate-90',name:trans('Templates.Cone.Short','SWADE')},
+        {model:'stream',icon:'fa-solid fa-rectangle-wide',name:trans('Templates.Stream.Short','SWADE')},
+        {model:'small',icon:'fa-solid fa-circle-1 fa-2xs',name:trans('Templates.Small.Short','SWADE')},
+        {model:'medium',icon:'fa-solid fa-circle-2 fa-sm',name:trans('Templates.Medium.Short','SWADE')},
+        {model:'large',icon:'fa-solid fa-circle-3 fa-lg',name:trans('Templates.Large.Short','SWADE')}
+    ]
+    let html='';
+
+    templateTypes.map(type=>{
+        if (item.system.templates[type.model]){
+            html+=`<button data-template="${type.model}" title="${type.name}"><i class="${type.icon}"></i></button>`
+        }
+    })
+
+    return html;
+   
+}
+
+
+
+
+export const rollResist=(traitName,skillMod)=>{
+    let tokens=Array.from(game.user.targets);
+    if (tokens.length<1){
+        ui.notifications.warn(trans('NoTarget'))
+    } else {
+    
+        let name=traitName;
+        let isatt=findAttr(traitName);
+        let att=false;
+        
+        if (isatt){
+            name=isatt;
+            att=true;
+            
+        }
+                   
+                  
+                    
+                    let mod=skillMod
+
+
+                    
+
+                      
+                    
+                    tokens.map(t=>{
+
+                        console.log(t.actor,name,mod,att);
+
+                        game.swade.swadetoolsRollTrait(t.actor,name,mod,att)
+
+                        
+
+                    })
+                }
+}
+
+            
+   
+
+
+export const showTemplate=type=>{
+   
+        let templateData = {
+            user: game.user.id,
+            distance: 0,
+            direction: 0,
+            x: 0,
+            y: 0,
+            fillColor: game.user.color,
+        };
+       
+        if (type === 'cone') {
+            templateData.t = 'cone'
+            templateData.distance = 9
+        } else if (type === 'stream') {
+            templateData.t = 'ray'
+            templateData.distance = 12
+            templateData.width = 1
+        } else {
+            templateData.t = 'circle'
+            templateData.distance = type === 'sbt' ? 1 : (type === 'mbt' ? 2 : 3)
+        }
+        // Adjust to grid distance
+
+        templateData.distance = templateData.distance*canvas.grid.grid.options.dimensions.distance
+        
+        // noinspection JSPotentiallyInvalidConstructorUsage
+        const template_base = new CONFIG.MeasuredTemplate.documentClass(
+            templateData, {parent: canvas.scene});
+        // noinspection JSPotentiallyInvalidConstructorUsage
+        let template = new CONFIG.MeasuredTemplate.objectClass(template_base)
+      
+        template.drawPreview()
+    
+}
+
 export const say=(what,who,flavor='')=>{
     let chatData = {
         user: game.user._id,
