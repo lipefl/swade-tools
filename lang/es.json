@@ -218,5 +218,7 @@
   "SWADETOOLS.SettingDesperateAttackHint": "Añadir un campo para Ataque Desesperado (Pathfinder). Este campo se muestra en las habilidades definidas para Ataque Salvaje.",
   "SWADETOOLS.Skill": "Habilidad",
   "SWADETOOLS.HeavyArmorWarn": "El objetivo tiene una Armadura Pesada, sólo afectada por las Armas Pesadas.",
-  "SWADETOOLSArcaneDevicePPHint": "Coste total en PP para activar el dispositivo"
+  "SWADETOOLS.ArcaneDevicePPHint": "Coste total en PP para activar el dispositivo",
+  "SWADETOOLS.SettingnoWoundFatigueIcon": "No mostrar Heridas/Fatiga sobre el token",
+  "SWADETOOLS.InnatePower": "Poder Innato"
 }
