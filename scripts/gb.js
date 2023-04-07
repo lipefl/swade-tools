@@ -674,8 +674,7 @@ export const raiseCount=(result,targetNumber=4)=>{
 //dsnShowBennyAnimation
 export const bennyAnimation= async ()=>{
     if (!!game.dice3d && game.user.getFlag('swade', 'dsnShowBennyAnimation')) {
-        const bennyRoll = await new Roll('1dB').roll({async:true});
-        //const bennyRoll = new Roll('1dB').roll({async:true});
+        const benny = await new Roll('1dB').roll({async:true});
         game.dice3d.showForRoll(benny, game.user, true, null, false);
     }
 }

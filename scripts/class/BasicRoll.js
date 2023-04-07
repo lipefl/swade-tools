@@ -12,7 +12,6 @@ export default class BasicRoll {
         this.runDie = false;
     }
 
-
     prepareModifier(modifier) {
         modifier = parseInt(modifier) || 0;
 
@@ -29,28 +28,22 @@ export default class BasicRoll {
         return this.diceModifier + modifier;
     }
 
-
     addDiceModifier(dieMod) {
 
         dieMod = gb.stringDiceMod(dieMod);
         this.diceModifier += dieMod;
         return dieMod;
-
     }
 
     isRunDie() {
         this.runDie = true;
     }
 
-
     async buildRoll(dieType, wildDie, modifier = 0, rof) {
 
         if (!parseInt(rof)) {
             rof = 1;
         }
-
-
-
 
         let rollExp;
         if (rof > 1) {
@@ -69,8 +62,6 @@ export default class BasicRoll {
                 this.addFlavor(`<div>${gb.trans('RoFFinalMod')}: ${mod}</div>`, true);
             }
 
-
-
             for (let i = 1; i < rof; i++) {
                 rofExp += `,1d${dieType}x${mod}`
 
@@ -79,7 +70,6 @@ export default class BasicRoll {
             if (wildDie) {
                 wildExp = `,1d${wildDie}x${mod}`
             }
-
 
             rollExp = `{1d${dieType}x${mod}${rofExp}${wildExp}}`
 
@@ -95,24 +85,16 @@ export default class BasicRoll {
             } else {
                 rollExp = `{1d${dieType}x,1d${wildDie}x}kh${this.prepareModifier(modifier)}`
             }
-
         }
 
         //console.log(rollExp);
-
-
         this.roll = await new Roll(rollExp).roll({ async: true });
-        //this.roll = new Roll(rollExp).roll({ async: true });
-
-
         this.addDiceFlavor(rof, wildDie);
 
         //this.roll.terms[0].dice[0].options.flavor='Skill';
 
         return this.roll;
-
     }
-
 
     addDiceFlavor(rof, wildDie) {
 
@@ -120,9 +102,7 @@ export default class BasicRoll {
         //   console.log(this.roll);
         let i = 0;
 
-
         if (rof > 1) {
-
 
             if (this.skillName) {
                 while (i < rof) {
@@ -130,8 +110,6 @@ export default class BasicRoll {
                     i++;
                 }
             }
-
-
 
             if (wildDie) {
                 this.roll.terms[0].dice[i].options.flavor = gb.trans('WildDie', 'SWADE');
@@ -156,7 +134,6 @@ export default class BasicRoll {
                 this.roll.terms[0].dice[1].options.flavor = gb.trans('WildDie', 'SWADE');
                 wildkey = 1;
             }
-
         }
 
         /// extra dice
@@ -167,13 +144,9 @@ export default class BasicRoll {
             i++;
         }
 
-
         if (wildDie) {
             this.colorWild(wildkey);
         }
-
-
-
     }
 
     colorWild(wildKey) {
@@ -183,7 +156,6 @@ export default class BasicRoll {
             if (colorPreset !== 'none') {
                 this.roll.terms[0].dice[wildKey].options.colorset = colorPreset;
             }
-
         }
     }
 
@@ -193,16 +165,13 @@ export default class BasicRoll {
         //console.log(raisedie);
         let raiseAdd = ''
         if (raise) {
-
             raiseAdd = '+1d' + raisedie + 'x'
         }
 
-        let rollObj = new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`);
         //console.log(rollObj);
-        this.roll = await rollObj.roll({ async: true });
-        //this.roll = new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({ async: true });
-         //console.log(this.roll);
-         //console.log(this.roll._total);
+        this.roll = await new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({ async: true });
+        //console.log(this.roll);
+        //console.log(this.roll._total);
         return this.roll;
     }
 
@@ -231,8 +200,6 @@ export default class BasicRoll {
         }
     
         return this.rsCount[key]; */
-
-
     }
 
     isSuccess() {
@@ -247,7 +214,4 @@ export default class BasicRoll {
     /* isCritical(){
  
     } */
-
-
-
 }
