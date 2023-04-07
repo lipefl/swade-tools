@@ -23,7 +23,7 @@ export default class SheetControl {
 
     bindAttributes(){
         gb.attributes.map(attribute=>{
-            this.html.find('.attribute button.attribute-value[data-attribute="'+attribute+'"]').unbind('click').bind('click',()=>{   
+            this.html.find('.attribute button.attribute-value[data-attribute="'+attribute+'"]').unbind('click').bind('click', async ()=>{   
                 /* if (gb.setting('simpleRolls')){
                    // let item=this.sheet.actor.items.get(skillId);
                   //  let skillName=item.name;
@@ -32,16 +32,16 @@ export default class SheetControl {
     
                 } else {   */           
                 let sys=new SystemRoll(this.sheet.actor);
-                sys.rollAtt(attribute);
+                await sys.rollAtt(attribute);
                /*  } */
             })
         })
     }
 
     bindRun(){
-        this.html.find('.running-die').unbind('click').bind('click',()=>{
+        this.html.find('.running-die').unbind('click').bind('click',async ()=>{
             let sys=new SystemRoll(this.sheet.actor);
-            sys.rollRun();
+            await sys.rollRun();
         })
     }
 
@@ -65,7 +65,7 @@ export default class SheetControl {
 
             let sys=new SystemRoll(realActor);
             sys.useManeuver(this.sheet.actor);
-            sys.rollSkill(skillId);
+            await sys.rollSkill(skillId);
         })
     }
 
@@ -86,7 +86,7 @@ export default class SheetControl {
         }
 
         // ol.skill-list ....
-        this.html.find(addel+'ol.skill-list li.item.skill button.skill-die,ol.skill-list li.item.skill img.skill-icon,.skill-list-main ol.skill-list li.item.skill button.skill-name, .skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',(ev)=>{
+        this.html.find(addel+'ol.skill-list li.item.skill button.skill-die,ol.skill-list li.item.skill img.skill-icon,.skill-list-main ol.skill-list li.item.skill button.skill-name, .skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',async (ev)=>{
             //let skillId=ev.currentTarget.parentElement.dataset.itemId;
            
             let skillId=$(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
@@ -129,7 +129,7 @@ export default class SheetControl {
             let sys=new SystemRoll(this.sheet.actor);
 
            
-            sys.rollSkill(skillId);
+            await sys.rollSkill(skillId);
            /*  } */
         })
 
@@ -161,11 +161,11 @@ export default class SheetControl {
 
     bindDamage(){
        
-            this.html.find('.quick-list a.damage-roll, .inventory button.damage-roll').unbind('click').bind('click',(ev)=>{
+            this.html.find('.quick-list a.damage-roll, .inventory button.damage-roll').unbind('click').bind('click', async (ev)=>{
                 let itemId=$(ev.currentTarget).parents('.item').data('itemId');
                 let sys=new SystemRoll(this.sheet.actor);
                // this.addJokerModifier(this.sheet.actor.id);  
-                sys.rollDamage(itemId);
+                await sys.rollDamage(itemId);
                 //console.log(itemId);
             });
 

@@ -28,7 +28,7 @@ export default class ItemRoll extends CharRoll{
 
 
 
-    rollAction(actionId){
+    async rollAction(actionId){
         let action=this.actions[actionId];
 
         this.defineAction(actionId);
@@ -65,7 +65,7 @@ export default class ItemRoll extends CharRoll{
 
            
             
-            this.rollSkill(skill,rof);
+            await this.rollSkill(skill,rof);
             
 
         } else if (action.type=='damage'){
@@ -83,7 +83,7 @@ export default class ItemRoll extends CharRoll{
            
 
             this.addDmgMod();
-            this.rollDamage(damage,'',this.raiseDie());
+            await this.rollDamage(damage,'',this.raiseDie());
         }
 
         
@@ -133,7 +133,7 @@ export default class ItemRoll extends CharRoll{
 
 
 
-    rollBaseSkill(rof=1){
+    async rollBaseSkill(rof=1){
 
         let rofstr='';
         if (rof>1){
@@ -148,9 +148,9 @@ export default class ItemRoll extends CharRoll{
         let attr=gb.findAttr(this.data.skill)
        // gb.log(this.data.skill,attr);
         if (attr){
-            this.rollAtt(attr,rof);
+            await this.rollAtt(attr,rof);
         } else {
-            this.rollSkill(this.data.skill,rof);
+            await this.rollSkill(this.data.skill,rof);
         }
         
        
@@ -159,7 +159,7 @@ export default class ItemRoll extends CharRoll{
         
     }
 
-    rollBaseDamage(){
+    async rollBaseDamage(){
         this.defineAction('damage');
         this.addDmgMod();
         let extrainfo='';
@@ -167,7 +167,7 @@ export default class ItemRoll extends CharRoll{
             extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.system.ap}) `;
         }
         
-        this.rollDamage(this.item.system.damage,extrainfo,this.raiseDie());
+        await this.rollDamage(this.item.system.damage,extrainfo,this.raiseDie());
     }
 
     

@@ -160,7 +160,7 @@ export default class CombatControl {
     } */
 
 
-    unshaken(combatant){
+    async unshaken(combatant){
 
      
         
@@ -186,7 +186,7 @@ export default class CombatControl {
 
 
         
-        charRoll.rollAtt('spirit')
+        await charRoll.rollAtt('spirit')
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unshaken');
 
@@ -205,7 +205,7 @@ export default class CombatControl {
         
     }
 
-    unstunned(combatant){
+    async unstunned(combatant){
         let actor=combatant.actor;
 
 
@@ -218,7 +218,7 @@ export default class CombatControl {
         let charRoll=new CharRoll(actor);        
      //   this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
-        charRoll.rollAtt('vigor');
+        await charRoll.rollAtt('vigor');
 
         charRoll.addFlag('useactor',actor.id);
         charRoll.addFlag('rolltype','unstunned');
@@ -273,7 +273,7 @@ export default class CombatControl {
 
         /// Shaken
         if (char.is('isShaken')){
-            this.unshaken(combatant);
+            await this.unshaken(combatant);
         }
 
         if (char.is('isBound')){
@@ -292,7 +292,7 @@ export default class CombatControl {
         if (char.is('isStunned')){
           //  checkDistracted=false; => new rule
             checkVulnerable=false;
-            this.unstunned(combatant);
+            await this.unstunned(combatant);
         }
         
         /// Distracted

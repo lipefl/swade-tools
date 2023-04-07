@@ -67,7 +67,7 @@ Hooks.on('ready',()=>{
 
 
     
-  game.swade.swadetoolsAttack=(actor,item,dialog=false)=>{
+  game.swade.swadetoolsAttack=async (actor,item,dialog=false)=>{
       if (dialog){
         let itemRoll=new ItemDialog(actor,item.id)
         //    console.log(this.item);
@@ -81,7 +81,7 @@ Hooks.on('ready',()=>{
         let itemRoll=new ItemRoll(actor,item)
         //  console.log(this.item);
             
-            itemRoll.rollBaseSkill();
+            await itemRoll.rollBaseSkill();
             
             itemRoll.display();
       }
@@ -327,7 +327,7 @@ Hooks.on('ready',()=>{
     }
   } */
 
-  game.swade.swadetoolsRollTrait=(actor,name,mod,attr=false)=>{
+  game.swade.swadetoolsRollTrait= async (actor,name,mod,attr=false)=>{
     
 
     let char=new CharRoll(actor);
@@ -335,11 +335,11 @@ Hooks.on('ready',()=>{
 
                         if (attr){
                             
-                            char.rollAtt(name);
+                            await char.rollAtt(name);
                             
                         } else {
                            // char.addFlag('rolltype','skill');
-                            char.rollSkill(name);
+                            await char.rollSkill(name);
                         } 
 
                         
@@ -511,7 +511,7 @@ Hooks.on("deleteActiveEffect", (effect,diff,userid)=>{
 
 ///data-swade-tools-action='func:arg1,arg2'
 
-Hooks.on("renderChatMessage", (chatItem, html) => { 
+Hooks.on("renderChatMessage", async (chatItem, html) => { 
 
    // console.log(chatItem);
     
@@ -550,7 +550,7 @@ Hooks.on("renderChatMessage", (chatItem, html) => {
 
         let roll=new RollControl(chatItem,html,chatItem.user);
        
-        roll.doActions();
+        await roll.doActions();
 
      /*    let dices=chatItem._roll.dice;
 

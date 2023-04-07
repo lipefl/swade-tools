@@ -198,7 +198,7 @@ export default class Char {
 
 
 
-    outOfControl(){
+    async outOfControl(){
         let vehicle=this.getActor();
         let driver=gb.getDriver(vehicle);
         
@@ -206,7 +206,7 @@ export default class Char {
             if (driver){
             let charroll=new CharRoll(driver);
             charroll.addFlavor(gb.trans('OutOfControlRoll')+' ('+vehicle.name+')');
-            charroll.rollSkill(gb.getDriverSkill(vehicle));
+            await charroll.rollSkill(gb.getDriverSkill(vehicle));
             charroll.display();
 
             if (charroll.isSuccess()){
@@ -216,7 +216,7 @@ export default class Char {
                 this.say(gb.trans('OutOfControlFail'));
                 
                 if (gb.setting('outofcontrolTable')){
-                    this.rollTable(game.tables.get(gb.setting('outofcontrolTable')));
+                    await this.rollTable(game.tables.get(gb.setting('outofcontrolTable')));
                    // game.tables.get(gb.setting('outofcontrolTable')).draw();
                 }
                 

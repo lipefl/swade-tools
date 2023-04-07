@@ -16,7 +16,7 @@ export default class SystemRoll {
         }
        
     })        
-        this.actor.items.get(itemId).rollDamage()
+        await this.actor.items.get(itemId).rollDamage()
         
     }
 
@@ -53,7 +53,7 @@ export default class SystemRoll {
                    
                     ok: {
                         label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
-                        callback: (html)=>{
+                        callback: async (html)=>{
                         
                             
                             let cr=new CharRoll(this.actor);
@@ -65,7 +65,7 @@ export default class SystemRoll {
                                 cr.addModifier(penalty,gb.trans('Handling','SWADE'))
                             }
                             cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
-                            cr.rollSkill(skillName)
+                            await cr.rollSkill(skillName)
                             cr.addFlag('rolltype','skill')
                             cr.display();
                             
@@ -108,7 +108,7 @@ export default class SystemRoll {
         }
 
 
-           this.actor.rollSkill(skillId,opts);
+           await this.actor.rollSkill(skillId,opts);
     }
         
     }
@@ -127,12 +127,12 @@ export default class SystemRoll {
                            
                             ok: {
                                 label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
-                                callback: (html)=>{
+                                callback: async (html)=>{
                                 
                                     
                                     let cr=new CharRoll(this.actor)
                                     cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
-                                    cr.rollRun()
+                                    await cr.rollRun()
                                    // cr.addFlag('rolltype','attribute')
                                     cr.display();
                                     
@@ -143,7 +143,7 @@ export default class SystemRoll {
                         }
                     }).render(true);
         } else {
-            this.actor.rollRunningDie();
+            await this.actor.rollRunningDie();
         }
         
     }
@@ -172,12 +172,12 @@ export default class SystemRoll {
                            
                             ok: {
                                 label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
-                                callback: (html)=>{
+                                callback: async (html)=>{
                                 
                                     
                                     let cr=new CharRoll(this.actor)
                                     cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
-                                    cr.rollAtt(attribute)
+                                    await cr.rollAtt(attribute)
                                     cr.addFlag('rolltype','attribute')
                                     cr.display();
                                     
@@ -198,7 +198,7 @@ export default class SystemRoll {
             }
            
         })        
-            this.actor.rollAttribute(attribute)
+            await this.actor.rollAttribute(attribute)
         }
     }
 }

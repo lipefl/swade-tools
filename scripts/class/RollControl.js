@@ -78,7 +78,7 @@ export default class RollControl {
                                    // let gmtarget=html.find("#retarget")[0]?.checked;
 
                                     if (typeof gmmod == "string" && gmmod.includes('d')){
-                                        let mod=await new Roll(gb.explodeAllDice(gmmod)).roll();
+                                        let mod= await new Roll(gb.explodeAllDice(gmmod)).roll();
                                         gmmod=mod.total;
                                     }
 
@@ -218,7 +218,7 @@ export default class RollControl {
                return totaldice;
     }
 
-    doActions(){
+    async doActions(){
 
      //   console.log('calling do actions');
 
@@ -293,22 +293,22 @@ export default class RollControl {
             this.html.find('h4.dice-total').css('color','transparent');
         } */
        
-            this.statusRolls();
+            await this.statusRolls();
         
         
     }
 
-    statusRolls(){
+    async statusRolls(){
         
         
         if (this.rolltype=='unshaken'){
-            this.unshaken();
+            await this.unshaken();
         } else if (this.rolltype=='unstunned'){
-            this.unstunned();
+            await this.unstunned();
         }
     }
 
-    unstunned(){
+    async unstunned(){
 
         let actor=this.getActor(true);
 
@@ -1077,7 +1077,7 @@ export default class RollControl {
 
         if (!this.targetFunction){
 
-        this.targetFunction=(targetid,raiseDmg)=>{
+        this.targetFunction= async (targetid,raiseDmg)=>{
 
           //  console.log(target);
 
@@ -1123,9 +1123,9 @@ export default class RollControl {
 
 
             if (this.chat.flags["swade-tools"].damageaction){
-                charRoll.rollAction(this.chat.flags["swade-tools"].damageaction)
+                await charRoll.rollAction(this.chat.flags["swade-tools"].damageaction)
             } else {
-                charRoll.rollBaseDamage();
+                await charRoll.rollBaseDamage();
             }
 
             
@@ -1327,7 +1327,7 @@ export default class RollControl {
         this.targetShow+=`</div>`;
 
 
-        this.soakFunction=(targetid)=>{
+        this.soakFunction=async (targetid)=>{
             let target=canvas.tokens.get(targetid);
             let charRoll=new CharRoll(target.actor);
             let char=new Char(target.actor);
@@ -1347,7 +1347,7 @@ export default class RollControl {
                 
                 charRoll.addFlag('usetarget',target.id);
                 charRoll.addFlag('wounds',raisecount);
-                charRoll.rollAtt('vigor');
+                await charRoll.rollAtt('vigor');
                 charRoll.addFlag('rolltype','soak'); //here to overwrite rolltype attribute
                 charRoll.display();
                 
@@ -1356,7 +1356,7 @@ export default class RollControl {
            
         }
 
-        this.targetFunction=(targetid,raisecount)=>{
+        this.targetFunction=async (targetid,raisecount)=>{
             let target=canvas.tokens.get(targetid);
            // let target=canvas.tokens.get(argsArray[0]).actor
       //  let raisecount=argsArray[1];
@@ -1375,7 +1375,7 @@ export default class RollControl {
 
             if (raisecount==0){
                 if (char.isVehicle()){
-                    char.outOfControl();
+                    await char.outOfControl();
                 } else
                 if (char.is('isShaken')){
                     if (!char.hasEdgeSetting('Hardy')){
@@ -1393,12 +1393,12 @@ export default class RollControl {
                 char.applyWounds(raisecount);
                 
                 if (char.isVehicle()){
-                    char.outOfControl();
+                    await char.outOfControl();
                 } else {                    
                     char.on('isShaken');
 
                     if (gb.setting('grittyDamage')){
-                        char.rollTable(game.tables.get(gb.setting('grittyDamage')));
+                        await char.rollTable(game.tables.get(gb.setting('grittyDamage')));
                     }
                   //  this.grittyDamage(target);
                 }
@@ -1413,11 +1413,11 @@ export default class RollControl {
             append('<button class="swadetools-freereroll swadetools-rollbutton" title="' +
                    gb.trans('FreeReroll','SWADE') +
                    '"><i class="fa fa-redo"></i></button>').
-            on('click', 'button.swadetools-freereroll', () => {
+            on('click', 'button.swadetools-freereroll', async () => {
                 let actor=this.findActor();
 
                 if (actor) {
-                    this.rerollBasic(actor, true);
+                    await this.rerollBasic(actor, true);
                 }
             }
         );
@@ -1429,7 +1429,7 @@ export default class RollControl {
         
 
         if (this.rolltype!='unshaken'){ /// dont show benny button for unshaken roll
-        this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-bennyrerroll swadetools-rollbutton" title="'+gb.trans('RerollBtn')+'"></button>').on('click','button.swadetools-bennyrerroll',()=>{
+        this.html.find('.swadetools-relative .swadetools-rollbuttonwrap').append('<button class="swadetools-bennyrerroll swadetools-rollbutton" title="'+gb.trans('RerollBtn')+'"></button>').on('click','button.swadetools-bennyrerroll',async ()=>{
             
 
             let actor=this.findActor();
@@ -1444,7 +1444,7 @@ export default class RollControl {
                
 
 
-                this.rerollBasic(actor);
+                await this.rerollBasic(actor);
                
                 
             
@@ -1474,7 +1474,7 @@ export default class RollControl {
         }
     }
 
-    rerollBasic(actor,freeReroll=false){
+    async rerollBasic(actor,freeReroll=false){
 
         let char=new Char(actor);
         let mod=0;
@@ -1525,8 +1525,8 @@ export default class RollControl {
             extraflavor+=`<div>${reason}: ${modStr}</div>`;
        }
 
-        let roll=new Roll(oldroll.formula+modStr).roll({async:false});
-
+        let roll = await new Roll(oldroll.formula+modStr).roll({async:true});
+        //console.log(roll);
         if (oldroll.terms[0]?.dice!==undefined){
 
             for (let i=0;i<oldroll.terms[0].dice.length;i++){

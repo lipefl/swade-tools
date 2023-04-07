@@ -31,16 +31,16 @@ export default class TokenHud {
     }
 
     bindAttributes(){ /// and RUNNING
-        $('#token-action-hud #tah-category-attributes .tah-action').unbind('click').unbind('mousedown').bind('click',(ev)=>{
+        $('#token-action-hud #tah-category-attributes .tah-action').unbind('click').unbind('mousedown').bind('click', async (ev)=>{
             let data=$(ev.currentTarget).find('button').val().split('|');
             let actor=canvas.tokens.get(data[1]).actor;
             let attribute=data[2];
 
             let sys=new SystemRoll(actor);
             if (attribute=='runningDie'){
-                sys.rollRun();
+                await sys.rollRun();
             } else {
-                sys.rollAtt(attribute);
+                await sys.rollAtt(attribute);
             }
             
             
@@ -51,12 +51,12 @@ export default class TokenHud {
    
 
     bindSkills(){
-        $('#token-action-hud #tah-category-skills .tah-action').unbind('click').unbind('mousedown').bind('click',(ev)=>{
+        $('#token-action-hud #tah-category-skills .tah-action').unbind('click').unbind('mousedown').bind('click', async (ev)=>{
             let data=$(ev.currentTarget).find('button').val().split('|');
             let actor=canvas.tokens.get(data[1]).actor;
             let skillId=data[2];
             let sys=new SystemRoll(actor);           
-            sys.rollSkill(skillId);
+            await sys.rollSkill(skillId);
 
         })
     }
