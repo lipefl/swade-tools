@@ -374,13 +374,13 @@ export default class ItemDialog {
 
         buttons.mainSkill={
             label: skillIcon+skillName+gb.stringMod(gb.itemSkillMod(this.item)),
-            callback: (html)=>{
+            callback: async (html)=>{
                 
                 let itemRoll=new ItemRoll(this.actor,this.item);
                 
                 
-                this.processItemFormDialog(html,itemRoll);               
-                itemRoll.rollBaseSkill();               
+                await this.processItemFormDialog(html,itemRoll);               
+                await itemRoll.rollBaseSkill();               
                 itemRoll.display();
                
 
@@ -403,11 +403,11 @@ export default class ItemDialog {
         buttons.mainDamage={
             label: damageIcon+gb.trans('Damage'),//weaponinfo.damage+gb.stringMod(weaponactions.dmgMod),
             
-            callback: (html)=>{
+            callback: async (html)=>{
                
                 let itemRoll=new ItemRoll(this.actor,this.item)
-                this.processItemFormDialog(html,itemRoll,'damage');
-                itemRoll.rollBaseDamage();
+                await this.processItemFormDialog(html,itemRoll,'damage');
+                await itemRoll.rollBaseDamage();
                 itemRoll.display();
 
                 /* let data={
@@ -466,13 +466,13 @@ export default class ItemDialog {
             if (char.hasEdgeSetting('Frenzy')){
                 buttons.frenzy={
                     label: gb.settingKeyName('Frenzy'),
-                    callback: (html)=>{
+                    callback: async (html)=>{
                         let itemRoll=new ItemRoll(this.actor,this.item);
                     
             //    console.log(this.item);
-                    this.processItemFormDialog(html,itemRoll,'skill');                    
+                    await this.processItemFormDialog(html,itemRoll,'skill');                    
                     
-                    itemRoll.rollBaseSkill(2);                  
+                    await itemRoll.rollBaseSkill(2);                  
                    
                     itemRoll.display();
                     }
@@ -488,12 +488,12 @@ export default class ItemDialog {
             if (char.hasEdgeSetting('Rapid Fire')) {
                 buttons.rapidFire={
                     label: gb.settingKeyName('Rapid Fire') +' ('+gb.trans('RoF','SWADE')+' '+rof+')',
-                    callback: (html)=>{
+                    callback: async (html)=>{
                         let itemRoll=new ItemRoll(this.actor,this.item);
                         itemRoll.useShots(gb.RoFBullets[rof])
-                        this.processItemFormDialog(html,itemRoll,'skill');
+                        await this.processItemFormDialog(html,itemRoll,'skill');
                         
-                        itemRoll.rollBaseSkill(rof);
+                        await itemRoll.rollBaseSkill(rof);
                         itemRoll.display();
                     }
                 }
@@ -504,13 +504,13 @@ export default class ItemDialog {
         if (item.isArcaneDevice){
             buttons['arcanedevice']={
                 label: gb.trans('ActivateArcaneDevice','SWADE'),
-                callback: (html)=>{
+                callback: async (html)=>{
 
 
                     let itemRoll=new ItemRoll(this.actor,this.item)
-                this.processItemFormDialog(html,itemRoll,'skill');
+                await this.processItemFormDialog(html,itemRoll,'skill');
 
-                itemRoll.rollArcaneDevice();
+                await itemRoll.rollArcaneDevice();
               //  itemRoll.rollBaseDamage();
                 itemRoll.display();
                 }
@@ -537,7 +537,7 @@ export default class ItemDialog {
            /// go to RollControl
                 buttons[id]={
                     label: actionIcon+action.name,
-                    callback: (html)=>{
+                    callback: async (html)=>{
 
                         if (action.type=='resist'){ 
 
@@ -545,8 +545,8 @@ export default class ItemDialog {
                         
                         } else  {
                             let itemRoll=new ItemRoll(this.actor,this.item)
-                            this.processItemFormDialog(html,itemRoll,action.type);
-                            itemRoll.rollAction(id);
+                            await this.processItemFormDialog(html,itemRoll,action.type);
+                            await itemRoll.rollAction(id);
                             itemRoll.display();
                         }
 
@@ -640,7 +640,7 @@ export default class ItemDialog {
         charRoll.display();
     } */
 
-    processItemFormDialog(html,charRoll,actionType){
+    async processItemFormDialog(html,charRoll,actionType){
         
         if (this.vehicle){
             charRoll.usingVehicle(this.vehicle);
@@ -654,7 +654,7 @@ export default class ItemDialog {
 
             if (html.find("#wildattack")[0]?.checked){
                 charRoll.addModifier(2,gb.trans('WildAttack'));
-                charRoll.wildAttack();
+                await charRoll.wildAttack();
             } 
 
             if (html.find("#swat")[0]?.checked){

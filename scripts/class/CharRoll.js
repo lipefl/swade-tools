@@ -171,7 +171,7 @@ export default class CharRoll extends BasicRoll{
     }
 
  
-    rollRun(){
+    async rollRun(){
         this.flavor+=`<div>${gb.trans('Running','SWADE')}</div>`;
 
         if (gb.systemSetting('enableWoundPace')){
@@ -187,10 +187,10 @@ export default class CharRoll extends BasicRoll{
         this.addModifier(this.actor.system.stats.speed.adjusted,gb.trans('Pace','SWADE'))
      //   this.baseModifiers();
      this.isRunDie();
-       return this.buildRoll(this.actor.system.stats.speed.runningDie,false,this.mod);
+       return await this.buildRoll(this.actor.system.stats.speed.runningDie,false,this.mod);
     }
 
-    rollAtt(attribute,rof=1){
+    async rollAtt(attribute,rof=1){
         let dieType=this.actor.system.attributes[attribute].die.sides;
         
       //  let modDice=this.actor.data.data.attributes[attribute].die.modifier+modifier;
@@ -219,7 +219,7 @@ export default class CharRoll extends BasicRoll{
 
         this.addFlag('rolltype','attribute');
 
-        return this.buildRoll(dieType,wildDie,this.mod,rof);
+        return await this.buildRoll(dieType,wildDie,this.mod,rof);
     }
 
 
@@ -657,7 +657,7 @@ export default class CharRoll extends BasicRoll{
 
 
 
-    rollDamage(damage,extraflavor='',raisedie=6){
+    async rollDamage(damage,extraflavor='',raisedie=6){
         this.rolltype='damage';
 
         let raisetext=``;
@@ -675,7 +675,7 @@ export default class CharRoll extends BasicRoll{
         this.flavor+=`<div>${gb.trans('Dmg','SWADE')}: ${damage} ${raisetext} ${extraflavor}</div>`;
         this.baseModifiers(true);
       //  console.log(raisedie);
-        this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise,raisedie);
+        await this.buildDamageRoll(this.changeStr(damage),this.mod,this.dmgraise,raisedie);
     }
 
     addFlavor(flavorText,atend=false){

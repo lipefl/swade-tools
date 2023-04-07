@@ -380,7 +380,7 @@ export const updateActor=(actor,data,val,istoken)=>{
 
 
 
-export const macroRoll=(itemName)=>{
+export const macroRoll=async (itemName)=>{
     let actor=findUserActor();
     
 
@@ -394,7 +394,7 @@ export const macroRoll=(itemName)=>{
             let type=item.type;
             if (type=='skill'){
                 let sys=new SystemRoll(actor);
-                sys.rollSkill(item.id);
+                await sys.rollSkill(item.id);
             } else {
                 let itemd=new ItemDialog(actor,item.id);
                 itemd.showDialog()
@@ -605,7 +605,7 @@ export const rollResist=(traitName,skillMod)=>{
                     
                     tokens.map(t=>{
 
-                        console.log(t.actor,name,mod,att);
+                        //console.log(t.actor,name,mod,att);
 
                         game.swade.swadetoolsRollTrait(t.actor,name,mod,att)
 
@@ -672,9 +672,10 @@ export const raiseCount=(result,targetNumber=4)=>{
     return Math.floor((result-targetNumber)/4);
 }
 //dsnShowBennyAnimation
-export const bennyAnimation=()=>{
+export const bennyAnimation= async ()=>{
     if (!!game.dice3d && game.user.getFlag('swade', 'dsnShowBennyAnimation')) {
-        const benny = new Roll('1dB').roll({async:false});
+        const bennyRoll = await new Roll('1dB').roll({async:true});
+        //const bennyRoll = new Roll('1dB').roll({async:true});
         game.dice3d.showForRoll(benny, game.user, true, null, false);
     }
 }
@@ -992,7 +993,7 @@ export const btnAction = { /// button functions
         }
     },
 
-    rollTargetDmg:(argsArray)=>{
+    rollTargetDmg:async(argsArray)=>{
       //args  actorid,itemid,targetid,raise
       let actor=game.actors.get(argsArray[0]);
       let target=canvas.tokens.get(argsArray[2])
@@ -1007,7 +1008,7 @@ export const btnAction = { /// button functions
         if (argsArray[3]){
             charRoll.raiseDmg();
         }
-      charRoll.rollDamage(`${item.system.damage}`);
+      await charRoll.rollDamage(`${item.system.damage}`);
       charRoll.display();
     },
 
