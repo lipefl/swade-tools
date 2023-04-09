@@ -220,7 +220,10 @@
     "SWADETOOLS.HeavyArmorWarn": "Alvo tem Armadura Pesada, só é afetado por Arma Pesada",
     "SWADETOOLS.ArcaneDevicePPHint": "O custo total em PP para ativar o dispositivo",
     "SWADETOOLS.SettingnoWoundFatigueIcon":"Não monstrar ícones de Ferimentos/Fadiga sobre o token",
-    "SWADETOOLS.InnatePower":"Poder Inato"
+    "SWADETOOLS.InnatePower":"Poder Inato",
+    "SWADETOOLS.PackTacticsSetting": "Táticas de Bando",
+    "SWADETOOLS.SettingautoCover": "Usar Cobertura Automaticamente",
+    "SWADETOOLS.SettingautoCoverHint": "Essa opção irá contar a penalidade de Cobertura automaticamente para items equipados (escudos ou outros) para Ataques à Distância. "    
    
 
 

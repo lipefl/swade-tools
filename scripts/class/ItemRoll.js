@@ -54,12 +54,15 @@ export default class ItemRoll extends CharRoll{
                rof=action.rof;
             }
 
-            let skill=this.item.skill;
+            let skill=this.data.skill;
+
+           // console.log(skill,'skill1');
             
             if (action.skillOverride){
                 skill=action.skillOverride;
             }
 
+           // console.log(skill,'skill2');
             
             this.addSkillMod();
 

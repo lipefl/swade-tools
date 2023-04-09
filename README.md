@@ -159,10 +159,15 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Resist actions compatibility with SWADE System
 + Option to disable Wounds/Fatigue Icons
 + Allow using the same damage roll for multiple targets
++ Added automatic Pack Tatics bonus damage (thanks to @EternalRider)
++ Added automatic Cover for shields or other items with Cover (can be disabled in settings)
 
 **Fixes**
 + Size Effect items now updates the sheet (as in the Size input)
 + Vehicle Maneuver button fixed
++ Async rolls (thanks to @inxaos)
++ Removed Called Shot (Torso) shown on damage
++ Fixed RoF bug for NPCs
 
 
 More features will be added...

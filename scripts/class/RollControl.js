@@ -833,6 +833,7 @@ export default class RollControl {
 
        
         let targetNumber=4;
+        let gangup=0;
 
 
    
@@ -931,6 +932,29 @@ export default class RollControl {
                 }
             }
 
+
+            if (gb.setting('autoCover')){
+                /// cover
+                let coveritems=target.actor.items.filter(el=>el.system.equipStatus==3 && el.system.cover<0);
+               // let finalcover = Math.min(...coveritems.map(item => item.cover));
+                let finalcover=0;
+                let itemname='';
+    
+                /// find lowest cover
+                coveritems.map(item=>{
+                    if (item.system.cover<finalcover){
+                        finalcover=item.system.cover;
+                        itemname=item.name;
+                    }
+                })
+    
+                if (finalcover<0){
+                    let coverBonus=Math.abs(finalcover);
+                    targetNumber+=coverBonus;
+                    targetInfo+=`<li>${itemname}: -${coverBonus}`
+                }
+    
+                }
             
         }
 
@@ -1102,6 +1126,13 @@ export default class RollControl {
             if (this.chat.flags["swade-tools"]?.wildattack){
                 charRoll.addModifier(2,gb.trans('WildAttack'));
             }
+
+
+             //pack tactics handle - thanks to EternalRider
+             let char=new Char(this.getActor());
+             if (gb.setting('gangUp') && gangup>0 && char.hasAbilitySetting('Pack Tactics')) {
+                 charRoll.addModifier(gangup,gb.trans('PackTacticsSetting'));
+             }
 
             if (this.chat.flags["swade-tools"]?.desperateattack){
                 let despmod=0-gb.realInt(this.chat.flags["swade-tools"].desperateattack)

@@ -7,7 +7,7 @@ export const moduleName='swade-tools'
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
 export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny'];
-export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable'];
+export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
 export const RoFBullets={
@@ -461,7 +461,7 @@ export const penalArmorMinStr=(actor)=>{
    
    let  actorstr=getStrForMinStr(actor);
    let minstr;
-    actor.items.filter(el=>el.type=='armor' && el.system.equipped).map(item=>{
+    actor.items.filter(el=>el.type=='armor' && el.system.equipStatus==3).map(item=>{
         minstr=getMinStr(item)
         if (minstr>actorstr){
             penal+=(minstr-actorstr)/2

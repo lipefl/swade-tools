@@ -199,6 +199,14 @@ game.settings.register(gb.moduleName, 'gangUp', {
     config: false
     });
 
+    game.settings.register(gb.moduleName, 'autoCover', {
+      name: gb.trans('SettingautoCover'),
+      hint: gb.trans('SettingautoCoverHint'),
+      default: true,
+      scope: "world",
+      type: Boolean,
+      config: false
+      });
 
     game.settings.register(gb.moduleName, 'reloadX', {
       name: gb.trans('SettingReloadX'),

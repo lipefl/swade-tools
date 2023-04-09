@@ -150,7 +150,7 @@ export default class CharRoll extends BasicRoll{
         
         if (this.flagUpdate?.['usecalled']=='Head'){
             this.addModifier(4,gb.trans('CalledShot')+ ' ('+gb.trans(this.flagUpdate['usecalled'],'SWADE')+')');
-        } else {
+        } else if (this.flagUpdate?.['usecalled']!='Torso') {
             this.addFlavor('<div>'+gb.trans('CalledShot')+ ' ('+gb.trans(this.flagUpdate['usecalled'],'SWADE')+')</div>',true);
         }
 

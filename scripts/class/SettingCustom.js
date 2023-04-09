@@ -25,7 +25,7 @@ export default class SettingName extends FormApplication {
         data.formHtml+=gb.settingFieldCheckbox('useScale',gb.trans('SettinguseScale'),gb.trans('SettinguseScaleHint'));
         data.formHtml+=gb.settingFieldCheckbox('askCalledShots',gb.trans('SettingAskCalledShots'),gb.trans('SettingAskCalledShotsHint'));
         data.formHtml+=gb.settingFieldCheckbox('ignoreRange',gb.trans('IgnoreRange'),'');
-
+        data.formHtml+=gb.settingFieldCheckbox('autoCover',gb.trans('SettingautoCover'),gb.trans('SettingautoCoverHint'));
         
 
         data.formHtml+=`<h2>${gb.trans('RulesSettings')}</h2>`;

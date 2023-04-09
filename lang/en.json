@@ -220,7 +220,10 @@
     "SWADETOOLS.HeavyArmorWarn": "Target has Heavy Armor, only affected by Heavy Weapon",
     "SWADETOOLS.ArcaneDevicePPHint": "The full cost in PP to activate the device",
     "SWADETOOLS.SettingnoWoundFatigueIcon":"Don't show Wounds/Fatigue counter over token",
-    "SWADETOOLS.InnatePower":"Innate Power"
+    "SWADETOOLS.InnatePower":"Innate Power",
+    "SWADETOOLS.PackTacticsSetting": "Pack Tactics",
+    "SWADETOOLS.SettingautoCover": "Use Cover Automatically",
+    "SWADETOOLS.SettingautoCoverHint": "This option will automatically count Cover penalty for equipped Shields (or any item with cover) on Ranged Attacks . "    
     
     
     
