@@ -446,3 +446,8 @@ color:white;
     
 }
 
+
+li.chat-message footer.roll-interaction { /* /// HIDE SYSTEM BENNY BUTTONS */
+    display:none
+    }
+

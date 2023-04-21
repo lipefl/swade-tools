@@ -1580,11 +1580,15 @@ export default class RollControl {
         /// also copy roll.options addDiceFlavor TODO
 
        // console.log(this.chat.flags?.['swade-tools']);
+
+    //   console.log(chatflags,roll.total);
         
         if (gb.raiseCount(roll.total)>=0 && chatflags?.arcanefail?.pp){
 
-            if (chatflags?.arcanefail?.arcaneitem){
-                char.spendPP(chatflags?.arcanefail?.pp,chatflags.arcanefail.arcaneitem);
+       //     console.log('pass');
+
+            if (chatflags?.arcanefail?.arcaneItem){
+                char.spendPP(chatflags?.arcanefail?.pp,chatflags.arcanefail.arcaneItem);
                 flavor=flavor.replace(`<div>${gb.trans('FailedPP')}</div>`,'');
                 chatflags.arcanefail={}; ///remove arcane fail pp to avoid repeat
             }

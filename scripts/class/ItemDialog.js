@@ -569,16 +569,16 @@ export default class ItemDialog {
                     $(el).parent().append('<span class="swadetools-number-controls-wrapper"><button class="swadetools-plus">+</button><button class="swadetools-minus">-</button></span>')
                     .on('click','button.swadetools-plus,button.swadetools-minus',ev=>{
 
-                        console.log(ev);
+                      //  console.log(ev);
 
                         let input=$(el)
                         let val=gb.realInt(input.val());
 
-                        console.log(ev);
+                       // console.log(ev);
 
                         if ($(ev.currentTarget).hasClass('swadetools-minus')){                       
                             let newvalue=val-1;
-                            console.log(newvalue);
+                           // console.log(newvalue);
                             input.val(newvalue);
                         } else if ($(ev.currentTarget).hasClass('swadetools-plus')){
                             let newvalue=val+1
