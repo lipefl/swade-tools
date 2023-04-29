@@ -208,14 +208,14 @@ game.settings.register(gb.moduleName, 'gangUp', {
       config: false
       });
 
-    game.settings.register(gb.moduleName, 'reloadX', {
+   /*  game.settings.register(gb.moduleName, 'reloadX', {
       name: gb.trans('SettingReloadX'),
       hint: gb.trans('SettingReloadXHint'),
       default: false,
       scope: "world",
       type: Boolean,
       config: false
-      });
+      }); */
 
   game.settings.register(gb.moduleName, 'alwaysShowSituational', {
     name: gb.trans('SettingShowSituational'),

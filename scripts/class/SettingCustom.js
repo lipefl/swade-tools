@@ -29,7 +29,7 @@ export default class SettingName extends FormApplication {
         
 
         data.formHtml+=`<h2>${gb.trans('RulesSettings')}</h2>`;
-        data.formHtml+=gb.settingFieldCheckbox('reloadX',gb.trans('SettingreloadX'),gb.trans('SettingreloadXHint'));
+      //  data.formHtml+=gb.settingFieldCheckbox('reloadX',gb.trans('SettingreloadX'),gb.trans('SettingreloadXHint'));
         data.formHtml+=gb.settingFieldCheckbox('desperateAttack',gb.trans('SettingDesperateAttack'),gb.trans('SettingDesperateAttackHint'));
 
 
