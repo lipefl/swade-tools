@@ -497,13 +497,10 @@ export default class CharRoll extends BasicRoll{
                     if (this.item.type=='weapon'){
                         if (this.item.system.autoReload===true && maxshots>=this.shotsUsed){
 
-                            gb.rechargeWeapon(this.actor,this.item,this.shotsUsed)
+                           // gb.rechargeWeapon(this.actor,this.item,this.shotsUsed) /// removed SWADE system 2.3
                             
+                            this.item.reload();
                             
-                            
-                            /* gb.rechargeWeapon(this.actor,this.item).then(()=>{
-                                return this.countShots();
-                            }) */
                             
                            
                         } else {
@@ -547,7 +544,9 @@ export default class CharRoll extends BasicRoll{
         ok: {
             label: `<i class="fas fa-redo"></i> ${gb.trans('Reload','SWADE')}`,
             callback: ()=>{
-                gb.rechargeWeapon(this.actor,this.item);
+              //  gb.rechargeWeapon(this.actor,this.item); /// removed swade system 2.3
+
+              this.item.reload();
 
             }
         }
@@ -555,7 +554,8 @@ export default class CharRoll extends BasicRoll{
         
     }
 
-    if (gb.setting('reloadX')){
+    /* SWADE SYSTEM now handles reload
+     if (gb.setting('reloadX')){ 
         buttons.x={
             label: `<i class="fas fa-spinner"></i> ${gb.trans('Reload','SWADE')} X`,
             callback: ()=>{
@@ -563,7 +563,7 @@ export default class CharRoll extends BasicRoll{
 
             }
         }
-    }
+    } */
 
         new Dialog({
             title: item.name,
@@ -761,6 +761,8 @@ export default class CharRoll extends BasicRoll{
 
          //  console.log(updateFlags);
         }
+
+        
 
         let chatData = {
             user: game.user.id,

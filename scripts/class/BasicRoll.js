@@ -87,11 +87,19 @@ export default class BasicRoll {
             }
         }
 
-        //console.log(rollExp);
-        this.roll = await new Roll(rollExp).roll({ async: true });
+       
+
+        
+
+      //  this.roll = await new Roll(rollExp).roll({ async: true });  /// removed due to SWADE SYSTEM 2.3
+        /// NEW CODE FOR ROLL
+      this.roll = new CONFIG.Dice.SwadeRoll(rollExp, {}, {});
+        await this.roll.evaluate({async: true});
+        //// END NEW CODE FOR ROLL
+
         this.addDiceFlavor(rof, wildDie);
 
-        //this.roll.terms[0].dice[0].options.flavor='Skill';
+       
 
         return this.roll;
     }
@@ -168,10 +176,11 @@ export default class BasicRoll {
             raiseAdd = '+1d' + raisedie + 'x'
         }
 
-        //console.log(rollObj);
-        this.roll = await new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({ async: true });
-        //console.log(this.roll);
-        //console.log(this.roll._total);
+       
+        this.roll = new CONFIG.Dice.SwadeRoll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`, {}, {});
+        await this.roll.evaluate({async: true});
+        /// this.roll = await new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({ async: true }); /// removed due to SWADE 2.3
+       
         return this.roll;
     }
 

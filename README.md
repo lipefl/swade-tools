@@ -13,22 +13,14 @@ A series of automations for swade: Joker's Wild (with bonus); Status Management 
 
 This is my first big module, please report if you see any bugs and be nice :)
 
-## v1.11.x (Last Update)
-+ Added quick template buttons for powers
-+ Added + and - buttons for number inputs (Mod field still accepts dice modifier)
-+ Resist actions compatibility with SWADE System
-+ Option to disable Wounds/Fatigue Icons
-+ Allow using the same damage roll for multiple targets
-+ Added automatic Pack Tatics bonus damage (thanks to @EternalRider)
-+ Added automatic Cover for shields or other items with Cover (can be disabled in settings)
+## v1.12.x (Last Update)
+
+- Only compatible with SWADE system v2.3+
+- Changed the way roll works to the new SWADE system basic roll
+- Reload is now handled entirely by SWADE system
 
 **Fixes**
-+ Size Effect items now updates the sheet (as in the Size input)
-+ Vehicle Maneuver button fixed
-+ Async rolls (thanks to @inxaos)
-+ Removed Called Shot (Torso) shown on damage
-+ Fixed RoF bug for NPCs
-+ Fixed minor bug for power fail not spending PP when success with reroll
+- Fixed bug in Elan/No Mercy Edges re-adding on third roll
 
 ## Features Available (v1.0.0)
 
@@ -166,6 +158,22 @@ Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
 + Rerolling a failed power now detects success and removes PP accordingly (and hide failure message)
 + Running die also simplified when "Simple Rolls" is enabled
 
+## v1.11.x (Last Update)
++ Added quick template buttons for powers
++ Added + and - buttons for number inputs (Mod field still accepts dice modifier)
++ Resist actions compatibility with SWADE System
++ Option to disable Wounds/Fatigue Icons
++ Allow using the same damage roll for multiple targets
++ Added automatic Pack Tatics bonus damage (thanks to @EternalRider)
++ Added automatic Cover for shields or other items with Cover (can be disabled in settings)
+
+**Fixes**
++ Size Effect items now updates the sheet (as in the Size input)
++ Vehicle Maneuver button fixed
++ Async rolls (thanks to @inxaos)
++ Removed Called Shot (Torso) shown on damage
++ Fixed RoF bug for NPCs
++ Fixed minor bug for power fail not spending PP when success with reroll
 
 
 

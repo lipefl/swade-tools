@@ -89,7 +89,7 @@ button.swadetools-freereroll {
 }
 
 .swadetools-rollbuttonwrap {
-    bottom: 5px;
+    bottom: 3px;
     position: absolute;
     display: flex;
     width: 100%;
@@ -447,7 +447,8 @@ color:white;
 }
 
 
-li.chat-message footer.roll-interaction { /* /// HIDE SYSTEM BENNY BUTTONS */
+li.chat-message footer.roll-interaction,
+.swade-roll .dice-flavor { /* /// HIDE SYSTEM BENNY BUTTONS AND words "Rool" .swadetools-rollbuttonwrap"Roll Result" */
     display:none
     }
 

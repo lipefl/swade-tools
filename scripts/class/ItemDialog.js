@@ -430,11 +430,13 @@ export default class ItemDialog {
         buttons.reload={
             label: `<i class="fas fa-redo"></i> `+gb.trans('Reload','SWADE'),
             callback: ()=> {
-                gb.rechargeWeapon(this.actor,this.item);
+                this.item.reload(); // swade system reload
+                //gb.rechargeWeapon(this.actor,this.item);
             }
         }
 
-        if (gb.setting('reloadX')){
+        /* swade system now handles reload
+         if (gb.setting('reloadX')){
             
             buttons.reloadx={
                 label: `<i class="fas fa-spinner"></i> `+gb.trans('Reload','SWADE')+' X',
@@ -443,7 +445,7 @@ export default class ItemDialog {
                     gb.rechargeWeaponXDialog(this.actor,this.item);
                 }
             }
-        }
+        } */
     }
 
         if (skillName==gb.setting('fightingSkill')){

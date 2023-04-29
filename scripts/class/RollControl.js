@@ -257,8 +257,11 @@ export default class RollControl {
 
           this.html.find('.message-content .dice-total').html(totalhtml);
 
-            this.html.find('.dice-formula').append('<div class="modifier"><label style="color:black">'+modstr+'</label></div><div class="modifier"><label style="color:black">'+Math.abs(this.gmmod)+'</label></div>')
-           // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
+           // this.html.find('.dice-formula').append('<div class="modifier"><label style="color:black">'+modstr+'</label></div><div class="modifier"><label style="color:black">'+Math.abs(this.gmmod)+'</label></div>')  /// removed due to swade system 2.3
+
+
+            this.html.find('.formula-list').append('<li>'+modstr+'</li><li>'+Math.abs(this.gmmod)+'</li>') 
+           
         },500)  
            
          //  this.html.find('.message-content').append('<div class="swadetools-gmmodtotal dice-roll"><span class="swadetools-gmmodtotalnumber dice-total">'+total+'</span></div>');
@@ -289,9 +292,9 @@ export default class RollControl {
 
       //  console.log(this.chat.data.flags['swade-tools']);
      
-        /* if (this.rolltype=='skill' && this.chat.data.flags['swade-tools'].userof>1){ ///hide total for rof  ----> not working anymore
-            this.html.find('h4.dice-total').css('color','transparent');
-        } */
+         if (this.rolltype=='skill' && this.chat.data.flags['swade-tools'].userof>1){ ///hide total for rof  
+            this.html.find('.dice-total').css('color','transparent');
+        } 
        
             await this.statusRolls();
         
@@ -1516,7 +1519,11 @@ export default class RollControl {
         let chatflags=this.chat.flags['swade-tools'];
 
 
-      //  console.log(this.chat.data.flags);
+    //   console.log(this.chat.data.flags);
+
+       if (this.chat.flags['swade-tools']?.edgebonus) {
+        edgebonus=this.chat.flags['swade-tools'].edgebonus;
+       }
 
       if (!freeReroll){
         if (this.rolltype=='damage'){
@@ -1556,7 +1563,14 @@ export default class RollControl {
             extraflavor+=`<div>${reason}: ${modStr}</div>`;
        }
 
-        let roll = await new Roll(oldroll.formula+modStr).roll({async:true});
+       
+
+      //  let roll = await new Roll(oldroll.formula+modStr).roll({async:true}); /// removed due to swade system  2.3
+      /// new roll
+      let roll = new CONFIG.Dice.SwadeRoll(oldroll.formula+modStr, {}, {});
+      await roll.evaluate({async: true});
+      /// end new roll
+
         //console.log(roll);
         if (oldroll.terms[0]?.dice!==undefined){
 
@@ -1608,13 +1622,13 @@ export default class RollControl {
 
         
 
-       roll.toMessage(chatData).then((chat)=>{
+       await roll.toMessage(chatData).then(async chat=>{
         if (chatflags){
             let flags=chatflags;
 
            
             
-            chat.update({"flags.swade-tools":flags,"flags.swade-tools.edgebonus":edgebonus});
+            await chat.update({"flags.swade-tools":flags,"flags.swade-tools.edgebonus":edgebonus});
             /// repeat flags for roll
            
         }
