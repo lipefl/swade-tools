@@ -872,6 +872,55 @@ export const translateActiveEffect=(statusName,removeIs=false)=>{
     
 }
 
+export const noneReloadType= async (actor,item,shots) => {
+    if (
+    systemSetting('ammoManagement') && (
+    (systemSetting('ammoFromInventory') && actor.type=='character') 
+    || (actor.type=='npc' && systemSetting('npcAmmo'))
+    || (actor.type=='vehicle' && systemSetting('vehicleAmmo')))
+    )    {
+
+       
+
+
+        let gearname=item.system.ammo.trim();
+            if (!gearname){
+               ui.notifications.error(trans('NoAmmoSet','SWADE'));
+               return false;
+            } else {
+                let gearitem=actor.items.filter(el=>el.type=='gear' && el.name.trim()==gearname)[0];
+
+            
+
+            let shotsToFull=shots;
+
+            if (!gearitem){
+                ui.notifications.warn(trans('NotEnoughAmmo','SWADE'));
+                return false;
+
+            } else {
+                let gearshots=realInt(gearitem.system.quantity);
+                let usedgearshots;
+                if (gearshots<shotsToFull){
+                    ui.notifications.warn(trans('NotEnoughAmmo','SWADE'));
+                    return false;
+                } else {
+                    usedgearshots=shotsToFull;                    
+                }
+
+                let newgearshots=gearshots-usedgearshots;
+              
+             await gearitem.update({"data.quantity":newgearshots})
+             return true;
+            
+            }
+        }
+
+    } else {
+        return true;
+    }
+}
+
 export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>{
     let newshots;
     let shots=realInt(item.system.shots);
@@ -951,7 +1000,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
 
         if (!stop && newshots!=curShots){
             item.update({"data.currentShots":newshots});
-            if (item.system.autoReload!==true){  // nao jogar no chat para itens com autoReload
+            if (item.system.reloadType=="none"){  // nao jogar no chat para itens com autoReload
             let char=new Char(actor);
             char.say(`${item.name} ${trans('Recharged')}${xbulletsay}`);
             }

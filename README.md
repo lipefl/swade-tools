@@ -17,10 +17,11 @@ This is my first big module, please report if you see any bugs and be nice :)
 
 - Only compatible with SWADE system v2.3+
 - Changed the way roll works to the new SWADE system basic roll
-- Reload is now handled entirely by SWADE system
+- Reload is now handled by SWADE system (except Reload Type "none" option)
 
 **Fixes**
 - Fixed bug in Elan/No Mercy Edges re-adding on third roll
+- Fixed bug with Reload Type "none"
 
 ## Features Available (v1.0.0)
 

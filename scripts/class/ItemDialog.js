@@ -426,7 +426,7 @@ export default class ItemDialog {
     }
       
 
-    if (weaponinfo.shots>0 && !weaponinfo.autoReload){
+    if (weaponinfo.shots>0 && weaponinfo.reloadType!="none"){ /// autoReload
         buttons.reload={
             label: `<i class="fas fa-redo"></i> `+gb.trans('Reload','SWADE'),
             callback: ()=> {

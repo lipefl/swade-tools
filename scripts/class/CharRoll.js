@@ -450,7 +450,7 @@ export default class CharRoll extends BasicRoll{
         
     }
 
-    countShots(){
+    async countShots(){
         
         if (this.manageshots){
        //let item=this.actor.items.get(this.itemid);
@@ -470,10 +470,27 @@ export default class CharRoll extends BasicRoll{
         }
     }else 
         if (this.item.type=='weapon'){
-            maxshots=gb.realInt(this.item.system.shots);
+
+            if (this.item.system.reloadType=="none"){  /// autoReload
+
+                maxshots=false;
+
+                let reload=await gb.noneReloadType(this.actor,this.item,this.shotsUsed);
+                //console.log(reload);
+
+               if (!reload){
+
+                    this.dontDisplay=true;
+               }
+
+            } else {
+
+                maxshots=gb.realInt(this.item.system.shots);
             currentShots=gb.realInt(this.item.system.currentShots)
          //   entity=this.item
             update='system.currentShots';
+            }
+            
         } else if (this.item.type=='power'){
             let char=new Char(this.actor);
             maxshots=gb.realInt(char.getActualPP(this.item.system.arcane))
@@ -495,17 +512,25 @@ export default class CharRoll extends BasicRoll{
 
                 if (currentShots<0){
                     if (this.item.type=='weapon'){
-                        if (this.item.system.autoReload===true && maxshots>=this.shotsUsed){
+                        /* if (this.item.system.reloadType=="none"){  /// autoReload
+
+                           // decrease ammo from inventory
+                           
+                           if (!gb.noneReloadType(this.actor,this.item,this.shotsUsed)){
+
+                            this.noShotsMsg(this.item);
+                        }
+                           
 
                            // gb.rechargeWeapon(this.actor,this.item,this.shotsUsed) /// removed SWADE system 2.3
                             
-                            this.item.reload();
+                            //this.item.reload();
                             
                             
                            
-                        } else {
+                        } else { */
                             this.noShotsMsg(this.item);
-                        }
+                       /*  } */
                         
                     } else if (this.item.type=='power' || this.item.isArcaneDevice){
                         this.noPowerPointsMsg(this.item);

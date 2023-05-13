@@ -37,6 +37,7 @@ export default class RollControl {
 
         this.powerfail=null;
 
+        
      
     }
 
@@ -292,7 +293,7 @@ export default class RollControl {
 
       //  console.log(this.chat.data.flags['swade-tools']);
      
-         if (this.rolltype=='skill' && this.chat.data.flags['swade-tools'].userof>1){ ///hide total for rof  
+         if (this.rolltype=='skill' && this.chat.flags['swade-tools'].userof>1){ ///hide total for rof  
             this.html.find('.dice-total').css('color','transparent');
         } 
        
@@ -384,7 +385,7 @@ export default class RollControl {
     }
 
 
-    unshaken(){
+    async unshaken(){
       //  let actorid=this.chat.data.flags["swade-tools"].useactor;
         let actor=this.getActor(true);
        // console.log(actor);
