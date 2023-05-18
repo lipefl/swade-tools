@@ -471,7 +471,10 @@ export default class CharRoll extends BasicRoll{
     }else 
         if (this.item.type=='weapon'){
 
-            if (this.item.system.reloadType=="none"){  /// autoReload
+
+            maxshots=gb.realInt(this.item.system.shots);
+
+            if (this.item.system.reloadType=="none" && maxshots){  /// autoReload
 
                 maxshots=false;
 
@@ -485,7 +488,7 @@ export default class CharRoll extends BasicRoll{
 
             } else {
 
-                maxshots=gb.realInt(this.item.system.shots);
+               
             currentShots=gb.realInt(this.item.system.currentShots)
          //   entity=this.item
             update='system.currentShots';

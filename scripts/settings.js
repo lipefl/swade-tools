@@ -3,7 +3,38 @@ import SettingRules from './class/SettingRules.js';
 import SettingCustom from './class/SettingCustom.js';
 import * as gb from './gb.js';
 
-export const registerSettings=()=>{
+export const registerSettings=async()=>{
+
+
+  game.settings.registerMenu(gb.moduleName,'settingName',{
+    name: gb.trans('settingName'),
+    label: gb.trans('settingNameButton'),
+    hint: gb.trans('settingNameHint'),
+    icon: 'far fa-address-card',
+    type: SettingName,
+    restricted: true
+});
+
+/* game.settings.registerMenu(gb.moduleName,'settingRules',{
+  name: gb.trans('settingRules'),
+  label: gb.trans('settingRulesButton'),
+  hint: gb.trans('settingRulesHint'),
+  icon: 'fas fa-list',
+  type: SettingRules,
+  restricted: true
+}); */
+
+
+game.settings.registerMenu(gb.moduleName,'settingCustom',{
+name: gb.trans('settingCustom'),
+label: gb.trans('settingCustomButton'),
+hint: gb.trans('settingCustomHint'),
+icon: 'fas fa-user-check',
+type: SettingCustom,
+restricted: true
+});
+
+
     game.settings.register(gb.moduleName, 'fightingSkill', {
 		name: gb.trans('SettingFighting'),
 		hint: gb.trans('SettingFightingHint'),
@@ -97,33 +128,7 @@ export const registerSettings=()=>{
         });
 
 
-    game.settings.registerMenu(gb.moduleName,'settingName',{
-        name: gb.trans('settingName'),
-        label: gb.trans('settingNameButton'),
-        hint: gb.trans('settingNameHint'),
-        icon: 'far fa-address-card',
-        type: SettingName,
-        restricted: true
-    });
-
-    game.settings.registerMenu(gb.moduleName,'settingRules',{
-      name: gb.trans('settingRules'),
-      label: gb.trans('settingRulesButton'),
-      hint: gb.trans('settingRulesHint'),
-      icon: 'fas fa-list',
-      type: SettingRules,
-      restricted: true
-  });
-
-
-  game.settings.registerMenu(gb.moduleName,'settingCustom',{
-    name: gb.trans('settingCustom'),
-    label: gb.trans('settingCustomButton'),
-    hint: gb.trans('settingCustomHint'),
-    icon: 'fas fa-user-check',
-    type: SettingCustom,
-    restricted: true
-});
+  
 
 
     gb.edgesNaming.map((value)=>{
@@ -146,6 +151,8 @@ export const registerSettings=()=>{
         })
     })
 
+
+
     gb.settingRules.map((value)=>{
       let confkey=gb.settingKey(value);
       game.settings.register(gb.moduleName,confkey,{
@@ -164,11 +171,11 @@ export const registerSettings=()=>{
     default: ''
 });
 
-let outChoices={'':gb.trans('Disabled')};
 
-game.tables.map(table=>{
+
+/* await gb.listTables().map(table=>{
   outChoices[table.id]=table.name;
-})
+}) */
 
 
 game.settings.register(gb.moduleName,'outofcontrolTable',{
@@ -177,7 +184,7 @@ game.settings.register(gb.moduleName,'outofcontrolTable',{
   scope: 'world',
   type: String,
   config: true,
-  choices: outChoices,
+  choices: await gb.listTables({'':gb.trans('Disabled')}),
   default: ''
 });
 
@@ -189,6 +196,18 @@ game.settings.register(gb.moduleName, 'gangUp', {
   type: Boolean,
   config: false
   });
+
+
+  game.settings.register(gb.moduleName, 'onlySystemMod', {
+    name: gb.trans('SettingonlySystemMod'),
+    hint: gb.trans('SettingonlySystemModHint'),
+    default: false,
+    scope: "world",
+    type: Boolean,
+    config: false
+    });
+
+  
 
   game.settings.register(gb.moduleName, 'useScale', {
     name: gb.trans('SettingScale'),

@@ -7,7 +7,7 @@ import SheetControl from './class/SheetControl.js';
 import RollControl from './class/RollControl.js';
 import { registerSettings } from './settings.js';
 import TokenHud from './class/TokenHud.js';
-import Char from './class/Char.js';
+//import Char from './class/Char.js';
 import CharRoll from './class/CharRoll.js';
 import CharUp from './class/CharUp.js';
 
@@ -45,7 +45,7 @@ ui.notifications.warn =>yellow
 var foundryIsReady=false;
 
 
-Hooks.on('ready',()=>{
+Hooks.on('ready',async()=>{
 
    
    
@@ -88,245 +88,7 @@ Hooks.on('ready',()=>{
     
   };
 
-  /* game.swade.swadetoolsBoostLower=(trait)=>{
-    const attrlang={
-        agility: "AttrAgi",
-        spirit:"AttrSpr",
-        strength: "AttrStr",
-        smarts:  "AttrSma",
-        vigor: "AttrVig"
-    }
-    
-    const attributes=['agility','smarts','spirit','strength','vigor']
-    
-    let tokens=canvas.tokens.controlled;
-        if (tokens.length<1){
-            ui.notifications.warn(game.i18n.localize('SWADETOOLS.NoTokenSelected'))
-        } else {
-        let skillList=[]
-        let content=`<div class="swadetools-formpart">
-        <div class="swadetools-mod-add"><label>${game.i18n.localize('SWADE.Trait')} </label> <select id="trait">`;
-    
-        content+=`<optgroup label="${game.i18n.localize('SWADE.Attributes')}">`;
-        attributes.map(att=>{
-            content+=`<option value="att-${att}">${game.i18n.localize('SWADE.'+attrlang[att])}</option>`;
-        })
-    
-        content+=`</optgroup>
-        <optgroup label="${game.i18n.localize('SWADE.Skills')}">`
-    
-    
-       // gb.log(tokens);
-    
-        tokens.map(token=>{
-            token.actor.data.items.filter(el=>el.data.type=='skill').map(skill=>{
-                    if (!skillList.includes(skill.name)){
-                    content+=`<option value="skl-${skill.name}">${skill.name}</option>`;
-                    skillList.push(skill.name);
-                    }
-                }
-            )
-            
-            
-        })
-    
-    
-    
-    
-        content+=`</optgroup></select></div>
-        <div class="swadetools-mod-add"><label>${game.i18n.localize('SWADETOOLS.DieSteps')} <i class="far fa-question-circle swadetools-hint" title="${game.i18n.localize('SWADETOOLS.BoostLowerHint')}"></i></label> <input type="number" id="diesteps"></div>
-        <div class="swadetools-mod-add"><label>${game.i18n.localize('SWADE.Dur')} (${game.i18n.localize('SWADETOOLS.Rounds')}) <i class="far fa-question-circle swadetools-hint" title="${game.i18n.localize('SWADETOOLS.DurationHint')}"></i></label> <input type="number" id="duration"></div></div>`;
-    
-        new Dialog({
-            title: "Boost/Lower Trait",
-            content: content,
-            buttons: {
-                ok: {
-                    label: `<i class="fas fa-check"></i> ${game.i18n.localize('SWADE.Ok')}`,
-                    callback: (html)=>{
-                    
-                        let val=html.find('#trait')[0].value
-                        let name=val.slice(4);
-                        let type=val.slice(0,4);
-                        let steps=html.find('#diesteps')[0].value
-                        let dur=parseInt(html.find('#duration')[0].value) || 0
-                        let boost=true;
-                        if (steps<0){
-                            boost=false;
-                        }
-
-                        steps=Math.abs(steps);
-    
-                      //  gb.log(val,name,type);
-                            let att=false;
-                            if (type=='att-'){
-                            att=true;
-                            } 
-                        
-                        if (steps){
-                        tokens.map(t=>{
-    
-                            let odie;
-                            let addsteps=0;
-                            let addmod=0;
-                            let data ={}
-                            let key
-                            let keymod
-                            let finalname
-                            let createskill=false;
-                            
-                            let sign='+'
-
-                            if (att){
-                                odie=t.actor.data.data.attributes[name].die.sides
-                                key="data.attributes."+name+".die.sides"
-                                keymod="data.attributes."+name+".die.modifier"
-                                finalname=game.i18n.localize('SWADE.'+attrlang[name])
-                            } else {
-                               // gb.log(t.actor);
-                              //  gb.log(t.actor.items.find(el=>el.type=="skill" && el.name==name))
-                                odie=t.actor.items.find(el=>el.type=="skill" && el.name==name)?.data?.data?.die?.sides
-                                finalname=name
-                                if (odie===undefined){ /// actor doesnt have the skill
-                                    
-
-                                    if (boost){
-
-                                        //add skill as d4
-                                       
-                                        odie=2
-                                        createskill=true;
-                                        ui.notifications.warn(`${finalname} ${game.i18n.localize('SWADETOOLS.BoostSkill')} ${t.actor.name} (${game.i18n.localize('SWADETOOLS.NoSkill')}). ${game.i18n.localize('SWADETOOLS.DeleteManually')}.`)
-
-                                    } else {
-                                        /// ignore
-                                        steps=0;
-                                        ui.notifications.warn(`${finalname} ${game.i18n.localize('SWADETOOLS.LowerSkillIgnored')} ${t.actor.name} (${game.i18n.localize('SWADETOOLS.NoSkill')})`)
-                                    }
-
-                                   
-                                }
-                                key=`@Skill{${name}}[data.die.sides]`
-                                keymod=`@Skill{${name}}[data.die.modifier]`
-                               
-                            }
-                            let mode=2;
-                            let finalsteps=steps;
-                            
-    
-                            for (let i=1;i<=steps;i++){
-
-                                if (boost){
-                                    data.icon='modules/swade-tools/icons/boost-trait.png'
-                                    
-                                    if (odie==12){
-                                        addmod++
-                                    } else {
-                                        odie+=2
-                                        addsteps+=2
-                                    }
-                                } else { ///lower
-
-                                    data.icon='modules/swade-tools/icons/lower-trait.png'
-
-                                    sign='-'
-                                   // mode=3
-                                    if (odie==4){    
-                                        finalsteps=i-1                                    
-                                        ui.notifications.warn(`${t.actor.name} ${game.i18n.localize('SWADETOOLS.NotBelowd4')} (${finalname})`)
-                                        break;
-                                    } else {
-                                        odie-=2
-                                        addsteps-=2
-                                    }
-                                }
-                               
-                            }
-
-                           // data.icon="/icons/svg/mystery-man.svg"
-                            
-                           if (finalsteps>0){
-                            
-
-                          //  gb.log(data);
-                           // data.changes.push()
-                           
-                         //   let ae=[{data}];
-                           // ae.push(data);
-
-                           if (createskill){
-                            let itemdata={
-                                name: `${name} [${game.i18n.localize('SWADETOOLS.BoostMark')}]`,
-                                img: 'modules/swade-tools/icons/boost-trait.png',
-                                type: 'skill',
-                                data: {
-                                    die: {
-                                        sides: 4
-                                    }
-                                }
-                            }
-
-                            if (addsteps){
-                                itemdata.data.die.sides=2+addsteps
-                            }
-
-                            if (addmod){
-                                itemdata.data.die.modifier=addmod;
-                            }
-
-                            
-
-                            t.actor.createEmbeddedDocuments('Item',[itemdata],{renderSheet:null});
-                           } else {
-
-                            data.label=`${finalname} (${sign}${finalsteps}d)`;
-                            if (dur){
-                                data.duration={rounds:dur}
-                            }     
-                            data.changes=[];      
-                            if (addsteps){
-                                data.changes.push({
-                                    key:key,
-                                    mode: mode,
-                                    value: addsteps
-                                })
-                            }                 
-                            
-                            if (addmod){
-                                data.changes.push({
-                                    key: keymod,
-                                    mode: mode,
-                                    value: addmod
-                                })
-                            }
-
-                            data.flags={swade:{expiration:2,loseTurnOnHold:false}}// Automatic, at end of turn
-
-                            t.actor.createEmbeddedDocuments('ActiveEffect',[data]);
-                           }
-
-                           
-                          //  let ae=new ActiveEffect
-                          //  ae.create(data,{parent:t.actor})
-                            }
-                            
-    
-                        })
-                    }
-                    }
-                }
-
-                
-    
-                
-            },
-            default: 'ok'
-        }).render(true);
-        
-    
-    }
-  } */
-
+ 
   game.swade.swadetoolsRollTrait= async (actor,name,mod,attr=false)=>{
     
 
@@ -353,7 +115,7 @@ Hooks.on('ready',()=>{
   }
 
      
-  registerSettings();
+  await registerSettings();
     foundryIsReady=true;
 
 
@@ -392,29 +154,7 @@ Hooks.on('ready',()=>{
    }
    
 
-/* 
-   const levelsStatus=[{   /// for wounds and fatigue
-        icon: '/modules/swade-tools/icons/w1.png',
-        id: 'wound1',
-        label: `1 ${gb.trans('Wound','SWADE')}`
-   },
-   {   /// for wounds and fatigue
-    icon: '/modules/swade-tools/icons/w2.png',
-    id: 'wound2',
-    label: `2 ${gb.trans('Wounds','SWADE')}`
-},
-{   /// for wounds and fatigue
-    icon: '/modules/swade-tools/icons/w3.png',
-    id: 'wound3',
-    label: `3 ${gb.trans('Wounds','SWADE')}`
-},
-{   /// for wounds and fatigue
-    icon: '/modules/swade-tools/icons/w4.png',
-    id: 'wound4',
-    label: `4 ${gb.trans('Wounds','SWADE')}`
-},]
 
-   CONFIG.statusEffects.push(...levelsStatus) */
 
   
 
@@ -424,18 +164,6 @@ Hooks.on('ready',()=>{
    })
 
   
-
-//gb.statusChange(game.actors.getName('Purple'),'shaken',false);
-
-//console.log(CONFIG.statusEffects)
-
-   /* CONFIG.statusEffects.unshift({
-    icon: 'modules/swade-tools/icons/shaken.png',
-    id: 'st-shaken',
-    label: 'SWADE.Shaken',
-}) */
-
-   // console.log(gb.getActorData(game.actors.get("WO2pFlDeowqDMNQc"),'data.stats.parry.value')+'actor-data');
     
 })
 

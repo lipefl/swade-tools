@@ -216,7 +216,8 @@ export default class Char {
                 this.say(gb.trans('OutOfControlFail'));
                 
                 if (gb.setting('outofcontrolTable')){
-                    await this.rollTable(game.tables.get(gb.setting('outofcontrolTable')));
+                    let table=await fromUuid(gb.setting('outofcontrolTable'))
+                    await this.rollTable(table);
                    // game.tables.get(gb.setting('outofcontrolTable')).draw();
                 }
                 

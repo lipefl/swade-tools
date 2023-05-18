@@ -180,9 +180,14 @@ export default class CombatControl {
             charRoll.addFlavor(`<div>${gb.trans("UnShakenAttempt")}</div>`);
         
 
-        charRoll.addEdgeModifier('Combat Reflexes',2)
-        charRoll.addAbilityModifier('Undead',2)
-        charRoll.addAbilityModifier('Construct',2)
+        charRoll.addModifier(actor.system.attributes.spirit?.unShakeBonus,gb.trans('EffectCallbacks.Shaken.UnshakeModifier','SWADE'));
+
+        if (!gb.setting('onlySystemMod')){
+            charRoll.addEdgeModifier('Combat Reflexes',2)
+            charRoll.addAbilityModifier('Undead',2)
+            charRoll.addAbilityModifier('Construct',2)
+        }
+        
 
 
         
@@ -218,6 +223,7 @@ export default class CombatControl {
         let charRoll=new CharRoll(actor);        
      //   this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
+        charRoll.addModifier(actor.system.attributes.spirit?.unStunBonus),gb.trans('EffectCallbacks.Stunned.UnStunModifier','SWADE');
         await charRoll.rollAtt('vigor');
 
         charRoll.addFlag('useactor',actor.id);

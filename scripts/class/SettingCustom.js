@@ -26,6 +26,8 @@ export default class SettingName extends FormApplication {
         data.formHtml+=gb.settingFieldCheckbox('askCalledShots',gb.trans('SettingAskCalledShots'),gb.trans('SettingAskCalledShotsHint'));
         data.formHtml+=gb.settingFieldCheckbox('ignoreRange',gb.trans('IgnoreRange'),'');
         data.formHtml+=gb.settingFieldCheckbox('autoCover',gb.trans('SettingautoCover'),gb.trans('SettingautoCoverHint'));
+
+        data.formHtml+=gb.settingFieldCheckbox('onlySystemMod',gb.trans('SettingonlySystemMod'),gb.trans('SettingonlySystemModHint'));
         
 
         data.formHtml+=`<h2>${gb.trans('RulesSettings')}</h2>`;
@@ -34,6 +36,7 @@ export default class SettingName extends FormApplication {
 
 
         data.formHtml+=`<h2>${gb.trans('Customization')}</h2>`;
+        
         data.formHtml+=gb.settingFieldCheckbox('simpleRolls',gb.trans('SettingsSimpleRolls'),gb.trans('SettingsSimpleRollsHint'));
         data.formHtml+=gb.settingFieldCheckbox('itemNameClick',gb.trans('SettingsItemNameClick'),gb.trans('SettingsItemNameClickHint'));
         data.formHtml+=gb.settingFieldCheckbox('alwaysShowSituational',gb.trans('SettingShowSituational'),gb.trans('SettingShowSituationalHint'));

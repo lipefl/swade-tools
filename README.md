@@ -3,207 +3,83 @@
 ## Buy me a coffee
 If you like the module and want to buy me a coffee: https://ko-fi.com/lipefl
 
+## About the Module
+A series of automations and quality of life improvements to use with SWADE system.
+
+### Automation on Combat
+- Detect targets in combat, **show hit/raise, damage and soak rolls**. All calculations automatically, just click to apply/roll.
+- Automatic Situational modifiers for targets: **Distance, Gang Up, Ranged in Melee, Scale** etc. It's shown hidden by default, always if you want.
+- Auto **Remove/Roll Status during combat**, no need to check or confirm
+- **Min Str** affects damage dice (for Strength) and also trait rolls based on armor equipped or ranged weapon. Edges like Soldier are detected automatically.
+- **Conviction support**: At the end of conviction, you are asked if you want to spend a benny to keep it active for another round.
+- **Auto detect egdes/abilities** for bonus on rolls based on their names (support to some settings, allow to change names).
+- Suport for **Cover** through items.
+- **Out of control** will roll the table automatically for vehicle combat
+- Suport for **setting rules** based on the swade system config
+- **GM benny** will be used from directly from NPC if they have it, or from GM pool. Automatically!
+
+### Automations to spare the GM
+- **Auto Update Max Wounds** based on Wildcard/Extra and Size
+- **Automatically link (and unlink) tokens** if the actor is wildcard (or not)
+- **Auto Update Token** width/height based on Size.
+- PCs are **friendly**, NPCs are **hostile** by default
+
+### User Friendly for beginners
+- **Simpler rolls**: by default, a simple dialog box with modifier when rolling Attributes and Skills. Same principle is applied to weapons and powers: a dialog box instead of sending to chat. The only player seeing it is the player using it.
+- **More visible icons** for status, wound and fatigue
+- **Clean and simple roll in the chat**. With tiny button to rerrol with benny or free reroll. For the GM, extra buttons to add modifier (after roll), re-targeting or calculate raises.
+- **Template buttons for powers** directly, with just one click
+- Asks when a weapon/power don't have a **defined trait** and redefine it for the roll
+- Visible **Critical Failure** in the chat 
+
+### Macros
+- Easier **Boost/Lower Trait**
+- Mark all PCs as **Friendly** and NPCs as **Hostile**. For those who haven't been using SWADE Tools.
+- **Attack macro** to simplify for the GM
+- **Roll once for all selected**, using the same trait
+
+### Add More Things (if you want)
+- Suport for **Called Shots**
+- Quick select Aditional Modifiers: **Multi-Actions, Cover, Illumination**
+
+### Missing something?
+Open an issue: https://github.com/lipefl/swade-tools/issues
+
+## Screenshots
+![](https://i.imgur.com/K94IRoK.jpg)
+
+![](https://i.imgur.com/2Y5tLRv.jpg)
+
+![](https://i.imgur.com/IHdNOCA.jpg)
+
+![](https://i.imgur.com/9On5gNC.jpg)
+
+![](https://i.imgur.com/ibkM5Fa.jpg)
+
+![](https://i.imgur.com/2mWd5oI.jpg)
+
+![](https://i.imgur.com/h71BtgJ.jpg)
+
+![](https://i.imgur.com/xJRCMxe.jpg)
+
+![](https://i.imgur.com/1Ld0v0X.jpg)
+
+![](https://i.imgur.com/yl7yhZz.jpg)
+
+![](https://i.imgur.com/D46Aybk.jpg)
+
+![](https://i.imgur.com/BexudNg.jpg)
+
 ## Translation
 If you want your language handled by gitlocalize.com (a much easier interface), please open an issue.
 
-## About the Module
-A Foundry VTT module for use with Savage Worlds (SWADE system).
-
-A series of automations for swade: Joker's Wild (with bonus); Status Management (with icons); Reroll with a benny; detect targets, hit and damage; etc. 
-
-This is my first big module, please report if you see any bugs and be nice :)
-
-## v1.12.x (Last Update)
-
-- Only compatible with SWADE system v2.3+
-- Changed the way roll works to the new SWADE system basic roll
-- Reload is now handled by SWADE system (except Reload Type "none" option)
-
-**Fixes**
-- Fixed bug in Elan/No Mercy Edges re-adding on third roll
-- Fixed bug with Reload Type "none"
-
-## Features Available (v1.0.0)
-
-1. Automatically rolls initiative when combat starts 
-2. Distribute bennies automatically when a Joker is drawn (Joker's Wild)
-3. Add +2 Bonus when a character has a Joker
-4. Show icons on the tokens for the status, wounds and fatigue. And link status that apply another: Stunned also marks Distracted and Vulnerable. (integration only from Sheet to Token for now)
-5. Manage Status automatically during the combat. Rolls to remove Stunned and Shaken (offer a to use a benny if it fails), removes Distracted and Vulnerable at the end of turn. Shows a warn for Entagled and Bound
-6. Shows a button to Reroll with a Benny in every roll. And shows a critical failure message (hiding the benny button in this case)
-7. Weapons and Powers show a dialog box instead of sending to chat directly. They also count shots and power points automatically (can be disabled in module settings)
-8. Weapons and Powers auto-detect when targets are selected, showing hit, raise with a button to roll damage and apply wounds.
-9. Translation support (English, Portuguese BR, Spanish, Italian, Catalan and German available)
-10. DiceSoNice Support (with benny animations)
-
-## v1.1.x
-
-11. Conviction Support: +1d6 Bonus is automatically added to item/power rolls now. In combat, will auto deactivate Conviction at the end of the turn, offering to spend a Benny to keep it active for another round.
-12. Soak Damage: Shows an icon next to the "apply damage" button to soak damage.
-
-**Fixes**
-+ bug fixes related to targeting, button behaviour and synthetic actors status and items not working properly
-
-## v1.2.x
-
-13. Detect Edges/Abilities and apply bonus. Supported: Elan, No Mercy, Iron Jaw, Combat Reflexes, Construct, Hardy, Undead
-14. Allow configuring some Setting Rules to modify how Swade Tools behave. Supported: Dumb Luck, Hard Choices, Unarmored Hero, Wound Cap
-
-**Fixes**
-+ read ammo settings from swade system (v 0.16). Added button to reload and Inventory ammo.
-+ better item dialog layout when more than 3 buttons
-+ Multiple AB properly support
-+ dice so nice/swade wild dice config support 
-+ Vehicle support
-+ Token Action Hud, Maestro and other modules compatibility
-+ Italian translation added
-
-## v1.3.x
-Version compatible with SWADE system v0.17+ only
-
-15. Added Out of Control and Gritty Damage auto roll tables (v1.3.1)
-
-## v1.4.x
-Version compatible with Foundry VTT v0.8.7 and SWADE system v0.20
-
-**Changes**
-+ Notifications about changing settings automatically
-+ There's now an option to not auto-roll initiative when combat starts. 
-+ Now Swade Tools is using auto iniative setting from swade system, but it will enable it automatically. It can be disabled if you choose to not auto-roll initiative when combat starts.
-+ Better vehicle damage
-+ German and Catalan languages added
-+ Warn about swade version
-+ Card-like layout for items
-+ better RoF targeting
-+ If the weapon has multiple damage action, you can change the damage to roll after Hit/Raise instead of default damage
-+ Jokers Wild removed from swade tools (since swade system option is now fully functional)
-+ Item asks for a skill when the skill field is empty (and save the choice for future rolls)
-+ "Count PP" option removed in favor of system setting "No Power Points"
-+ New option to always show Situational Modifiers for target
-
-**Fixes**
-+ Combat automation remade (it wasn't working with the new swade system initiative)
-+ Fixed problem with joker bonus duplicating (from system and swade tools)
-+ Fixed problem with "Doesn't need reload" option
-
-
-## v1.5.x
-+ Apply "Assign Status Effect" via token
-+ Calculates Gang Up, Range and Ranged Weapon in Melee (shows a (?) icon in the target with more info)
-+ Bonus Macro to turn all your PCs Friendly and NPCs Hostile (to work with Gang Up)
-+ New Edges automations: Block, Improved Block, Dodge, Frenzy, Formation Fighter (from Pathfinder, thanks to @bloy)
-+ Special abilities are separated from edges and now searched as abilities (thanks to @bloy) or edges
-
-**Fixes**
-+ Stunned allows distracted to be removed at the end of next turn (as in the rules)
-
-## v1.6.x
-+ Calculate Scale automatically (shows a checkbox for creatures with Swat)
-+ Option to activate a button to Reload X (instead of full reload)
-+ Option to disable Status Icons (so you can use whatever you want with CUB)
-+ Option to disable automatic rolls (remove Shaken,Stunned) during combat
-+ Compatibility with Automated Animations and SWADE Sfx & Vfx Enchantments
-
-**Fixes**
-+ Wild attack is now a checkbox, so you can use it with Frenzy and other attacks.
-+ Fixed bugs with attack from vehicles
-
-## v1.7.x
-+ Compatibility with Foundry v9 and SWADE System v0.22
-
-## v1.8.x
-+ Compatibility with SWADE system v1.0
-+ Simpler Dialog Rolls for attributes and skills (enabled by default, can be disabled in settings)
-+ New Buttons and funcionality for GMs: Add Modifier, Raise Calculator and Use GM targets
-+ Added an option to use Called Shots (calculated automatically)
-+ Added an option to use Wild Attack with other skills (like in Pathfinder setting)
-+ Added an option to disable automatic rolls (Shaken, Stunned) only for PCs
-
-**Fixes**
-+ Auto Initiative config removed since Auto Iniative from system is now doing the same.
-+ Hard Choices is removed and uses the new system setting
-+ Fixed a bug with distance and bigger tokens. Better distance calc for grid vs no-grid (based on scene config)
-+ Fixed a minor bug when the Character is using Fighting but don't have the skill
-
-## v1.9.x
-+ "Roll From Selected" macro to roll a trait from all selected tokens
-+ Free Reroll button (thanks to @bloy)
-+ Rapid Fire autodetection (thanks to @bloy)
-+ Auto Update Max Wounds based on Wildcard/Extra and Size
-+ Auto Update Token width/height based on Size.
-+ "Boost/Lower Trait" macro for selected tokens (add skill if actor doesnt have it)
-+ Automatically link (and unlink) tokens if the actor is wildcard (or not)
-+ Min Str affects damage dice and also trait rolls based on armor equipped or ranged weapon (not able to affect Pace, since swade system auto-calculates it)
-
-**Fixes**
-+ Items now allow Attributes as roll trait
-+ Compatibility with swade system v1.1.1 (from SWADE Tools v1.9.6, open an issue if you see any problems)
-+ Now allow an item to have an empty trait (hides trait button)
-+ Wild attack between turns/rounds now work properly 
-+ Combat round start fixed
-+ Token hud compatibility with Simple Trait Roll option
-
-## v1.10.x
-+ Checks for Unstoppable (and ignores it if the attacker has a Joker)
-+ Option to disable automatic Range calculation and modifiers
-+ Option to show common modifiers as selection - Multi-Action, Cover, Illumination (thanks to @EternalRider)
-+ Desperate Attack (option must be enabled in settings)
-+ Heavy Armor detection (only Heavy Weapon does damage)
-+ Button to activate Arcane Device (roll and spend PP from item)
-
-**Fixes**
-+ Compatibility with Foundry v10
-+ MinStr now checks for Soldier and Brawny edges
-+ GangUp now ignores tokens behind walls
-+ Linked Status (Stunned, Entagled, Bound) are now managed only by SWADE system to avoid bugs or compatibility errors
-+ Rerolling a failed power now detects success and removes PP accordingly (and hide failure message)
-+ Running die also simplified when "Simple Rolls" is enabled
-
-## v1.11.x (Last Update)
-+ Added quick template buttons for powers
-+ Added + and - buttons for number inputs (Mod field still accepts dice modifier)
-+ Resist actions compatibility with SWADE System
-+ Option to disable Wounds/Fatigue Icons
-+ Allow using the same damage roll for multiple targets
-+ Added automatic Pack Tatics bonus damage (thanks to @EternalRider)
-+ Added automatic Cover for shields or other items with Cover (can be disabled in settings)
-
-**Fixes**
-+ Size Effect items now updates the sheet (as in the Size input)
-+ Vehicle Maneuver button fixed
-+ Async rolls (thanks to @inxaos)
-+ Removed Called Shot (Torso) shown on damage
-+ Fixed RoF bug for NPCs
-+ Fixed minor bug for power fail not spending PP when success with reroll
-
-
-
-More features will be added...
-
-### Bonus: Macro
-A Macro that shows the "Quick Access" of the selected token and rolls the basic skill with a checkbox to show more options (in dialog). Only works with the module.
+## Last Update
+Check The Releases!
+For versions previous to v1.12, check: https://github.com/lipefl/swade-tools/blob/main/UPDATEHISTORY.md
 
 ## Installation Link
 https://raw.githubusercontent.com/lipefl/swade-tools/main/module.json
 
-## Settings
-Most of the module will be enabled by default, so if you want to disable something, post an issue. I'm planning on adding more options in the settings.
 
-## Screenshots
-![](https://i.imgur.com/vrybiSO.jpg)
 
-![](https://i.imgur.com/jeDZzgf.jpg)
-
-![](https://i.imgur.com/YG1IU5W.jpg)
-
-![](https://i.imgur.com/68Ym14p.jpg)
-
-![](https://i.imgur.com/gVJDthp.jpg)
-
-![](https://i.imgur.com/Xxt5cOh.jpg)
-
-![](https://i.imgur.com/wh2j1Wx.jpg)
-
-## Next Planned Features
-+ Review of character points distribution
 

@@ -184,7 +184,7 @@ export default class RollControl {
     addButtons(){
         if (this.rolltype!==undefined){ ///roll comes from swade tools
             this.html.append('<div class="swadetools-relative"><div class="swadetools-rollbuttonwrap"></div></div>');
-            if (!this.isCritical() || gb.settingKeyName('Dumb Luck')){
+            if (!this.isCritical() || gb.settingKeyName('Dumb Luck') || gb.systemSetting('dumbLuck')){
                 this.addBennyButton();
                 this.addFreeRerollButton();
             }
@@ -1262,7 +1262,7 @@ export default class RollControl {
             
             if (raisecount>0){
 
-                if(gb.settingKeyName('Wound Cap') && raisecount>4){
+                if((gb.settingKeyName('Wound Cap') || gb.systemSetting('woundCap')) && raisecount>4){
                     raisecount=4;
                 }
                 addTarget='wounds';
@@ -1369,12 +1369,16 @@ export default class RollControl {
           //  let wounds=raisecount;
 
             if (char.spendBenny()){
+
+                if (!gb.setting('onlySystemMod')){
                 charRoll.addEdgeModifier('Iron Jaw',2)
-               
+                }
+
+                charRoll.addModifier(target.actor.system.attributes.vigor?.soakBonus,gb.trans('DamageApplicator.SoakModifier','SWADE'),);
                 
 
-                if(gb.settingKeyName('Unarmored Hero') && gb.realInt(target.actor.system.stats.toughness.armor)==0){
-                    charRoll.addModifier(2,gb.trans(gb.settingKey('Unarmored Hero')));
+                if((gb.settingKeyName('Unarmored Hero') || gb.systemSetting('unarmoredHero')) && target.actor.system.wildcard && gb.realInt(target.actor.system.stats.toughness.armor)==0){
+                    charRoll.addModifier(2,gb.trans("Settings.UnarmoredHero.Name","SWADE"));
                 }
                
                 
@@ -1434,6 +1438,12 @@ export default class RollControl {
 
                     if (gb.setting('grittyDamage')){
                         await char.rollTable(game.tables.get(gb.setting('grittyDamage')));
+                    }
+
+
+                    if (gb.systemSetting('grittyDamage') && gb.systemSetting('injuryTable')){
+                        let table=await fromUuid(gb.systemSetting('injuryTable'));
+                        await char.rollTable(table);
                     }
                   //  this.grittyDamage(target);
                 }

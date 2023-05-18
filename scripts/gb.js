@@ -46,7 +46,26 @@ export const attributesShort=[
 ]
 
 
-
+export const listTables=async (start={})=>{
+    const tables = start;
+        for (const p of game.packs) {
+            if (p.metadata.type === 'RollTable' &&
+                p.metadata.packageType !== 'system') {
+                for (const i of p.index) {
+                    const rollTable = await p.getDocument(i._id);
+                    if (rollTable) {
+                        tables[rollTable.uuid] = `${rollTable.name} (${p.title})`;
+                    }
+                }
+            }
+        }
+        if (game.tables?.size) {
+            for (const rollTable of game.tables) {
+                tables[rollTable.uuid] = `${rollTable.name} (World)`;
+            }
+        }
+        return tables;
+}
 
 export const settingKey=(name)=>{
     return name.replace(' ','')+'Setting';
