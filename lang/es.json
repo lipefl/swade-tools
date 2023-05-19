@@ -223,5 +223,7 @@
   "SWADETOOLS.InnatePower": "Poder Innato",
   "SWADETOOLS.PackTacticsSetting": "Tácticas de Manada",
   "SWADETOOLS.SettingautoCover": "Utilizar Cobertura Automáticamente",
-  "SWADETOOLS.SettingautoCoverHint": "Esta opción automáticamente cuenta la penalización de Cobertura de los Escudos equipados (o cualquier otro objeto con cobertura) para los Ataques a Distancia."
+  "SWADETOOLS.SettingautoCoverHint": "Esta opción automáticamente cuenta la penalización de Cobertura de los Escudos equipados (o cualquier otro objeto con cobertura) para los Ataques a Distancia.",
+  "SWADETOOLS.SettingonlySystemMod": "Utilizar sólo el modificador definido en la hoja de PJ para Absorber daño y salir del Aturdimiento.",
+  "SWADETOOLS.SettingonlySystemModHint": "Marca esta opción si quieres utilizar sólo los ajustes de la hoja de personaje para salir del aturdimiento y absorber el daño. Esto desactiva la auto-detección de ventajas y habilidades como: Reflejos de Combate, Muerto Viviente, etc."
 }
