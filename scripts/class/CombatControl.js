@@ -223,7 +223,7 @@ export default class CombatControl {
         let charRoll=new CharRoll(actor);        
      //   this.addJoker(combatant,charRoll);    
         charRoll.addFlavor(`<div>${gb.trans("UnStunnedAttempt")}</div>`);
-        charRoll.addModifier(actor.system.attributes.spirit?.unStunBonus),gb.trans('EffectCallbacks.Stunned.UnStunModifier','SWADE');
+        charRoll.addModifier(actor.system.attributes.vigor?.unStunBonus,gb.trans('EffectCallbacks.Stunned.UnStunModifier','SWADE'));
         await charRoll.rollAtt('vigor');
 
         charRoll.addFlag('useactor',actor.id);

@@ -1214,13 +1214,15 @@ export default class RollControl {
         } else {
             toughness=gb.realInt(target.actor.system.stats.toughness.value);
            
-           
+         
            
                armor=gb.realInt(gb.getArmorArea(target.actor,area)) 
+
+               
                toughness=toughness-gb.getArmorArea(target.actor)+armor; /// remove default armor, add location armor to final toughness
            
             
-           
+              
 
         }
 

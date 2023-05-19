@@ -769,7 +769,7 @@ export const trace=(...args)=>{
 
 export const getArmorArea=(actor,area='torso')=>{
    // let armorData=actor.armorPerLocation;
-   if (area=='torso'){
+   if (area.toLowerCase()=='torso'){
     return actor.system.stats.toughness.armor;
    } else {
     return actor.armorPerLocation[area.toLowerCase()];
