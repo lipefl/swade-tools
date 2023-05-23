@@ -1379,7 +1379,9 @@ export default class RollControl {
                 charRoll.addModifier(target.actor.system.attributes.vigor?.soakBonus,gb.trans('DamageApplicator.SoakModifier','SWADE'),);
                 
 
-                if((gb.settingKeyName('Unarmored Hero') || gb.systemSetting('unarmoredHero')) && target.actor.system.wildcard && gb.realInt(target.actor.system.stats.toughness.armor)==0){
+                if((gb.settingKeyName('Unarmored Hero') || gb.systemSetting('unarmoredHero')) && target.actor.system.wildcard && 
+                target.actor.items.find(el=>el.type=='armor' && el.system.equipStatus==3)===undefined
+                ){
                     charRoll.addModifier(2,gb.trans("Settings.UnarmoredHero.Name","SWADE"));
                 }
                
