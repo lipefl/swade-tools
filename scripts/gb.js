@@ -639,6 +639,8 @@ export const rollResist=(traitName,skillMod)=>{
 
 
 export const showTemplate=type=>{
+
+    
    
         let templateData = {
             user: game.user.id,
@@ -658,7 +660,7 @@ export const showTemplate=type=>{
             templateData.width = 1
         } else {
             templateData.t = 'circle'
-            templateData.distance = type === 'sbt' ? 1 : (type === 'mbt' ? 2 : 3)
+            templateData.distance = type === 'small' ? 1 : (type === 'medium' ? 2 : 3)
         }
         // Adjust to grid distance
 

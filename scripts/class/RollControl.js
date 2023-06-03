@@ -442,7 +442,7 @@ export default class RollControl {
     }
 
     scrollChat(){
-        new ChatLog().scrollBottom() /// force scroll
+        ui.chat.scrollBottom()/// force scroll
     }
 
    async findTargets(){
@@ -609,7 +609,9 @@ export default class RollControl {
 
 
                     }).ready(()=>{
-                        this.scrollChat();/// force scroll
+                          
+                        this.scrollChat();/// force scroll                  
+                        
                     })
                 } else if (rolltype=='damage' || rolltype=='soak'){
                     this.html.append(this.targetShow).on('click','a.swadetools-applydamage',(event)=>{
