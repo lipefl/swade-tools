@@ -83,8 +83,11 @@ https://raw.githubusercontent.com/lipefl/swade-tools/main/module.json
 ## Internal helper functions
 
 async game.swadetools.attribute(actor,attribute)  => attribute dialog
+
 async game.swadetools.skill(actor,skillItemId) => skill dialog
+
 async game.swadetools.run(actor) => run dialog
+
 game.swadetools.item(actor,itemId) => item dialog
 
 
