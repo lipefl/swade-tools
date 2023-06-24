@@ -1,4 +1,5 @@
 import * as gb from './../gb.js';
+import * as st from './../st.js';
 import CharRoll from './CharRoll.js';
 import ItemDialog from './ItemDialog.js';
 import ItemRoll from './ItemRoll.js';
@@ -24,24 +25,18 @@ export default class SheetControl {
     bindAttributes(){
         gb.attributes.map(attribute=>{
             this.html.find('.attribute button.attribute-value[data-attribute="'+attribute+'"]').unbind('click').bind('click', async ()=>{   
-                /* if (gb.setting('simpleRolls')){
-                   // let item=this.sheet.actor.items.get(skillId);
-                  //  let skillName=item.name;
-                    
                    
-    
-                } else {   */           
-                let sys=new SystemRoll(this.sheet.actor);
-                await sys.rollAtt(attribute);
-               /*  } */
+               await st.attribute(this.sheet.actor,attribute);
+               /*  let sys=new SystemRoll(this.sheet.actor);
+                await sys.rollAtt(attribute); */
+              
             })
         })
     }
 
     bindRun(){
         this.html.find('.running-die').unbind('click').bind('click',async ()=>{
-            let sys=new SystemRoll(this.sheet.actor);
-            await sys.rollRun();
+            await st.run(this.sheet.actor);
         })
     }
 
@@ -71,90 +66,27 @@ export default class SheetControl {
 
     bindSkills(){
 
-        /* let skillList=this.html.find('.skill-list-main ol.skill-list li.item.skill')
-        
-        for (let skill of skillList) {
-            let skillId=$(skill).attr('data-item-id');
-            $(skill).find('button.skill-name').unbind('click').bind('click',()=>{
-                this.rollSkill(skillId);
-            })
-        } */
-
+       
         let addel=''
         if(!gb.setting('itemNameClick')){
             addel='ol.skill-list li.item.skill button.skill-name,';
         }
 
-        // ol.skill-list ....
+       
         this.html.find(addel+'ol.skill-list li.item.skill button.skill-die,ol.skill-list li.item.skill img.skill-icon,.skill-list-main ol.skill-list li.item.skill button.skill-name, .skills-list .skill.item a:not(.item-edit)').unbind('click').bind('click',async (ev)=>{
-            //let skillId=ev.currentTarget.parentElement.dataset.itemId;
+          
            
             let skillId=$(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
 
-           /*  if (gb.setting('simpleRolls')){
-                let item=this.sheet.actor.items.get(skillId);
-                let skillName=item.name;
-                let content=`<div class="swadetools-itemfulldata">
-                <strong>${skillName}</strong>: d${item.data.data.die.sides}${gb.realInt(item.data.data.die.modifier)?'+'+item.data.data.die.modifier:''}
-                </div>
-                <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
-                new Dialog({
-                    title: skillName,
-                    content: content,
-                    default: 'ok',
-                    buttons: {
-                       
-                        ok: {
-                            label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
-                            callback: (html)=>{
-                            
-                                
-                                let cr=new CharRoll(this.sheet.actor)
-                                cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
-                                cr.rollSkill(skillName)
-                                cr.addFlag('rolltype','skill')
-                                cr.display();
-                                
-                            }
-                        }
-        
-                        
-                    }
-                }).render(true);
-               
-
-            } else { */
+          
+            await st.skill(this.sheet.actor,skillId);
 
                 
-            let sys=new SystemRoll(this.sheet.actor);
-
-           
-            await sys.rollSkill(skillId);
-           /*  } */
+            
+          
         })
 
-        /* ;
-            let item =  */
-        /* .map(skill=>{
-          //  console.log($(skill).attr('data-item-id'));
-        })
-      //  console.log(data); */
-        /* .map(el=>{
-        //    console.log(el);
-            let skillId=el.attr('data-item-id');
-         //   console.log(skillId);
-        }) */
-        
-        
-        
-       /*  .each(()=>{
-            let skillId=$(this).attr('data-item-id');
-          //  console.log(obj);
-            $(this).find('button.skill-name').unbind('click').bind('click',()=>{
-
-                this.rollSkill(skillId)
-            })
-        }) */
+      
        
     }
 

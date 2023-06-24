@@ -843,7 +843,7 @@ export default class RollControl {
 
 
    
-
+        let char=new Char(target.actor);
         /// range, gangup
 
         let targetRange=gb.getRange(this.getActor(true,true),target)*canvas.dimensions.distance; /// use Grid Scale for distance (but not for gang up)
@@ -865,7 +865,7 @@ export default class RollControl {
                     if (gangup>0){
 
                         let reason='';
-                        let char=new Char(target.actor);
+                       // let char=new Char(target.actor);
                         if (char.hasEdgeSetting('Improved Block')){
                             gangup-=2
                             reason=` (${gb.settingKeyName('Improved Block')})`
@@ -890,11 +890,13 @@ export default class RollControl {
 
         //// ranged attack or vehicle
 
-            let char=new Char(target.actor);
+           
             if (char.hasEdgeSetting('Dodge')){
                 targetNumber+=2;
                 targetInfo+=`<li>${gb.settingKeyName('Dodge')}: -2`
             }
+
+            
 
 
             if (!gb.setting('ignoreRange') && item.system?.range.includes('/')){
@@ -965,6 +967,14 @@ export default class RollControl {
         }
 
 
+        /// combat acrobat both ranged and melee
+        
+        if (char.hasEdgeSetting('Combat Acrobat')){
+            targetNumber+=1;
+            targetInfo+=`<li>${gb.settingKeyName('Combat Acrobat')}: -1`
+        }
+
+
         /// scale 
         if (gb.setting('useScale')){
             
@@ -1006,7 +1016,7 @@ export default class RollControl {
         }
 
 
-        let char=new Char(target.actor);
+       
         if (char.is('isVulnerable')){
            targetInfo+=`<li>${target.name} ${gb.trans('IsVulnerable')}: +2</li>`;
             targetNumber-=2;
@@ -1135,8 +1145,8 @@ export default class RollControl {
 
 
              //pack tactics handle - thanks to EternalRider
-             let char=new Char(this.getActor());
-             if (gb.setting('gangUp') && gangup>0 && char.hasAbilitySetting('Pack Tactics')) {
+             let charAct=new Char(this.getActor());
+             if (gb.setting('gangUp') && gangup>0 && charAct.hasAbilitySetting('Pack Tactics')) {
                  charRoll.addModifier(gangup,gb.trans('PackTacticsSetting'));
              }
 
@@ -1266,7 +1276,7 @@ export default class RollControl {
             
             if (raisecount>0){
 
-                if((gb.settingKeyName('Wound Cap') || gb.systemSetting('woundCap')) && raisecount>4){
+                if(raisecount>4 && (gb.settingKeyName('Wound Cap') || gb.systemSetting('woundCap'))){
                     raisecount=4;
                 }
                 addTarget='wounds';

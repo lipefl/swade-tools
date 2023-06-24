@@ -225,7 +225,8 @@
     "SWADETOOLS.SettingautoCover": "Usar Cobertura Automaticamente",
     "SWADETOOLS.SettingautoCoverHint": "Essa opção irá contar a penalidade de Cobertura automaticamente para items equipados (escudos ou outros) para Ataques à Distância. ",
     "SWADETOOLS.SettingonlySystemMod": "Usar apenas os bônus de Absorção e Sair do Abalado definidos pelos ajustes do ator",
-    "SWADETOOLS.SettingonlySystemModHint": "Marque essa opção se você quiser usar somente o bonus de Sair do Abalado e Absorção definidos nos ajustes do personagem. Isso irá desabilitar a detecção automática de algumas vantagens e habilidades como: Morto-Vivo, Queixo de Ferro, etc."      
+    "SWADETOOLS.SettingonlySystemModHint": "Marque essa opção se você quiser usar somente o bonus de Sair do Abalado e Absorção definidos nos ajustes do personagem. Isso irá desabilitar a detecção automática de algumas vantagens e habilidades como: Morto-Vivo, Queixo de Ferro, etc.",
+    "SWADETOOLS.CombatAcrobatSetting": "Combatente Acrobata"      
    
 
 

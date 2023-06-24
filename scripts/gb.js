@@ -6,7 +6,7 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
-export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny'];
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat'];
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 

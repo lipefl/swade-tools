@@ -285,8 +285,13 @@ export default class StatusIcon {
       
         let char=new Char(this.entity,this.istoken);
 
+        const statusIncapacitated = CONFIG.SWADE.statusEffects.find((s) => s.id === 'incapacitated');
+
+       
+
+        this.entity.toggleActiveEffect(statusIncapacitated, { active: char.isDefeated(), overlay: true });
         
-            this.applyEffect(CONFIG.controlIcons.defeated,char.isDefeated(),true)
+           // this.applyEffect(CONFIG.controlIcons.defeated,char.isDefeated(),true)
        
        
     }

@@ -225,7 +225,8 @@
     "SWADETOOLS.SettingautoCover": "Use Cover Automatically",
     "SWADETOOLS.SettingautoCoverHint": "This option will automatically count Cover penalty for equipped Shields (or any item with cover) on Ranged Attacks . ",
     "SWADETOOLS.SettingonlySystemMod": "Use only Soak and Unshaken bonus defined by the sheet tweaks.",
-    "SWADETOOLS.SettingonlySystemModHint": "Check this option if you want to use only the sheet tweak bonus for Unshaken and Soak. This will disable auto-detection of some edges and abilities like: Combat Reflexes, Undead, etc. "    
+    "SWADETOOLS.SettingonlySystemModHint": "Check this option if you want to use only the sheet tweak bonus for Unshaken and Soak. This will disable auto-detection of some edges and abilities like: Combat Reflexes, Undead, etc. ",   
+    "SWADETOOLS.CombatAcrobatSetting": "Combat Acrobat"
     
     
     

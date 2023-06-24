@@ -1,6 +1,7 @@
 import StatusIcon from './class/StatusIcon.js';
 import CombatControl from './class/CombatControl.js';
 import * as gb from './gb.js';
+import * as st from './st.js';
 import ItemRoll from './class/ItemRoll.js';
 import ItemDialog from './class/ItemDialog.js';
 import SheetControl from './class/SheetControl.js';
@@ -48,18 +49,14 @@ var foundryIsReady=false;
 Hooks.on('ready',async()=>{
 
    
-   
-    /* game.swade.rollSkillMacro=(skillName)=>{
-        gb.macroRoll('skill',skillName);
-    }
+    game.swadetools={};
+    game.swadetools=st;
 
-    game.swade.rollWeaponMacro=(weaponName)=>{
-        gb.macroRoll('weapon',weaponName);
-    }
-
-    game.swade.rollPowerMacro=(powerName)=>{
-        gb.macroRoll('power',powerName);
+    /* game.swadetools.attribute=async(actor,attribute)=>{
+        await st.attribute(actor,attribute)
     } */
+   
+
 
     game.swade.rollItemMacro=(itemName)=>{
         gb.macroRoll(itemName);

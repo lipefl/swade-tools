@@ -275,7 +275,7 @@ export default class CharRoll extends BasicRoll{
 
             if (this.canCast){
                 this.powerCount();
-                gb.say(`${gb.trans('InnatePower')}: ${this.item.name}`,this.actor.name);
+                gb.say(`${this.getItemCard(this.item)}${gb.trans('InnatePower')}`,this.actor.name);
             }
             this.dontDisplay=true;            
             return 
@@ -374,13 +374,11 @@ export default class CharRoll extends BasicRoll{
         this.manageshots=false;
     } */
 
-    isItem(item,countshots=true){
-        this.item=item;
+    getItemCard(item){
 
-     //   console.log(item);
-     const description=TextEditor.enrichHTML(item.system.description,{async:false}) /// async false will be removed
+        const description=TextEditor.enrichHTML(item.system.description,{async:false}) /// async false will be removed
 
-        this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
+        return `<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">
         <h3 class="item-name"><a>${item.name}</a></h3>
       </header>
@@ -388,6 +386,25 @@ export default class CharRoll extends BasicRoll{
     <div class="card-content" style="display:none">
         ${description}
       </div></div>`;
+
+    }
+
+    isItem(item,countshots=true){
+        this.item=item;
+
+     //   console.log(item);
+     const description=TextEditor.enrichHTML(item.system.description,{async:false}) /// async false will be removed
+
+     this.flavorAdd.start=this.getItemCard(item);
+
+     /*    this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
+        <img src="${item.img}" title="${item.name}" width="36" height="36">
+        <h3 class="item-name"><a>${item.name}</a></h3>
+      </header>
+    
+    <div class="card-content" style="display:none">
+        ${description}
+      </div></div>`; */
 
         if (gb.systemSetting('ammoManagement') && countshots && item.type=="weapon"){
             this.manageshots=countshots;
@@ -775,6 +792,7 @@ export default class CharRoll extends BasicRoll{
         }
         
         if (this.item){
+            
             Hooks.call('swadeAction', this.actor, this.item,this.action,this.roll, game.user.id);  /// all item rolls -> can be used for hit/damage (itemDialog) => search for "new itemRoll"
         }
 
