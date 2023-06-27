@@ -19,7 +19,13 @@ export const run=async(actor)=>{
 
 
 export const item=async(actor,itemId)=>{
-    let item=new ItemDialog(actor,itemId);
-    item.showDialog();
+    let item=actor.items.get(itemId)
+    if (item.type=='weapon' || item.type=='power'){
+        let itemshow=new ItemDialog(actor,itemId);
+        itemshow.showDialog();
+    } else {
+        item.show();
+    }
 }
+   
 

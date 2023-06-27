@@ -174,13 +174,14 @@ export default class CharRoll extends BasicRoll{
     async rollRun(){
         this.flavor+=`<div>${gb.trans('Running','SWADE')}</div>`;
 
-        if (gb.systemSetting('enableWoundPace')){
+        let ferinfo=''
+         if (gb.systemSetting('enableWoundPace')){
             let woundMod=0-gb.realInt(this.actor.system.wounds.value);
             if (woundMod<-3){
                 woundMod=-3
             }
-            this.addModifier(woundMod,gb.trans('Wounds','SWADE'));
-        }
+            this.flavor+=`<div>${gb.trans('Wounds','SWADE')}: ${woundMod}</div>`;
+        } 
         
         /// wounds
        // this.addModifier(-2,gb.trans('Wounds','SWADE'))
