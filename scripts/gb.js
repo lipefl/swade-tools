@@ -160,8 +160,11 @@ export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
     const ray = new Ray(origin, target);
 
     if (checkWalls){
-        if (canvas.walls.checkCollision(ray,{type:"move",mode:"any"})===true){ 
-         //   console.log('collision');
+       if (CONFIG.Canvas.polygonBackends['move'].testCollision(origin,target,{type:"move",mode:"any"})===true){
+     // if (canvas.walls.checkCollision(ray,{type:"move",mode:"any"})===true){  //v10
+
+      //console.log('block');
+       
             return null
         }
     }
@@ -638,7 +641,7 @@ export const rollResist=(traitName,skillMod)=>{
    
 
 
-export const showTemplate=type=>{
+export const showTemplate=(type,item)=>{
 
     
    
@@ -649,6 +652,7 @@ export const showTemplate=type=>{
             x: 0,
             y: 0,
             fillColor: game.user.color,
+            flags: item ? { swade: { origin: item.uuid } } : {}
         };
        
         if (type === 'cone') {
@@ -870,7 +874,8 @@ export const statusChange=async(actor,status,active)=>{
         });
         // Find the existing effect based on label and flag and delete it.
         for (const effect of actor.effects) {
-            if (effect.getFlag('core', 'statusId') === status) {
+            console.log(effect);
+            if (effect.statuses.has(status)) {
                 await effect.delete();
             }
         }

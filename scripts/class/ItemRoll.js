@@ -36,14 +36,14 @@ export default class ItemRoll extends CharRoll{
 
         if (action.type=='skill'){
 
-          //  if (this.item.system.trademark){
-         //   this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
-           // }
-           
+      
+
+
+                  
           
-           if (action.shotsUsed!==''){
+           if (gb.realInt(action.shotsUsed)>0){
             this.useShots(action.shotsUsed);
-            }
+            } 
             
             
 
@@ -127,6 +127,8 @@ export default class ItemRoll extends CharRoll{
             if (usepp<0){ /// min 0
                 usepp=0
             }
+
+           // console.log(usepp,'usepp');
             this.useShots(usepp);
         } else if (this.item.isArcaneDevice){
             this.useShots(gb.realInt(extraPP))

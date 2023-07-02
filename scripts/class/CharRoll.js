@@ -268,6 +268,7 @@ export default class CharRoll extends BasicRoll{
        
 
         if (this.item && this.manageshots){
+           
             this.countShots();
         }
 
@@ -472,7 +473,7 @@ export default class CharRoll extends BasicRoll{
         
         if (this.manageshots){
        //let item=this.actor.items.get(this.itemid);
-     //  console.log('counting shots');
+     
         let maxshots;
         let currentShots;
         let update;
@@ -758,6 +759,7 @@ export default class CharRoll extends BasicRoll{
     }
 
     defineAction(action){
+        this.addFlag('useaction',action);
         this.action=action;
     }
 

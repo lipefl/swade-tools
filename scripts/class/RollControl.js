@@ -1546,7 +1546,7 @@ export default class RollControl {
         let chatflags=this.chat.flags['swade-tools'];
 
 
-    //   console.log(this.chat.data.flags);
+     //  console.log(this.chat.flags);
 
        if (this.chat.flags['swade-tools']?.edgebonus) {
         edgebonus=this.chat.flags['swade-tools'].edgebonus;
@@ -1612,6 +1612,12 @@ export default class RollControl {
         }
 
         
+
+
+        if (this.chat.flags['swade-tools']?.itemroll){
+            
+            Hooks.call('swadeAction',actor, actor.items.get(this.chat.flags['swade-tools'].itemroll),this.chat.flags['swade-tools']?.useaction,roll, game.user.id);  /// all item rolls -> can be used for hit/damage (itemDialog) => search for "new itemRoll"
+        }
 
          ////
    //  console.log(this.chat._roll.terms[0].dice); /// if undefined its 1 die, use this.chat._roll.terms[0].options

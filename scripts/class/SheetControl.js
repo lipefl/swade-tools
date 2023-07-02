@@ -233,7 +233,7 @@ export default class SheetControl {
                         
                         let templateType=$(button.currentTarget).data("template");
 
-                        gb.showTemplate(templateType);
+                        gb.showTemplate(templateType,this.sheet.actor.items.get(itemId));
                         
                        
                     })
