@@ -272,8 +272,11 @@ export default class Char {
     async off(statusName){
      //  console.log(statusName,this.is(statusName),'off');
     // console.log(statusName);
+ 
+
         if (this.is(statusName)){
           //  this.update('status.'+statusName,false);
+          
           await gb.statusChange(this.entity,statusName,false);
            // this.actor.update({['data.status.'+statusName]:false})
        }

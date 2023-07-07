@@ -128,8 +128,11 @@ export default class ItemDialog {
 
        // let raise=false;
         let content=`<div class="swadetools-dialog-item">
-        <div class="swadetools-itemfulldata">
-        <div class="swadetools-2grid">`
+        <div class="swadetools-itemfulldata">`
+
+       
+
+        content+=`<div class="swadetools-2grid">`
 
 
         if (item.type=='weapon'){
@@ -153,9 +156,17 @@ export default class ItemDialog {
         `
         }
        
-        content+=`</div>
+        content+=`</div>`
 
-        <div class="swadetools-formpart swadetools-2grid">
+        if (item.type=='power'){
+            let templatehtml=gb.getTemplatesHTML(item);
+            if (templatehtml){
+                content+=`<span class="swade-tools-template-buttons"><strong>Templates:</strong>${templatehtml}</span>`
+            }
+            
+        }
+
+        content+=`<div class="swadetools-formpart swadetools-2grid">
         
         <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" size=3 class="swadetools-input-number"></div>`
         
@@ -587,6 +598,16 @@ export default class ItemDialog {
                             input.val(newvalue);
                         } 
                     })
+                })
+
+
+                html.on('click','button[data-template]',button=>{
+                        
+                    let templateType=$(button.currentTarget).data("template");
+
+                    gb.showTemplate(templateType,item);
+                    
+                   
                 })
                 
             }

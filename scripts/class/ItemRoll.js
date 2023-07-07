@@ -77,11 +77,11 @@ export default class ItemRoll extends CharRoll{
 
             if (action.dmgOverride){
                 damage=action.dmgOverride;
-            } else {
+            } /* else {
                 
                 ui.notifications.warn(gb.trans('NoDmgActionDefined'));
                 
-            }
+            } */
 
            
 

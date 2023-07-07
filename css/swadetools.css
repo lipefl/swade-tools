@@ -424,6 +424,7 @@ width: calc(100% - 47px);
             .swade-tools-template-buttons
              {
                 display:flex;
+                align-items: center;
             }
 
 .swadetools-number-controls-wrapper button {
@@ -446,6 +447,21 @@ color:white;
     
 }
 
+.swadetools-dialog-item .swade-tools-template-buttons {
+margin-top:5px
+}
+
+.swadetools-dialog-item .swade-tools-template-buttons button {
+    width: auto;
+    line-height: initial;
+    padding: 2px;
+    margin-left: 2px;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    background: none;
+    border: none;
+}
 
 li.chat-message footer.roll-interaction,
 .swade-roll .dice-flavor { /* /// HIDE SYSTEM BENNY BUTTONS AND words "Rool" .swadetools-rollbuttonwrap"Roll Result" */

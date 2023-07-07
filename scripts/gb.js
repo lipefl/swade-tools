@@ -842,10 +842,13 @@ export const statusChange=async(actor,status,active)=>{
             token = tokens?.find((t) => t.actor?.id === actor.id);
         }
         
+        if (token){
+            actor=token.actor;
+        }
 
-      //  console.log(token);
+        //console.log(token);
         // So, if there is...
-        if (token) {
+      /*   if (token) {
             // Toggle the AE from the token which toggles it on the actor sheet, too
             //@ts-ignore TokenDocument.toggleActiveEffect is documented in the API: https://foundryvtt.com/api/TokenDocument.html#toggleActiveEffect
             await token.toggleActiveEffect(statusConfigData, {
@@ -853,7 +856,7 @@ export const statusChange=async(actor,status,active)=>{
             });
             // Otherwise
         }
-        else {
+        else { */
             // Create the AE, passing the label, data, and renderSheet boolean
             await actor.update({
                 'data.status': {
@@ -863,7 +866,7 @@ export const statusChange=async(actor,status,active)=>{
             actor.toggleActiveEffect(statusConfigData, {
                 active: true,
             });
-        }
+       // }
         // Otherwise...
     }
     else {
@@ -872,13 +875,17 @@ export const statusChange=async(actor,status,active)=>{
                 [translateActiveEffect(status)]: false,
             },
         });
+
+        actor.toggleActiveEffect(statusConfigData, {
+            active: false,
+        });
         // Find the existing effect based on label and flag and delete it.
-        for (const effect of actor.effects) {
-            console.log(effect);
+        /* for (const effect of actor.effects) {
+         //   console.log(effect);
             if (effect.statuses.has(status)) {
                 await effect.delete();
             }
-        }
+        } */
     }
 }
 
