@@ -184,8 +184,8 @@
     "SWADETOOLS.Raises":"Raises",
     "SWADETOOLS.Failure":"Failure",
     "SWADETOOLS.TargetNumber":"Change Target Number",
-    "SWADETOOLS.SettingWildAttackSkills": "Skills to use for Wild Attack",
-    "SWADETOOLS.SettingWildAttackSkillsHint": "List of skills to use for Wild Attack, separated by comma. Ex: Fighting, Athtletics, Shooting",
+    "SWADETOOLS.SettingWildAttackSkills": "Skills to use for Wild/Desperate Attack",
+    "SWADETOOLS.SettingWildAttackSkillsHint": "List of skills to use for Wild/Desperate Attack, separated by comma. Ex: Fighting, Athtletics, Shooting",
     "SWADETOOLS.SettingAskCalledShots": "Called Shots option for Items",
     "SWADETOOLS.SettingAskCalledShotsHint": "This option shows a select for called shots when using attack items",
     "SWADETOOLS.CalledShot": "Called Shot",
@@ -226,7 +226,9 @@
     "SWADETOOLS.SettingautoCoverHint": "This option will automatically count Cover penalty for equipped Shields (or any item with cover) on Ranged Attacks . ",
     "SWADETOOLS.SettingonlySystemMod": "Use only Soak and Unshaken bonus defined by the sheet tweaks.",
     "SWADETOOLS.SettingonlySystemModHint": "Check this option if you want to use only the sheet tweak bonus for Unshaken and Soak. This will disable auto-detection of some edges and abilities like: Combat Reflexes, Undead, etc. ",   
-    "SWADETOOLS.CombatAcrobatSetting": "Combat Acrobat"
+    "SWADETOOLS.CombatAcrobatSetting": "Combat Acrobat",
+    "SWADETOOLS.DesperateWildAttack": "Desperate/Wild Attack",
+    "SWADETOOLS.ImprovedFrenzySetting": "Improved Frenzy"
     
     
     

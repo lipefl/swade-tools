@@ -207,7 +207,8 @@ export default class CharRoll extends BasicRoll{
 
         
         this.baseModifiers();
-        this.addModifier(this.actor.system.attributes[attribute].die.modifier,gb.trans('ModAttr'))
+       // this.addModifier(this.actor.system.attributes[attribute].die.modifier,gb.trans('ModAttr'))
+       this.addModifier(gb.attModifier(this.actor,attribute),gb.trans('ModAttr'))
       //  console.log(this.mod);
     //    console.log(this.reasons);
         
@@ -323,7 +324,7 @@ export default class CharRoll extends BasicRoll{
                 wildDie=item.system["wild-die"].sides;
             } 
 
-            this.addModifier(item.system.die.modifier,gb.trans('ModSkill'))     
+            this.addModifier(gb.skillModifier(item),gb.trans('ModSkill'))     
 
             if (item.system.attribute=='agility'){
                 this.agilityMods();
@@ -829,7 +830,7 @@ export default class CharRoll extends BasicRoll{
 
       // console.log(this.roll);
 
-       this.roll.toMessage(chatData)
+       this.roll.toMessage(chatData,{rollMode:game.settings.get("core","rollMode")})
        /* .then((chat)=>{ => already in chatData
        
         

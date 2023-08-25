@@ -109,7 +109,7 @@ export default class ItemDialog {
         }
 
 
-        if (item.type=='power' && !weaponinfo.damage){
+        if ((item.type=='power' && !weaponinfo.damage) || item.type=='gear'){
             showDamage=false;
             showRaiseDmg=false;
            
@@ -206,15 +206,32 @@ export default class ItemDialog {
 
 
 
-        let showDesperate=false;
+        //let showDesperate=false;
 
-        if (gb.setting('wildAttackSkills').split(',').map(s => s.trim()).includes(weaponactions.skill)){ /// wild attack
-            content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="wildattack" value="1"><strong>${gb.trans('WildAttack')}</strong></label></div>`;
+        if (gb.setting('wildAttackSkills').split(',').map(s => s.trim()).includes(weaponactions.trait)){ /// wild attack
+
+
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('DesperateWildAttack')}:</strong></label> <select id="desperate">`
+            //<option value="">${gb.trans('Default')}</option>`;
+            let multiaction=[
+                {val:'0',text:gb.trans('MAPenalty.None','SWADE')},
+                {val:'1',text:gb.trans('WildAttack')},
+                {val:'2',text:`${gb.trans('DesperateAttack')} +2/-2`},
+                {val:'4',text:`${gb.trans('DesperateAttack')} +4/-4`},
+            ]
+         
+            multiaction.forEach(act=>{
+                content+=`<option value="${act.val}">${act.text}</option>`;
+            })
+
+            content+=`</select>
+            </div>`;
+           /*  content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="wildattack" value="1"><strong>${gb.trans('WildAttack')}</strong></label></div>`;
 
             if (gb.setting('desperateAttack')){
                 showDesperate=true;
 
-            }
+            } */
             
         }
 
@@ -240,11 +257,11 @@ export default class ItemDialog {
             </div>`;
         }
 
-        if ( gb.setting('selectModifiers') || gb.setting('askCalledShots') || showDesperate){
+        if ( gb.setting('selectModifiers') || gb.setting('askCalledShots')){
         content+=`<div class="swadetools-damage-actions swadetools-mod-add swadetools-mid-title"><h3>${gb.trans("ModOther",'SWADE')}</h3></div>`;
         }
 
-        if (showDesperate){
+        /* if (showDesperate){
             content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('DesperateAttack')}:</strong></label> <select id="desperate">`
             //<option value="">${gb.trans('Default')}</option>`;
             let multiaction=[
@@ -260,7 +277,7 @@ export default class ItemDialog {
             content+=`</select>
             </div>`;
         }
-
+ */
 
         if ( gb.setting('selectModifiers') ){
             content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('MAPenalty.Label','SWADE')}:</strong></label> <select id="multiaction">`
@@ -347,7 +364,7 @@ export default class ItemDialog {
 
         let buttons={};
 
-        let skillName=weaponactions.skill;
+        let skillName=weaponactions.trait;
         let skillflag=item.getFlag('swade-tools','skillitem')
         let noMainSkill=false;
 
@@ -476,16 +493,30 @@ export default class ItemDialog {
             } */
 
             let char=new Char(this.actor);
-            if (char.hasEdgeSetting('Frenzy')){
+
+            if (char.hasEdgeSetting('Frenzy') || char.hasEdgeSetting('Improved Frenzy')){
+
+                let btFrenzyName;
+                let frenzyRof;
+
+                if (char.hasEdgeSetting('Improved Frenzy')){
+
+                    btFrenzyName=gb.settingKeyName('Improved Frenzy')
+                    frenzyRof=3
+                } else if (char.hasEdgeSetting('Frenzy')){
+                    btFrenzyName=gb.settingKeyName('Frenzy')
+                    frenzyRof=2
+                }
+
                 buttons.frenzy={
-                    label: gb.settingKeyName('Frenzy'),
+                    label: btFrenzyName,
                     callback: async (html)=>{
                         let itemRoll=new ItemRoll(this.actor,this.item);
                     
             //    console.log(this.item);
                     await this.processItemFormDialog(html,itemRoll,'skill');                    
                     
-                    await itemRoll.rollBaseSkill(2);                  
+                    await itemRoll.rollBaseSkill(frenzyRof);                  
                    
                     itemRoll.display();
                     }
@@ -675,10 +706,10 @@ export default class ItemDialog {
             } 
 
 
-            if (html.find("#wildattack")[0]?.checked){
+           /*  if (html.find("#wildattack")[0]?.checked){
                 charRoll.addModifier(2,gb.trans('WildAttack'));
                 await charRoll.wildAttack();
-            } 
+            }  */
 
             if (html.find("#swat")[0]?.checked){
                 charRoll.addFlag('useswat',1);
@@ -700,11 +731,16 @@ export default class ItemDialog {
 
             if (html.find("#desperate")[0]){
                 let despmod=html.find('#desperate')[0].value;
+                if (despmod==1){ /// wildAttack
+                    charRoll.addModifier(2,gb.trans('WildAttack'));
+                    await charRoll.wildAttack();
+                } else {
                 if (actionType=='damage'){
                     despmod=0-gb.realInt(html.find('#desperate')[0].value)
                 }
                 charRoll.addModifier(despmod,gb.trans('DesperateAttack'));
                 charRoll.addFlag('desperateattack',html.find('#desperate')[0].value);
+                }
             } 
 
             if (html.find('#cover')[0]){

@@ -41,8 +41,8 @@ export default class ItemRoll extends CharRoll{
 
                   
           
-           if (gb.realInt(action.shotsUsed)>0){
-            this.useShots(action.shotsUsed);
+           if (gb.realInt(action.resourcesUsed)>0){
+            this.useShots(action.resourcesUsed);
             } 
             
             
@@ -50,16 +50,16 @@ export default class ItemRoll extends CharRoll{
            
             this.addModifier(action.skillMod,action.name);
             let rof=1;
-            if (action.rof!==undefined){
-               rof=action.rof;
+            if (action.dice!==undefined){
+               rof=action.dice;
             }
 
-            let skill=this.data.skill;
+            let skill=this.data.trait;
 
            // console.log(skill,'skill1');
             
-            if (action.skillOverride){
-                skill=action.skillOverride;
+            if (action.override){
+                skill=action.override;
             }
 
            // console.log(skill,'skill2');
@@ -72,11 +72,11 @@ export default class ItemRoll extends CharRoll{
             
 
         } else if (action.type=='damage'){
-            this.addModifier(action.dmgMod,action.name);
+            this.addModifier(action.modifier,action.name);
             let damage=this.item.system.damage;            
 
-            if (action.dmgOverride){
-                damage=action.dmgOverride;
+            if (action.override){
+                damage=action.override;
             } /* else {
                 
                 ui.notifications.warn(gb.trans('NoDmgActionDefined'));
@@ -107,12 +107,12 @@ export default class ItemRoll extends CharRoll{
     /// universal mods
     addSkillMod(){
         this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
-        this.addModifier(this.data.skillMod,gb.trans('ModItem'));
+        this.addModifier(this.data.modifier,gb.trans('ModItem'));
         
     }
 
     addDmgMod(){
-        this.addModifier(this.data.dmgMod,gb.trans('ModItem'));
+        this.addModifier(this.data.modifier,gb.trans('ModItem'));
     }
     ///
 

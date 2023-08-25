@@ -6,7 +6,7 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
-export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat'];
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat','Improved Frenzy'];
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
@@ -637,7 +637,29 @@ export const rollResist=(traitName,skillMod)=>{
                 }
 }
 
-            
+export const attModifier=(actor,att)=>{
+    
+    let mod=0;
+     actor.system.attributes[att].effects.map(e=>{
+         mod+=e.value;
+     })
+ 
+     mod+=actor.system.attributes[att].die.modifier;
+ 
+     return mod;
+ }
+
+export const skillModifier=(item)=>{
+    
+   let mod=0;
+    item.system.effects.map(e=>{
+        mod+=e.value;
+    })
+
+    mod+=item.system.die.modifier;
+
+    return mod;
+}
    
 
 
@@ -794,7 +816,7 @@ export const isHeavyArmor=(actor,area='torso')=>{
 }
 
 export const itemSkillMod=item=>{
-    return realInt(item.system.actions.skillMod)+realInt(item.system.trademark)
+    return realInt(item.system.actions.traitMod)+realInt(item.system.trademark)
 }
 
 export const rechargeWeaponXDialog=(actor,item)=>{

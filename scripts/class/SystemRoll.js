@@ -5,6 +5,7 @@ export default class SystemRoll {
     constructor(actor){
         this.actor=actor;
         this.vehicle=false;
+        this.modifiers=[]
     }
 
 
@@ -22,6 +23,13 @@ export default class SystemRoll {
 
     useManeuver(vehicle){
         this.vehicle=vehicle
+        this.modifiers.push({reason:gb.trans('Handling','SWADE'),mod:vehicle.system.handling})
+    }
+
+    addExtraModifiers(charRoll){
+        this.modifiers.map(obj=>{
+            charRoll.addModifier(obj.mod,obj.reason);
+        })
     }
 
     async rollSkill(skillId){
@@ -34,11 +42,12 @@ export default class SystemRoll {
             let skillName;
             let exp;
             if (!item){
-                skillName=skillId;
+                skillName=skillId;                
                 exp=`d4-2`
             } else {
                 skillName=item.name;
-                exp=`d${item.system.die.sides}${gb.realInt(item.system.die.modifier)?'+'+item.system.die.modifier:''}`
+                let skillModifier=gb.realInt(gb.skillModifier(item));
+                exp=`d${item.system.die.sides}${skillModifier?'+'+skillModifier:''}`
             }
             
             let content=`<div class="swadetools-itemfulldata">
@@ -65,6 +74,7 @@ export default class SystemRoll {
                                 cr.addModifier(penalty,gb.trans('Handling','SWADE'))
                             }
                             cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
+                            this.addExtraModifiers(cr);
                             await cr.rollSkill(skillName)
                             cr.addFlag('rolltype','skill')
                             cr.display();
@@ -160,8 +170,10 @@ export default class SystemRoll {
 
         if (gb.setting('simpleRolls')){
 
+            let attModifier=gb.realInt(gb.attModifier(this.actor,attribute));
+
             let content=`<div class="swadetools-itemfulldata">
-                    <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.actor.system.attributes[attribute].die.sides}${gb.realInt(this.actor.system.attributes[attribute].die.modifier)?'+'+this.actor.system.attributes[attribute].die.modifier:''}
+                    <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.actor.system.attributes[attribute].die.sides}${attModifier?'+'+attModifier:''}
                     </div>
                     <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
                     new Dialog({

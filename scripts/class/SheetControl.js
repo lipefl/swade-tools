@@ -60,6 +60,11 @@ export default class SheetControl {
 
             let sys=new SystemRoll(realActor);
             sys.useManeuver(this.sheet.actor);
+
+            if (!skillId){
+                skillId=driveSkill;
+            }
+            
             await sys.rollSkill(skillId);
         })
     }
@@ -148,18 +153,19 @@ export default class SheetControl {
 
         /// v0.0.5
 
-        let nthkey='2';
+        
+        let nthkey=['2','7'];
         if (this.sheet.actor.items.find(el=>el.type=='edge' && el.system.isArcaneBackground===true)){
        // if (Object.keys(this.sheet.actor.data.data.powerPoints).length !== 0){
          //  console.log(this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true));
        //   console.log('has powers');
-            nthkey='-n+3';
+            nthkey.push('3')
         }
 
        // nthkey=2;
         
         // .swade-official
-        let findEl='.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll' 
+        let findEl='.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll,.inventory .item .misc .item-img' 
 
        //
 
@@ -167,16 +173,23 @@ export default class SheetControl {
         findEl+=',.gear-list.weapon-list .item.weapon .item-image,  .gear-list.weapon-list .item.weapon .item-show, .powers-list .item-image, .powers-list .item-show, .powers-list h4.item-name, .item-list .item.weapon h4, .item-list .item.weapon .item-image';
 
 
+        nthkey.map(key=>{
+            findEl+=',.quickaccess .quick-list:nth-of-type('+key+') .item-image,.quickaccess .quick-list:nth-of-type('+key+') .item-show'   
+        })
         ///v0.17
-        findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-image,.quickaccess .quick-list:nth-of-type('+nthkey+') .item-show'       
+            
         
 
 
 
 
         if(!gb.setting('itemNameClick')){
-            findEl+=',.quickaccess .quick-list:nth-of-type('+nthkey+') .item-name';
-            findEl+=',.gear-list.weapon-list .item.weapon .item-name, .item.power .item-name, .inventory .item .weapon .item-name'  /// swade-official, npc
+            nthkey.map(key=>{
+                findEl+=',.quickaccess .quick-list:nth-of-type('+key+') .item-name';
+            })
+
+           
+            findEl+=',.gear-list.weapon-list .item.weapon .item-name, .item.power .item-name, .inventory .item .weapon .item-name, .inventory .item .misc .item-name'  /// swade-official, npc
             //v0.17
            
         }
@@ -185,7 +198,7 @@ export default class SheetControl {
 
         this.html.find(findEl).each((index,el)=>{
             this.doItem($(el));
-        })
+        });
        
     
       /* // this.html.find(findEl).css('background','yellow');
@@ -218,7 +231,7 @@ export default class SheetControl {
             let actorItem=this.sheet.actor.items.find(el=>el.id==itemId)
             let type=actorItem?.type;
 
-            if (actions.includes(type)){
+            if (actions.includes(type) || (type=='gear' && actorItem.system.isArcaneDevice===true)){
                 target.unbind('click').bind('click',ev=>{
                     let item=new ItemDialog(this.sheet.actor,itemId);
                      item.showDialog();
