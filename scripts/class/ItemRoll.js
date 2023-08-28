@@ -34,7 +34,7 @@ export default class ItemRoll extends CharRoll{
         this.defineAction(actionId);
 
 
-        if (action.type=='skill'){
+        if (action.type=='trait'){
 
       
 
