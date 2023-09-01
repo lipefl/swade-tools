@@ -107,7 +107,7 @@ export default class ItemRoll extends CharRoll{
     /// universal mods
     addSkillMod(){
         this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
-        this.addModifier(this.data.modifier,gb.trans('ModItem'));
+        this.addModifier(this.item.system.actions.traitMod,gb.trans('ModItem'));
         
     }
 
@@ -150,12 +150,12 @@ export default class ItemRoll extends CharRoll{
        
         this.addSkillMod();
 
-        let attr=gb.findAttr(this.data.skill)
+        let attr=gb.findAttr(this.data.trait)
        // gb.log(this.data.skill,attr);
         if (attr){
             await this.rollAtt(attr,rof);
         } else {
-            await this.rollSkill(this.data.skill,rof);
+            await this.rollSkill(this.data.trait,rof);
         }
         
        
