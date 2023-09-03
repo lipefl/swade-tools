@@ -184,8 +184,8 @@
   "SWADETOOLS.Raises": "Aumentos",
   "SWADETOOLS.Failure": "Fallo",
   "SWADETOOLS.TargetNumber": "Cambiar Valor Objetivo",
-  "SWADETOOLS.SettingWildAttackSkills": "Habilidades utilizan Ataque Salvaje",
-  "SWADETOOLS.SettingWildAttackSkillsHint": "Lista de habilidades que utilizan el Ataque Salvaje, separadas por coma. Ej: Pelea, Atletismo, Disparar",
+  "SWADETOOLS.SettingWildAttackSkills": "Habilidades que utilizan Ataque Salvaje/Desesperado",
+  "SWADETOOLS.SettingWildAttackSkillsHint": "Lista de habilidades que utilizan el Ataque Salvaje/Desesperado, separados por coma. Ej: Pelear, Atletismo, Disparar",
   "SWADETOOLS.SettingAskCalledShots": "Opción Disparo Apuntado en armas",
   "SWADETOOLS.SettingAskCalledShotsHint": "Esta opción muestra un selector para disparos apuntados cuando se utilizan armas del equipo.",
   "SWADETOOLS.CalledShot": "Disparo Apuntado",
@@ -226,5 +226,7 @@
   "SWADETOOLS.SettingautoCoverHint": "Esta opción automáticamente cuenta la penalización de Cobertura de los Escudos equipados (o cualquier otro objeto con cobertura) para los Ataques a Distancia.",
   "SWADETOOLS.SettingonlySystemMod": "Utilizar sólo el modificador definido en la hoja de PJ para Absorber daño y salir del Aturdimiento.",
   "SWADETOOLS.SettingonlySystemModHint": "Marca esta opción si quieres utilizar sólo los ajustes de la hoja de personaje para salir del aturdimiento y absorber el daño. Esto desactiva la auto-detección de ventajas y habilidades como: Reflejos de Combate, Muerto Viviente, etc.",
-  "SWADETOOLS.CombatAcrobatSetting": "Acróbata Marcial"
+  "SWADETOOLS.CombatAcrobatSetting": "Acróbata Marcial",
+  "SWADETOOLS.DesperateWildAttack": "Ataque Salvaje/Desesperado",
+  "SWADETOOLS.ImprovedFrenzySetting": "Frenesí Improvisado"
 }
