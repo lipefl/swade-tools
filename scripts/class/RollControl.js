@@ -833,7 +833,19 @@ export default class RollControl {
        // let vulBonus=0;
       // let vulIcon='';
        
+        let powertype=false;
 
+        if (item.type=='power') {
+
+            if ((!item.system.damage)){ /// damaging powers
+                powertype='nodamage';
+            } else if (item.system?.templates?.cone || item.system?.templates.large || item.system?.templates?.medium || item.system?.templates?.small || item.system?.templates?.stream){  /// template powers
+                powertype='template'
+            } 
+           
+        }
+
+       
        
       let raisecount;
 
@@ -846,9 +858,11 @@ export default class RollControl {
         let char=new Char(target.actor);
         /// range, gangup
 
+        if (!powertype){
         let targetRange=gb.getRange(this.getActor(true,true),target)*canvas.dimensions.distance; /// use Grid Scale for distance (but not for gang up)
 
        // console.log(targetRange);
+       
        
         if (!this.chat.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
           //  targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
@@ -889,6 +903,8 @@ export default class RollControl {
         } else {
 
         //// ranged attack or vehicle
+
+            
 
            
             if (char.hasEdgeSetting('Dodge')){
@@ -1017,12 +1033,16 @@ export default class RollControl {
 
 
        
-        if (char.is('isVulnerable')){
-           targetInfo+=`<li>${target.name} ${gb.trans('IsVulnerable')}: +2</li>`;
-            targetNumber-=2;
-        }
+       
 
 
+    }
+
+
+    if (powertype!='template' && char.is('isVulnerable')){
+        targetInfo+=`<li>${target.name} ${gb.trans('IsVulnerable')}: +2</li>`;
+         targetNumber-=2;
+     }
         //// distance modifier
 
       //  console.log(this.failedPower(item));
@@ -1724,7 +1744,8 @@ export default class RollControl {
             && t.id!=target.id /// not the target
             && t.visible  /// is visible   
             && t.document.overlayEffect!=CONFIG.controlIcons.defeated   /// not defeated (out of combat)
-            && !t.combatant?.defeated /// not defeated
+            && !t.actor.effects.find(el=>el.name=="Incapacitated")  /// not defeated (out of combat)
+            && !t.combatant?.defeated /// not defeated 
             && t?.actor?.system.status.isStunned!==true /// not stunned    
             && t?.actor?.type!='vehicle'
             && t.document.disposition!=0        

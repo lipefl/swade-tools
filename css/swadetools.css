@@ -64,6 +64,7 @@ align-items: center;
 
 .swadetools-relative {
     position: relative;
+    z-index:1;
 }
 
 .swadetools-chatadd-status {

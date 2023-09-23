@@ -24,8 +24,8 @@ export default class ItemDialog {
 
 
     saveSkill(newSkill){
-        this.item.update({'data.actions.skill':newSkill});
-        this.item.system.actions.skill=newSkill;
+        this.item.update({'system.actions.trait':newSkill});
+        this.item.system.actions.trait=newSkill;
         this.dontDisplay=false;
         this.showDialog();
     }
