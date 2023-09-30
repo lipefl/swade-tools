@@ -112,7 +112,7 @@ export default class ItemRoll extends CharRoll{
     }
 
     addDmgMod(){
-        this.addModifier(this.data.modifier,gb.trans('ModItem'));
+        this.addModifier(this.data.dmgMod,gb.trans('ModItem'));
     }
     ///
 
