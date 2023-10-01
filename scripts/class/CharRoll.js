@@ -120,13 +120,37 @@ export default class CharRoll extends BasicRoll{
         
         woundmod=woundmod-this.actor.system.wounds.ignored;
         
+       
+
+        
+        let fatiguemod=this.actor.system.fatigue.value;
+        fatiguemod=fatiguemod-this.actor.system.fatigue.ignored;       
+        
+
+        
+
+        if (this.actor.system.woundsOrFatigue.ignored){
+            
+            let reduceFatigue=this.actor.system.woundsOrFatigue.ignored;
+            if (woundmod>0){
+                woundmod=woundmod-this.actor.system.woundsOrFatigue.ignored
+                console.log(woundmod);
+                if (woundmod<=0){
+                    reduceFatigue=Math.abs(woundmod);
+                }
+            }
+
+            if (fatiguemod>0){
+                fatiguemod=fatiguemod-Math.min(this.actor.system.woundsOrFatigue.ignored,reduceFatigue)
+            }
+
+        }
+
         if (woundmod>0){            
             this.addModifier(0-woundmod,gb.trans("Wounds","SWADE"));
         }
 
-        
-        let fatiguemod=this.actor.system.fatigue.value        
-        if (fatiguemod){
+        if (fatiguemod>0){
             this.addModifier(0-fatiguemod,gb.trans("Fatigue","SWADE"));
         }
 
