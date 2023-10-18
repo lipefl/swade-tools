@@ -152,7 +152,7 @@ export default class Char {
             arcane='general'
         }
         
-        return this.entity.system.powerPoints[arcane].value;
+        return this.entity.system?.powerPoints?.[arcane]?.value;
            
             
     }

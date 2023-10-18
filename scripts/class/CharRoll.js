@@ -134,7 +134,7 @@ export default class CharRoll extends BasicRoll{
             let reduceFatigue=this.actor.system.woundsOrFatigue.ignored;
             if (woundmod>0){
                 woundmod=woundmod-this.actor.system.woundsOrFatigue.ignored
-                console.log(woundmod);
+              //  console.log(woundmod);
                 if (woundmod<=0){
                     reduceFatigue=Math.abs(woundmod);
                 }
@@ -250,7 +250,7 @@ export default class CharRoll extends BasicRoll{
 
 
     agilityMods(){
-        if (this.actor.isEncumbered){
+        if (this.actor.system.encumbered){
             this.addModifier(-2,gb.trans('CarryWeight','SWADE'))
         }
 

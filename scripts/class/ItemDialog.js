@@ -149,9 +149,18 @@ export default class ItemDialog {
                 content+=`<div><strong>${gb.trans('Dmg','SWADE')}</strong>: ${weaponinfo.damage}${patxt}</div>`;
             }
             
+          
+            if(gb.systemSetting('noPowerPoints')){
+
+                content+=`<div><strong>${gb.trans('Item.power','TYPES')} ${gb.trans('Modifier')}</strong>: ${0-gb.realInt(Math.ceil(weaponinfo.pp/2))} (${gb.realInt(weaponinfo.pp)} ${gb.trans('PPAbbreviation','SWADE')})</div>`
+
+            } else {
+                content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(char.getActualPP(item.system.arcane))}</div>`
+            }
             
-            content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(char.getActualPP(item.system.arcane))}</div>
-            <div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
+            
+
+            content+=`<div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
             <div><strong>${gb.trans('Range._name','SWADE')}</strong>: ${weaponinfo.range}</div>
         `
         }
