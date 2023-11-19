@@ -108,11 +108,20 @@ export default class ItemRoll extends CharRoll{
     addSkillMod(){
         this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
         this.addModifier(this.item.system.actions.traitMod,gb.trans('ModItem'));
-        
+        if (this.actor?.system?.stats?.globalMods?.attack && this.actor?.system?.stats?.globalMods?.attack.length > 1) {
+            this.actor?.system?.stats?.globalMods?.attack.forEach(el => {
+                this.addModifier(el.value,el.label);
+            });
+        }
     }
 
     addDmgMod(){
         this.addModifier(this.data.dmgMod,gb.trans('ModItem'));
+        if (this.actor?.system?.stats?.globalMods?.damage && this.actor?.system?.stats?.globalMods?.damage.length > 1) {
+            this.actor?.system?.stats?.globalMods?.damage.forEach(el => {
+                this.addModifier(el.value,el.label);
+            });
+        }
     }
     ///
 

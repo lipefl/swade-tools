@@ -40,7 +40,7 @@ export default class CharRoll extends BasicRoll{
 
        this.canCast=true;
 
-      
+      this.groupRoll=false;
       
        
     }
@@ -227,6 +227,11 @@ export default class CharRoll extends BasicRoll{
          //   console.log(wildDie);
         } 
 
+        if (this.groupRoll){
+            wildDie=6
+            this.flavor+=`<div><strong>${gb.trans('GroupRoll','SWADE')}</strong></div>`;
+        }
+
         this.flavor+=`<div>${gb.trans(gb.attrlang[attribute],"SWADE")}</div>`;
 
         
@@ -241,6 +246,9 @@ export default class CharRoll extends BasicRoll{
             this.agilityMods();
         }
 
+        this.actor.system.stats.globalMods[attribute].map(e=>{
+            this.addModifier(e.value,e.label);
+        })
 
 
         this.addFlag('rolltype','attribute');
@@ -283,6 +291,10 @@ export default class CharRoll extends BasicRoll{
        
 
         return await this.buildRoll(dieType,wildDie,this.mod,1);
+    }
+   
+    rollGroup(){
+        this.groupRoll=true;
     }
     
 
@@ -333,9 +345,15 @@ export default class CharRoll extends BasicRoll{
         this.addFlag('rolltype','skill');
 
         if (item===undefined){
+            item = await game.packs.get(gb.systemSetting("coreSkillsCompendium")).getDocument(await game.packs.get(gb.systemSetting("coreSkillsCompendium")).index.find(el => el.name == skillName)._id);
             skillName=`${gb.trans('Unskilled')} (${skillName})`;
             dieType=4;
             this.addModifier(-2,gb.trans('Unskilled'));
+            if (item.system?.attribute != "") {
+                this.actor.system.stats.globalMods[item.system.attribute].map(e=>{
+                    this.addModifier(e.value,e.label);
+                })
+            }
 
             if (wildCard){
                 wildDie=6;
@@ -348,7 +366,12 @@ export default class CharRoll extends BasicRoll{
                 wildDie=item.system["wild-die"].sides;
             } 
 
-            this.addModifier(gb.skillModifier(item),gb.trans('ModSkill'))     
+            this.addModifier(gb.skillModifier(item),gb.trans('ModSkill'))
+            if (item.system?.attribute != "") {
+                this.actor.system.stats.globalMods[item.system.attribute].map(e=>{
+                    this.addModifier(e.value,e.label);
+                })
+            }
 
             if (item.system.attribute=='agility'){
                 this.agilityMods();
@@ -358,7 +381,10 @@ export default class CharRoll extends BasicRoll{
         
         
         
-        
+        if (this.groupRoll){
+            wildDie=6;
+            this.flavor+=`<div><strong>${gb.trans('GroupRoll','SWADE')}</strong></div>`;
+        }
         
       
 
@@ -712,6 +738,14 @@ export default class CharRoll extends BasicRoll{
                     if (this.actor.system.attributes[data.name].die.modifier){
                         this.addModifier(this.actor.system.attributes[data.name].die.modifier,gb.trans(`Attr${data.short.charAt(0).toUpperCase()}${data.short.slice(1)}`,'SWADE'));
                     }
+
+                   
+                    this.actor.system.attributes[data.name].effects.map(e=>{
+                        this.addModifier(e.value,e.label);
+                    })
+                    this.actor.system.stats.globalMods[data.name].map(e=>{
+                        this.addModifier(e.value,e.label);
+                    })
                     
            }
         })

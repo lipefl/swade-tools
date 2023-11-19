@@ -228,8 +228,10 @@
     "SWADETOOLS.SettingonlySystemModHint": "Marque essa opção se você quiser usar somente o bonus de Sair do Abalado e Absorção definidos nos ajustes do personagem. Isso irá desabilitar a detecção automática de algumas vantagens e habilidades como: Morto-Vivo, Queixo de Ferro, etc.",
     "SWADETOOLS.CombatAcrobatSetting": "Combatente Acrobata",
     "SWADETOOLS.DesperateWildAttack": "Ataque Selvagem/Desesperado",
-    "SWADETOOLS.ImprovedFrenzySetting": "Frenesi Aprimorado"      
-   
-
+    "SWADETOOLS.ImprovedFrenzySetting": "Frenesi Aprimorado" ,  
+    "SWADETOOLS.SettingsUseGroupRolls": "Mostrar opção de Rolagem de Grupo para Extras",
+    "SWADETOOLS.SettingsUseGroupRollsHint": "Com essa opção marcada, uma caixa de seleção aparecerá para Rolagem de Grupo se o personagem for um extra, adicionando um dado selvagem.",
+    "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Uncanny Reflexes"
+    
 
 }

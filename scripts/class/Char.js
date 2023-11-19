@@ -36,7 +36,7 @@ export default class Char {
     }
 
     getStrForMinStr(){
-        let str=this.getActor().system.attributes.strength.die.sides;
+        let str=this.getActor(true).system.attributes.strength.die.sides;
 
        
             if (this.hasEdgeSetting('Soldier')){
@@ -368,10 +368,14 @@ export default class Char {
     }
 
 
-    getActor(){
+    getActor(useDriverIfVehicle=false){
         let actor=this.entity;
         if (this.istoken){
             actor=this.entity.actor;
+        }
+
+        if (useDriverIfVehicle && this.isvehicle){
+            actor=gb.getDriver(actor);
         }
 
         return actor;

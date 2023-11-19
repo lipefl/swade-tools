@@ -203,6 +203,8 @@ export default class ItemDialog {
             content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="raise" value="1"><strong>${gb.trans('RaiseDmg')}</strong></label></div>`;
         }
 
+       
+
         
         if (gb.setting('useScale')){ ///swat
             let char=new Char(this.actor);
@@ -266,8 +268,16 @@ export default class ItemDialog {
             </div>`;
         }
 
+
+        
+
         if ( gb.setting('selectModifiers') || gb.setting('askCalledShots')){
         content+=`<div class="swadetools-damage-actions swadetools-mod-add swadetools-mid-title"><h3>${gb.trans("ModOther",'SWADE')}</h3></div>`;
+        }
+
+
+        if (!this.actor.isWildcard && gb.setting('useGroupRolls')){
+            content+=`<div class="swadetools-raise swadetools-raise-${item.type}"><label><input type="checkbox" id="grouproll" value="1"><strong>${gb.trans('GroupRoll','SWADE')}</strong></label></div>`;
         }
 
         /* if (showDesperate){
@@ -618,27 +628,7 @@ export default class ItemDialog {
             buttons: buttons,
             render: (html)=>{
 
-                html.find('.swadetools-input-number').each((index,el)=>{
-                    $(el).parent().append('<span class="swadetools-number-controls-wrapper"><button class="swadetools-plus">+</button><button class="swadetools-minus">-</button></span>')
-                    .on('click','button.swadetools-plus,button.swadetools-minus',ev=>{
-
-                      //  console.log(ev);
-
-                        let input=$(el)
-                        let val=gb.realInt(input.val());
-
-                       // console.log(ev);
-
-                        if ($(ev.currentTarget).hasClass('swadetools-minus')){                       
-                            let newvalue=val-1;
-                           // console.log(newvalue);
-                            input.val(newvalue);
-                        } else if ($(ev.currentTarget).hasClass('swadetools-plus')){
-                            let newvalue=val+1
-                            input.val(newvalue);
-                        } 
-                    })
-                })
+               gb.modButtons(html);
 
 
                 html.on('click','button[data-template]',button=>{
@@ -723,6 +713,11 @@ export default class ItemDialog {
             if (html.find("#swat")[0]?.checked){
                 charRoll.addFlag('useswat',1);
             } 
+
+
+            if (html.find("#grouproll")[0]?.checked){
+                charRoll.rollGroup();
+            }
         
             if (html.find('#extrapp')[0]){
                 charRoll.usePP(html.find('#extrapp')[0].value);

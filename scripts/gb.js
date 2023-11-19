@@ -7,7 +7,7 @@ export const moduleName='swade-tools'
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
 export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat','Improved Frenzy'];
-export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics'];
+export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics','Rifts Uncanny Reflexes'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
 export const RoFBullets={
@@ -68,7 +68,7 @@ export const listTables=async (start={})=>{
 }
 
 export const settingKey=(name)=>{
-    return name.replace(' ','')+'Setting';
+    return name.replaceAll(' ','')+'Setting';
 }
 
 export const settingKeyName=(name)=>{
@@ -84,6 +84,30 @@ export const getDriver=(vehicle)=>{
         return false
     }
     
+}
+
+export const modButtons=(html)=>{
+    html.find('.swadetools-input-number').each((index,el)=>{
+        $(el).parent().append('<span class="swadetools-number-controls-wrapper"><button class="swadetools-plus">+</button><button class="swadetools-minus">-</button></span>')
+        .on('click','button.swadetools-plus,button.swadetools-minus',ev=>{
+
+          //  console.log(ev);
+
+            let input=$(el)
+            let val=gb.realInt(input.val());
+
+           // console.log(ev);
+
+            if ($(ev.currentTarget).hasClass('swadetools-minus')){                       
+                let newvalue=val-1;
+               // console.log(newvalue);
+                input.val(newvalue);
+            } else if ($(ev.currentTarget).hasClass('swadetools-plus')){
+                let newvalue=val+1
+                input.val(newvalue);
+            } 
+        })
+    })
 }
 
 export const statusDefaultToIs=(status)=>{

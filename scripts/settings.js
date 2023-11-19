@@ -69,6 +69,16 @@ restricted: true
 		config: false
     });
 
+
+    game.settings.register(gb.moduleName, 'useGroupRolls', {
+      name: gb.trans('SettingsUseGroupRolls'),
+      hint: gb.trans('SettingsUseGroupRollsHint'),
+      default: false,
+      scope: "world",
+      type: Boolean,
+      config: false
+      });
+
     game.settings.register(gb.moduleName, 'askCalledShots', {
       name: gb.trans('SettingAskCalledShots'),
       hint: gb.trans('SettingAskCalledShotsHint'),

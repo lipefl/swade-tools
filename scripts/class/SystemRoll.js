@@ -53,11 +53,18 @@ export default class SystemRoll {
             let content=`<div class="swadetools-itemfulldata">
             <strong>${skillName}</strong>: ${exp}
             </div>
-            <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
+            <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" class="swadetools-input-number" id="mod" value=""></div>`
+            if (!this.actor.isWildcard && gb.setting('useGroupRolls')){
+                content+=`<div class="swadetools-formpart"><label><input type="checkbox" id="grouproll" value="1"><strong>${gb.trans('GroupRoll','SWADE')}</strong></label></div>`;
+            }
+            content+=`</div>`
             new Dialog({
                 title: skillName,
                 content: content,
                 default: 'ok',
+                render: html => {
+                    gb.modButtons(html)
+                },
                 buttons: {
                    
                     ok: {
@@ -75,6 +82,11 @@ export default class SystemRoll {
                             }
                             cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
                             this.addExtraModifiers(cr);
+
+                            if (html.find("#grouproll")[0]?.checked){
+                                cr.rollGroup();
+                            }
+
                             await cr.rollSkill(skillName)
                             cr.addFlag('rolltype','skill')
                             cr.display();
@@ -128,17 +140,21 @@ export default class SystemRoll {
             let content=`<div class="swadetools-itemfulldata">
                     <strong>${gb.trans('Running','SWADE')}</strong>: ${this.actor.system.stats.speed.adjusted}+d${this.actor.system.stats.speed.runningDie}${gb.stringMod(this.actor.system.stats.speed.runningMod)}
                     </div>
-                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
+                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" class="swadetools-input-number" id="mod" value=""></div></div>`
                     new Dialog({
                         title: gb.trans('Running','SWADE'),
                         content: content,
                         default: 'ok',
+                        render: html => {
+                            gb.modButtons(html)
+                        },
                         buttons: {
                            
                             ok: {
                                 label: `<i class="fas fa-dice"></i> ${gb.trans('Roll','SWADE')}`,
                                 callback: async (html)=>{
                                 
+                                   
                                     
                                     let cr=new CharRoll(this.actor)
                                     cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
@@ -175,11 +191,21 @@ export default class SystemRoll {
             let content=`<div class="swadetools-itemfulldata">
                     <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.actor.system.attributes[attribute].die.sides}${attModifier?'+'+attModifier:''}
                     </div>
-                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" value=""></div></div>`
+                    <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" class="swadetools-input-number" value=""></div>`
+
+                    if (!this.actor.isWildcard && gb.setting('useGroupRolls')){
+                        content+=`<div class="swadetools-formpart"><label><input type="checkbox" id="grouproll" value="1"><strong>${gb.trans('GroupRoll','SWADE')}</strong></label></div>`;
+                    }
+            
+
+                    content+=`</div>`
                     new Dialog({
                         title: gb.trans(gb.attrlang[attribute],'SWADE'),
                         content: content,
                         default: 'ok',
+                        render: html => {
+                            gb.modButtons(html)
+                        },
                         buttons: {
                            
                             ok: {
@@ -189,6 +215,9 @@ export default class SystemRoll {
                                     
                                     let cr=new CharRoll(this.actor)
                                     cr.addModifier(html.find("#mod")[0].value,gb.trans('Additional'))
+                                    if (html.find("#grouproll")[0]?.checked){
+                                        cr.rollGroup();
+                                    }
                                     await cr.rollAtt(attribute)
                                     cr.addFlag('rolltype','attribute')
                                     cr.display();

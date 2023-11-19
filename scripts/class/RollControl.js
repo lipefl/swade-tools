@@ -864,7 +864,12 @@ export default class RollControl {
        // console.log(targetRange);
        
        
-        if (!this.chat.flags["swade-tools"]?.usevehicle && (skill==gb.setting('fightingSkill') || targetRange==1)){
+        if 
+        //(  ====> exclude vehicle removed
+         ///   !this.chat.flags["swade-tools"]?.usevehicle && 
+        (skill==gb.setting('fightingSkill') || targetRange==1)
+       // )
+        {
           //  targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
 
           targetNumber=this.getParry(target.actor);
@@ -990,11 +995,15 @@ export default class RollControl {
             targetInfo+=`<li>${gb.settingKeyName('Combat Acrobat')}: -1`
         }
 
+        if (char.hasAbilitySetting('Rifts Uncanny Reflexes')){
+            targetNumber+=2;
+            targetInfo+=`<li>${gb.settingKeyName('Rifts Uncanny Reflexes')}: -2`
+        }
 
         /// scale 
         if (gb.setting('useScale')){
             
-            let atScale=gb.getScale(this.getSize(this.getActor()));
+            let atScale=gb.getScale(this.getSize(this.getActor(false,true)));
             let dfScale=gb.getScale(this.getSize(target.actor));
 
             let diffScale=dfScale-atScale;
