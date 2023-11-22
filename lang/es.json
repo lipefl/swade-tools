@@ -228,5 +228,8 @@
   "SWADETOOLS.SettingonlySystemModHint": "Marca esta opción si quieres utilizar sólo los ajustes de la hoja de personaje para salir del aturdimiento y absorber el daño. Esto desactiva la auto-detección de ventajas y habilidades como: Reflejos de Combate, Muerto Viviente, etc.",
   "SWADETOOLS.CombatAcrobatSetting": "Acróbata Marcial",
   "SWADETOOLS.DesperateWildAttack": "Ataque Salvaje/Desesperado",
-  "SWADETOOLS.ImprovedFrenzySetting": "Frenesí Improvisado"
+  "SWADETOOLS.ImprovedFrenzySetting": "Frenesí Improvisado",
+  "SWADETOOLS.SettingsUseGroupRolls": "Mostrar Tiradas de Grupo en Extras",
+  "SWADETOOLS.SettingsUseGroupRollsHint": "Si se activa, aparecerá una opción para realizar Tiradas de Grupo añadiendo un Dado Salvaje en los Extras.",
+  "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Reflejos Asombrosos"
 }
