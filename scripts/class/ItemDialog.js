@@ -99,6 +99,7 @@ export default class ItemDialog {
         let showDamage=true;
         let showRaiseDmg=true;
         let char=new Char(this.actor)
+        let powermod=''
         
         let damageActions=[];
       //  let showReload=false;
@@ -149,10 +150,11 @@ export default class ItemDialog {
                 content+=`<div><strong>${gb.trans('Dmg','SWADE')}</strong>: ${weaponinfo.damage}${patxt}</div>`;
             }
             
+
           
             if(gb.systemSetting('noPowerPoints')){
-
-                content+=`<div><strong>${gb.trans('Item.power','TYPES')} ${gb.trans('Modifier')}</strong>: ${0-gb.realInt(Math.ceil(weaponinfo.pp/2))} (${gb.realInt(weaponinfo.pp)} ${gb.trans('PPAbbreviation','SWADE')})</div>`
+                powermod=0-gb.realInt(Math.ceil(weaponinfo.pp/2))
+                content+=`<div><strong>${gb.trans('Item.power','TYPES')} ${gb.trans('Modifier')}</strong>: ${powermod} (${gb.realInt(weaponinfo.pp)} ${gb.trans('PPAbbreviation','SWADE')})</div>`
 
             } else {
                 content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(char.getActualPP(item.system.arcane))}</div>`
@@ -177,7 +179,7 @@ export default class ItemDialog {
 
         content+=`<div class="swadetools-formpart swadetools-2grid">
         
-        <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" size=3 class="swadetools-input-number"></div>`
+        <div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" id="mod" size=3 class="swadetools-input-number" value="${powermod}"></div>`
         
         if ((!gb.systemSetting('noPowerPoints') && item.type=='power') || item.isArcaneDevice){
             let defaultValue='';

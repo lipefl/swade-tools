@@ -6,7 +6,7 @@ export const moduleName='swade-tools'
 
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
-export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat','Improved Frenzy'];
+export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat','Improved Frenzy','Ace'];
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics','Rifts Uncanny Reflexes'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
@@ -94,7 +94,7 @@ export const modButtons=(html)=>{
           //  console.log(ev);
 
             let input=$(el)
-            let val=gb.realInt(input.val());
+            let val=realInt(input.val());
 
            // console.log(ev);
 

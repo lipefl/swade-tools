@@ -28,6 +28,9 @@ export default class SettingName extends FormApplication {
         data.formHtml+=gb.settingFieldCheckbox('autoCover',gb.trans('SettingautoCover'),gb.trans('SettingautoCoverHint'));
 
         data.formHtml+=gb.settingFieldCheckbox('onlySystemMod',gb.trans('SettingonlySystemMod'),gb.trans('SettingonlySystemModHint'));
+
+
+        data.formHtml+=gb.settingFieldCheckbox('bloodAndGoreRifts',gb.trans('bloodAndGoreRifts'),gb.trans('bloodAndGoreRiftsHint'));
         
 
       //  data.formHtml+=`<h2>${gb.trans('RulesSettings')}</h2>`;

@@ -247,7 +247,7 @@ export default class CharRoll extends BasicRoll{
         }
 
         this.actor.system.stats.globalMods[attribute].map(e=>{
-            this.addModifier(e.value,e.label);
+            this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.${attribute.charAt(0).toUpperCase() + attribute.slice(1)}`,'SWADE')})`);
         })
 
 
@@ -351,7 +351,7 @@ export default class CharRoll extends BasicRoll{
             this.addModifier(-2,gb.trans('Unskilled'));
             if (item.system?.attribute != "") {
                 this.actor.system.stats.globalMods[item.system.attribute].map(e=>{
-                    this.addModifier(e.value,e.label);
+                    this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.${item.system.attribute.charAt(0).toUpperCase() + item.system.attribute.slice(1)}`,'SWADE')})`);
                 })
             }
 
@@ -369,7 +369,7 @@ export default class CharRoll extends BasicRoll{
             this.addModifier(gb.skillModifier(item),gb.trans('ModSkill'))
             if (item.system?.attribute != "") {
                 this.actor.system.stats.globalMods[item.system.attribute].map(e=>{
-                    this.addModifier(e.value,e.label);
+                    this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.${item.system.attribute.charAt(0).toUpperCase() + item.system.attribute.slice(1)}`,'SWADE')})`);
                 })
             }
 
@@ -744,7 +744,7 @@ export default class CharRoll extends BasicRoll{
                         this.addModifier(e.value,e.label);
                     })
                     this.actor.system.stats.globalMods[data.name].map(e=>{
-                        this.addModifier(e.value,e.label);
+                        this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.${data.name.charAt(0).toUpperCase() + data.name.slice(1)}`,'SWADE')})`);
                     })
                     
            }

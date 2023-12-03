@@ -108,18 +108,19 @@ export default class ItemRoll extends CharRoll{
     addSkillMod(){
         this.addModifier(this.item.system.trademark,gb.trans('TrademarkWeapon.Label','SWADE'))
         this.addModifier(this.item.system.actions.traitMod,gb.trans('ModItem'));
-        if (this.actor?.system?.stats?.globalMods?.attack && this.actor?.system?.stats?.globalMods?.attack.length > 1) {
+        if (this.actor?.system?.stats?.globalMods?.attack && this.actor?.system?.stats?.globalMods?.attack.length > 0) {
             this.actor?.system?.stats?.globalMods?.attack.forEach(el => {
-                this.addModifier(el.value,el.label);
+                this.addModifier(el.value,`${el.label} (${gb.trans('GlobalMod.Attack','SWADE')})`);
             });
         }
     }
 
     addDmgMod(){
-        this.addModifier(this.data.dmgMod,gb.trans('ModItem'));
-        if (this.actor?.system?.stats?.globalMods?.damage && this.actor?.system?.stats?.globalMods?.damage.length > 1) {
+        this.addModifier(this.data.dmgMod,gb.trans('ModItem'));        
+       
+        if (this.actor?.system?.stats?.globalMods?.damage && this.actor?.system?.stats?.globalMods?.damage.length > 0) {
             this.actor?.system?.stats?.globalMods?.damage.forEach(el => {
-                this.addModifier(el.value,el.label);
+                this.addModifier(el.value,`${el.label} (${gb.trans('GlobalMod.Damage','SWADE')})`);
             });
         }
     }
@@ -177,8 +178,31 @@ export default class ItemRoll extends CharRoll{
         this.defineAction('damage');
         this.addDmgMod();
         let extrainfo='';
+
+        let finalAp=this.item.system.ap;
+        let reason=[];
+
+        if (this.actor?.system?.stats?.globalMods?.ap && this.actor?.system?.stats?.globalMods?.ap.length > 0) {
+            this.actor?.system?.stats?.globalMods?.ap.forEach(el => {
+                finalAp=finalAp+el.value
+                reason.push(`${el.label}: ${el.value}`)
+            });
+
+            if (finalAp<0){
+                finalAp=0
+            }
+        }
+
         if (this.item.system.ap){
-            extrainfo+=` (${gb.trans('Ap','SWADE')}: ${this.item.system.ap}) `;
+            extrainfo+=` [${gb.trans('Ap','SWADE')}: ${finalAp}`;
+        
+
+        if (reason.length>0){
+            extrainfo+=` (${reason.join(', ')})`
+        }
+
+            extrainfo+=`]`
+      
         }
         
         await this.rollDamage(this.item.system.damage,extrainfo,this.raiseDie());

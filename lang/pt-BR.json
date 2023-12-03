@@ -231,7 +231,11 @@
     "SWADETOOLS.ImprovedFrenzySetting": "Frenesi Aprimorado" ,  
     "SWADETOOLS.SettingsUseGroupRolls": "Mostrar opção de Rolagem de Grupo para Extras",
     "SWADETOOLS.SettingsUseGroupRollsHint": "Com essa opção marcada, uma caixa de seleção aparecerá para Rolagem de Grupo se o personagem for um extra, adicionando um dado selvagem.",
-    "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Uncanny Reflexes"
+    "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Uncanny Reflexes", 
+    "SWADETOOLS.AceSetting": "Ás",
+    "SWADETOOLS.bloodAndGoreRifts": "Usar Blood And Gore (Rifts)",
+    "SWADETOOLS.bloodAndGoreRiftsHint": "Se um atacante com Arma Pesada causa um ferimento num oponent sem Armadura Pesada irá automaticamente rolar na Tabela de Lesões. É preciso ter uma Tabela de Lesões definida nas configurações do sistema."
+    
     
 
 }

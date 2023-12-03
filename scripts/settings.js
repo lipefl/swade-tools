@@ -138,6 +138,14 @@ restricted: true
         });
 
 
+        game.settings.register(gb.moduleName, 'bloodAndGoreRifts', {
+          name: gb.trans('bloodAndGoreRifts'),
+          hint: gb.trans('bloodAndGoreRiftsHint'),
+          default: false,
+          scope: "world",
+          type: Boolean,
+          config: false
+          });
   
 
 

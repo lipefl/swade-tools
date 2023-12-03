@@ -872,7 +872,9 @@ export default class RollControl {
         {
           //  targetNumber=gb.realInt(target.actor.data.data.stats.parry.value)+gb.realInt(target.actor.data.data.stats.parry.modifier)
 
+          //console.log(target.actor);
           targetNumber=this.getParry(target.actor);
+
         //  console.log(targetNumber);
             if (skill!=gb.setting('fightingSkill')){
                 //Ranged Weapons in Melee
@@ -1273,6 +1275,18 @@ export default class RollControl {
         let apextra=0;
         if (item.system.ap){
             apextra=gb.realInt(item.system.ap);
+
+            let useactor=this.getItemOwner();
+
+            if (useactor?.system?.stats?.globalMods?.ap && useactor?.system?.stats?.globalMods?.ap.length > 0) {
+                useactor?.system?.stats?.globalMods?.ap.forEach(el => {
+                    apextra=apextra+el.value
+                });
+
+                if (apextra<0){
+                    apextra=0
+                }
+            }
            
             if (apextra>armor){
                 apextra=armor;
@@ -1360,7 +1374,16 @@ export default class RollControl {
            
         }
 
-        if (!isvehicle && applyDmg && addTarget=='wounds' && newWounds===null){
+        let driverHasAce=false;
+
+        if (isvehicle){
+            let driver=new Char(gb.getDriver(target.actor));
+            if (driver.hasEdgeSetting('Ace')){
+                driverHasAce=true;
+            }
+        }
+
+        if ((!isvehicle || driverHasAce) && applyDmg && addTarget=='wounds' && newWounds===null){
             soakClass=' swadetools-damage-with-soak';
         }
 
@@ -1407,31 +1430,46 @@ export default class RollControl {
 
         this.soakFunction=async (targetid)=>{
             let target=canvas.tokens.get(targetid);
-            let charRoll=new CharRoll(target.actor);
-            let char=new Char(target.actor);
+            let tactor=target.actor;
+            
+            if (isvehicle){
+                tactor=gb.getDriver(target.actor);
+            }
+            let charRoll=new CharRoll(tactor);
+            let char=new Char(tactor);
           //  let wounds=raisecount;
 
             if (char.spendBenny()){
+
+                if (!isvehicle){
+
+                
 
                 if (!gb.setting('onlySystemMod')){
                 charRoll.addEdgeModifier('Iron Jaw',2)
                 }
 
-                charRoll.addModifier(target.actor.system.attributes.vigor?.soakBonus,gb.trans('DamageApplicator.SoakModifier','SWADE'),);
+                charRoll.addModifier(tactor.system.attributes.vigor?.soakBonus,gb.trans('DamageApplicator.SoakModifier','SWADE'),);
                 
 
-                if((gb.settingKeyName('Unarmored Hero') || gb.systemSetting('unarmoredHero')) && target.actor.system.wildcard && 
-                target.actor.items.find(el=>el.type=='armor' && el.system.equipStatus==3)===undefined
+                if((gb.settingKeyName('Unarmored Hero') || gb.systemSetting('unarmoredHero')) && tactor.system.wildcard && 
+                tactor.items.find(el=>el.type=='armor' && el.system.equipStatus==3)===undefined
                 ){
                     charRoll.addModifier(2,gb.trans("Settings.UnarmoredHero.Name","SWADE"));
                 }
                
+            } 
                 
                 charRoll.addFlavor(gb.trans('DoSoak'))
                 
                 charRoll.addFlag('usetarget',target.id);
                 charRoll.addFlag('wounds',raisecount);
-                await charRoll.rollAtt('vigor');
+                if (isvehicle){
+                    await charRoll.rollSkill(gb.getDriverSkill(target.actor));
+                } else {
+                    await charRoll.rollAtt('vigor');
+                }
+                
                 charRoll.addFlag('rolltype','soak'); //here to overwrite rolltype attribute
                 charRoll.display();
                 
@@ -1481,12 +1519,14 @@ export default class RollControl {
                 } else {                    
                     char.on('isShaken');
 
-                    if (gb.setting('grittyDamage')){
+                    /* if (gb.setting('grittyDamage')){
                         await char.rollTable(game.tables.get(gb.setting('grittyDamage')));
-                    }
+                    } */
 
+                    
+                    let useditem=this.getItemOwner().items.get(this.chat.flags["swade-tools"].itemroll);
 
-                    if (gb.systemSetting('grittyDamage') && gb.systemSetting('injuryTable')){
+                    if (gb.systemSetting('injuryTable') && (gb.systemSetting('grittyDamage') || (gb.setting('bloodAndGoreRifts') && useditem.system.isHeavyWeapon && !gb.isHeavyArmor(target.actor,area)))){
                         let table=await fromUuid(gb.systemSetting('injuryTable'));
                         await char.rollTable(table);
                     }
