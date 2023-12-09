@@ -53,6 +53,12 @@
       "name": "Català",
       "path": "lang/ca.json",
       "flags": {}
+    },
+    {
+      "lang": "cn",
+      "name": "中文",
+      "path": "lang/cn.json",
+      "flags": {}
     }
   ],
   "packs": [
