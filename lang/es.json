@@ -231,5 +231,8 @@
   "SWADETOOLS.ImprovedFrenzySetting": "Frenesí Improvisado",
   "SWADETOOLS.SettingsUseGroupRolls": "Mostrar Tiradas de Grupo en Extras",
   "SWADETOOLS.SettingsUseGroupRollsHint": "Si se activa, aparecerá una opción para realizar Tiradas de Grupo añadiendo un Dado Salvaje en los Extras.",
-  "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Reflejos Asombrosos"
+  "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Reflejos Asombrosos",
+  "SWADETOOLS.AceSetting": "As",
+  "SWADETOOLS.bloodAndGoreRifts": "Utilizar Sangre y Gore (Rifts)",
+  "SWADETOOLS.bloodAndGoreRiftsHint": "Si un ataque con un Arma Pesada causa herida a un oponente sin Armadura Pesada, se tira automáticamente en la Tabla de Heridas. Debes definir una Tabla de Heridas en la configuración del sistema."
 }
