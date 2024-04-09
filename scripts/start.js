@@ -440,13 +440,13 @@ Hooks.on('ready',()=>{ /// disable autoInit
 
     }  */
 
-    if (gb.systemSettingExists('parryBaseSkill')){
-        if (gb.systemSetting('parryBaseSkill')!=gb.setting('fightingSkill')){
-            game.settings.set('swade','parryBaseSkill',gb.setting('fightingSkill')) /// auto-translate
-            ui.notifications.info(gb.trans('ParryBase','SWADE')+' '+gb.trans('FightingWarn')+' '+gb.setting('fightingSkill'))
+    /* if (gb.systemSettingExists('parryBaseSwid')){
+        if (gb.systemSetting('parryBaseSwid')!=gb.trans('fightingSkillSWID')){
+            game.settings.set('swade','parryBaseSwid',gb.setting('fightingSkillSWID')) /// auto-translate
+            ui.notifications.info(gb.trans('ParryBase.Name','SWADE')+' '+gb.trans('FightingWarn')+' '+gb.setting('fightingSkillSWID'))
         }
         
-    }
+    } */
 
 
     /// disabled -> swade already doing it.

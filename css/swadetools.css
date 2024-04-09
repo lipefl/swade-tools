@@ -309,7 +309,8 @@ width: calc(100% - 47px);
         margin:0
     }
 
-    .swade-official .primary .attribute { max-width: 64px; }
+    
+    
 
     .swadetools-pseudocard .card-content {
         border-bottom: 2px groove #fff;
@@ -469,3 +470,11 @@ li.chat-message footer.roll-interaction,
     display:none
     }
 
+
+    .swade-official .gear-card.swadetools-noshow .card-content,
+    .swade-official .item.swadetools-noshow .content {
+        display: none !important;
+    }
+
+
+    .swade-official .primary .attribute-list {flex-wrap: nowrap;} /* /// fix css wrap attributes */

@@ -154,7 +154,7 @@ export default class SheetControl {
         /// v0.0.5
 
         
-        let nthkey=['2','7'];
+       /*  let nthkey=['2','7'];
         if (this.sheet.actor.items.find(el=>el.type=='edge' && el.system.isArcaneBackground===true)){
        // if (Object.keys(this.sheet.actor.data.data.powerPoints).length !== 0){
          //  console.log(this.sheet.actor.items.find(el=>el.type=='edge' && el.data.data.isArcaneBackground===true));
@@ -165,7 +165,9 @@ export default class SheetControl {
        // nthkey=2;
         
         // .swade-official
-        let findEl='.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll,.inventory .item .misc .item-img' 
+        let findEl=`.inventory .item .weapon .item-img, .inventory .item .weapon .item-show, 
+        .inventory .item .shield .item-img, .inventory .item .shield .item-show, 
+        .item.power .item-image,.item.power .item-show, .inventory .item .weapon .damage-roll,.inventory .item .misc .item-img`
 
        //
 
@@ -183,7 +185,7 @@ export default class SheetControl {
 
 
 
-        if(!gb.setting('itemNameClick')){
+      //  if(!gb.setting('itemNameClick')){
             nthkey.map(key=>{
                 findEl+=',.quickaccess .quick-list:nth-of-type('+key+') .item-name';
             })
@@ -192,9 +194,19 @@ export default class SheetControl {
             findEl+=',.gear-list.weapon-list .item.weapon .item-name, .item.power .item-name, .inventory .item .weapon .item-name, .inventory .item .misc .item-name'  /// swade-official, npc
             //v0.17
            
-        }
+      //  } */
 
 
+      let findEl=`.inventory .item-img,.inventory .item-image, .inventory .item-name, .inventory .weapon .damage-roll`
+
+      findEl+=`,.quickaccess .item-image, .quickaccess .item-name, .quickaccess .item-show`
+
+      findEl+=`,.quickaccess-list .item-image, .quickaccess-list .item-name, .quickaccess-list .item-show`
+
+
+      findEl+=`,.powers-list .item-image, .powers-list .item-name, .powers-list .item-show`
+
+      findEl+=`,.power-header .item-img, .power-header .item-name`
 
         this.html.find(findEl).each((index,el)=>{
             this.doItem($(el));
@@ -223,16 +235,27 @@ export default class SheetControl {
     }
 
     doItem(target){
-        let itemId=target.parents('.item').data('itemId');
-        const actions=['weapon','power']
+        let parentDiv=target.parents('.item')
+        let itemId=parentDiv.data('itemId')
+        
+       // target.css('background','yellow');
+     //   const actions=
+
+       // console.log(target.attr('class'));
 
         if (itemId){
 
             let actorItem=this.sheet.actor.items.find(el=>el.id==itemId)
             let type=actorItem?.type;
 
-            if (actions.includes(type) || (type=='gear' && actorItem.system.isArcaneDevice===true)){
-                target.unbind('click').bind('click',ev=>{
+            if (type=='power' || type=='weapon' || (type=='gear' && (actorItem.system.isArcaneDevice===true || !$.isEmptyObject(actorItem.system.actions.additional))) || (type=='shield' && actorItem.system.actions.trait)){
+
+
+                if(!gb.setting('itemNameClick')){
+                    parentDiv.addClass('swadetools-noshow')
+                }
+                
+                target.off('click').on('click',ev=>{
                     let item=new ItemDialog(this.sheet.actor,itemId);
                      item.showDialog();
                 })

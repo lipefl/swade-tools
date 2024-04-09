@@ -100,6 +100,7 @@ export default class ItemDialog {
         let showRaiseDmg=true;
         let char=new Char(this.actor)
         let powermod=''
+        let hasDefaultDamage=true;
         
         let damageActions=[];
       //  let showReload=false;
@@ -115,6 +116,11 @@ export default class ItemDialog {
             showRaiseDmg=false;
            
             
+        }
+
+        if (item.type=='shield'){
+            showDamage=false;
+            hasDefaultDamage=false;
         }
 
         
@@ -162,14 +168,14 @@ export default class ItemDialog {
             
             
 
-            content+=`<div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
-            <div><strong>${gb.trans('Range._name','SWADE')}</strong>: ${weaponinfo.range}</div>
-        `
+            content+=`<div><strong>${gb.trans('Range._name','SWADE')}</strong>: ${weaponinfo.range}</div>
+            <div><strong>${gb.trans('Dur','SWADE')}</strong>: ${weaponinfo.duration}</div>
+            `
         }
        
         content+=`</div>`
 
-        if (item.type=='power'){
+        if (item.type=='power' || item.type=='weapon'){
             let templatehtml=gb.getTemplatesHTML(item);
             if (templatehtml){
                 content+=`<span class="swade-tools-template-buttons"><strong>Templates:</strong>${templatehtml}</span>`
@@ -250,9 +256,13 @@ export default class ItemDialog {
 
         
 
-        if (damageActions.length>0){
-            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('Damage')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ActDmgHint')}"></i></label> <select id="actiondmg">
-            <option value="">${gb.trans('Default')}</option>`;
+        if ((hasDefaultDamage && damageActions.length>0) || (!hasDefaultDamage && damageActions.length>1)){
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add"><label><strong>${gb.trans('Damage')}:</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ActDmgHint')}"></i></label> <select id="actiondmg">`;
+
+            if (hasDefaultDamage){
+                content+=`<option value="">${gb.trans('Default')}</option>`;
+            }
+            
 
           //  console.log(damageActions)
          
@@ -588,7 +598,7 @@ export default class ItemDialog {
             let action=weaponactions.additional[id];
 
             let actionIcon;
-            if (action.type=='skill'){
+            if (action.type=='trait'){
                 actionIcon=skillIcon;
             } else if (action.type=='damage'){
                 actionIcon=damageIcon;

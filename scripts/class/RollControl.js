@@ -512,8 +512,15 @@ export default class RollControl {
                         
                     } else if (rolltype=='soak'){
 
+                        let unstoppable=false;
                         let prevWounds=this.chat.flags["swade-tools"].wounds;
-                        this.damageTarget(target,this.soak(prevWounds));
+
+                        if (this.chat.flags["swade-tools"]?.unstoppable_wounds){
+                            prevWounds=this.chat.flags["swade-tools"].unstoppable_wounds
+                            unstoppable=true;
+                        } 
+                     
+                        this.damageTarget(target,this.soak(prevWounds),unstoppable);
                     }
 
                    
@@ -608,6 +615,18 @@ export default class RollControl {
                         
 
 
+                    }).on('mouseenter','a.swadetools-rolldamage',(event)=>{
+
+                        let el=event.currentTarget;
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        gb.hoverToken(targetid);
+
+                    }).on('mouseleave','a.swadetools-rolldamage',(event)=>{
+
+                        let el=event.currentTarget;
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        gb.hoverToken(targetid,false);
+
                     }).ready(()=>{
                           
                         this.scrollChat();/// force scroll                  
@@ -633,6 +652,18 @@ export default class RollControl {
 
                        
             
+                    }).on('mouseenter','a.swadetools-applydamage',(event)=>{
+
+                        let el=event.currentTarget;
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        gb.hoverToken(targetid);
+
+                    }).on('mouseleave','a.swadetools-applydamage',(event)=>{
+
+                        let el=event.currentTarget;
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        gb.hoverToken(targetid,false);
+
                     }).on('click','a.swadetools-soakdamage',(event)=>{
                         let el=event.currentTarget;
 
@@ -641,7 +672,20 @@ export default class RollControl {
                         this.html.off('click','a.swadetools-soakdamage'); */
                         let targetid=$(el).attr('data-swadetools-targetid');
                         let raise=gb.realInt($(el).attr('data-swadetools-raise'));
+                       // let unstoppable_wounds=gb.realInt($(el).attr('data-swadetools-unstoppable'));
                         this.soakFunction(targetid,raise);
+                    }).on('mouseenter','a.swadetools-soakdamage',(event)=>{
+
+                        let el=event.currentTarget;
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        gb.hoverToken(targetid);
+
+                    }).on('mouseleave','a.swadetools-soakdamage',(event)=>{
+
+                        let el=event.currentTarget;
+                        let targetid=$(el).attr('data-swadetools-targetid');
+                        gb.hoverToken(targetid,false);
+
                     }).on('click','a.swadetools-situational-link',(event)=>{
                         let el=event.currentTarget;
                         $(el).closest('.swadetools-targetwrap').find('.swadetools-situational-info').slideToggle();
@@ -1218,7 +1262,7 @@ export default class RollControl {
         }
     }
 
-    damageTarget(target,newWounds=null){
+    damageTarget(target,newWounds=null,unstoppable=0){
         let applyDmg=false;
         let raisecount;
         let soakClass='';
@@ -1226,7 +1270,7 @@ export default class RollControl {
         let area='torso';
         let total=this.roll.total+this.gmmod;
         let targetInfo='';
-
+       // let unstoppable=0;
         
         
 
@@ -1302,6 +1346,10 @@ export default class RollControl {
             if (raisecount==0){ //0 wounds
                 raisecount=-1  ///not even shaken
             } 
+
+            if (unstoppable && raisecount>1){
+                raisecount=1;
+            }
         }
      //   console.log(toughness+armor);
      //   console.log(raisecount);
@@ -1326,6 +1374,7 @@ export default class RollControl {
             }
 
             ///unstoppable
+            
             if (raisecount>1){
                 let char=new Char(target.actor);                
                 
@@ -1340,7 +1389,10 @@ export default class RollControl {
 
 
                     if (!attackerIsJoker){
-                        raisecount=1
+
+                        unstoppable=raisecount;
+                        raisecount=1;
+                        
                     }                
                     
                 }
@@ -1464,6 +1516,7 @@ export default class RollControl {
                 
                 charRoll.addFlag('usetarget',target.id);
                 charRoll.addFlag('wounds',raisecount);
+                charRoll.addFlag('unstoppable_wounds',unstoppable);
                 if (isvehicle){
                     await charRoll.rollSkill(gb.getDriverSkill(target.actor));
                 } else {
@@ -1500,7 +1553,7 @@ export default class RollControl {
                     await char.outOfControl();
                 } else
                 if (char.is('isShaken')){
-                    if (!char.hasEdgeSetting('Hardy')){
+                    if (!char.hasAbilitySetting('Hardy')){
                         char.applyWounds(1);
                     } else {
                         ui.notifications.info(`${target.actor.name} ${gb.trans('HardyWarn')}`)
@@ -1698,16 +1751,24 @@ export default class RollControl {
        // console.log(this.chat.flags?.['swade-tools']);
 
     //   console.log(chatflags,roll.total);
+
+   // console.log(chatflags);
         
-        if (gb.raiseCount(roll.total)>=0 && chatflags?.arcanefail?.pp){
+        if (gb.raiseCount(roll.total)>=0 && chatflags?.arcanefail?.arcaneItem){
 
        //     console.log('pass');
 
-            if (chatflags?.arcanefail?.arcaneItem){
-                char.spendPP(chatflags?.arcanefail?.pp,chatflags.arcanefail.arcaneItem);
+       
+
+           
+
+                if (chatflags?.arcanefail?.pp){
+                    char.spendPP(chatflags?.arcanefail?.pp,chatflags.arcanefail.arcaneItem);
+                }
+               
                 flavor=flavor.replace(`<div>${gb.trans('FailedPP')}</div>`,'');
                 chatflags.arcanefail={}; ///remove arcane fail pp to avoid repeat
-            }
+            
             
         }
             
@@ -1845,6 +1906,15 @@ export default class RollControl {
             gangup=4
         }
 
+        
+        if (gangup>0){
+            let targetActor=new Char(target.actor);
+            if (targetActor.hasAbilitySetting('All-Around Vision')){
+                gangup=gangup-1
+               // console.log('all-around vision')
+            }
+            
+        }
        // console.log('gangup',gangup);
 
         return gangup;

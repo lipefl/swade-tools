@@ -7,7 +7,7 @@ export const moduleName='swade-tools'
 
 export const attributes=['agility','smarts','spirit','strength','vigor']
 export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge','Block','Improved Block','Frenzy', 'Formation Fighter','Rapid Fire','Soldier','Brawny','Combat Acrobat','Improved Frenzy','Ace'];
-export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics','Rifts Uncanny Reflexes'];
+export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics','Rifts Uncanny Reflexes','All-Around Vision'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
 export const RoFBullets={
@@ -332,6 +332,12 @@ export const explodeAllDice=(weaponDamage)=>{
     let regexDiceExplode = /d[0-9]{1,2}/g;
     weaponDamage = weaponDamage.replace(/x|=/g,'') /// remove x and = if it already has
     weaponDamage = weaponDamage.replace(regexDiceExplode, "$&x");
+
+    /// Added (dont explode 1d1) - thanks to @EternalRider
+    let noExplode = /(d[0-1])(x)/g;
+    weaponDamage = weaponDamage.replace(noExplode, "$1");
+ 
+
     return weaponDamage;
    }
 
@@ -661,7 +667,7 @@ export const rollResist=(traitName,skillMod)=>{
                 }
 }
 
-export const attModifier=(actor,att)=>{
+/* export const attModifier=(actor,att)=>{
     
     let mod=0;
      actor.system.attributes[att].effects.map(e=>{
@@ -671,9 +677,9 @@ export const attModifier=(actor,att)=>{
      mod+=actor.system.attributes[att].die.modifier;
  
      return mod;
- }
+ } */
 
-export const skillModifier=(item)=>{
+/* export const skillModifier=(item)=>{
     
    let mod=0;
     item.system.effects.map(e=>{
@@ -683,7 +689,7 @@ export const skillModifier=(item)=>{
     mod+=item.system.die.modifier;
 
     return mod;
-}
+} */
    
 
 
@@ -803,6 +809,15 @@ export const settingTextArea=(setting,title,hint)=>{
     </div>`
     
 
+}
+
+export const hoverToken=(tokenId,hoverIn=true)=>{
+    if (hoverIn){
+        canvas.tokens.get(tokenId)._onHoverIn(new PIXI.FederatedEvent("pointerover"), {hoverOutOthers: true})
+    } else {
+        canvas.tokens.get(tokenId)._onHoverOut(new PIXI.FederatedEvent("pointerover"))
+    }
+    
 }
 
 export const log=(...args)=>{

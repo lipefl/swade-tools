@@ -46,7 +46,7 @@ export default class SystemRoll {
                 exp=`d4-2`
             } else {
                 skillName=item.name;
-                let skillModifier=gb.realInt(gb.skillModifier(item));
+                let skillModifier=item.system.die.modifier;
                 exp=`d${item.system.die.sides}${skillModifier?'+'+skillModifier:''}`
             }
             
@@ -186,7 +186,7 @@ export default class SystemRoll {
 
         if (gb.setting('simpleRolls')){
 
-            let attModifier=gb.realInt(gb.attModifier(this.actor,attribute));
+            let attModifier=gb.realInt(this.actor.system.attributes[attribute].die.modifier);
 
             let content=`<div class="swadetools-itemfulldata">
                     <strong>${gb.trans(gb.attrlang[attribute],'SWADE')}</strong>: d${this.actor.system.attributes[attribute].die.sides}${attModifier?'+'+attModifier:''}

@@ -65,7 +65,10 @@ export default class CharRoll extends BasicRoll{
      //   console.log(mod,reason);
         if (typeof mod == "string" && mod.includes('d')){
 
+            
             mod=this.addDiceModifier(mod); // add the plus
+
+           
             this.reasons.push(`${reason}: ${mod}`);
         } else {
         mod=gb.realInt(eval(mod));
@@ -237,7 +240,21 @@ export default class CharRoll extends BasicRoll{
         
         this.baseModifiers();
        // this.addModifier(this.actor.system.attributes[attribute].die.modifier,gb.trans('ModAttr'))
-       this.addModifier(gb.attModifier(this.actor,attribute),gb.trans('ModAttr'))
+
+      
+       this.actor.system.attributes[attribute].effects.map(e=>{
+        this.addModifier(e.value,e.label);
+       })
+   
+
+      
+
+    this.addModifier(this.actor.system.attributes[attribute].die.modifier,gb.trans('ModAttr'));
+
+      // mod+=actor.system.attributes[att].die.modifier;
+   
+      
+       //this.addModifier(gb.attModifier(this.actor,attribute),gb.trans('ModAttr'))
       //  console.log(this.mod);
     //    console.log(this.reasons);
         
@@ -345,11 +362,11 @@ export default class CharRoll extends BasicRoll{
         this.addFlag('rolltype','skill');
 
         if (item===undefined){
-            item = await game.packs.get(gb.systemSetting("coreSkillsCompendium")).getDocument(await game.packs.get(gb.systemSetting("coreSkillsCompendium")).index.find(el => el.name == skillName)._id);
+            item = await game.packs.get(gb.systemSetting("coreSkillsCompendium")).getDocument(await game.packs.get(gb.systemSetting("coreSkillsCompendium")).index.find(el => el.name == skillName)?.id);
             skillName=`${gb.trans('Unskilled')} (${skillName})`;
             dieType=4;
             this.addModifier(-2,gb.trans('Unskilled'));
-            if (item.system?.attribute != "") {
+            if (item && item.system?.attribute != "") {
                 this.actor.system.stats.globalMods[item.system.attribute].map(e=>{
                     this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.${item.system.attribute.charAt(0).toUpperCase() + item.system.attribute.slice(1)}`,'SWADE')})`);
                 })
@@ -366,7 +383,17 @@ export default class CharRoll extends BasicRoll{
                 wildDie=item.system["wild-die"].sides;
             } 
 
-            this.addModifier(gb.skillModifier(item),gb.trans('ModSkill'))
+
+            item.system.effects.map(e=>{
+                this.addModifier(e.value,e.label);
+            })
+        
+            this.addModifier(item.system.die.modifier,gb.trans('ModSkill'));
+            //mod+=item.system.die.modifier;
+
+            
+          //  this.addModifier(gb.skillModifier(item),gb.trans('ModSkill'))
+
             if (item.system?.attribute != "") {
                 this.actor.system.stats.globalMods[item.system.attribute].map(e=>{
                     this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.${item.system.attribute.charAt(0).toUpperCase() + item.system.attribute.slice(1)}`,'SWADE')})`);
