@@ -32,6 +32,7 @@ export default class CombatControl {
 
     isNewTurn(){
         let combat= game.combats.get(this.combatid);
+        gb.log('SWADETOOLS','C2',combat,this.combatinfo);
         if (this.combatinfo.round!=combat.current.round || this.combatinfo.turn!=combat.current.turn){
             this.combatinfo={
                 round: combat.current.round,

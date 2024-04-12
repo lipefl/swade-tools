@@ -824,7 +824,15 @@ export const log=(...args)=>{
     if (setting('debugger')){
         console.log(args);
     }
+   
+}
+
+
+export const lognow=(arg)=>{
+    if (setting('debugger')){
+        console.log(JSON.parse(JSON.stringify(arg))); //// === > console.log AT THE EXACT TIME OF EXECUTION
     
+    }
 }
 
 export const trace=(...args)=>{

@@ -475,81 +475,128 @@ Hooks.on('ready',()=>{ /// disable autoInit
 //var dontStart=false;
 let cbt=new CombatControl;
 
-Hooks.on('updateCombat',async (entity,data,options,userid)=>{
-  //  console.log(JSON.parse(JSON.stringify(entity)))
-  //console.log(entity);
+/* Hooks.on('combatTurn'),  (combat,data,data2)=>{
+    console.log(combat,data,data2);
+    return true;
+} */
 
-    gb.log('SWADETOOLS','A',gb.mainGM(),foundryIsReady);
-    if (foundryIsReady && gb.mainGM()){
+
+
+Hooks.on('combatTurn', async (combat,data) => 
+{
+   // 
+   // console.log(JSON.parse(JSON.stringify(data.turn)));
     
-    let combatdata=entity;
-    let combatid=combatdata.id;
-    cbt.setCombat(combatid);  
+    cbt.setCombat(combat.id);
+   // const currentCombatant=await combat.current.combatantId;
+    await cbt.endTurn();
+
+    await cbt.startTurn(combat.turns[data.turn]);
+
     
-    gb.log('SWADETOOLS','B',combatid);
+   
+   // 
+   //  console.log(combat,data);
+})
+
+Hooks.on('combatRound',async (combat) => {
+    cbt.setCombat(combat.id);
+    // const currentCombatant=await combat.current.combatantId;
+
+    let helpHook=Hooks.on('updateCombat', async(combatdata)=>{
+
+        let itgo=true;
+        combatdata.turns.map(turner=>{
+            if (turner.initiative===null){
+                itgo=false;
+            }
+        })
+
+        if (itgo){
+            await cbt.endTurn();
+            await cbt.startTurn(combat.turns[0]);
+            Hooks.off('updateCombat',helpHook)
+        }
+   
+    })
     
-    /// COMBAT SYNC ERROR 
-    /* if (combatdata.current.round!=combatdata.previous.round){
+})
+
+// Hooks.on('updateCombat',async (entity,data,options,userid)=>{
+//   //  console.log(JSON.parse(JSON.stringify(entity)))
+//   //console.log(entity);
+
+//     gb.log('SWADETOOLS','A',gb.mainGM(),foundryIsReady);
+//     if (foundryIsReady && gb.mainGM()){
+    
+//     let combatdata=entity;
+//     let combatid=combatdata.id;
+//     cbt.setCombat(combatid);  
+    
+//     gb.log('SWADETOOLS','B',combatid,combatdata);
+    
+//     /// COMBAT SYNC ERROR 
+//     /* if (combatdata.current.round!=combatdata.previous.round){
       
 
-       await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
-       let init=0;
-       let first=false;
-       let csize=combatdata.combatants.size;
-       let i=0;
-       let combatantsids=new Array;
-       let suit=0;
+//        await cbt.endTurn(combatdata.combatants.find(el=>el.id==combatdata.previous.combatantId));
+//        let init=0;
+//        let first=false;
+//        let csize=combatdata.combatants.size;
+//        let i=0;
+//        let combatantsids=new Array;
+//        let suit=0;
     
 
-       let firstPlayer=Hooks.on('updateCombatant',async(combatant,initdata)=>{
+//        let firstPlayer=Hooks.on('updateCombatant',async(combatant,initdata)=>{
        
            
-            if (initdata.initiative!==null){
-                if (!combatantsids.includes(combatant.id)){
-                    combatantsids.push(combatant.id);
-                    i++;
+//             if (initdata.initiative!==null){
+//                 if (!combatantsids.includes(combatant.id)){
+//                     combatantsids.push(combatant.id);
+//                     i++;
 
-                    if (initdata.flags.swade.cardValue>init ||
-                        initdata.flags.swade.cardValue==init && initdata.flags.swade.suitValue>suit
-                        ){                   
-                        first=combatant.id;
-                        init=initdata.flags.swade.cardValue;
-                        suit=initdata.flags.swade.suitValue;
-                    }
+//                     if (initdata.flags.swade.cardValue>init ||
+//                         initdata.flags.swade.cardValue==init && initdata.flags.swade.suitValue>suit
+//                         ){                   
+//                         first=combatant.id;
+//                         init=initdata.flags.swade.cardValue;
+//                         suit=initdata.flags.swade.suitValue;
+//                     }
     
-                    if (i==csize){
-                        Hooks.off('updateCombatant',firstPlayer);
-                        await cbt.startTurn(combatdata.combatants.find(el=>el.id==first));
-                    }
-                }
+//                     if (i==csize){
+//                         Hooks.off('updateCombatant',firstPlayer);
+//                         await cbt.startTurn(combatdata.combatants.find(el=>el.id==first));
+//                     }
+//                 }
                 
                 
              
               
-            }
+//             }
 
            
-       })
+//        })
 
        
         
-    } else { */
+//     } else { */
 
-        if (cbt.isNewTurn()){
-            gb.log('SWADETOOLS','C');
-        await cbt.endTurn();
-        await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
+//         if (cbt.isNewTurn()){
+//             gb.log('SWADETOOLS','C');
+//         await cbt.endTurn();
+//         await cbt.startTurn(combatdata.combatants.find(el=>el.id==combatdata.current.combatantId));
 
-        gb.log('SWADETOOLS','D');
-        } /* else {
-          //  await cbt.endPrevious();
-            gb.log('not a new turn')
-        } */
-    /* } */
+//         gb.log('SWADETOOLS','D');
+//         } /* else {
+//           //  await cbt.endPrevious();
+//             gb.log('not a new turn')
+//         } */
+//     /* } */
    
     
-    }
-});
+//     }
+// });
 
 
 
