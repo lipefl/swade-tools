@@ -1850,16 +1850,17 @@ export default class RollControl {
 
         let all_around_target=canvas.tokens.placeables.filter(t=>
             t.id!=attacker.id // not the attacker
+            && gb.getRange(target,t,true)==1 /// adjacent
+            && t.actor!==undefined /// prevent no actor bug
+            && t?.actor?.type!='vehicle'
             && !(attacker.actor.isToken===false && attacker.actor.id==t?.actor?.id)
             && t.id!=target.id /// not the target
             && t.visible  /// is visible   
             && t.document.overlayEffect!=CONFIG.controlIcons.defeated   /// not defeated (out of combat)
             && !t.actor.effects.find(el=>el.name=="Incapacitated")  /// not defeated (out of combat)
             && !t.combatant?.defeated /// not defeated 
-            && t?.actor?.system.status.isStunned!==true /// not stunned    
-            && t?.actor?.type!='vehicle'
-            && t.document.disposition!=0        
-            && gb.getRange(target,t,true)==1 /// adjacent
+            && t?.actor?.system.status.isStunned!==true /// not stunned               
+            && t.document.disposition!=0               
         )
 
      //  console.log('all_around',all_around_target.length)
