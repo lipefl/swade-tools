@@ -376,7 +376,7 @@ export default class RollControl {
                    // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
                 },500)
               //  char.updateData({'status.isDistracted':false,'status.isVulnerable':true})/// just to make sure is disabled
-              gb.setFlagCombatant(game.combats.get(this.chat.flags?.["swade-tools"]?.usecombat),{id:this.chat.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',1)
+              gb.setFlagCombatant(game.combats.get(this.chat.flags?.["swade-tools"]?.usecombat),{id:this.chat.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',true)   //EternalRider: I don't know why the 0 in my test will not work
             //    game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat).updateCombatant({_id:this.chat.data.flags?.["swade-tools"]?.usecombatant,['flags.swade-tools.removeVulnerable']:1});
               //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
             }

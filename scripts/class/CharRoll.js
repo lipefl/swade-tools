@@ -732,7 +732,7 @@ export default class CharRoll extends BasicRoll{
         let combatant=gb.actorCombatant(this.actor)
       //  console.log(this.actor,combatant.id,'wild');
         if (combatant){
-            await gb.setFlagCombatant(game.combat,combatant,gb.moduleName,'removeVulnerable',0);
+            await gb.setFlagCombatant(game.combat,combatant,gb.moduleName,'removeVulnerable',false);   //EternalRider: I don't know why the 0 in my test will not work
         }
     }
 
