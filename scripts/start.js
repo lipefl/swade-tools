@@ -132,6 +132,7 @@ Hooks.on('ready',async()=>{
 
         if (!gb.setting('defaultStatusIcons')){
            data.icon=gb.stIcons.filter(el=>el.stat==gb.statusDefaultToIs(data.id))[0]?.icon;
+           data.img=gb.stIcons.filter(el=>el.stat==gb.statusDefaultToIs(data.id))[0]?.icon;
         }
 
            if (data?.flags?.swade?.expiration){ /// disable dialog -> enable for no-autoRoll in the future ????
@@ -273,7 +274,7 @@ Hooks.on("renderChatMessage", async (chatItem, html) => {
     
      //console.log(chatItem);
 
-        let roll=new RollControl(chatItem,html,chatItem.user);
+        let roll=new RollControl(chatItem,html,chatItem.author);
        
         await roll.doActions();
 
@@ -482,14 +483,14 @@ let cbt=new CombatControl;
 
 
 
-Hooks.on('combatTurn', async (combat,data) => 
+Hooks.on('combatTurn', async (combat,data,options) => 
 {
-   // 
+    if (options.direction == -1) return;  //EternalRider: Do not retrigger
    // console.log(JSON.parse(JSON.stringify(data.turn)));
     
-    cbt.setCombat(combat.id);
+    // cbt.setCombat(combat.id); //EternalRider: useless
    // const currentCombatant=await combat.current.combatantId;
-    await cbt.endTurn();
+    await cbt.endTurn(combat.turns[data.turn - 1]);  //EternalRider: with no backforward, just use minus 1
 
     await cbt.startTurn(combat.turns[data.turn]);
 
@@ -499,10 +500,12 @@ Hooks.on('combatTurn', async (combat,data) =>
    //  console.log(combat,data);
 })
 
-Hooks.on('combatRound',async (combat) => {
-    cbt.setCombat(combat.id);
+Hooks.on('combatRound',async (combat,data,options) => {
+    if (options.direction == -1) return;  //EternalRider: Do not retrigger
+    // cbt.setCombat(combat.id); //EternalRider: useless
     // const currentCombatant=await combat.current.combatantId;
 
+    /* EternalRider: hooks will not be called in right times, so we need to wait for all combatants to have their initiative set
     let helpHook=Hooks.on('updateCombat', async(combatdata)=>{
 
         let itgo=true;
@@ -518,9 +521,30 @@ Hooks.on('combatRound',async (combat) => {
             Hooks.off('updateCombat',helpHook)
         }
    
-    })
+    })*/
     
+    //EternalRider: store this before it has been changed
+    let previous = combat.combatants.get(combat?.previous?.combatantId);
+    //EternalRider: clean up retrigger tag when new round starts
+    for (let turner of combat.turns) {
+        await cbt.setFlag(turner, gb.moduleName, 'hasStarted', false);
+        await cbt.setFlag(turner, gb.moduleName, 'hasEnded', false);
+       //await turner.setFlag(gb.moduleName,'hasStarted',false);
+      // await turner.setFlag(gb.moduleName,'hasEnded',false);
+    }
+    //EternalRider: wait for all combatants to have their initiative set
+    await gb.waitFor(() => {
+        return combat.turns.every(turner => turner.initiative !== null);
+    }, -1);
+    //EternalRider: then trigger the end and start turn
+    await cbt.endTurn(previous);
+    await cbt.startTurn(combat.turns[0]);
 })
+
+//EternalRider: don't forget to start the first turn
+Hooks.on("combatStart", async (combat, data) => {
+    await cbt.startTurn(combat.turns[data.turn]);
+});
 
 // Hooks.on('updateCombat',async (entity,data,options,userid)=>{
 //   //  console.log(JSON.parse(JSON.stringify(entity)))

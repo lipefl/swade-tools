@@ -376,7 +376,7 @@ export default class RollControl {
                    // actor.update({'data.status.isDistracted':true,'data.status.isVulnerable':true})
                 },500)
               //  char.updateData({'status.isDistracted':false,'status.isVulnerable':true})/// just to make sure is disabled
-              gb.setFlagCombatant(game.combats.get(this.chat.flags?.["swade-tools"]?.usecombat),{id:this.chat.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',1)
+              gb.setFlagCombatant(game.combats.get(this.chat.flags?.["swade-tools"]?.usecombat),{id:this.chat.flags?.["swade-tools"]?.usecombatant},'swade-tools','removeVulnerable',true)   //EternalRider: I don't know why the 0 in my test will not work
             //    game.combats.get(this.chat.data.flags?.["swade-tools"]?.usecombat).updateCombatant({_id:this.chat.data.flags?.["swade-tools"]?.usecombatant,['flags.swade-tools.removeVulnerable']:1});
               //  actor.update({'data.status.isDistracted':false,'data.status.isVulnerable':false}) /// just to make sure is disabled
             }
@@ -1215,7 +1215,11 @@ export default class RollControl {
             }
 
             if (this.chat.flags["swade-tools"]?.wildattack){
-                charRoll.addModifier(2,gb.trans('WildAttack'));
+                let wildDmg=2;
+                if (this.getActor().getFlag('swade','wildAttackDamage')!==undefined){
+                    wildDmg=gb.realInt(this.getActor().getFlag('swade','wildAttackDamage'));
+                }
+                charRoll.addModifier(wildDmg,gb.trans('WildAttack'));
             }
 
 
@@ -1806,11 +1810,18 @@ export default class RollControl {
        // console.log(this.roll);
 
         let dices=this.roll.terms[0].dice;
-       // console.log(dices);
+
+       
         if (dices!==undefined){ /// extras roll one dice only
         let ones=dices.filter(el=>el.total==1);
         if (ones.length>1 && ones.length>(dices.length/2)){
-            return true;
+            // check wild die
+            if (dices.filter(el=>el.options.flavor=="Wild Die" && el.total>1).length>0){
+                return false;
+            } else {
+                return true;
+            }
+            
         } 
         }
 

@@ -427,6 +427,7 @@ export default class ItemDialog {
         let damageIcon='<i class="fas fa-tint"></i> ';
         let resistIcon='<i class="fas fa-shield"></i> ';
         let genericIcon='<i class="fas fa-circle"></i> '
+        let macroIcon='<i class="fas fa-robot"></i> ';
         
 
         if (!noMainSkill){  //// hide button for main skill if there's no skill
@@ -604,10 +605,14 @@ export default class ItemDialog {
                 actionIcon=damageIcon;
             }else if (action.type=='resist'){
                 actionIcon=resistIcon;
-            } else {
+            } else if (action.type=='macro'){
+                actionIcon=macroIcon
+            }else {
                 actionIcon=genericIcon
             }
        
+
+
 
            /// go to RollControl
                 buttons[id]={
@@ -616,9 +621,11 @@ export default class ItemDialog {
 
                         if (action.type=='resist'){ 
 
-                            gb.rollResist(action.skillOverride,action.skillMod);
+                            gb.rollResist(action.skillOverride,action.traitMod);
                         
-                        } else  {
+                        } else if (action.type=='macro'){                            
+                            game.swade.itemChatCardHelper.handleAdditionalActions(this.item,this.actor,id) /// swade system handles macros
+                        }else  {
                             let itemRoll=new ItemRoll(this.actor,this.item)
                             await this.processItemFormDialog(html,itemRoll,action.type);
                             await itemRoll.rollAction(id);

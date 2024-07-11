@@ -48,7 +48,7 @@ export default class ItemRoll extends CharRoll{
             
 
            
-            this.addModifier(action.skillMod,action.name);
+            this.addModifier(action.traitMod,action.name);
             let rof=1;
             if (action.dice!==undefined){
                rof=action.dice;

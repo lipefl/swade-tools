@@ -344,10 +344,13 @@ export default class Char {
                 this.update('bennies.value',actualBennies);
 
                 if (gb.systemSetting('hardChoices')){ /// give the GM a BENNY
-                    let gmPlayer=gb.GMPlayer();
-                    let actualGMBennies=gmPlayer.data.flags.swade.bennies;
-                    actualGMBennies++;
-                    gb.GMPlayer().update({"flags.swade.bennies":actualGMBennies});
+              /*       let gmPlayer=gb.GMPlayer();
+                    let actualGMBennies=gmPlayer.flags.swade.bennies;
+                    actualGMBennies++;                   
+                    gb.GMPlayer().update({"flags.swade.bennies":actualGMBennies}); */
+
+                    game.swade.sockets.giveBenny([gb.GMPlayer().id]);
+                    
                     
                 }
               //  this.actor.update({"data.bennies.value":actualBennies});

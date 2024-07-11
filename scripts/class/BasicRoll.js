@@ -94,7 +94,7 @@ export default class BasicRoll {
       //  this.roll = await new Roll(rollExp).roll({ async: true });  /// removed due to SWADE SYSTEM 2.3
         /// NEW CODE FOR ROLL
       this.roll = new CONFIG.Dice.SwadeRoll(rollExp, {}, {});
-        await this.roll.evaluate({async: true});
+        await this.roll.evaluate();
         //// END NEW CODE FOR ROLL
 
         this.addDiceFlavor(rof, wildDie);
@@ -178,7 +178,7 @@ export default class BasicRoll {
 
        
         this.roll = new CONFIG.Dice.SwadeRoll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`, {}, {});
-        await this.roll.evaluate({async: true});
+        await this.roll.evaluate();
         /// this.roll = await new Roll(`${damage}${raiseAdd}${this.prepareModifier(modifier)}`).roll({ async: true }); /// removed due to SWADE 2.3
        
         return this.roll;

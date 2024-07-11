@@ -197,7 +197,7 @@ export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
    // console.log(origin,target,);
   //  console.log(CONFIG.Canvas.losBackend.testCollision(origin,target));
   //  console.log(ray.getRayCollisions());
-    
+   
     
     //console.log(getRayCollisions(ray,{mode:'any'}))
     return canvas.grid.measureDistances([{ ray }], {gridSpaces: grid})[0];
@@ -207,7 +207,8 @@ export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
    // const ray = new Ray(origin, target);
 
  
-    const grid_unit = canvas.grid.grid.options.dimensions.distance
+   // const grid_unit = canvas.grid.options.dimensions.distance
+    const grid_unit = canvas.grid.distance // v12
     let grid=false;
    if (origin.scene.gridType==1){
        grid=true;
@@ -533,8 +534,11 @@ export const  setFlagCombatant=async (combat,combatant,scope,flag,value)=>{
     /*  log(combat.id);
      log(combatant.id);
      log(update); */
+
+     // await game.combats.get(combat.id).combatants.get(combatant.id).setFlag(scope,flag,value); /// combatant flag was causing bug => revert if ok
+     await combat.setFlag(scope,flag+'###'+combatant.id,value);
      
-    await combat.updateEmbeddedDocuments('Combatant',update);
+    
     
 }
 
@@ -990,18 +994,31 @@ export const noneReloadType= async (actor,item,shots) => {
                ui.notifications.error(trans('NoAmmoSet','SWADE'));
                return false;
             } else {
-                let gearitem=actor.items.filter(el=>el.type=='gear' && el.name.trim()==gearname)[0];
+                let gearitem=actor.items.filter(el=>(el.type=='gear' || el.type=='consumable') && el.name.trim()==gearname)[0];
 
             
 
             let shotsToFull=shots;
 
             if (!gearitem){
+                console.log('here');
                 ui.notifications.warn(trans('NotEnoughAmmo','SWADE'));
                 return false;
 
             } else {
-                let gearshots=realInt(gearitem.system.quantity);
+                let gearshots;
+               
+                if (gearitem.type=='gear'){
+                    gearshots=gearitem.system.quantity;                 
+
+                } else
+                if (gearitem.type=='consumable'){
+                    gearshots=gearitem.system.charges.value                  
+                }
+
+                gearshots=realInt(gearshots);
+
+
                 let usedgearshots;
                 if (gearshots<shotsToFull){
                     ui.notifications.warn(trans('NotEnoughAmmo','SWADE'));
@@ -1011,8 +1028,15 @@ export const noneReloadType= async (actor,item,shots) => {
                 }
 
                 let newgearshots=gearshots-usedgearshots;
+
+                if (gearitem.type=='gear'){
+
+                    await gearitem.update({"system.quantity":newgearshots})
+                } else if (gearitem.type=='consumable'){
+                    await gearitem.update({"system.charges.value":newgearshots})
+                }
               
-             await gearitem.update({"data.quantity":newgearshots})
+            
              return true;
             
             }
@@ -1227,3 +1251,39 @@ export const btnAction = { /// button functions
     }
     
 }
+
+/**
+ * 等待直到给定的函数返回true，或者达到最大迭代次数
+ * @param {() => boolean} fn 要等待的函数，返回true时停止等待
+ * @param {number} maxIter 最大迭代次数
+ * @param {number} iterWaitTime 每次迭代的等待时间
+ * @param {number} i 迭代次数
+ * @returns {Promise<boolean>} 是否等待成功
+ */
+export async function waitFor(fn, maxIter = 600, iterWaitTime = 100, i = 0) {
+    const continueWait = (current, max) => {
+      /* negative max iter means wait forever */
+      // 负的最大迭代次数表示无限等待
+      if (maxIter < 0) return true;
+      return current < max;
+    }
+  
+    while (!fn(i, ((i * iterWaitTime) / 100)) && continueWait(i, maxIter)) {
+      // 当函数返回false，并且还未达到最大迭代次数时，执行以下操作
+      i++;
+      await wait(iterWaitTime);
+    }
+    // 如果达到最大迭代次数，则返回false，否则返回true
+    return i === maxIter ? false : true;
+  }
+
+    /**
+   * Helper function. Waits for a specified amount of time in milliseconds (be sure to await!).
+   * Useful for timings with animations in the pre/post callbacks.
+   *
+   * @param {Number} ms Time to delay, in milliseconds
+   * @returns Promise
+   */
+    export async function wait(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }

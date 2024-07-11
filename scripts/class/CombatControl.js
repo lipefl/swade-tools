@@ -7,15 +7,16 @@ export default class CombatControl {
     
 
     constructor(){
-        this.previousTurn=false;   
-        this.combatid=false;  
-        this.combatinfo={}
-        this.acting=false;
+        // this.previousTurn=false;   //EternalRider: useless
+        // this.combatid=false;  //EternalRider: useless
+        // this.combatinfo={}  //EternalRider: useless
+        // this.acting=false; //EternalRider: this.acting is not always the previous combatant
        
        // this.combatant=false;   
     }
 
-    setCombat(id){
+    //EternalRider: useless
+    /* setCombat(id){
         if (this.combatid!=id){ /// changed combat
             this.previousTurn=false;
 
@@ -27,10 +28,11 @@ export default class CombatControl {
         this.combatid=id;
 
         
-    }
+    } */
 
 
-    isNewTurn(){
+    //EternalRider: useless
+    /* isNewTurn(){
         let combat= game.combats.get(this.combatid);
         gb.log('SWADETOOLS','C2',combat,this.combatinfo);
         if (this.combatinfo.round!=combat.current.round || this.combatinfo.turn!=combat.current.turn){
@@ -42,7 +44,7 @@ export default class CombatControl {
         } else {
             return false;
         }
-    }
+    } */
    
     /* async act(combatant){ ///not used anymore
         
@@ -69,30 +71,22 @@ export default class CombatControl {
 
 
    async getFlag(combatant,scope,flag){
-        if (combatant.flags?.[scope]?.[flag]!==undefined){
-            return combatant.flags[scope][flag]
-        } else {
-            return false;
+
+        //  const flag=await combatant.getFlag(scope,flag) /// revert if ok
+        let flagret=await game.combats.get(combatant.combat.id).getFlag(scope,flag+'###'+combatant.id); /// combatant flag was causing bug
+
+        if (flagret===undefined){
+            flagret=false;
         }
+       return flagret;
     }
 
-    async setFlag(combatant,scope,flag,value){
-        /* game.combat.updateEmbeddedEntity('Combatant', {
-            _id: combatant.id,
-          //  initiative: suitValue + cardValue,
-            'flags.swadetools': {
-                [flag]:value
-            }
-        });
+    async setFlag(combatant,scope,flag,value){    
 
-        game.combat.updateEmbeddedEntity('Combatant', {
-        combatant.flags.push({{flags:{[scope]:{[flag]:value}}}); */
-      //  combatant.flags[scope][flag]=value;
+    
+    await gb.setFlagCombatant(combatant.combat,combatant,scope,flag,value);
 
-      //  let update={_id:combatant.id,['flags.'+scope+'.'+flag]:value}
-      //  console.log(update);
-      gb.setFlagCombatant(game.combats.get(this.combatid),combatant,scope,flag,value);
-      //  game.combats.get(this.combatid).updateCombatant(update);
+
     }
 
     hasJoker(combatant){
@@ -265,15 +259,26 @@ export default class CombatControl {
 
    async startTurn(combatant){      
 
-    if (combatant.defeated){ //do nothing if it's defeated
-        return
-    }
+    
    // console.log(combatant);
+      if (combatant){
+
+        if (combatant.defeated){ //do nothing if it's defeated
+            return
+        }
+
+        //EternalRider: Do not retrigger
+        let hasStarted = await this.getFlag(combatant, gb.moduleName, 'hasStarted');
+        if (hasStarted) return;
+
+        gb.log('starting',combatant);
+
+        await this.setFlag(combatant, gb.moduleName, 'hasStarted', true);
         let actor=combatant.actor;
         
     gb.log('start: '+actor.name); 
 
-        this.acting=combatant;
+        // this.acting=combatant; //EternalRider: this.acting is not always the previous combatant
         let char=new Char(actor);
         let checkDistracted=true;
         let checkVulnerable=true;
@@ -304,13 +309,13 @@ export default class CombatControl {
         
         /// Distracted
         if (checkDistracted && char.is('isDistracted')){
-            this.setFlag(combatant,gb.moduleName,'removeDistracted',1)
+            this.setFlag(combatant,gb.moduleName,'removeDistracted',true)  //EternalRider: I don't know why the 0 in my test will not work
            // combatant.setFlag(gb.moduleName,'removeDistracted',1);
         }
 
         /// Vulnerable
         if (checkVulnerable && char.is('isVulnerable')){
-            this.setFlag(combatant,gb.moduleName,'removeVulnerable',1)
+            this.setFlag(combatant,gb.moduleName,'removeVulnerable',true)  //EternalRider: I don't know why the 0 in my test will not work
             //combatant.setFlag(gb.moduleName,'removeVulnerable',1);
         }
 
@@ -321,40 +326,50 @@ export default class CombatControl {
 
         /// Entangled
     }
+    }
     
-    async endTurn(){
+    async endTurn(combatant){  //EternalRider: same as startTurn is better
 
         
       //  console.log(combatant);
-      let combatant=this.acting;
+    //   let combatant=this.acting; //EternalRider: this.acting is not always the previous combatant
 
-      if (combatant.defeated){ //do nothing if it's defeated
-        return
-    }
+    
 
       if (combatant){
+
+        if (combatant.defeated){ //do nothing if it's defeated
+            return
+        }
+
+
+
+
+        //EternalRider: Do not retrigger
+        let hasEnded = await this.getFlag(combatant, gb.moduleName, 'hasEnded');
+        if (hasEnded) return;
+
+        gb.log('ending',combatant);
+        await this.setFlag(combatant, gb.moduleName, 'hasEnded', true);
+
         let actor=combatant.actor;
     gb.log('end: '+actor.name); 
         let char=new Char(actor);
-     //   console.log(combatant);
-    ///   console.log(combatant.flags.swade);
-     //   console.log(combatant.flags?.['swade-tools']?.removeVulnerable);
-     //   console.log(await this.getFlag(combatant,gb.moduleName,'removeVulnerable'));
+
       let removeVul=await this.getFlag(combatant,gb.moduleName,'removeVulnerable')
-     // console.log(combatant);
-    //  console.log(removeVul);
-        if (removeVul){
-         //   console.log('removing Vulnerable');
+      gb.log(actor.name,'removeVul',removeVul);
+        if (removeVul){        
             char.off('isVulnerable')
             char.say(gb.trans("RemVuln"))
-            this.setFlag(combatant,gb.moduleName,'removeVulnerable',0)
+            this.setFlag(combatant,gb.moduleName,'removeVulnerable',false)  //EternalRider: I don't know why the 0 in my test will not work
         }
 
         let removeDist=await this.getFlag(combatant,gb.moduleName,'removeDistracted');
+        gb.log(actor.name,'removeDist',removeDist);
         if (removeDist){
             char.off('isDistracted');
             char.say(gb.trans("RemDistr"))
-            this.setFlag(combatant,gb.moduleName,'removeDistracted',0)
+            this.setFlag(combatant,gb.moduleName,'removeDistracted',false)  //EternalRider: I don't know why the 0 in my test will not work
         }
 
         if (gb.actorIsConvicted(actor.id)){
@@ -362,6 +377,6 @@ export default class CombatControl {
             char.update('details.conviction.active',false);
         }
 
-    }
+        }
     }
 }
