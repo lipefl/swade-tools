@@ -268,6 +268,12 @@ export default class CharRoll extends BasicRoll{
         })
 
 
+        /// global trait mod
+        this.actor.system.stats.globalMods.trait.map(e=>{
+            this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.Trait`,'SWADE')})`);
+        })
+
+
         this.addFlag('rolltype','attribute');
 
         return await this.buildRoll(dieType,wildDie,this.mod,rof);
@@ -405,7 +411,10 @@ export default class CharRoll extends BasicRoll{
             }
         }
         
-        
+        /// global trait mod
+        this.actor.system.stats.globalMods.trait.map(e=>{
+            this.addModifier(e.value,`${e.label} (${gb.trans(`GlobalMod.Trait`,'SWADE')})`);
+        })
         
         
         if (this.groupRoll){

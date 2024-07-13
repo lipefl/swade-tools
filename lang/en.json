@@ -234,7 +234,8 @@
     "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Uncanny Reflexes",
     "SWADETOOLS.AceSetting": "Ace",
     "SWADETOOLS.bloodAndGoreRifts": "Use Blood And Gore (Rifts)",
-    "SWADETOOLS.bloodAndGoreRiftsHint": "If an attacker with Heavy Weapon causes a wound in a opponent without Heavy Armor it'll automatically roll on the Injury Table. You have to define a Injury Table in the system configuration."
+    "SWADETOOLS.bloodAndGoreRiftsHint": "If an attacker with Heavy Weapon causes a wound in a opponent without Heavy Armor it'll automatically roll on the Injury Table. You have to define a Injury Table in the system configuration.",
+    "SWADETOOLS.AllAroundVisionSetting": "All-Around Vision" 
     
     
      

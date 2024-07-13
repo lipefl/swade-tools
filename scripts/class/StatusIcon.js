@@ -59,7 +59,41 @@ export default class StatusIcon {
         }
     }
 
-    async applyEffect(icon,active,overlay=false){
+    async woundFatigueIcon(type,number,active){
+        if (gb.setting('defaultStatusIcons')!='none'){
+            
+            if (number<=0){
+                active=false;
+            }
+            await this.entity.toggleStatusEffect(type+'t',{active:active});
+
+            if (number>0){
+
+                let typeid;
+            let letter;
+            let max;
+            if (type=='wounds'){
+                typeid=gb.wounds_id;
+                letter='w';
+                max=6;
+
+            } else if (type=='fatigues'){
+                typeid=gb.fatigues_id;
+                letter='f';
+                max=2;
+            }
+
+            if (number>max){
+                number=max;
+            }
+           // console.log(typeid);
+            await this.entity.effects.get(typeid).update({"img":`modules/swade-tools/icons/${letter}${number}.png`})
+            }
+            
+        }
+    }
+
+  /*   async applyEffect(icon,active,overlay=false){
 
 
         
@@ -91,7 +125,8 @@ export default class StatusIcon {
 
 
                     if (doit){
-                        await token.toggleEffect(icon,{active:active,overlay:overlay})
+                       await token.toggleEffect(icon,{active:active,overlay:overlay})
+                       // await token.actor.toggleStatusEffect('aiming');
                     }
                     
                 },500)
@@ -106,14 +141,8 @@ export default class StatusIcon {
     }
 
 }
-       /*  if (this.entityType=='actor'){
-            this.entity.getActiveTokens().map((token)=>{
-                
-            })
-        } else if (this.entityType=='token'){
-           canvas.tokens.get(this.entity._id).toggleEffect(icon,{active:active}); 
-        } */
-    }
+     
+    } */
 
     getTokens(){ /// return an array of tokens
         if (this.entityType=='actor'){
@@ -255,15 +284,16 @@ export default class StatusIcon {
         if (statval!==undefined){
 
             /// mark defeated
-            this.markDefeated(levelType,statval);
+            this.markDefeated();
+            this.woundFatigueIcon(levelType,statval,true);
 
-            levels.map(async item => {
+            /* levels.map(async item => {
                 if (item.value==statval){
                      await this.applyEffect(item.icon,true)
                 } else {
                     await this.applyEffect(item.icon,false)
                 }
-            })
+            }) */
             
         }
         }
@@ -288,10 +318,10 @@ export default class StatusIcon {
         const statusIncapacitated = CONFIG.SWADE.statusEffects.find((s) => s.id === 'incapacitated');
 
        
-
+        /// char.isDefeated checks if it's defeated;
         this.entity.toggleActiveEffect(statusIncapacitated, { active: char.isDefeated(), overlay: true });
         
-           // this.applyEffect(CONFIG.controlIcons.defeated,char.isDefeated(),true)
+           
        
        
     }
@@ -308,13 +338,9 @@ export default class StatusIcon {
         await this.checkLevels('fatigues');
     }
 
-    createTokenCheck(){
+   /*  createTokenCheck(){
         let actor=this.entity.actor;
-    /* this.statuses.map(item=>{
-        if (actor.data.data.status[item.stat]){
-            this.applyEffect(item.icon,true);
-        } 
-    }); */
+ 
     
     let woundsval=actor.system?.wounds?.value;
     if (woundsval){
@@ -327,7 +353,7 @@ export default class StatusIcon {
     if (fatigueval){        
         this.applyEffect(this.fatigues.filter(el=>el.value==fatigueval)[0].icon,true);
     }
-    }
+    } */
     
 }
 

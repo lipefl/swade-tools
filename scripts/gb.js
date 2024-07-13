@@ -10,6 +10,9 @@ export const edgesNaming=['Elan','No Mercy','Iron Jaw','Combat Reflexes','Dodge'
 export const abilitiesNaming=['Construct','Hardy','Undead','Swat','Unstoppable','Pack Tactics','Rifts Uncanny Reflexes','All-Around Vision'];
 export const settingRules=['Dumb Luck','Unarmored Hero','Wound Cap'];
 
+export const wounds_id='woundswadetools0';
+export const fatigues_id='fatiguswadetools';
+
 export const RoFBullets={
     2: 5,
     3: 10,

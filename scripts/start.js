@@ -142,6 +142,20 @@ Hooks.on('ready',async()=>{
        }
    })
 
+   CONFIG.statusEffects.push({
+    img: 'modules/swade-tools/icons/w1.png',
+    id: 'woundst',
+    _id: gb.wounds_id,
+    name: 'SWADE.Wound',
+    })
+
+    CONFIG.statusEffects.push({
+        img: 'modules/swade-tools/icons/f1.png',
+        id: 'fatiguest',
+        _id: gb.fatigues_id,
+        name: 'SWADE.Fatigue',
+        })
+
    /// remove swade dialogs
    if (gb.setting('noStatusAutoRoll')!='all'){
     const effectCallbacks = game.swade.effectCallbacks;
@@ -379,14 +393,14 @@ Hooks.on("updateActiveEffect", async (effect,info,diff,userId) => {
 
 })
 
-Hooks.on("createToken",(token,diff,userId)=>{
+/* Hooks.on("createToken",(token,diff,userId)=>{
    // console.log(token,diff,userId);
     if (game.user.id==userId){
     let upToken=new StatusIcon(token,'token',false);
     upToken.createTokenCheck();
     }
    
-})
+}) */
 
 Hooks.on('updateToken', async (scene, token, data, options, userId) => {
     if (game.user.id==userId){
