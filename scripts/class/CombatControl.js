@@ -83,8 +83,14 @@ export default class CombatControl {
 
     async setFlag(combatant,scope,flag,value){    
 
+       /*  console.log('setting-flag');
+        socket.on('module.'+gb.moduleName,async()=>{
+            if (game.user !== game.users.activeGM) return;
+            console.log('isGM');
+            
+        }) */
     
-    await gb.setFlagCombatant(combatant.combat,combatant,scope,flag,value);
+        await gb.setFlagCombatant(combatant.combat,combatant,scope,flag,value);
 
 
     }

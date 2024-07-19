@@ -531,23 +531,23 @@ export const penalArmorMinStr=(actor)=>{
 
 export const  setFlagCombatant=async (combat,combatant,scope,flag,value)=>{
     let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
-   // console.log(update);
-     //combat.updateCombatant(update);
-
-    /*  log(combat.id);
-     log(combatant.id);
-     log(update); */
+ 
 
      // await game.combats.get(combat.id).combatants.get(combatant.id).setFlag(scope,flag,value); /// combatant flag was causing bug => revert if ok
-     await combat.setFlag(scope,flag+'###'+combatant.id,value);
+    
+
+     game.socket.emit('module.'+moduleName,{combat,combatant,scope,flag,value});
+
+     
+
+     
+
+     
      
     
     
 }
 
-export const simpleAttRoll=(attribute,actor)=>{
-    
-}
 
 export const actorCombatant=(actor)=>{
     if (game.combat){
