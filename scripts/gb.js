@@ -727,7 +727,7 @@ export const showTemplate=(type,item)=>{
         }
         // Adjust to grid distance
 
-        templateData.distance = templateData.distance*canvas.grid.grid.options.dimensions.distance
+        templateData.distance = templateData.distance*canvas.grid.distance /// v12
         
         // noinspection JSPotentiallyInvalidConstructorUsage
         const template_base = new CONFIG.MeasuredTemplate.documentClass(
