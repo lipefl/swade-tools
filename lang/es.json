@@ -234,5 +234,6 @@
   "SWADETOOLS.RiftsUncannyReflexesSetting": "Rifts Reflejos Asombrosos",
   "SWADETOOLS.AceSetting": "As",
   "SWADETOOLS.bloodAndGoreRifts": "Utilizar Sangre y Gore (Rifts)",
-  "SWADETOOLS.bloodAndGoreRiftsHint": "Si un ataque con un Arma Pesada causa herida a un oponente sin Armadura Pesada, se tira automáticamente en la Tabla de Heridas. Debes definir una Tabla de Heridas en la configuración del sistema."
+  "SWADETOOLS.bloodAndGoreRiftsHint": "Si un ataque con un Arma Pesada causa herida a un oponente sin Armadura Pesada, se tira automáticamente en la Tabla de Heridas. Debes definir una Tabla de Heridas en la configuración del sistema.",
+  "SWADETOOLS.AllAroundVisionSetting": "Visión 360º"
 }
