@@ -1322,7 +1322,17 @@ export default class RollControl {
      /// adds AP
         let apextra=0;
         if (item.system.ap){
-            apextra=gb.realInt(item.system.ap);
+
+            let useAp=item.system.ap
+
+            if (this.chat.flags["swade-tools"]?.useaction) {
+                let actionKey=this.chat.flags["swade-tools"].useaction
+                if (item.system.actions.additional[actionKey]?.ap){
+                    useAp=item.system.actions.additional[actionKey].ap
+                }
+            }
+
+            apextra=gb.realInt(useAp);
 
             let useactor=this.getItemOwner();
 
@@ -1341,6 +1351,8 @@ export default class RollControl {
             }
         }
 
+
+       
      
          raisecount=gb.raiseCount(total,toughness-apextra);
     }

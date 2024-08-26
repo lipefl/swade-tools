@@ -530,13 +530,14 @@ export const penalArmorMinStr=(actor)=>{
 
 
 export const  setFlagCombatant=async (combat,combatant,scope,flag,value)=>{
-    let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
+   // let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
  
+   /// silver tape 
+   setTimeout(async ()=>{
+     await game.combats.get(combat.id).combatants.get(combatant.id).setFlag(scope,flag,value); /// combatant flag was causing bug => revert if ok   
+    },500)
 
-     // await game.combats.get(combat.id).combatants.get(combatant.id).setFlag(scope,flag,value); /// combatant flag was causing bug => revert if ok
-    
-
-     game.socket.emit('module.'+moduleName,{combat,combatant,scope,flag,value});
+   //  game.socket.emit('module.'+moduleName,{combat,combatant,scope,flag,value});
 
      
 

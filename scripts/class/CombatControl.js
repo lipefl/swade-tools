@@ -72,12 +72,12 @@ export default class CombatControl {
 
    async getFlag(combatant,scope,flag){
 
-        //  const flag=await combatant.getFlag(scope,flag) /// revert if ok
-        let flagret=await game.combats.get(combatant.combat.id).getFlag(scope,flag+'###'+combatant.id); /// combatant flag was causing bug
+        let flagret=await combatant.getFlag(scope,flag) /// revert if ok
+        /* let flagret=await game.combats.get(combatant.combat.id).getFlag(scope,flag+'###'+combatant.id); /// combatant flag was causing bug
 
         if (flagret===undefined){
             flagret=false;
-        }
+        } */
        return flagret;
     }
 

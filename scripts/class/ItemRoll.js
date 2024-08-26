@@ -86,7 +86,7 @@ export default class ItemRoll extends CharRoll{
            
 
             this.addDmgMod();
-            await this.rollDamage(damage,'',this.raiseDie());
+            await this.rollDamage(damage,this.getApInfo(action),this.raiseDie());
         }
 
         
@@ -174,10 +174,46 @@ export default class ItemRoll extends CharRoll{
         
     }
 
+    getApInfo(action=false){
+        let extrainfo='';
+
+        let finalAp=this.item.system.ap;
+
+        if (action && action?.ap){
+            finalAp=action.ap;
+        }
+        let reason=[];
+
+        if (this.actor?.system?.stats?.globalMods?.ap && this.actor?.system?.stats?.globalMods?.ap.length > 0) {
+            this.actor?.system?.stats?.globalMods?.ap.forEach(el => {
+                finalAp=finalAp+el.value
+                reason.push(`${el.label}: ${el.value}`)
+            });
+
+            if (finalAp<0){
+                finalAp=0
+            }
+        }
+
+        if (this.item.system.ap){
+            extrainfo+=` [${gb.trans('Ap','SWADE')}: ${finalAp}`;
+        
+
+        if (reason.length>0){
+            extrainfo+=` (${reason.join(', ')})`
+        }
+
+            extrainfo+=`]`
+      
+        }
+
+        return extrainfo;
+    }
+
     async rollBaseDamage(){
         this.defineAction('damage');
         this.addDmgMod();
-        let extrainfo='';
+        /* let extrainfo='';
 
         let finalAp=this.item.system.ap;
         let reason=[];
@@ -203,9 +239,11 @@ export default class ItemRoll extends CharRoll{
 
             extrainfo+=`]`
       
-        }
+        } */
+
         
-        await this.rollDamage(this.item.system.damage,extrainfo,this.raiseDie());
+        
+        await this.rollDamage(this.item.system.damage,this.getApInfo(),this.raiseDie());
     }
 
     

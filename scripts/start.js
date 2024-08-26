@@ -50,12 +50,12 @@ Hooks.on('ready',async()=>{
 
 
     /// only socket to fix permission for gb.setFlagCombatant (remove it => or rework)
-    game.socket.on('module.'+gb.moduleName,async(data)=>{
+    /* game.socket.on('module.'+gb.moduleName,async(data)=>{
         if (game.user.id != gb.GMPlayer().id) return;
         gb.log(data);
        await game.combats.get(data.combat._id).setFlag(data.scope,data.flag+'###'+data.combatant._id,data.value);       
         
-    })
+    }) */
 
    
     game.swadetools={};
