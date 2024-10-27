@@ -248,7 +248,7 @@ export default class SheetControl {
             let actorItem=this.sheet.actor.items.find(el=>el.id==itemId)
             let type=actorItem?.type;
 
-            if (type=='power' || type=='weapon' || (type=='gear' && (actorItem.system.isArcaneDevice===true || actorItem.system.actions.trait || !$.isEmptyObject(actorItem.system.actions.additional))) || (type=='shield' && actorItem.system.actions.trait)){
+            if (type=='power' || type=='weapon' || (type=='gear' && (actorItem.system.isArcaneDevice===true || actorItem.system.actions.trait || !$.isEmptyObject(actorItem.system.actions.additional))) || (type=='shield' && actorItem.system.actions.trait) || type=='action'){
 
 
                 if(!gb.setting('itemNameClick')){

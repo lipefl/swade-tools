@@ -34,7 +34,7 @@ export default class ItemDialog {
         
         let item=this.item;  
         
-        if (!item.system?.innate){
+        if (!item.system?.innate && item.type!='action'){
         
         let content=`<p><strong>${this.item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>`;
         content+=`<p><select id="skillitem">`;
@@ -118,12 +118,12 @@ export default class ItemDialog {
             
         }
 
-        if (item.type=='shield'){
+        if (item.type=='shield' || item.type=='action'){
             showDamage=false;
             hasDefaultDamage=false;
         }
 
-        
+       
 
         for (const id in weaponactions.additional){
             if (weaponactions.additional[id].type=='damage'){
@@ -405,7 +405,7 @@ export default class ItemDialog {
        
         if (!skillName){
 
-            if (skillflag!==true){
+            if (skillflag!==true && this.item.type!='action'){
                 skillName=this.noSkillItem();
             } else {
                 noMainSkill=true;
@@ -415,6 +415,7 @@ export default class ItemDialog {
            // skillName=gb.trans('Unskilled');
         }
 
+        
        
            
            // skillName=gb.trans('Unskilled');

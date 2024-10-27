@@ -47,8 +47,12 @@ export default class ItemRoll extends CharRoll{
             
             
 
+            
            
-            this.addModifier(action.traitMod,action.name);
+           // this.addModifier(action.traitMod,action.name);
+           this.addModifier(action.modifier,action.name); /// => changed name
+
+            
             let rof=1;
             if (action.dice!==undefined){
                rof=action.dice;
@@ -73,7 +77,9 @@ export default class ItemRoll extends CharRoll{
 
         } else if (action.type=='damage'){
             this.addModifier(action.modifier,action.name);
-            let damage=this.item.system.damage;            
+            let damage=this.item.system?.damage;      
+            
+            
 
             if (action.override){
                 damage=action.override;

@@ -1880,7 +1880,7 @@ export default class RollControl {
             && t.id!=target.id /// not the target
             && t.visible  /// is visible   
             && t.document.overlayEffect!=CONFIG.controlIcons.defeated   /// not defeated (out of combat)
-            && !t.actor.effects.find(el=>el.name=="Incapacitated")  /// not defeated (out of combat)
+            && !t.actor.effects.find(el=>el.name==gb.trans('Incap',"SWADE") && el.disabled==false)  /// not defeated (out of combat)
             && !t.combatant?.defeated /// not defeated 
             && t?.actor?.system.status.isStunned!==true /// not stunned               
             && t.document.disposition!=0               
