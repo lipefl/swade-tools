@@ -337,7 +337,7 @@ export default class CharRoll extends BasicRoll{
 
             if (this.canCast){
                 this.powerCount();
-                gb.say(`${this.getItemCard(this.item)}${gb.trans('InnatePower')}`,this.actor.name);
+                gb.say(`${await this.getItemCard(this.item)}${gb.trans('InnatePower')}`,this.actor.name);
             }
             this.dontDisplay=true;            
             return 
@@ -463,9 +463,9 @@ export default class CharRoll extends BasicRoll{
         this.manageshots=false;
     } */
 
-    getItemCard(item){
+    async getItemCard(item){
 
-        const description=TextEditor.enrichHTML(item.system.description,{async:false}) /// async false will be removed
+        const description=await TextEditor.enrichHTML(item.system.description) /// async false will be removed
 
         return `<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">
@@ -478,13 +478,13 @@ export default class CharRoll extends BasicRoll{
 
     }
 
-    isItem(item,countshots=true){
+    async isItem(item,countshots=true){
         this.item=item;
 
      //   console.log(item);
-     const description=TextEditor.enrichHTML(item.system.description,{async:false}) /// async false will be removed
+   //  const description=await TextEditor.enrichHTML(item.system.description) /// async false will be removed
 
-     this.flavorAdd.start=this.getItemCard(item);
+     this.flavorAdd.start=await this.getItemCard(item);
 
      /*    this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">
