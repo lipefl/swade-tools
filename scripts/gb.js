@@ -1005,7 +1005,7 @@ export const noneReloadType= async (actor,item,shots) => {
             let shotsToFull=shots;
 
             if (!gearitem){
-                console.log('here');
+             //   console.log('here');
                 ui.notifications.warn(trans('NotEnoughAmmo','SWADE'));
                 return false;
 

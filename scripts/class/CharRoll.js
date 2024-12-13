@@ -325,6 +325,10 @@ export default class CharRoll extends BasicRoll{
       //  console.log(skillName,rof)
 
         this.rof=rof;
+
+        if (this.item){
+            await this.addItemFlavor(this.item)
+        }
        
 
         if (this.item && this.manageshots){
@@ -478,13 +482,17 @@ export default class CharRoll extends BasicRoll{
 
     }
 
-    async isItem(item,countshots=true){
+    async addItemFlavor(item){
+        this.flavorAdd.start=await this.getItemCard(item);
+    }
+
+    isItem(item,countshots=true){
         this.item=item;
 
      //   console.log(item);
    //  const description=await TextEditor.enrichHTML(item.system.description) /// async false will be removed
 
-     this.flavorAdd.start=await this.getItemCard(item);
+     
 
      /*    this.flavorAdd.start=`<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">
@@ -803,6 +811,10 @@ export default class CharRoll extends BasicRoll{
         this.rolltype='damage';
 
         let raisetext=``;
+
+        if (this.item){
+            await this.addItemFlavor(this.item)
+        }
 
         if (this.dmgraise){
             raisetext=`(+${gb.trans('Targetraise')})`;

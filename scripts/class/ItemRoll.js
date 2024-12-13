@@ -14,6 +14,8 @@ export default class ItemRoll extends CharRoll{
         this.addFlavor(item.name);
         this.isItem(item);
 
+
+     //   console.log(this.manageshots);
         
 
         /* if (actor.data.type=='vehicle'){
