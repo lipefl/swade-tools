@@ -201,21 +201,28 @@ export default class CharRoll extends BasicRoll{
     async rollRun(){
         this.flavor+=`<div>${gb.trans('Running','SWADE')}</div>`;
 
-        let ferinfo=''
-         if (gb.systemSetting('enableWoundPace')){
-            let woundMod=0-gb.realInt(this.actor.system.wounds.value);
+        let ferinfo=''         
+        if (gb.systemSetting('enableWoundPace')){
+           let woundMod=0-gb.realInt(this.actor.system.wounds.value);
             if (woundMod<-3){
                 woundMod=-3
             }
-            this.flavor+=`<div>${gb.trans('Wounds','SWADE')}: ${woundMod}</div>`;
+
+            if (woundMod){
+                ferinfo+=` (${gb.trans('Wounds','SWADE')}: ${woundMod})`;
+            }
+
+
+            
         } 
         
         /// wounds
        // this.addModifier(-2,gb.trans('Wounds','SWADE'))
-        this.addModifier(this.actor.system.stats.speed.adjusted,gb.trans('Pace','SWADE'))
+        this.addModifier(this.actor.system.pace.ground,gb.trans('Pace','SWADE')+ferinfo)
+        this.addModifier(this.actor.system.pace.running.die.mod,gb.trans('RunningMod','SWADE'))
      //   this.baseModifiers();
      this.isRunDie();
-       return await this.buildRoll(this.actor.system.stats.speed.runningDie,false,this.mod);
+       return await this.buildRoll(this.actor.system.pace.running.die,false,this.mod);
     }
 
     async rollAtt(attribute,rof=1){

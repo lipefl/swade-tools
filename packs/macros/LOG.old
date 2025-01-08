@@ -1,8 +1,5 @@
-2024/12/02-18:23:17.166 3490 Recovering log #324
-2024/12/02-18:23:17.174 3490 Delete type=0 #324
-2024/12/02-18:23:17.174 3490 Delete type=3 #323
-2024/12/02-18:25:29.354 3d60 Level-0 table #328: started
-2024/12/02-18:25:29.354 3d60 Level-0 table #328: 0 bytes OK
-2024/12/02-18:25:29.357 3d60 Delete type=0 #326
-2024/12/02-18:25:29.357 3d60 Manual compaction at level-0 from '!macros!87yjIHK7Zk1hWz2P' @ 72057594037927935 : 1 .. '!macros!piWqfcNbrqVjmZGF' @ 0 : 0; will stop at (end)
-2024/12/02-18:25:29.357 3d60 Manual compaction at level-1 from '!macros!87yjIHK7Zk1hWz2P' @ 72057594037927935 : 1 .. '!macros!piWqfcNbrqVjmZGF' @ 0 : 0; will stop at (end)
+2025/01/08-12:22:48.861 1498 Log #330: 0 ops saved to Table #331 OK
+2025/01/08-12:22:48.862 1498 Archiving D:\Dropbox\Foundry\Data\modules\swade-tools\packs\macros/000330.log: OK
+2025/01/08-12:22:48.863 1498 Table #308: 4 entries OK
+2025/01/08-12:22:48.869 1498 Archiving D:\Dropbox\Foundry\Data\modules\swade-tools\packs\macros/MANIFEST-000329: OK
+2025/01/08-12:22:48.876 1498 **** Repaired leveldb D:\Dropbox\Foundry\Data\modules\swade-tools\packs\macros; recovered 1 files; 7705 bytes. Some data may have been lost. ****

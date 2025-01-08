@@ -138,7 +138,7 @@ export default class SystemRoll {
     async rollRun(){
         if (gb.setting('simpleRolls')){
             let content=`<div class="swadetools-itemfulldata">
-                    <strong>${gb.trans('Running','SWADE')}</strong>: ${this.actor.system.stats.speed.adjusted}+d${this.actor.system.stats.speed.runningDie}${gb.stringMod(this.actor.system.stats.speed.runningMod)}
+                    <strong>${gb.trans('Running','SWADE')}</strong>: ${this.actor.system.pace.ground}+d${this.actor.system.pace.running.die}${gb.stringMod(this.actor.system.pace.running.mod)}
                     </div>
                     <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" class="swadetools-input-number" id="mod" value=""></div></div>`
                     new Dialog({
