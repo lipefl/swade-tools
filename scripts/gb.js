@@ -182,7 +182,7 @@ export const getTokenCoordinates=(token)=>{
     
 }
 
-export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
+/* export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
    
     const ray = new Ray(origin, target);
 
@@ -204,7 +204,25 @@ export const getDistance=(origin,target,grid=false,checkWalls=false)=>{
     
     //console.log(getRayCollisions(ray,{mode:'any'}))
     return canvas.grid.measureDistances([{ ray }], {gridSpaces: grid})[0];
-}
+} */
+
+
+export const getDistance = (origin, target, grid = false, checkWalls = false) => {
+    //const ray = new Ray(origin, target);
+
+    if (checkWalls) {
+        if (CONFIG.Canvas.polygonBackends['move'].testCollision(origin, target, { type: "move", mode: "any" }) === true) {
+            return null;
+        }
+    }
+
+    // A função measurePath agora requer um array de pontos
+    const path = [origin, target]; 
+
+    const result=canvas.grid.measurePath(path, { gridSpaces: grid });
+    //console.log(result);
+    return result.distance;
+} 
 
 export const getRange=(origin,target,checkWalls=false)=>{ /// walls return null
    // const ray = new Ray(origin, target);
