@@ -1274,6 +1274,7 @@ export default class RollControl {
         let area='torso';
         let total=this.roll.total+this.gmmod;
         let targetInfo='';
+        let action=false;
        // let unstoppable=0;
         
         
@@ -1289,9 +1290,15 @@ export default class RollControl {
         area=this.chat.flags['swade-tools'].usecalled;
     }
 
+    if (this.chat.flags['swade-tools'].useaction){
+        action=this.chat.flags['swade-tools'].useaction;
+    }
+
+
+   console.log(this.chat.flags);
     
       /// heavy armor check
-      if (gb.isHeavyArmor(target.actor,area) && !item?.system?.isHeavyWeapon){ //heavy armor but no heavy weapon
+      if (gb.isHeavyArmor(target.actor,area) && !gb.isHeavyWeapon(item,action)){ //heavy armor but no heavy weapon
         raisecount=-1 // no damage
         targetInfo+=`<li>${gb.trans('HeavyArmorWarn')}</li>`;
       } else {

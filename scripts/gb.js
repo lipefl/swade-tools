@@ -878,6 +878,26 @@ export const getArmorArea=(actor,area='torso')=>{
     
 }
 
+export const isHeavyWeapon=(item,action='')=>{
+   // let heavy=false;
+   let heavy=item?.system?.isHeavyWeapon;
+
+   if (!action){
+    return heavy;
+   } else {
+        if (!heavy){
+           // console.log(action);
+            if (item?.system?.actions?.additional?.[action]!==undefined){  /// check for action
+                return item.system.actions.additional[action]?.isHeavyWeapon;
+            } else {
+                return heavy;
+            }
+            
+        }
+   }
+    
+}
+
 export const isHeavyArmor=(actor,area='torso')=>{
    
     if (actor.items.filter(el=>el.type=='armor' && el.system?.isHeavyArmor===true && el.system.locations[area.toLowerCase()]===true).length>0){
