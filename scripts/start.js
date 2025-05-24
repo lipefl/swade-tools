@@ -222,47 +222,12 @@ Hooks.on("createActor",(actor,options,userid)=>{
 })
 
 
-/* Hooks.on("createActiveEffect", (effect, diff,userid) => { 
-    
-   // console.log(plus,'ae-data-create');
-    
-   // console.log(effect);
-   
-    if (game.user.id==userid && effect.flags?.core?.statusId){
-        let actor=effect.parent; 
-        let upActor=new StatusIcon(actor,'actor');
-        upActor.chainedStatus(effect.flags.core.statusId,true)
 
-       //  let act=new SwadeActiveEffect();
-      //  act.apply(actor,'shaken'); 
-      //  char.activeEffect(effect.data.flags.core.statusId,false);
-    }
-    
-
-    
-
-   
-})
-
-Hooks.on("deleteActiveEffect", (effect,diff,userid)=>{
-
-    
-
-    if (game.user.id==userid && effect.flags?.core?.statusId){
-        let actor=effect.parent; 
-        let upActor=new StatusIcon(actor,'actor');
-        upActor.chainedStatus(effect.flags.core.statusId,false)
-      //  char.activeEffect(effect.data.flags.core.statusId,false);
-    }
-})
- */
-
-
-///data-swade-tools-action='func:arg1,arg2'
-
-Hooks.on("renderChatMessage", async (chatItem, html) => { 
+Hooks.on("renderChatMessageHTML", async (chatItem, element) => { 
 
    // console.log(chatItem);
+
+   const html = $(element);
     
     html.on('click','a[data-swade-tools-action],button[data-swade-tools-action]',(event)=>{ /// remove and change for Hooks.once ?
         let el=event.currentTarget;
@@ -270,15 +235,10 @@ Hooks.on("renderChatMessage", async (chatItem, html) => {
             let func=data[0];
             let args=data[1].split(',')
 
-            //  console.log(func);
-             // el.addEventListener('click',()=>{
+         
                   gb.btnAction[func](args);
 
-                 /*  if (el.getAttribute('data-swade-tools-action-once')){
-                      $(el).unbind('click').attr('disabled','disabled').removeAttr('data-swade-tools-action');
-
-                  } */
-            //  })
+                
 
     })
 
@@ -286,67 +246,18 @@ Hooks.on("renderChatMessage", async (chatItem, html) => {
         let el=$(event.currentTarget);
         el.closest('.swadetools-pseudocard').find('.card-content').toggle();
     })
-   //console.log(chatItem)
+  
 
-  //  console.log();
+   
 
     if (foundryIsReady && chatItem.isRoll){
 
-     //   console.log(chatItem.data.user);
-
-    
-     //console.log(chatItem);
+  
 
         let roll=new RollControl(chatItem,html,chatItem.author);
        
         await roll.doActions();
 
-     /*    let dices=chatItem._roll.dice;
-
-
-        if (chatItem.data.flags["swade-tools"]?.itemroll){
-            html.append('Here it is');
-        }
-
-
-        if (dices!==undefined){
-        let ones=dices.filter(el=>el.total==1);
-
-     //   console.log(ones);
-        
-        if (ones.length>1 && ones.length>(dices.length/2)){
-            html.append('<div class="swadetools-criticalfailure">'+gb.trans('CriticalFailure')+'</div>')
-        } else {
-        html.append('<a class="swadetools-bennyrerroll" title="'+gb.trans('RerollBtn')+'"><i class="fas fa-sync"></i></a>').on('click','a',()=>{
-            let actor=game.actors.filter(el=>el.name==chatItem.alias)[0];
-            if (!actor || actor.length>1){
-                return ui.notifications.warn('NoActorFoundRerroll')
-            }
-
-            let char=new Char(actor);
-            
-         //   console.log(actor);
-
-            if (char.spendBenny()){
-
-            let roll=new Roll(chatItem._roll.formula).roll();
-
-            
-
-            let chatData = {
-                user: game.user._id,
-                speaker: {alias:chatItem.alias},
-             //content: 'this is plus',
-            flavor: chatItem.data.flavor
-            };
-    
-    
-           roll.toMessage(chatData);
-            }
-        
-        });
-    }
-    } */
 
     }
    

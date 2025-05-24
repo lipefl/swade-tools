@@ -182,6 +182,7 @@ export default class RollControl {
     }
 
     addButtons(){
+        
         if (this.rolltype!==undefined){ ///roll comes from swade tools
             this.html.append('<div class="swadetools-relative"><div class="swadetools-rollbuttonwrap"></div></div>');
             if (!this.isCritical() || gb.settingKeyName('Dumb Luck') || gb.systemSetting('dumbLuck')){
@@ -221,7 +222,7 @@ export default class RollControl {
 
     async doActions(){
 
-     //   console.log('calling do actions');
+     
 
         
      

@@ -95,16 +95,15 @@ button.swadetools-freereroll {
     display: flex;
     width: 100%;
     padding-left: 3px;
+    gap:2px;
 }
 button.swadetools-rollbutton {
     padding-top: 2px;
     width: 20px;
     height: 20px;
-    
     border: 1px solid #737171;
     border-radius: 3px;
     cursor: pointer;
-    
     line-height: 1;
     padding: 2px;
     font-size: 13px;
@@ -112,6 +111,9 @@ button.swadetools-rollbutton {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* --buton-size: initial; */
+    background: #f3f3e7;
+    min-height: initial;
 }
 
 
@@ -478,3 +480,15 @@ li.chat-message footer.roll-interaction,
 
 
     .swade-official .primary .attribute-list {flex-wrap: nowrap;} /* /// fix css wrap attributes */
+
+    .swadetools-pseudocard header {
+        gap:10px;
+    }
+    .swadetools-pseudocard header img {
+        flex:initial;
+    }
+
+    .swadetools-pseudocard header h3 {
+        margin:0;
+        font-size:16px;
+    }
