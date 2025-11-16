@@ -163,7 +163,7 @@ export default class ItemDialog {
                 content+=`<div><strong>${gb.trans('Item.power','TYPES')} ${gb.trans('Modifier')}</strong>: ${powermod} (${gb.realInt(weaponinfo.pp)} ${gb.trans('PPAbbreviation','SWADE')})</div>`
 
             } else {
-                content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: ${gb.realInt(weaponinfo.pp)}/${gb.realInt(char.getActualPP(item.system.arcane))}</div>`
+                content+=`<div><strong>${gb.trans('PPCost','SWADE')}</strong>: <span class="swadetools-powercost">${gb.getPPCostMod(item)}</span>/${gb.realInt(char.getActualPP(item.system.arcane))}</div>`
             }
             
             
@@ -281,7 +281,38 @@ export default class ItemDialog {
         }
 
 
+        gb.log(item.effects,item.type);
+
+        /// ==> START POWER MODIFIERS
+
+        if (item.type=='power'){
+
+            const modifiers = item.effects.filter(e => e.type === "modifier");
+
+            if (modifiers){
+
+            content+=`<div class="swadetools-damage-actions swadetools-mod-add swadetools-mid-title"><h3>${gb.trans('PPMods','SWADE')}</h3></div>`; 
+            
+            content+=`<div class="swadetools-power-modifiers">`;
+
+            for (const e of modifiers) {
+            content += `
+                <label>
+                <input type="checkbox" class="swadetools-powermod-check" ${e.disabled ? "" : "checked"} data-id="${e.id}">
+                ${e.name}
+                </label>
+            `;
+            }   
+
+            content+='</div>';
+
+            }
+
+        }
         
+
+        /// ==> END POWER MODIFIERS
+
 
         if ( gb.setting('selectModifiers') || gb.setting('askCalledShots')){
         content+=`<div class="swadetools-damage-actions swadetools-mod-add swadetools-mid-title"><h3>${gb.trans("ModOther",'SWADE')}</h3></div>`;
@@ -659,6 +690,27 @@ export default class ItemDialog {
                     
                    
                 })
+
+                html.on('click','.swadetools-powermod-check', async ev => {
+                   
+      const id = ev.target.dataset.id;
+      const enabled = ev.target.checked;
+
+       gb.log(ev,id,enabled);
+
+      const effect = item.effects.get(id);
+      if(!effect) return;
+
+      await effect.update({ disabled: !enabled });
+
+      const cost = effect.system.cost ?? 0;
+
+    // span com valor original
+    html.find("span.swadetools-powercost").text(gb.getPPCostMod(item));
+   // const baseCost = Number(span.data("basecost"));
+
+
+    });
                 
             }
         },{classes:['dialog swadetools-vertical']}).render(true);

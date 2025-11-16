@@ -141,7 +141,7 @@ export default class ItemRoll extends CharRoll{
 
     usePP(extraPP){
         if (this.item.type=='power'){
-            let usepp=gb.realInt(this.item.system.pp)+gb.realInt(extraPP);
+            let usepp=gb.getPPCostMod(this.item)+gb.realInt(extraPP);
             if (usepp<0){ /// min 0
                 usepp=0
             }

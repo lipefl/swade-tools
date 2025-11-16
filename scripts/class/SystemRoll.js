@@ -11,7 +11,7 @@ export default class SystemRoll {
 
    async rollDamage(itemId){
       //  this.addJokerModifier(); 
-      await   Hooks.once("renderChatMessage", (chat, html,data) => { 
+      await   Hooks.once("renderChatMessageHTML", (chat, html,data) => { 
         if (data.user.id==game.user.id){
         chat.update({'flags.swade-tools.rolltype':'damage'});
         }
@@ -37,6 +37,7 @@ export default class SystemRoll {
         if (gb.setting('simpleRolls')){
             let item=this.actor.items.get(skillId);
 
+            
             
 
             let skillName;
@@ -101,7 +102,7 @@ export default class SystemRoll {
 
         } else {
          //   this.addJokerModifier();  
-         await Hooks.once("renderChatMessage", (chat, html,data) => { 
+         await Hooks.once("renderChatMessageHTML", (chat, html,data) => { 
            // console.log(data);
             if (data.user.id==game.user.id){
             chat.update({'flags.swade-tools.rolltype':'skill'});
@@ -233,7 +234,7 @@ export default class SystemRoll {
     
          //   console.log('called');
            // this.addJokerModifier();   
-           await Hooks.once("renderChatMessage", (chat, html,data) => { 
+           await Hooks.once("renderChatMessageHTML", (chat, html,data) => { 
             if (data.user.id==game.user.id){
             chat.update({'flags.swade-tools.rolltype':'attribute'});
             }

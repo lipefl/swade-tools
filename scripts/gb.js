@@ -589,19 +589,39 @@ export const actorCombatant=(actor)=>{
 
 export const actorIsJoker=(actor)=>{
 
+    log('cheking if actor is joker');
    // actor.token.id==el.tokenId
   /// removed  flags.swade.hasJoker (swade bug)
-    if(game.combat && game.combat.combatants.filter(el=>el.flags?.swade?.cardValue>14 && el?.actor?.id===actor.id && 
+    if(game.combat && game.combat.combatants.filter(el=>(el.flags?.swade?.cardValue>14 || el?.initiative>14) && el?.actor?.id===actor.id && 
         (!actor?.isToken || actor.token.id==el.token.id)  /// check if it's the same token
         ).length>0){
 
-       
+       log('actor is joker');
 
         return true;
     } else {
      
         return false;
     }
+}
+
+export const getPPCostMod=item=>{
+    if (!item) return 0;
+
+  // custo base do item
+  const baseCost = realInt(item.system?.pp);
+
+  // todos os modifiers ativos
+  const activeModifiers = item.effects.filter(e =>
+    e.type === "modifier" && !e.disabled
+  );
+
+  // soma dos custos dos modifiers ativos
+  const modifiersCost = activeModifiers.reduce((total, effect) => {
+    return total + realInt(effect.system?.cost);
+  }, 0);
+
+  return baseCost + modifiersCost;
 }
 
 export const actorIsConvicted=(actor)=>{

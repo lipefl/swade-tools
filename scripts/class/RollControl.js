@@ -182,6 +182,8 @@ export default class RollControl {
     }
 
     addButtons(){
+
+       
         
         if (this.rolltype!==undefined){ ///roll comes from swade tools
             this.html.append('<div class="swadetools-relative"><div class="swadetools-rollbuttonwrap"></div></div>');
@@ -1296,7 +1298,7 @@ export default class RollControl {
     }
 
 
-   console.log(this.chat.flags);
+   //console.log(this.chat.flags);
     
       /// heavy armor check
       if (gb.isHeavyArmor(target.actor,area) && !gb.isHeavyWeapon(item,action)){ //heavy armor but no heavy weapon
