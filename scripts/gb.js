@@ -592,7 +592,7 @@ export const actorIsJoker=(actor)=>{
     log('cheking if actor is joker');
    // actor.token.id==el.tokenId
   /// removed  flags.swade.hasJoker (swade bug)
-    if(game.combat && game.combat.combatants.filter(el=>(el.flags?.swade?.cardValue>14 || el?.initiative>14) && el?.actor?.id===actor.id && 
+    if(game.combat && game.combat.combatants.filter(el=>(el.flags?.swade?.cardValue>14 || el?.initiative>15) && el?.actor?.id===actor.id && 
         (!actor?.isToken || actor.token.id==el.token.id)  /// check if it's the same token
         ).length>0){
 
