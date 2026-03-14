@@ -20,13 +20,31 @@ export default class SheetControl {
 
 
     replaceClickHandler(container, selector, callback) {
+    container.find(selector).each((i, el) => {
+        const $el = $(el);
+        
+        
+        const clone = $el.clone(); 
+
+        
+        clone.off('click').on('click', function(e) {
+            e.stopImmediatePropagation(); 
+            e.preventDefault();
+            callback.call(this, e);
+        });
+
+        $el.replaceWith(clone);
+    });
+}
+
+    /* replaceClickHandler(container, selector, callback) {
         container.find(selector).each((i, el) => {
             const $el = $(el);
             const clone = $el.clone(true, false);
             clone.off('click').on('click', callback);
             $el.replaceWith(clone);
         });
-    }
+    } */
 
     bindAttributes(){
         gb.attributes.forEach(attribute => {
@@ -110,18 +128,19 @@ export default class SheetControl {
 
         let addel = '';
         if (!gb.setting('itemNameClick')) {
-            addel = 'ol.skill-list li.item.skill button.skill-name,';
+            addel = 'ol.skill-list li.item.skill .skill-name,';
         }
     
         const selector = addel +
-            'ol.skill-list li.item.skill button.skill-die,' +
-            'ol.skill-list li.item.skill img.skill-icon,' +
-            '.skill-list-main ol.skill-list li.item.skill button.skill-name,' +
-            '.skills-list .skill.item a:not(.item-edit)';
+            'ol.skill-list li.item.skill .skill-die,' 
+           + 'ol.skill-list li.item.skill img.skill-icon,' 
+           + '.skill-list-main ol.skill-list li.item.skill .skill-name,' 
+           + '.skills-list .skill.item a:not(.item-edit)';
     
         this.replaceClickHandler(this.html, selector, async (ev) => {
             const skillId = $(ev.currentTarget).closest('[data-item-id]').attr('data-item-id');
             await st.skill(this.sheet.actor, skillId);
+            gb.log('replacing: '+selector)
         });
 
        

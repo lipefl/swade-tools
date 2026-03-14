@@ -692,10 +692,39 @@ export default class CharRoll extends BasicRoll{
         },
         ok: {
             label: `<i class="fas fa-redo"></i> ${gb.trans('Reload','SWADE')}`,
-            callback: ()=>{
+            callback: async ()=>{
               //  gb.rechargeWeapon(this.actor,this.item); /// removed swade system 2.3
+                if (this.item.system.reloadType=='self'){ /// swade system bug (no reload)
+                    let recharge=gb.realInt(item.system.quantity);
+                    if (!recharge){
+                        ui.notifications.warn(gb.trans('NotEnoughAmmo','SWADE'));
+                        return false;
+                        
+                    }
+                    let max=gb.realInt(item.system.shots);
+                    let current=gb.realInt(item.system.currentShots);
 
-              this.item.reload();
+                    let needShots=max-current;
+
+                    if (recharge>needShots){
+                        current=max;
+                        recharge=recharge-needShots;
+                    } else {
+                        current=current+recharge;
+                        recharge=0;
+                    }
+
+                    await this.item.update({
+                    "system.quantity": recharge,
+                    "system.currentShots": current
+                    })
+
+                     ui.notifications.warn(gb.trans('ReloadSuccess','SWADE'));
+
+                } else {
+                    this.item.reload();
+                }
+              
 
             }
         }

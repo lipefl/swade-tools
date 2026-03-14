@@ -1052,7 +1052,7 @@ export const noneReloadType= async (actor,item,shots) => {
 
 
         let gearname=item.system.ammo.trim();
-            if (!gearname){
+            if (!gearname){               
                ui.notifications.error(trans('NoAmmoSet','SWADE'));
                return false;
             } else {
@@ -1127,8 +1127,11 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
     } else {
           
         if ((systemSetting('ammoFromInventory') && actor.type=='character') || (actor.type=='npc' && systemSetting('npcAmmo'))){
+
+            
             let gearname=item.system.ammo.trim();
-            if (!gearname){
+            if (!gearname){               
+
                ui.notifications.error(trans('NoAmmoSet','SWADE'));
                stop=true;
             } else {
