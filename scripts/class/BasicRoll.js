@@ -68,7 +68,7 @@ export default class BasicRoll {
             }
 
             if (wildDie) {
-                wildExp = `,1d${wildDie}x${mod}`
+                wildExp = `,1dw${wildDie}x${mod}`
             }
 
             rollExp = `{1d${dieType}x${mod}${rofExp}${wildExp}}`
@@ -83,7 +83,7 @@ export default class BasicRoll {
             if (!wildDie) {
                 rollExp = `1d${dieType}${x}${this.prepareModifier(modifier)}`;
             } else {
-                rollExp = `{1d${dieType}x,1d${wildDie}x}kh${this.prepareModifier(modifier)}`
+                rollExp = `{1d${dieType}x,1dw${wildDie}x}kh${this.prepareModifier(modifier)}`
             }
         }
 
