@@ -152,12 +152,12 @@ export default class BasicRoll {
             i++;
         }
 
-        if (wildDie) {
+       /*  if (wildDie) {
             this.colorWild(wildkey);
-        }
+        } */
     }
 
-    colorWild(wildKey) {
+   /*  colorWild(wildKey) {
         if (!!game.dice3d) {
             //  let colorPreset='none';
             const colorPreset = game.user.getFlag('swade', 'dsnWildDie') || 'none';
@@ -165,7 +165,7 @@ export default class BasicRoll {
                 this.roll.terms[0].dice[wildKey].options.colorset = colorPreset;
             }
         }
-    }
+    } */
 
     async buildDamageRoll(damage, modifier, raise, raisedie = 6) {
 
