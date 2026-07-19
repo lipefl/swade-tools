@@ -63,8 +63,8 @@ export default class CharUp {
         if (this.data?.system?.stats?.size!==undefined){
             let wh=this.checkSizeUp()+1;           
             
-            this.updates['token.width']=wh;
-            this.updates['token.height']=wh;
+            this.updates['prototypeToken.width']=wh;
+            this.updates['prototypeToken.height']=wh;
 
             
             
@@ -78,14 +78,14 @@ export default class CharUp {
             if (wild===true){
                 maxw=3
 
-                this.updates['token.actorLink']=true; /// link token
+                this.updates['prototypeToken.actorLink']=true; /// link token
             } else {
-                this.updates['token.actorLink']=false; /// link token
+                this.updates['prototypeToken.actorLink']=false; /// link token
             }
 
             maxw+=this.checkSizeUp()
 
-            this.updates['data.wounds.max']=maxw
+            this.updates['system.wounds.max']=maxw
             
         }
     }

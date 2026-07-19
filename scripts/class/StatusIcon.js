@@ -50,9 +50,14 @@ export default class StatusIcon {
     }
     }
 
+    getActor(){
+        return this.entityType === 'token' ? this.entity.actor : this.entity;
+    }
+
     noBasicActiveEffect(statusName){
-        
-        if (statusName && this.entity.effects.filter(el=>el.flags?.core?.statusId==this.translateActiveEffect(statusName)).length>0){
+        const actor = this.getActor();
+        const statusId = this.translateActiveEffect(statusName);
+        if (statusName && actor?.effects.filter(el => el.statuses?.has(statusId) || el.flags?.core?.statusId == statusId).length > 0){
             return false;
         } else {
             return true;
@@ -61,11 +66,13 @@ export default class StatusIcon {
 
     async woundFatigueIcon(type,number,active){
         if (gb.setting('defaultStatusIcons')!='none'){
+            const actor = this.getActor();
+            if (!actor) return;
             
             if (number<=0){
                 active=false;
             }
-            await this.entity.toggleStatusEffect(type+'t',{active:active});
+            await actor.toggleStatusEffect(type+'t',{active:active});
 
             if (number>0){
 
@@ -87,7 +94,7 @@ export default class StatusIcon {
                 number=max;
             }
            // console.log(typeid);
-            await this.entity.effects.get(typeid).update({"img":`modules/swade-tools/icons/${letter}${number}.png`})
+            await actor.effects.get(typeid)?.update({"img":`modules/swade-tools/icons/${letter}${number}.png`})
             }
             
         }
@@ -201,9 +208,12 @@ export default class StatusIcon {
     }
 
     removeActiveEffects(statusName){ /// also remove Active Effect
-        let idstat=this.entity.data.effects.filter(el=>el.data.flags?.core?.statusId && el.data.flags?.core?.statusId==this.translateActiveEffect(statusName))[0]?._id;
+        const actor = this.getActor();
+        if (!actor) return;
+        const statusId = this.translateActiveEffect(statusName);
+        const idstat = actor.effects.find(el => el.statuses?.has(statusId) || el.flags?.core?.statusId === statusId)?.id;
         if (idstat){
-            this.entity.deleteEmbeddedDocuments('ActiveEffect',[idstat]);
+            actor.deleteEmbeddedDocuments('ActiveEffect',[idstat]);
         }
         
     }
@@ -264,7 +274,9 @@ export default class StatusIcon {
             if (this.entityType=='actor'){
                 statval=this.data.system?.wounds?.value;
             } else if (this.entityType=='token'){
-                statval=this.data?.actorData?.data?.wounds?.value;
+                statval=this.data?.delta?.system?.wounds?.value
+                    ?? this.data?.actorData?.system?.wounds?.value
+                    ?? this.data?.actorData?.data?.wounds?.value;
             }
             
             levels=this.wounds;
@@ -273,7 +285,9 @@ export default class StatusIcon {
             if (this.entityType=='actor'){
                 statval=this.data.system?.fatigue?.value;
             } else if (this.entityType=='token'){
-                statval=this.data?.actorData?.data?.fatigue?.value;
+                statval=this.data?.delta?.system?.fatigue?.value
+                    ?? this.data?.actorData?.system?.fatigue?.value
+                    ?? this.data?.actorData?.data?.fatigue?.value;
             }
             
             levels=this.fatigues;
@@ -311,19 +325,12 @@ export default class StatusIcon {
     } */
 
     markDefeated(){
-      //  let actor=this.getActor();
-      
         let char=new Char(this.entity,this.istoken);
+        const actor = this.getActor();
+        if (!actor) return;
 
-        const statusIncapacitated = CONFIG.SWADE.statusEffects.find((s) => s.id === 'incapacitated');
-
-       
         /// char.isDefeated checks if it's defeated;
-        this.entity.toggleActiveEffect(statusIncapacitated, { active: char.isDefeated(), overlay: true });
-        
-           
-       
-       
+        actor.toggleStatusEffect('incapacitated', { active: char.isDefeated(), overlay: true });
     }
     
 

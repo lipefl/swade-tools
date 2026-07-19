@@ -65,7 +65,7 @@ export default class RollControl {
                     </div>
                    `
         
-                    new Dialog({
+                    new foundry.appv1.api.Dialog({
                         title: gb.trans('EditBtn'),
                         content: content,
                         default: 'ok',
@@ -162,7 +162,7 @@ export default class RollControl {
        <div class="swadetools-formpart">
        <div class="swadetools-mod-add"><label><strong>${gb.trans('TargetNumber')}:</strong></label> <input type="text" id="targetNumber" value=""></div></div>`
 
-        new Dialog({
+        new foundry.appv1.api.Dialog({
             title: gb.trans('RaiseCalcBtn'),
             content: content,
             default: 'ok',
@@ -807,7 +807,8 @@ export default class RollControl {
         if (actor.type=='vehicle'){
            let skill=gb.getDriverSkill(actor);        
          //  console.log(skill);   
-           let item=gb.getDriver(actor).items.filter(el=>el.type=='skill' && el.name==skill)[0];
+           const driver=gb.getDriver(actor);
+           let item=driver?.items.filter(el=>el.type=='skill' && el.name==skill)[0];
            let skillValue;
            if (!item){
             skillValue=0;
@@ -1205,7 +1206,7 @@ export default class RollControl {
 
 
 
-           if (this.getActor().permission!=3 || this.getItemOwner().permission!=3){
+           if (!this.getActor().isOwner || !this.getItemOwner().isOwner){
             ui.notifications.error(gb.trans('PermissionActor'))
             return false;
            }
@@ -1455,9 +1456,12 @@ export default class RollControl {
         let driverHasAce=false;
 
         if (isvehicle){
-            let driver=new Char(gb.getDriver(target.actor));
-            if (driver.hasEdgeSetting('Ace')){
-                driverHasAce=true;
+            const driverActor=gb.getDriver(target.actor);
+            if (driverActor){
+                let driver=new Char(driverActor);
+                if (driver.hasEdgeSetting('Ace')){
+                    driverHasAce=true;
+                }
             }
         }
 
@@ -1512,6 +1516,7 @@ export default class RollControl {
             
             if (isvehicle){
                 tactor=gb.getDriver(target.actor);
+                if (!tactor) return;
             }
             let charRoll=new CharRoll(tactor);
             let char=new Char(tactor);
@@ -1800,7 +1805,7 @@ export default class RollControl {
             
 
         let chatData = {
-            user: game.user._id,
+            author: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: actor }),
          //content: 'this is plus',
         flavor: flavor+extraflavor
@@ -1889,7 +1894,7 @@ export default class RollControl {
             && !(attacker.actor.isToken===false && attacker.actor.id==t?.actor?.id)
             && t.id!=target.id /// not the target
             && t.visible  /// is visible   
-            && t.document.overlayEffect!=CONFIG.controlIcons.defeated   /// not defeated (out of combat)
+            && !t.actor.statuses?.has('incapacitated')
             && !t.actor.effects.find(el=>el.name==gb.trans('Incap',"SWADE") && el.disabled==false)  /// not defeated (out of combat)
             && !t.combatant?.defeated /// not defeated 
             && t?.actor?.system.status.isStunned!==true /// not stunned               
