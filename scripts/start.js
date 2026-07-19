@@ -188,15 +188,14 @@ Hooks.on('ready',async()=>{
     
 })
 
-Hooks.on("renderSidebarTab", async (object, html) => {
-    if (object instanceof Settings) {
-      const details = html.find("#game-details");
-      const fxDetails = document.createElement("li");
-      fxDetails.classList.add("swadetools-donation-link");
-      fxDetails.innerHTML = "SWADE Tools <a title='Donate' href='https://ko-fi.com/lipefl'><img src='https://storage.ko-fi.com/cdn/cup-border.png'></a> <span><a href='https://github.com/lipefl/swade-tools/issues'>Report issue</a></span>";
-      details.append(fxDetails);
-    }
-  })
+Hooks.on("renderSettings", (app, html) => {
+    if (html.querySelector(".swadetools-donation-link")) return;
+    const info = html.querySelector("section.info") ?? html;
+    const fxDetails = document.createElement("div");
+    fxDetails.classList.add("swadetools-donation-link");
+    fxDetails.innerHTML = "SWADE Tools <a title='Donate' href='https://ko-fi.com/lipefl'><img src='https://storage.ko-fi.com/cdn/cup-border.png'></a> <span><a href='https://github.com/lipefl/swade-tools/issues'>Report issue</a></span>";
+    info.append(fxDetails);
+})
 
 Hooks.on("createActor",(actor,options,userid)=>{
 
@@ -204,16 +203,16 @@ Hooks.on("createActor",(actor,options,userid)=>{
     if (game.user.id==userid){
     if (gb.setting('gangUp')){
         if (actor.type=='character'){
-            actor.update({'token.disposition':1})
+            actor.update({'prototypeToken.disposition':1})
         } else if (actor.type=='npc'){
-            actor.update({'token.disposition':-1})
+            actor.update({'prototypeToken.disposition':-1})
         }
     }
 
    // gb.log(actor);
 
    if (actor.system.wildcard===true){
-       actor.update({'token.actorLink':true})
+       actor.update({'prototypeToken.actorLink':true})
      //  gb.log('actorLink');
    }
     
@@ -322,10 +321,10 @@ Hooks.on("updateActiveEffect", async (effect,info,diff,userId) => {
    
 }) */
 
-Hooks.on('updateToken', async (scene, token, data, options, userId) => {
+Hooks.on('updateToken', async (tokenDocument, changed, options, userId) => {
     if (game.user.id==userId){
-      //  console.log(token);
-   let upToken=new StatusIcon(token,'token',data)
+      //  console.log(tokenDocument);
+   let upToken=new StatusIcon(tokenDocument,'token',changed)
     await upToken.checkAllStatus();
     }
    

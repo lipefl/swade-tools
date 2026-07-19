@@ -50,7 +50,7 @@ export default class ItemDialog {
 
         content+=`</select></p>`;
 
-        new Dialog({
+        new foundry.appv1.api.Dialog({
             title: item.name,
             content: content,
             buttons: {
@@ -673,7 +673,7 @@ export default class ItemDialog {
 
       
         if (!this.dontDisplay){
-        new Dialog({
+        new foundry.appv1.api.Dialog({
             title: item.name,
             content: content,
             buttons: buttons,

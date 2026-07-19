@@ -1,6 +1,6 @@
 import * as gb from './../gb.js';
 
-export default class SettingRules extends FormApplication {
+export default class SettingRules extends foundry.appv1.api.FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
         options.id = "setting-rules-config";
@@ -80,7 +80,7 @@ export default class SettingRules extends FormApplication {
              if(value && name==gb.settingKey('Hard Choices')){ /// disable Joker's Wild and GM benny=0
                
 
-                new Dialog({
+                new foundry.appv1.api.Dialog({
                     title: gb.trans(gb.settingKey('Hard Choices')),
                     content: `<p>${gb.trans('HardChoicesWarn')}</p>`,
                     buttons: {

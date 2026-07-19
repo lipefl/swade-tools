@@ -1,7 +1,7 @@
 # SWADE Tools
 
 ## Compatibility 
-SWADE Tools v2 is only compatible with with Foundry v13 and SWADE system v5
+SWADE Tools is compatible with Foundry v14 and the SWADE system
 
 ## Buy me a coffee
 If you like the module and want to buy me a coffee: https://ko-fi.com/lipefl

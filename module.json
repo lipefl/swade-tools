@@ -9,7 +9,9 @@
     "scripts/start.js"
   ],
   "styles": [
-    "css/swadetools.css"
+    {
+      "src": "css/swadetools.css"
+    }
   ],
   "languages": [
     {
@@ -89,7 +91,8 @@
     }
   ],
   "compatibility": {
-    "minimum": "13",
-    "verified": "14"
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
   }
 }

@@ -125,7 +125,7 @@ export default class CombatControl {
 
                 /// also give GM a benny
                 let gmPlayer=gb.GMPlayer();
-                let actualBennies=gmPlayer.data.flags.swade.bennies+1
+                let actualBennies=(gmPlayer.flags?.swade?.bennies ?? 0)+1
                 gmPlayer.update({"flags.swade.bennies":actualBennies})
 
             } else {

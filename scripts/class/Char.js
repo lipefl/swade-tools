@@ -103,11 +103,7 @@ export default class Char {
     }
 
     hasPerm(){
-        if (this.getActor().permission==3){
-            return true;
-        } else {
-            return false;
-        }
+        return this.getActor().isOwner;
     }
 
     isDefeated(){
@@ -232,7 +228,7 @@ export default class Char {
       //  console.log(sort);
 
         let chatData={
-            user: game.user._id,
+            author: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.getActor() })
         }
        
@@ -244,8 +240,8 @@ export default class Char {
         let entity=this.entity;
         let prefix='system.';
         if (this.istoken){
-            prefix="actorData.data.";
-            entity=canvas.tokens.get(this.entity.id)
+            entity = this.entity.actor ?? canvas.tokens.get(this.entity.id)?.actor;
+            if (!entity) return;
         }
 
         let dataupdate={}
@@ -329,7 +325,7 @@ export default class Char {
     }
 
     spendBenny(){
-        if (this.getActor().permission!=3){
+        if (!this.getActor().isOwner){
             ui.notifications.error(gb.trans('PermissionActor'))
             return false;
         } else 
@@ -434,7 +430,7 @@ export default class Char {
     say(msg,flavor){
        
         let chatData = {
-            user: game.user._id,
+            author: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.getActor() }),
           content: msg,
         flavor: flavor

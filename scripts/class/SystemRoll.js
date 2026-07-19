@@ -59,7 +59,7 @@ export default class SystemRoll {
                 content+=`<div class="swadetools-formpart"><label><input type="checkbox" id="grouproll" value="1"><strong>${gb.trans('GroupRoll','SWADE')}</strong></label></div>`;
             }
             content+=`</div>`
-            new Dialog({
+            new foundry.appv1.api.Dialog({
                 title: skillName,
                 content: content,
                 default: 'ok',
@@ -142,7 +142,7 @@ export default class SystemRoll {
                     <strong>${gb.trans('Running','SWADE')}</strong>: ${this.actor.system.pace.ground}+d${this.actor.system.pace.running.die}${gb.stringMod(this.actor.system.pace.running.mod)}
                     </div>
                     <div class="swadetools-formpart"><div class="swadetools-mod-add"><label><strong>${gb.trans('Modifier')}</strong> <i class="far fa-question-circle swadetools-hint" title="${gb.trans('ModHint')}"></i></label></label><input type="text" class="swadetools-input-number" id="mod" value=""></div></div>`
-                    new Dialog({
+                    new foundry.appv1.api.Dialog({
                         title: gb.trans('Running','SWADE'),
                         content: content,
                         default: 'ok',
@@ -200,7 +200,7 @@ export default class SystemRoll {
             
 
                     content+=`</div>`
-                    new Dialog({
+                    new foundry.appv1.api.Dialog({
                         title: gb.trans(gb.attrlang[attribute],'SWADE'),
                         content: content,
                         default: 'ok',

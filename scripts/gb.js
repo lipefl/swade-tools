@@ -79,14 +79,20 @@ export const settingKeyName=(name)=>{
 }
 
 export const getDriver=(vehicle)=>{
-    if (vehicle.system?.driver?.id){
-        let driverid=vehicle.system.driver.id.split('.');
-        return game.actors.get(driverid[1]);
-    } else {
-        ui.notifications.error(trans('NoOperator'));
-        return false
+    // Modern SWADE: operator lives on crew.members (system.operator getter).
+    const operator = vehicle.system?.operator;
+    if (operator) return operator;
+
+    // Legacy fallback: older SWADE stored Actor.<id> on system.driver.id
+    const legacyId = vehicle.system?.driver?.id;
+    if (legacyId){
+        const parts = String(legacyId).split('.');
+        const actor = game.actors.get(parts[1]) ?? game.actors.get(legacyId);
+        if (actor) return actor;
     }
-    
+
+    ui.notifications.error(trans('NoOperator'));
+    return false;
 }
 
 export const modButtons=(html)=>{
@@ -780,7 +786,7 @@ export const showTemplate=(type,item)=>{
 
 export const say=(what,who,flavor='')=>{
     let chatData = {
-        user: game.user._id,
+        author: game.user.id,
         speaker: {alias:who},
       content: what,
     flavor: flavor
@@ -933,7 +939,7 @@ export const itemSkillMod=item=>{
 }
 
 export const rechargeWeaponXDialog=(actor,item)=>{
-    new Dialog({
+    new foundry.appv1.api.Dialog({
         title: `${item.name} ${trans('Reload','SWADE')} X`,
         content: `<div class="swadetools-formline">How many bullets? <input type="text" id="bullets" class="swadetools-bullets-field" /></div>`,
         buttons: {
@@ -962,66 +968,19 @@ export const statusChange=async(actor,status,active)=>{
     if (status.startsWith('is')){
         status=translateActiveEffect(status,true)
     }
-    const statusConfigData = CONFIG.statusEffects.find((effect) => effect.id === status);
-    if (active) {
-        // Set render AE sheet to false
-        const renderSheet = false;
-        // See if there's a token for this actor on the scene. If there is and we toggle the AE from the sheet, it double applies because of the token.
-        const tokens = game.canvas.tokens?.getDocuments();
-
-        let token
-       // console.log(actor);
-        if (actor.isToken){
-            token = tokens?.find((t) => t?.id === actor.id);
-        } else {
-            token = tokens?.find((t) => t.actor?.id === actor.id);
-        }
-        
-        if (token){
-            actor=token.actor;
-        }
-
-        //console.log(token);
-        // So, if there is...
-      /*   if (token) {
-            // Toggle the AE from the token which toggles it on the actor sheet, too
-            //@ts-ignore TokenDocument.toggleActiveEffect is documented in the API: https://foundryvtt.com/api/TokenDocument.html#toggleActiveEffect
-            await token.toggleActiveEffect(statusConfigData, {
-                active: true,
-            });
-            // Otherwise
-        }
-        else { */
-            // Create the AE, passing the label, data, and renderSheet boolean
-            await actor.update({
-                'data.status': {
-                    [translateActiveEffect(status)]: false,
-                },
-            });
-            actor.toggleActiveEffect(statusConfigData, {
-                active: true,
-            });
-       // }
-        // Otherwise...
+    // Prefer the scene token's actor when present so status effects stay in sync.
+    const tokens = game.canvas.tokens?.getDocuments();
+    let token
+    if (actor.isToken){
+        token = tokens?.find((t) => t?.id === actor.id);
+    } else {
+        token = tokens?.find((t) => t.actor?.id === actor.id);
     }
-    else {
-        await actor.update({
-            'data.status': {
-                [translateActiveEffect(status)]: false,
-            },
-        });
-
-        actor.toggleActiveEffect(statusConfigData, {
-            active: false,
-        });
-        // Find the existing effect based on label and flag and delete it.
-        /* for (const effect of actor.effects) {
-         //   console.log(effect);
-            if (effect.statuses.has(status)) {
-                await effect.delete();
-            }
-        } */
+    if (token){
+        actor=token.actor;
     }
+    if (!actor) return;
+    await actor.toggleStatusEffect(status, { active: !!active });
 }
 
 
@@ -1164,7 +1123,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
 
                     let newgearshots=gearshots-usedgearshots;
                   
-                 await gearitem.update({"data.quantity":newgearshots})
+                 await gearitem.update({"system.quantity":newgearshots})
                 
                 }
 
@@ -1190,7 +1149,7 @@ export const rechargeWeapon=async (actor,item,removeShots=false,xbullets=null)=>
         
 
         if (!stop && newshots!=curShots){
-            item.update({"data.currentShots":newshots});
+            item.update({"system.currentShots":newshots});
             if (item.system.reloadType=="none"){  // nao jogar no chat para itens com autoReload
             let char=new Char(actor);
             char.say(`${item.name} ${trans('Recharged')}${xbulletsay}`);

@@ -1,6 +1,6 @@
 import * as gb from './../gb.js';
 
-export default class SettingName extends FormApplication {
+export default class SettingName extends foundry.appv1.api.FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
         options.id = "setting-custom-config";

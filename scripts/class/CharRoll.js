@@ -743,7 +743,7 @@ export default class CharRoll extends BasicRoll{
         }
     } */
 
-        new Dialog({
+        new foundry.appv1.api.Dialog({
             title: item.name,
             content: `<p>${item.name} ${gb.trans('NotEnoughShots')}</p>`,
             buttons: buttons
