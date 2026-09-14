@@ -211,11 +211,18 @@ export default class StatusIcon {
         const actor = this.getActor();
         if (!actor) return;
         const statusId = this.translateActiveEffect(statusName);
-        const idstat = actor.effects.find(el => el.statuses?.has(statusId) || el.flags?.core?.statusId === statusId)?.id;
-        if (idstat){
-            actor.deleteEmbeddedDocuments('ActiveEffect',[idstat]);
+        const effect = actor.effects.find(el => el.statuses?.has(statusId) || el.flags?.core?.statusId === statusId);
+
+        if (!effect) return;
+
+        if (typeof actor.deleteEmbeddedDocuments === 'function') {
+            try {
+                actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id]);
+            } catch (error) {
+                // Ignore stale ActiveEffect deletions; the effect may already be gone
+                // and the combat state should continue normally.
+            }
         }
-        
     }
 
     upStatus(statusName,val){
@@ -324,13 +331,13 @@ export default class StatusIcon {
         return actor;
     } */
 
-    markDefeated(){
+    async markDefeated(){
         let char=new Char(this.entity,this.istoken);
         const actor = this.getActor();
         if (!actor) return;
 
         /// char.isDefeated checks if it's defeated;
-        actor.toggleStatusEffect('incapacitated', { active: char.isDefeated(), overlay: true });
+        await actor.toggleStatusEffect('incapacitated', { active: char.isDefeated(), overlay: true });
     }
     
 

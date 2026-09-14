@@ -554,12 +554,26 @@ export const penalArmorMinStr=(actor)=>{
 
 
 export const  setFlagCombatant=async (combat,combatant,scope,flag,value)=>{
-   // let update=[{_id:combatant.id,['flags.'+scope+'.'+flag]:value}]
- 
-   /// silver tape 
-   setTimeout(async ()=>{
-     await game.combats.get(combat.id).combatants.get(combatant.id).setFlag(scope,flag,value); /// combatant flag was causing bug => revert if ok   
-    },500)
+   if (!combat || !combatant || !scope || !flag) return false;
+
+   const combatDoc = game.combats.get(combat.id);
+   if (!combatDoc) return false;
+
+   const combatantDoc = combatDoc.combatants.get(combatant.id);
+   if (!combatantDoc) return false;
+
+   // Foundry can serialize combatant flag writes a bit later during initiative flow.
+   // Keep the timeout workaround, but make it awaitable so callers can reliably
+   // wait for the flag update to complete before continuing.
+   await new Promise((resolve) => setTimeout(resolve, 500));
+
+   try {
+      await combatantDoc.setFlag(scope, flag, value);
+      return true;
+   } catch (error) {
+      console.warn('swade-tools setFlagCombatant failed', error);
+      return false;
+   }
 
    //  game.socket.emit('module.'+moduleName,{combat,combatant,scope,flag,value});
 
@@ -963,24 +977,64 @@ export const rechargeWeaponXDialog=(actor,item)=>{
     }).render(true);
 }
 
-/// copy from swade system
+
+const statusChangeQueue = new Map();
+
 export const statusChange=async(actor,status,active)=>{
+    if (!actor || typeof actor.toggleStatusEffect !== 'function') return;
+
     if (status.startsWith('is')){
         status=translateActiveEffect(status,true)
     }
-    // Prefer the scene token's actor when present so status effects stay in sync.
-    const tokens = game.canvas.tokens?.getDocuments();
-    let token
-    if (actor.isToken){
-        token = tokens?.find((t) => t?.id === actor.id);
-    } else {
-        token = tokens?.find((t) => t.actor?.id === actor.id);
+
+    const actorDocument = actor.isToken ? actor.actor : actor;
+    const actorKey = actorDocument?.uuid ?? actorDocument?.id ?? actor?.id ?? actor?.name ?? 'unknown';
+    const queueKey = `${actorKey}:${status}:${active ? 1 : 0}`;
+
+    if (statusChangeQueue.has(queueKey)) {
+        return statusChangeQueue.get(queueKey);
     }
-    if (token){
-        actor=token.actor;
+
+    const pending = (async () => {
+        const hasEffect = actorDocument?.effects?.some((effect) => {
+            const statusIds = effect.statuses ?? new Set();
+            return statusIds.has(status) || effect.flags?.core?.statusId === status;
+        });
+
+        if (active && hasEffect) {
+            return;
+        }
+
+        if (!active && !hasEffect) {
+            return;
+        }
+
+        try {
+            await actor.toggleStatusEffect(status, { active: !!active });
+        } catch (error) {
+            const msg = String(error?.message ?? error ?? '');
+            if (msg.includes('ActiveEffect') && msg.includes('does not exist')) {
+                // The status effect may already have been removed from the actor by the
+                // system; in that case, the safest action is simply to ignore the stale toggle.
+                log('[swade-tools] Ignored stale ActiveEffect toggle', {
+                    actorId: actor?.id,
+                    status,
+                    active,
+                    message: msg,
+                });
+                return;
+            }
+            throw error;
+        }
+    })();
+
+    statusChangeQueue.set(queueKey, pending);
+
+    try {
+        return await pending;
+    } finally {
+        statusChangeQueue.delete(queueKey);
     }
-    if (!actor) return;
-    await actor.toggleStatusEffect(status, { active: !!active });
 }
 
 

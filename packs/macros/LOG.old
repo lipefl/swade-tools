@@ -1,11 +1,1 @@
-2026/07/18-16:47:39.017 7748 Delete type=3 #1
-2026/07/18-17:01:09.769 5eb8 Level-0 table #410: started
-2026/07/18-17:01:09.769 5eb8 Level-0 table #410: 0 bytes OK
-2026/07/18-17:01:09.773 5eb8 Delete type=0 #408
-2026/07/18-17:01:09.785 5eb8 Manual compaction at level-0 from '!macros!87yjIHK7Zk1hWz2P' @ 72057594037927935 : 1 .. '!macros!piWqfcNbrqVjmZGF' @ 0 : 0; will stop at '!macros!piWqfcNbrqVjmZGF' @ 17 : 1
-2026/07/18-17:01:09.785 5eb8 Compacting 1@0 + 0@1 files
-2026/07/18-17:01:09.788 5eb8 Generated table #411@0: 4 keys, 7719 bytes
-2026/07/18-17:01:09.788 5eb8 Compacted 1@0 + 0@1 files => 7719 bytes
-2026/07/18-17:01:09.793 5eb8 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/07/18-17:01:09.793 5eb8 Delete type=2 #355
-2026/07/18-17:01:09.793 5eb8 Manual compaction at level-0 from '!macros!piWqfcNbrqVjmZGF' @ 17 : 1 .. '!macros!piWqfcNbrqVjmZGF' @ 0 : 0; will stop at (end)
+2026/09/14-11:54:32.863 26d0 Delete type=3 #1

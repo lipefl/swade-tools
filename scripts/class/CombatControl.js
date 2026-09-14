@@ -11,6 +11,9 @@ export default class CombatControl {
         // this.combatid=false;  //EternalRider: useless
         // this.combatinfo={}  //EternalRider: useless
         // this.acting=false; //EternalRider: this.acting is not always the previous combatant
+
+        this.processingStartTurns = new Set();
+        this.processingEndTurns = new Set();
        
        // this.combatant=false;   
     }
@@ -267,7 +270,12 @@ export default class CombatControl {
 
     
    // console.log(combatant);
-      if (combatant){
+      if (!combatant) return;
+
+      if (this.processingStartTurns.has(combatant.id)) return;
+      this.processingStartTurns.add(combatant.id);
+
+      try {
 
         if (combatant.defeated){ //do nothing if it's defeated
             return
@@ -331,7 +339,9 @@ export default class CombatControl {
         /// Bound
 
         /// Entangled
-    }
+      } finally {
+        this.processingStartTurns.delete(combatant.id);
+      }
     }
     
     async endTurn(combatant){  //EternalRider: same as startTurn is better
@@ -342,7 +352,12 @@ export default class CombatControl {
 
     
 
-      if (combatant){
+      if (!combatant) return;
+
+      if (this.processingEndTurns.has(combatant.id)) return;
+      this.processingEndTurns.add(combatant.id);
+
+      try {
 
         if (combatant.defeated){ //do nothing if it's defeated
             return
@@ -383,6 +398,8 @@ export default class CombatControl {
             char.update('details.conviction.active',false);
         }
 
-        }
+      } finally {
+        this.processingEndTurns.delete(combatant.id);
+      }
     }
 }
