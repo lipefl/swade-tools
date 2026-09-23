@@ -476,7 +476,7 @@ export default class CharRoll extends BasicRoll{
 
     async getItemCard(item){
 
-        const description=await TextEditor.enrichHTML(item.system.description) /// async false will be removed
+        const description=await foundry.applications.ux.TextEditor.implementation.enrichHTML(item.system.description) /// async false will be removed
 
         return `<div class="swade chat-card swadetools-pseudocard"><header class="card-header flexrow">
         <img src="${item.img}" title="${item.name}" width="36" height="36">

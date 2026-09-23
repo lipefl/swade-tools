@@ -19,7 +19,31 @@ export default class SheetControl {
     }
 
 
-    replaceClickHandler(container, selector, callback) {
+replaceClickHandler(container, selector, callback) {
+    const buttons = new Set();
+
+    container.find(selector).each((i, el) => {
+        const button = $(el).closest('button[data-action]')[0];
+        buttons.add(button || el);
+    });
+
+    for (const el of buttons) {
+        const clone = $(el).clone();
+
+        clone.on('click', function(e) {
+            console.log('MEU CLICK');
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+            
+            callback.call(this, e);
+        });
+
+        $(el).replaceWith(clone);
+    }
+}
+
+ /*    replaceClickHandler(container, selector, callback) {
     container.find(selector).each((i, el) => {
         const $el = $(el);
         
@@ -35,16 +59,8 @@ export default class SheetControl {
 
         $el.replaceWith(clone);
     });
-}
+} */
 
-    /* replaceClickHandler(container, selector, callback) {
-        container.find(selector).each((i, el) => {
-            const $el = $(el);
-            const clone = $el.clone(true, false);
-            clone.off('click').on('click', callback);
-            $el.replaceWith(clone);
-        });
-    } */
 
     bindAttributes(){
         gb.attributes.forEach(attribute => {
@@ -170,10 +186,22 @@ export default class SheetControl {
 
     bindDamage(){
 
-        const selector = '.quick-list a.damage-roll, .inventory button.damage-roll';
+        let selector = '.quick-list a.damage-roll, .inventory button.damage-roll';
+        
+        
+
+      //  this.html.find(selector).css('background', 'yellow');
+
+        //selector.css('background','yellow');
 
     this.replaceClickHandler(this.html, selector, async (ev) => {
-        const itemId = $(ev.currentTarget).parents('.item').data('itemId');
+       // let itemId = $(ev.currentTarget).parents('.item').data('itemId');
+
+       // if (!itemId) {
+         let  itemId = $(ev.target).closest('[data-item-id]').attr('data-item-id');
+      //  }
+
+      //  console.log(ev,itemId);
         const sys = new SystemRoll(this.sheet.actor);
         // this.addJokerModifier(this.sheet.actor.id);  
         await sys.rollDamage(itemId);
@@ -210,6 +238,8 @@ export default class SheetControl {
 
       findEl+=`,.powers-list .item-image, .powers-list .item-name, .powers-list .item-show`
 
+      findEl+=', .weapons .item-list a.name,.weapons .item-list img';
+
       findEl+=`,.power-header .item-img, .power-header .item-name`
 
         this.html.find(findEl).each((index,el)=>{
@@ -219,59 +249,65 @@ export default class SheetControl {
         
     }
 
-    doItem(target){
-        let parentDiv=target.parents('.item')
-        let itemId=parentDiv.data('itemId')
-        
-       // target.css('background','yellow');
-     //   const actions=
 
-       // console.log(target.attr('class'));
+doItem(target){
+    let parentDiv = target.closest('[data-item-id]');
+    let itemId = parentDiv.data('itemId');
 
-        if (itemId){
+    if (itemId){
+        let actorItem = this.sheet.actor.items.find(el => el.id == itemId);
+        let type = actorItem?.type;
 
-            let actorItem=this.sheet.actor.items.find(el=>el.id==itemId)
-            let type=actorItem?.type;
-
-            if (type=='power' || type=='weapon' || (type=='gear' && (actorItem.system.isArcaneDevice===true || actorItem.system.actions.trait || !$.isEmptyObject(actorItem.system.actions.additional))) || (type=='shield' && actorItem.system.actions.trait) || type=='action'){
-
-
-                if(!gb.setting('itemNameClick')){
-                    parentDiv.addClass('swadetools-noshow')
-                }
-                
-                target.off('click').on('click',ev=>{
-                    let item=new ItemDialog(this.sheet.actor,itemId);
-                     item.showDialog();
-                })
-
-
-                if (type=='power' && !target.closest('li').find('.swade-tools-template-buttons').length){
-
-                   
-
-                    target.closest('li').find('.item-controls').prepend(`<span class="swade-tools-template-buttons">${gb.getTemplatesHTML(actorItem)}</span>`).on('click','button[data-template]',button=>{
-                        
-                        let templateType=$(button.currentTarget).data("template");
-
-                        gb.showTemplate(templateType,this.sheet.actor.items.get(itemId));
-                        
-                       
-                    })
-                }
+        if (
+            type == 'power' ||
+            type == 'weapon' ||
+            (
+                type == 'gear' &&
+                (
+                    actorItem.system.isArcaneDevice === true ||
+                    actorItem.system.actions.trait ||
+                    !$.isEmptyObject(actorItem.system.actions.additional)
+                )
+            ) ||
+            (type == 'shield' && actorItem.system.actions.trait) ||
+            type == 'action'
+        ){
+            if (!gb.setting('itemNameClick')){
+                parentDiv.addClass('swadetools-noshow');
             }
 
-            
-       
+            // Impede que o CharacterSheet do SWADE reconheça este elemento
+            // como uma ação através do data-action.
+            target.removeAttr('data-action');
 
-            
-          }     
-       
+            target.off('click').on('click', ev => {
+                ev.preventDefault();
+                ev.stopImmediatePropagation();
+
+                let item = new ItemDialog(this.sheet.actor, itemId);
+                item.showDialog();
+            });
+
+            if (
+                type == 'power' &&
+                !target.closest('li').find('.swade-tools-template-buttons').length
+            ){
+                target.closest('li')
+                    .find('.item-controls')
+                    .prepend(`<span class="swade-tools-template-buttons">${gb.getTemplatesHTML(actorItem)}</span>`)
+                    .on('click', 'button[data-template]', button => {
+                        let templateType = $(button.currentTarget).data('template');
+                        gb.showTemplate(templateType, this.sheet.actor.items.get(itemId));
+                    });
+            }
+        }
     }
+}
+
 
    
 
-    rebindAll(){
+    rebindAll(){        
         this.bindAttributes();
         this.bindSkills();
         this.bindDamage();

@@ -839,6 +839,8 @@ export default class RollControl {
         let itemid=this.chat.flags["swade-tools"].itemroll;
         let item=this.getItemOwner().items.get(itemid);
 
+       // gb.log(this.getItemOwner(),this.chat.flags);
+
       //  gb.log(item,'item');
 
         let rof=1;
@@ -1300,6 +1302,8 @@ export default class RollControl {
 
 
    //console.log(this.chat.flags);
+
+   //gb.log(gb.isHeavyWeapon(item,action),item,action);
     
       /// heavy armor check
       if (gb.isHeavyArmor(target.actor,area) && !gb.isHeavyWeapon(item,action)){ //heavy armor but no heavy weapon

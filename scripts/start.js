@@ -81,10 +81,17 @@ Hooks.on('ready',async()=>{
             itemRoll.showDialog();
            
       } else {
+        let vehicle=false;
+        
         if (actor.type=='vehicle'){
+            vehicle=actor;
             actor=gb.getDriver(actor);
         }
         let itemRoll=new ItemRoll(actor,item)
+
+        if (vehicle){
+            itemRoll.usingVehicle(vehicle);
+        }
         //  console.log(this.item);
             
             await itemRoll.rollBaseSkill();
@@ -413,7 +420,17 @@ Hooks.on('ready',()=>{ /// disable autoInit
     }
 }) */
 
+  Hooks.on("renderSettingsConfig", (app, html) => {
+    const section = html.querySelector('[data-category="swade-tools"]');
 
+    section?.insertAdjacentHTML("beforeend", `
+        <div>
+        <p>If you have any issues with the module, please <a href='https://github.com/lipefl/swade-tools/issues'>report them here</a></p>
+            <p>If this module makes your games better, consider supporting it!  <a title='Donate' href='https://ko-fi.com/lipefl'>Support me on Ko-fi</a></p>
+            
+        </div>
+    `);
+});
 
 //var dontStart=false;
 let cbt=new CombatControl;

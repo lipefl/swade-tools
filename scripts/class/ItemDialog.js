@@ -30,65 +30,58 @@ export default class ItemDialog {
         this.showDialog();
     }
 
-    noSkillItem(){
-        
-        let item=this.item;  
-        
-        if (!item.system?.innate && item.type!='action'){
-        
-        let content=`<p><strong>${this.item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>`;
-        content+=`<p><select id="skillitem">`;
-        this.actor.items.filter(el=>el.type=='skill').map(skill=>{
-            content+=`<option value="${skill.name}">${skill.name}</option>`;
-        })
+   noSkillItem() {
 
-        content+=`<optgroup label="${gb.trans('Attributes','SWADE')}">`;
-        gb.attributesShort.map(attr=>{
-            content+=`<option value="${attr.trans}">${attr.trans}</option>`
-        })
-        content+=`</optgroup>`
+    let item = this.item;
 
-        content+=`</select></p>`;
+    if (!item.system?.innate && item.type != 'action') {
 
-        new foundry.appv1.api.Dialog({
-            title: item.name,
+        let content = `<form>
+            <p><strong>${item.name}</strong> ${gb.trans('NoSkillQuestion')}</p>
+            <p><select name="skillitem">`;
+
+        this.actor.items.filter(el => el.type == 'skill').map(skill => {
+            content += `<option value="${skill.name}">${skill.name}</option>`;
+        });
+
+        content += `<optgroup label="${gb.trans('Attributes', 'SWADE')}">`;
+
+        gb.attributesShort.map(attr => {
+            content += `<option value="${attr.trans}">${attr.trans}</option>`;
+        });
+
+        content += `</optgroup>
+            </select></p>
+        </form>`;
+
+        new foundry.applications.api.DialogV2({
+            window: {
+                title: item.name
+            },
             content: content,
-            buttons: {
-                no: {
+            buttons: [
+                {
+                    action: "no",
                     label: `<i class="fas fa-times"></i> ${gb.trans('LeaveItBlank')}`,
-                    callback: async ()=>{
-                        await item.setFlag('swade-tools','skillitem',true);
-                        this.dontDisplay=false;
+                    callback: async () => {
+                        await item.setFlag('swade-tools', 'skillitem', true);
+                        this.dontDisplay = false;
                         this.showDialog();
-                        
                     }
-                },/* 
-                cancel: {
-                    label: `<i class="fas fa-times"></i> ${gb.trans('Unskilled')}`,
-                    callback: ()=>{
-                        this.saveSkill(gb.trans('Unskilled'));
-                        
-                    }
-                }, */
-                ok: {
+                },
+                {
+                    action: "ok",
                     label: `<i class="fas fa-check"></i> ${gb.trans('UseSkillSelected')}`,
-                    callback: (html)=>{
-                    
-                        this.saveSkill(html.find('#skillitem')[0].value);
-                        
+                    callback: (event, button) => {
+                        this.saveSkill(button.form.elements.skillitem.value);
                     }
                 }
+            ]
+        }).render({force: true});
 
-                
-            }
-        }).render(true);
-
-        this.dontDisplay=true;
-
-        }
-    
-    
+        this.dontDisplay = true;
     }
+}
 
     showDialog(){
         

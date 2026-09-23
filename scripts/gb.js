@@ -922,7 +922,9 @@ export const isHeavyWeapon=(item,action='')=>{
    // let heavy=false;
    let heavy=item?.system?.isHeavyWeapon;
 
-   if (!action){
+  // log(heavy);
+
+   if (!action || action=='damage'){
     return heavy;
    } else {
         if (!heavy){
