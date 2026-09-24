@@ -647,7 +647,7 @@ export const getPPCostMod=item=>{
 export const actorIsConvicted=(actor)=>{
    // let actor=game.actors.get(actorId);
    
-    if (actor.system?.details?.conviction.active===true){
+    if (actor.system?.details?.conviction?.active===true){
        // console.log('conviction is on');
         return true;
        
