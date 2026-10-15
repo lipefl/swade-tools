@@ -740,9 +740,26 @@ export default class RollControl {
     
 
     getActor(orToken=false,useVehicle=false){
-        
-            if (this.chat.flags["swade-tools"]?.usetoken){
-                let tokenid=this.chat.flags["swade-tools"].usetoken
+
+            const flags=this.chat.flags["swade-tools"];
+
+            if (useVehicle && flags?.usevehicle){
+                let vehicleToken;
+                if (flags.usevehicletoken){
+                    vehicleToken=canvas.tokens.get(flags.usevehicletoken);
+                }
+                if (!vehicleToken){
+                    vehicleToken=canvas.tokens.placeables.find(el=>el?.actor?.id==flags.usevehicle);
+                }
+
+                if (orToken){
+                    return vehicleToken;
+                }
+                return vehicleToken?.actor ?? game.actors.get(flags.usevehicle);
+            }
+
+            if (flags?.usetoken){
+                let tokenid=flags.usetoken
               //  console.log('token',tokenid);
                 this.istoken=true;
                 if (orToken){
@@ -755,10 +772,7 @@ export default class RollControl {
                 
                 
             } else {
-                let actorid=this.chat.flags["swade-tools"].useactor
-                if (useVehicle && this.chat.flags["swade-tools"]?.usevehicle){
-                    actorid=this.chat.flags["swade-tools"].usevehicle
-                }
+                let actorid=flags.useactor
               //  console.log('actor',actorid);
                 if (orToken){
                     return canvas.tokens.placeables.filter(el=>el?.actor?.id==actorid)[0]
